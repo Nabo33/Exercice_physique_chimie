@@ -400,6 +400,7 @@ let currentVolume = 25;
 let precision = 1;
 let scoreOk = 0;
 let scoreTotal = 0;
+let questionAlreadyChecked = false;
 
 const epContainer = document.getElementById('epContainer');
 const epImg = document.getElementById('epImg');
@@ -616,6 +617,8 @@ function updateScoreDisplay() {
 }
 
 function checkAnswer() {
+  if (questionAlreadyChecked) return;
+
   const raw = (studentAnswer.value || '').replace(',', '.');
   const answer = Number(raw);
 
@@ -628,12 +631,15 @@ function checkAnswer() {
   const tolerance = precision / 100;
 
   scoreTotal += 1;
+  questionAlreadyChecked = true;
+
   if (Math.abs(answer - expected) <= tolerance) {
     scoreOk += 1;
     showFeedback("🎉 Bravo ! C'est correct !", true);
   } else {
     showFeedback('❌ Ce n\'est pas la bonne valeur. Réponse attendue : ' + formatVolume(expected) + ' mL.', false);
   }
+
   updateScoreDisplay();
 }
 
@@ -643,6 +649,8 @@ function randomPrecision() {
 }
 
 function newQuestion() {
+  questionAlreadyChecked = false;
+
   precision = randomPrecision();
   syncInputSettings();
 
