@@ -161,32 +161,24 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 1.4rem;
+      padding: 1.5rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.14);
     }
 
     .card h3 {
-      margin-bottom: 0.6rem;
-      font-size: 1.15rem;
+      margin-bottom: 0.7rem;
+      font-size: 1.2rem;
     }
 
     .card p {
       color: var(--muted);
       margin-bottom: 1rem;
     }
-
-    .tag {
-      display: inline-block;
-      font-size: 0.82rem;
-      font-weight: 700;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      margin-bottom: 0.8rem;
-    }
-
-    .tag-blue { background: #dbeafe; color: #1d4ed8; }
-    .tag-purple { background: #ede9fe; color: #6d28d9; }
-    .tag-orange { background: #fef3c7; color: #b45309; }
-    .tag-green { background: #d1fae5; color: #047857; }
 
     .card a {
       text-decoration: none;
@@ -238,7 +230,6 @@
       <div class="topbar">
         <div class="brand">🔬 Sciences au collège</div>
         <nav>
-          <a href="#activites">Activités</a>
           <a href="#niveaux">Niveaux</a>
           <a href="#apropos">À propos</a>
         </nav>
@@ -247,11 +238,11 @@
       <div class="hero">
         <h1>Bienvenue sur mon espace d’activités interactives</h1>
         <p>
-          Retrouve ici des exercices, des animations et des défis pour progresser en sciences au collège.
-          Chaque activité permet de réviser, s’entraîner et mieux comprendre les notions vues en classe.
+          Choisis ton niveau pour accéder aux activités de sciences du collège :
+          exercices, animations et défis pour apprendre en s’entraînant.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#activites">Voir les activités</a>
+          <a class="btn btn-primary" href="#niveaux">Choisir un niveau</a>
           <a class="btn btn-secondary" href="#apropos">En savoir plus</a>
         </div>
       </div>
@@ -259,72 +250,35 @@
   </header>
 
   <main class="container">
-    <section id="activites">
-      <h2 class="section-title">Activités disponibles</h2>
-      <p class="section-text">
-        Voici quelques exemples de rubriques que tu pourras compléter avec tes propres fichiers HTML.
-      </p>
-
-      <div class="grid">
-        <article class="card">
-          <div class="tag tag-blue">Physique</div>
-          <h3>Circuits électriques</h3>
-          <p>Des activités pour reconnaître les dipôles, comprendre le fonctionnement d’un circuit et s’entraîner de façon interactive.</p>
-          <a href="EXERCICE%20-%20CIRCUIT%20SIMPLE%202.html">Accéder à l’activité</a>
-        </article>
-
-        <article class="card">
-          <div class="tag tag-purple">Chimie</div>
-          <h3>Pictogrammes de danger</h3>
-          <p>Révise les pictogrammes, leur signification et apprends à identifier les risques dans la vie courante et au laboratoire.</p>
-          <a href="EXERCICE%20-%20PICTOGRAMME.html">Accéder à l’activité</a>
-        </article>
-
-        <article class="card">
-          <div class="tag tag-orange">Mesures</div>
-          <h3>Mesure de volumes</h3>
-          <p>Manipule virtuellement une éprouvette graduée pour t’entraîner à réaliser des mesures avec précision.</p>
-          <a href="EXERCICE%20-%20MESURE%20DE%20VOLUMES.html">Accéder à l’activité</a>
-        </article>
-
-        <article class="card">
-          <div class="tag tag-green">États de la matière</div>
-          <h3>Changements d’état</h3>
-          <p>Observe et révise la fusion, la vaporisation, la liquéfaction et la solidification grâce à des exercices ludiques.</p>
-          <a href="EXERCICE%20-%20CHANGEMENT%20D'ETAT.html">Accéder à l’activité</a>
-        </article>
-      </div>
-    </section>
-
     <section id="niveaux">
-      <h2 class="section-title">Par niveau</h2>
+      <h2 class="section-title">Choisir un niveau</h2>
       <p class="section-text">
-        Cette partie peut servir à organiser ton site par classe pour que les élèves trouvent plus facilement leurs activités.
+        Clique sur ton niveau pour accéder aux activités correspondantes.
       </p>
 
       <div class="grid">
         <article class="card">
           <h3>6ème</h3>
           <p>Découvrir les sciences, manipuler, observer et apprendre les premières méthodes de travail.</p>
-          <a href="6eme.html">Voir les activités de 6ème</a>
+          <a href="6eme.html">Accéder aux activités de 6ème</a>
         </article>
 
         <article class="card">
           <h3>5ème</h3>
           <p>Approfondir les notions et commencer à raisonner de façon plus autonome à travers des défis variés.</p>
-          <a href="5eme.html">Voir les activités de 5ème</a>
+          <a href="5eme.html">Accéder aux activités de 5ème</a>
         </article>
 
         <article class="card">
           <h3>4ème</h3>
           <p>Renforcer les méthodes scientifiques, interpréter des résultats et consolider les connaissances du cycle 4.</p>
-          <a href="4eme.html">Voir les activités de 4ème</a>
+          <a href="4eme.html">Accéder aux activités de 4ème</a>
         </article>
 
         <article class="card">
           <h3>3ème</h3>
           <p>Réviser, se préparer au lycée et développer des compétences solides en physique-chimie.</p>
-          <a href="3eme.html">Voir les activités de 3ème</a>
+          <a href="3eme.html">Accéder aux activités de 3ème</a>
         </article>
       </div>
     </section>
@@ -338,7 +292,7 @@
         </p>
         <ul>
           <li>Des exercices interactifs accessibles depuis un ordinateur, une tablette ou un téléphone.</li>
-          <li>Une organisation possible par thème ou par niveau.</li>
+          <li>Une organisation par niveau pour trouver plus facilement les activités.</li>
           <li>Une mise à jour facile en ajoutant simplement de nouveaux fichiers HTML.</li>
         </ul>
       </div>
