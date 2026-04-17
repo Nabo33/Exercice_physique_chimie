@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mesure de volume – Éprouvette graduée</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+  :root {
+    --blue-light: #d0eeff;
+    --blue-mid:   #5bb3e8;
+    --blue-deep:  #1a6fa8;
+    --bg:         #f0f6fc;
+    --panel:      #ffffff;
+    --text:       #1a2b3c;
+    --shadow:     0 8px 32px rgba(26,111,168,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px 40px;
+    background-image:
+      radial-gradient(circle at 20% 20%, #cce8ff 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, #d5f0ff 0%, transparent 50%);
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--blue-deep);
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: .95rem;
+    color: #5580a0;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .main-layout {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 980px;
+  }
+
+  .eprouvette-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .eprouvette-container {
+    position: relative;
+    width: 382px;
+    height: 573px;
+    cursor: ns-resize;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .ep-img {
+    position: absolute;
+    inset: 0;
+    width: 382px;
+    height: 573px;
+    display: block;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .meniscus-img {
+    position: absolute;
+    display: block;
+    z-index: 4;
+    pointer-events: none;
+    transition: bottom 0.2s linear, width 0.2s linear, left 0.2s linear;
+    mix-blend-mode: multiply;
+    object-fit: fill;
+  }
+
+  .tube-click-area {
+    position: absolute;
+    z-index: 10;
+    cursor: ns-resize;
+  }
+
+  .control-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 220px;
+  }
+
+  .slider-label {
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--blue-deep);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 180px;
+    height: 6px;
+    background: linear-gradient(90deg, var(--blue-mid), var(--blue-deep));
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--blue-deep);
+    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  }
+
+  .precision-row {
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  .prec-btn {
+    padding:5px 12px;
+    border-radius:20px;
+    border:2px solid #b0d0e8;
+    background:white;
+    font-family:'Nunito',sans-serif;
+    font-size:.8rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:all .2s;
+    color:#446680;
+  }
+
+  .prec-btn.active {
+    background:var(--blue-deep);
+    border-color:var(--blue-deep);
+    color:white;
+  }
+
+  .right-panel {
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    width:320px;
+  }
+
+  .zoom-panel, .answer-panel, .score-panel {
+    background: var(--panel);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 16px 20px;
+  }
+
+  .panel-title {
+    font-size: .95rem;
+    font-weight: 800;
+    color: var(--blue-deep);
+    margin-bottom: 10px;
+  }
+
+  .zoom-canvas-wrap {
+    position:relative;
+    width:100%;
+    height:220px;
+    overflow:hidden;
+    border-radius:10px;
+    border:2px solid #c5dff2;
+    background:#f8fcff;
+  }
+
+  #zoomCanvas {
+    display:block;
+    width:100%;
+    height:100%;
+  }
+
+  .zoom-info {
+    font-size:.78rem;
+    color:#6690aa;
+    text-align:center;
+    font-style:italic;
+    margin-top:6px;
+  }
+
+  .answer-row {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
+  }
+
+  .answer-row label {
+    font-size:.9rem;
+    font-weight:600;
+    color:#446680;
+    white-space:nowrap;
+  }
+
+  #studentAnswer {
+    width:90px;
+    padding:8px 12px;
+    border:2px solid #b0d0e8;
+    border-radius:10px;
+    font-family:'Nunito',sans-serif;
+    font-size:1.1rem;
+    font-weight:700;
+    color:var(--text);
+    outline:none;
+    text-align:center;
+  }
+
+  #studentAnswer:focus {
+    border-color: var(--blue-mid);
+  }
+
+  .unit-label {
+    font-size:.9rem;
+    font-weight:700;
+    color:#446680;
+  }
+
+  .check-btn {
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg, var(--blue-mid), var(--blue-deep));
+    color:white;
+    font-family:'Nunito',sans-serif;
+    font-size:1rem;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 4px 12px rgba(26,111,168,.3);
+  }
+
+  .feedback {
+    min-height:38px;
+    border-radius:10px;
+    padding:8px 14px;
+    font-size:.95rem;
+    font-weight:700;
+    text-align:center;
+    margin-top:10px;
+    opacity:0;
+    transition:opacity .25s;
+  }
+
+  .feedback.show { opacity:1; }
+  .feedback.correct { background:#d4f7e0; color:#1a7a3f; }
+  .feedback.wrong   { background:#fde8e6; color:#b52b1c; }
+
+  .score-panel {
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+
+  .score-label {
+    font-size:.85rem;
+    font-weight:700;
+    color:#446680;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+  }
+
+  .score-numbers {
+    font-size:1.3rem;
+    font-weight:800;
+    color:var(--blue-deep);
+  }
+
+  .score-stars {
+    font-size:1.2rem;
+    letter-spacing:2px;
+    margin-left:auto;
+  }
+
+  .new-btn {
+    padding:8px 14px;
+    border:2px solid var(--blue-mid);
+    border-radius:12px;
+    background:white;
+    color:var(--blue-deep);
+    font-family:'Nunito',sans-serif;
+    font-size:.9rem;
+    font-weight:800;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+
+  @media (max-width: 760px) {
+    .eprouvette-container {
+      width: 315px;
+      height: 473px;
+    }
+    .ep-img {
+      width: 315px;
+      height: 473px;
+    }
+  }
+</style>
+</head>
+<body>
+<h1>📏 Mesures de volumes !</h1>
+<p class="subtitle">Analyse les graduations afin de déterminer le volume d'eau présent dans l'éprouvette graduée. Clique sur "Nouveau niveau" pour recommencer.</p>
+
+<div class="main-layout">
+  <div class="eprouvette-panel">
+    <div class="eprouvette-container" id="epContainer">
+      <img class="ep-img" id="epImg" src="https://raw.githubusercontent.com/Nabo33/Images/3ff2d118c280bc279f76300d6bb4fa9a02b61c52/Eprouvette%20gradu%C3%A9e%20nue.png" crossorigin="anonymous" alt="éprouvette graduée">
+      <img class="meniscus-img" id="menImg" src="https://raw.githubusercontent.com/Nabo33/Images/1568bde5e4735db0a446fd54091c9e5042da1b16/menisque_seul%20%C3%A9troit.png" crossorigin="anonymous" alt="ménisque">
+      <div class="tube-click-area" id="tubeClickArea"></div>
+    </div>
+
+    <div class="control-block">
+      <span class="slider-label">Ajuster le niveau</span>
+      <input type="range" id="volumeSlider" min="0" max="50" step="1" value="25">
+    </div>
+
+    <div>
+            
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="zoom-panel">
+      <div class="panel-title">🔍 Vue agrandie du ménisque</div>
+      <div class="zoom-canvas-wrap">
+        <canvas id="zoomCanvas" width="600" height="420"></canvas>
+      </div>
+      <div class="zoom-info">Analyse correctement le volume correspondant à chaque petite graduation avant d'inscrire ci-dessous le volume mesuré !</div>
+    </div>
+
+    <div class="answer-panel">
+      <div class="panel-title">✏️ Quelle est la valeur du volume ?</div>
+      <div class="answer-row">
+        <label for="studentAnswer">Volume :</label>
+        <input type="number" id="studentAnswer" placeholder="?" step="1" min="0" max="50" inputmode="decimal">
+        <span class="unit-label">mL</span>
+      </div>
+      <button class="check-btn" onclick="checkAnswer()">✅ Vérifier ma réponse</button>
+      <div class="feedback" id="feedback"></div>
+    </div>
+
+    <div class="score-panel">
+      <div>
+        <div class="score-label">Score</div>
+        <div class="score-numbers"><span id="scoreOk">0</span> / <span id="scoreTotal">0</span></div>
+      </div>
+      <button class="new-btn" onclick="newQuestion()">🔄 Nouveau niveau</button>
+    </div>
+  </div>
+</div>
+
+<img id="srcEp" src="https://raw.githubusercontent.com/Nabo33/Images/3ff2d118c280bc279f76300d6bb4fa9a02b61c52/Eprouvette%20gradu%C3%A9e%20nue.png" crossorigin="anonymous" style="display:none">
+<img id="srcMen" src="https://raw.githubusercontent.com/Nabo33/Images/1568bde5e4735db0a446fd54091c9e5042da1b16/menisque_seul%20%C3%A9troit.png" crossorigin="anonymous" style="display:none">
+
+<script>
+const SRC_W = 1006;
+const SRC_H = 1507;
+
+// Calibration de l'image réelle utilisée pour l'éprouvette.
+const SRC_TUBE_LEFT = 417;
+const SRC_TUBE_RIGHT = 611;
+const SRC_Y_50ML = 331;
+const SRC_Y_0ML = 1206;
+
+// L'image du ménisque est lue à son point le plus bas visible.
+const MEN_SRC_W = 194;
+const MEN_SRC_H = 41;
+const MEN_LOWEST_POINT_RATIO = 1;
+
+let currentVolume = 25;
+let precision = 1;
+let scoreOk = 0;
+let scoreTotal = 0;
+
+const epContainer = document.getElementById('epContainer');
+const epImg = document.getElementById('epImg');
+const menImg = document.getElementById('menImg');
+const tubeClickArea = document.getElementById('tubeClickArea');
+const volumeSlider = document.getElementById('volumeSlider');
+const studentAnswer = document.getElementById('studentAnswer');
+const feedback = document.getElementById('feedback');
+const precisionInfo = document.getElementById('precisionInfo');
+const zoomCanvas = document.getElementById('zoomCanvas');
+const ctx = zoomCanvas.getContext('2d');
+const srcEp = document.getElementById('srcEp');
+const srcMen = document.getElementById('srcMen');
+
+function displayScaleX() {
+  return epImg.clientWidth / SRC_W;
+}
+
+function displayScaleY() {
+  return epImg.clientHeight / SRC_H;
+}
+
+function tubeLeftDisp() {
+  return SRC_TUBE_LEFT * displayScaleX();
+}
+
+function tubeRightDisp() {
+  return SRC_TUBE_RIGHT * displayScaleX();
+}
+
+function y50Disp() {
+  return SRC_Y_50ML * displayScaleY();
+}
+
+function y0Disp() {
+  return SRC_Y_0ML * displayScaleY();
+}
+
+function decimalsFromStep(step) {
+  const s = String(step);
+  return s.includes('.') ? s.split('.')[1].length : 0;
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function roundToStep(value, step) {
+  const decimals = decimalsFromStep(step);
+  return Number((Math.round(value / step) * step).toFixed(decimals));
+}
+
+function clampVolume(value) {
+  return clamp(roundToStep(value, precision), 0, 50);
+}
+
+function formatVolume(value) {
+  return value.toFixed(decimalsFromStep(precision)).replace('.', ',');
+}
+
+function sourceYFromVolume(ml) {
+  const t = (50 - clamp(ml, 0, 50)) / 50;
+  return SRC_Y_50ML + t * (SRC_Y_0ML - SRC_Y_50ML);
+}
+
+function displayYFromVolume(ml) {
+  const t = (50 - clamp(ml, 0, 50)) / 50;
+  return y50Disp() + t * (y0Disp() - y50Disp());
+}
+
+function volumeFromDisplayY(yDisp) {
+  const t = (yDisp - y50Disp()) / (y0Disp() - y50Disp());
+  const ml = 50 - t * 50;
+  return clampVolume(ml);
+}
+
+function precisionLabel(step) {
+  return String(step).replace('.', ',') + ' mL';
+}
+
+function syncInputSettings() {
+  volumeSlider.step = String(precision);
+  studentAnswer.step = String(precision);
+  if (precisionInfo) precisionInfo.textContent = precisionLabel(precision);
+}
+
+function applyTubeCalibration() {
+  const left = tubeLeftDisp();
+  const right = tubeRightDisp();
+  const top = y50Disp();
+  const bottom = y0Disp();
+
+  tubeClickArea.style.left = left + 'px';
+  tubeClickArea.style.top = top + 'px';
+  tubeClickArea.style.width = (right - left) + 'px';
+  tubeClickArea.style.height = (bottom - top) + 'px';
+}
+
+function updateMeniscus(ml) {
+  currentVolume = clampVolume(ml);
+  const lineY = displayYFromVolume(currentVolume);
+  const tubeWidth = tubeRightDisp() - tubeLeftDisp();
+  const menHeight = tubeWidth * (MEN_SRC_H / MEN_SRC_W);
+  const bottomShift = menHeight * (1 - MEN_LOWEST_POINT_RATIO);
+
+  menImg.style.left = tubeLeftDisp() + 'px';
+  menImg.style.width = tubeWidth + 'px';
+  menImg.style.height = menHeight + 'px';
+  menImg.style.bottom = (epImg.clientHeight - lineY - bottomShift) + 'px';
+
+  drawZoom(currentVolume);
+}
+
+function drawZoom(ml) {
+  if (!srcEp.complete || !srcMen.complete) return;
+
+  const W = zoomCanvas.width;
+  const H = zoomCanvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  const pxPerMl = (SRC_Y_0ML - SRC_Y_50ML) / 50;
+
+  const config =
+    precision === 1
+      ? { tickStep: 1,  labelStep: 10, majorStep: 10, midStep: 5, zoomSpanMl: 18, fontSize: 38, outline: 6 }
+      : precision === 0.5
+        ? { tickStep: 0.5, labelStep: 5, majorStep: 5, midStep: 1, zoomSpanMl: 9, fontSize: 34, outline: 6 }
+        : { tickStep: 0.2, labelStep: 1, majorStep: 1, midStep: 0.5, zoomSpanMl: 3.6, fontSize: 28, outline: 5 };
+
+  const cropHalf = (config.zoomSpanMl * pxPerMl) / 2;
+  const srcYCenter = sourceYFromVolume(ml);
+  const cropY = clamp(srcYCenter - cropHalf, 0, SRC_H - 2 * cropHalf);
+  const cropH = cropHalf * 2;
+  const cropX = 320;
+  const cropW = 360;
+
+  ctx.drawImage(srcEp, cropX, cropY, cropW, cropH, 0, 0, W, H);
+
+  const cLeft = ((SRC_TUBE_LEFT - cropX) / cropW) * W;
+  const cRight = ((SRC_TUBE_RIGHT - cropX) / cropW) * W;
+  const menYCanvas = ((srcYCenter - cropY) / cropH) * H;
+  const menWCanvas = cRight - cLeft;
+  const menHCanvas = menWCanvas * (MEN_SRC_H / MEN_SRC_W);
+
+  // Ménisque d'abord : graduations et chiffres resteront au premier plan
+  ctx.drawImage(srcMen, cLeft, menYCanvas - menHCanvas, menWCanvas, menHCanvas);
+
+  // Graduations et chiffres
+  const decimals = decimalsFromStep(config.tickStep);
+  const startValue = Math.ceil((clamp(ml - config.zoomSpanMl / 2 - config.tickStep, 0, 50)) / config.tickStep) * config.tickStep;
+  const endValue = clamp(ml + config.zoomSpanMl / 2 + config.tickStep, 0, 50);
+  const labelX = (cLeft + cRight) / 2;
+
+  for (let v = startValue; v <= endValue + 1e-9; v = Number((v + config.tickStep).toFixed(decimals + 2))) {
+    const value = Number(v.toFixed(decimals));
+    const srcYLine = sourceYFromVolume(value);
+    const yCanvas = ((srcYLine - cropY) / cropH) * H;
+    if (yCanvas < -4 || yCanvas > H + 4) continue;
+
+    const isLabel = Math.abs((value / config.labelStep) - Math.round(value / config.labelStep)) < 1e-9;
+    const isMajor = Math.abs((value / config.majorStep) - Math.round(value / config.majorStep)) < 1e-9;
+    const isMid = !isMajor && Math.abs((value / config.midStep) - Math.round(value / config.midStep)) < 1e-9;
+
+    let lineLenRatio;
+    let lineWidth;
+    if (isMajor) {
+      lineLenRatio = 0.36;
+      lineWidth = 5.6;
+    } else if (isMid) {
+      lineLenRatio = 0.28;
+      lineWidth = 4.3;
+    } else {
+      lineLenRatio = 0.20;
+      lineWidth = 3.0;
+    }
+
+    const lineLen = menWCanvas * lineLenRatio;
+    ctx.strokeStyle = 'rgba(15, 15, 18, 0.96)';
+    ctx.lineWidth = lineWidth;
+
+    ctx.beginPath();
+    ctx.moveTo(cLeft, yCanvas);
+    ctx.lineTo(cLeft + lineLen, yCanvas);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cRight, yCanvas);
+    ctx.lineTo(cRight - lineLen, yCanvas);
+    ctx.stroke();
+
+    if (isLabel) {
+      const label = String(Math.round(value)).replace('.', ',');
+      ctx.font = `800 ${config.fontSize}px Nunito, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.lineWidth = config.outline;
+      ctx.strokeStyle = 'rgba(255,255,255,0.98)';
+      ctx.fillStyle = 'rgba(20,20,24,0.98)';
+      ctx.strokeText(label, labelX, yCanvas);
+      ctx.fillText(label, labelX, yCanvas);
+    }
+  }
+}
+
+function showFeedback(message, ok) {
+  feedback.textContent = message;
+  feedback.className = 'feedback show ' + (ok ? 'correct' : 'wrong');
+}
+
+function updateScoreDisplay() {
+  document.getElementById('scoreOk').textContent = scoreOk;
+  document.getElementById('scoreTotal').textContent = scoreTotal;
+  
+}
+
+function checkAnswer() {
+  const raw = (studentAnswer.value || '').replace(',', '.');
+  const answer = Number(raw);
+
+  if (!Number.isFinite(answer)) {
+    showFeedback('Entre une valeur numérique.', false);
+    return;
+  }
+
+  const expected = clampVolume(currentVolume);
+  const tolerance = precision / 100;
+
+  scoreTotal += 1;
+  if (Math.abs(answer - expected) <= tolerance) {
+    scoreOk += 1;
+    showFeedback("🎉 Bravo ! C'est correct !", true);
+  } else {
+    showFeedback('❌ Ce n\'est pas la bonne valeur. Réponse attendue : ' + formatVolume(expected) + ' mL.', false);
+  }
+  updateScoreDisplay();
+}
+
+function randomPrecision() {
+  const steps = [1, 0.5, 0.2];
+  return steps[Math.floor(Math.random() * steps.length)];
+}
+
+function newQuestion() {
+  precision = randomPrecision();
+  syncInputSettings();
+
+  const raw = Math.random() * 50;
+  const next = clampVolume(raw);
+  volumeSlider.value = String(next);
+  studentAnswer.value = '';
+  feedback.className = 'feedback';
+  feedback.textContent = '';
+  updateMeniscus(next);
+}
+
+function setPrecision(step) {
+  precision = step;
+  syncInputSettings();
+
+  const adjusted = clampVolume(currentVolume);
+  volumeSlider.value = String(adjusted);
+  updateMeniscus(adjusted);
+}
+
+function volumeFromPointerY(clientY) {
+  const rect = tubeClickArea.getBoundingClientRect();
+  const localY = clamp(clientY - rect.top, 0, rect.height);
+  return volumeFromDisplayY(y50Disp() + localY);
+}
+
+volumeSlider.addEventListener('input', () => {
+  updateMeniscus(parseFloat(volumeSlider.value));
+});
+
+let dragging = false;
+
+tubeClickArea.addEventListener('mousedown', (e) => {
+  dragging = true;
+  const value = volumeFromPointerY(e.clientY);
+  volumeSlider.value = String(value);
+  updateMeniscus(value);
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!dragging) return;
+  const value = volumeFromPointerY(e.clientY);
+  volumeSlider.value = String(value);
+  updateMeniscus(value);
+});
+
+window.addEventListener('mouseup', () => {
+  dragging = false;
+});
+
+tubeClickArea.addEventListener('touchstart', (e) => {
+  dragging = true;
+  const value = volumeFromPointerY(e.touches[0].clientY);
+  volumeSlider.value = String(value);
+  updateMeniscus(value);
+  e.preventDefault();
+}, { passive: false });
+
+window.addEventListener('touchmove', (e) => {
+  if (!dragging) return;
+  const value = volumeFromPointerY(e.touches[0].clientY);
+  volumeSlider.value = String(value);
+  updateMeniscus(value);
+  e.preventDefault();
+}, { passive: false });
+
+window.addEventListener('touchend', () => {
+  dragging = false;
+});
+
+window.addEventListener('resize', () => {
+  applyTubeCalibration();
+  updateMeniscus(currentVolume);
+});
+
+function init() {
+  syncInputSettings();
+  applyTubeCalibration();
+  volumeSlider.value = String(currentVolume);
+  updateMeniscus(currentVolume);
+  updateScoreDisplay();
+}
+
+if (srcEp.complete && srcMen.complete) {
+  init();
+} else {
+  let loaded = 0;
+  const done = () => {
+    loaded += 1;
+    if (loaded >= 2) init();
+  };
+  srcEp.addEventListener('load', done);
+  srcMen.addEventListener('load', done);
+}
+</script>
+</body>
+</html>
