@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pictogrammes de danger</title>
+<style>
+:root {
+  --bg1:#fff8e8; --bg2:#eef7ff; --card:#ffffff; --ink:#223446; --muted:#607286; --line:#d6e1ed;
+  --blue:#3b82f6; --cyan:#06b6d4; --green:#22c55e; --red:#ef4444; --purple:#8b5cf6; --pink:#ec4899;
+  --shadow:0 16px 34px rgba(34,52,70,.12);
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif; color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(251,191,36,.18), transparent 18%),
+    radial-gradient(circle at 90% 0%, rgba(59,130,246,.16), transparent 18%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+}
+.container { max-width:1260px; margin:0 auto; padding:18px; }
+.hero, .panel {
+  background:rgba(255,255,255,.9); border:1px solid var(--line); border-radius:28px; box-shadow:var(--shadow);
+}
+.hero { padding:24px; }
+.panel { margin-top:18px; padding:22px; }
+h1 { margin:0 0 8px 0; font-size:clamp(2rem,4vw,3.2rem); }
+.hero p { margin:0; color:var(--muted); line-height:1.55; font-size:1.05rem; }
+.badges { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.badge { background:#fff; border:1px solid var(--line); border-radius:999px; padding:8px 14px; font-weight:900; }
+.main-nav, .challenge-nav { display:grid; gap:12px; margin-top:18px; }
+.main-nav { grid-template-columns:1fr 1fr; }
+.challenge-nav { grid-template-columns:repeat(4,1fr); margin-bottom:18px; }
+
+.main-btn, .challenge-btn, .btn {
+  border-radius:18px;
+  padding:13px 14px;
+  cursor:pointer;
+  font-weight:900;
+  font-size:.98rem;
+}
+
+.action-row{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.action-row .scorepill{
+  margin-left:auto;
+}
+
+.main-btn {
+  transition: all 0.2s ease;
+}
+
+/* État : cours affiché */
+.main-nav.cours-active .main-btn[data-view="cours"] {
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  color: white;
+  border: 2px solid transparent;
+}
+
+.main-nav.cours-active .main-btn[data-view="defis"] {
+  background: white;
+  color: var(--pink);
+  border: 2px solid var(--pink);
+}
+
+/* État : défis affichés */
+.main-nav.defis-active .main-btn[data-view="cours"] {
+  background: white;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+}
+
+.main-nav.defis-active .main-btn[data-view="defis"] {
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  color: white;
+  border: 2px solid transparent;
+}
+
+.challenge-btn, .btn {
+  border:0;
+  background:#eef4ff;
+  color:#164a8f;
+}
+
+.challenge-btn.active, .btn.primary {
+  background:linear-gradient(135deg, var(--purple), var(--pink));
+  color:white;
+}
+
+.view, .challenge-page { display:none; }
+.view.active, .challenge-page.active { display:block; }
+
+.challenge-page.active{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.section-title { margin:0 0 6px 0; font-size:1.75rem; }
+.section-sub { margin:0 0 18px 0; color:var(--muted); line-height:1.5; }
+.callouts {
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:16px;
+  margin-bottom:18px;
+}
+
+.callout {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px 18px;
+  margin-bottom:28px; /* espace ajouté avant la grille des pictogrammes */
+}
+.mini-list { display:grid; gap:10px; }
+.mini-item { background:#f9fcff; border:1px dashed #cddbeb; border-radius:16px; padding:10px 12px; font-weight:900; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:16px; }
+.card, .score-box, .dropcard, .sort-card {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:16px;
+}
+
+.exercise-box {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:16px;
+  margin-bottom:28px;
+}.picto-img { width:112px; height:112px; object-fit:contain; display:block; margin:0 auto 10px auto; }
+.picto-title { margin:0 0 8px 0; font-size:1.1rem; text-align:center; }
+.tag {
+  display:inline-block; width:100%; text-align:center; padding:8px 10px; border-radius:999px; font-weight:900; font-size:.86rem; margin-bottom:10px;
+}
+.tag.physique { background:#fff2c9; color:#996500; }
+.tag.sante { background:#fee2e2; color:#b91c1c; }
+.tag.environnement { background:#dcfce7; color:#15803d; }
+.tip { background:#f7fbff; border-left:5px solid var(--blue); padding:10px 12px; border-radius:14px; color:#28445c; font-size:.95rem; }
+.top-score { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }
+.score-box { text-align:center; }
+.score-box .big { font-size:1.5rem; font-weight:900; }
+.score-box .small { color:var(--muted); font-size:.92rem; }
+.scorebar { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px; }
+.scorepill { background:#eef6ff; color:#164a8f; border-radius:999px; padding:10px 16px; font-weight:900; }
+.question { font-size:1.18rem; font-weight:900; margin-bottom:14px; line-height:1.45; }
+.options { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; }
+.option {
+  border:2px solid #d7e1ed; background:#fff; border-radius:20px; padding:12px; cursor:pointer; font-weight:900; text-align:center;
+}
+.option.selected { border-color:#3b82f6; background:#eff6ff; }
+.option img { width:84px; height:84px; object-fit:contain; display:block; margin:0 auto 8px auto; }
+.option.good { border-color: var(--green); background:#f0fdf4; }
+.option.bad { border-color: var(--red); background:#fef2f2; }
+
+.feedback {
+  padding:12px 14px;
+  border-radius:22px;
+  font-weight:800;
+  display:none;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+}
+.feedback.show { display:block; }
+.feedback.ok { background:#f0fdf4; color:#166534; }
+.feedback.ko { background:#fef2f2; color:#b91c1c; }
+
+.bank { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+.chip { padding:10px 14px; background:#fff; border:2px solid #d7e1ed; border-radius:999px; cursor:grab; font-weight:900; }
+.dropgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px; }
+.dropzone {
+  min-height:62px; border:2px dashed #c6d7ea; border-radius:16px; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:10px; color:var(--muted); background:#fff;
+}
+.dropzone.filled { color:var(--ink); font-weight:900; }
+.dropzone.good { border-color: var(--green); background:#f0fdf4; }
+.dropzone.bad { border-color: var(--red); background:#fef2f2; }
+.photo-wrap { max-width:620px; margin:0 auto 14px auto; text-align:center; }
+.real-photo {
+  width:100%; max-height:420px; object-fit:contain; background:#f6f9fc; border:1px solid var(--line); border-radius:20px; padding:10px;
+}
+.photo-credit { margin-top:8px; color:var(--muted); font-size:.86rem; }
+.photo-fallback {
+  border:1px dashed #cbd5e1; border-radius:20px; padding:28px 16px; color:var(--muted); background:#f8fafc;
+}
+.sort-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; }
+.sort-card img { width:84px; height:84px; object-fit:contain; display:block; margin:0 auto 8px auto; }
+.sort-card select {
+  width:100%; border:2px solid #d7e1ed; border-radius:14px; padding:10px; font-weight:800; background:white;
+}
+.helper { color:var(--muted); font-size:.95rem; }
+@media (max-width: 980px) {
+  .callouts, .challenge-nav, .top-score { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <section class="hero">
+    <h1>🧪 Mission Pictogrammes</h1>
+    <div class="main-nav cours-active">
+      <button class="main-btn active" data-view="cours">📚 Reprendre le cours</button>
+      <button class="main-btn" data-view="defis">🎮 Défis interactifs</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div id="cours" class="view active">
+      <h2 class="section-title">Leçon sur les pictogrammes de danger</h2>
+      <br>
+      <p class="section-sub">
+        Un <strong>pictogramme</strong> permet d'identifier rapidement quel est le
+        <strong>danger</strong> et les <strong>précautions</strong> qu'il est nécessaire
+        de prendre lors du stockage ou lors de l'utilisation de produits chimiques.
+      </p>
+
+      <div class="callout">
+        <div class="mini-list">
+          <div>Il existe plusieurs classes de dangers :</div>
+          <div class="mini-item">⚡ <u>Dangers physiques</u> : explosif, inflammable, comburant, gaz sous pression</div>
+          <div class="mini-item">🩺 <u>Dangers pour la santé</u> : corrosif, toxique, fort danger pour la santé, nocif / irritant</div>
+          <div class="mini-item">🌿 <u>Danger pour l'environnement</u> : polluant</div>
+        </div>
+      </div>
+
+      <div class="grid" id="courseGrid"></div>
+    </div>
+
+    <div id="defis" class="view">
+      <h2 class="section-title">Défis interactifs</h2>
+      <h3>Tu peux changer de défi quand tu le souhaites. Les questions reviennent en boucle seulement après avoir parcouru toute la banque.</h3>
+
+      <div class="challenge-nav">
+        <button class="challenge-btn active" data-page="page-qcm">Défi 1<br>Reconnaître les <br> pictogrammes</button>
+        <button class="challenge-btn" data-page="page-match">Défi 2<br>Faire les <br>bonnes associations</button>
+        <button class="challenge-btn" data-page="page-photo">Défi 3<br>Dangers de <br>produits chimiques</button>
+        <button class="challenge-btn" data-page="page-sort">Défi 4<br>Classes de <br>dangers</button>
+      </div>
+
+      <div id="page-qcm" class="challenge-page active">
+        <div class="exercise-box">
+          <div class="question" id="qcmQuestion"></div>
+          <div class="options" id="qcmOptions"></div>
+          <div class="action-row">
+            <button class="btn" id="qcmNext">Question suivante</button>
+            <div class="scorepill" id="qcmScore">0 / 0</div>
+          </div>
+        </div>
+        <div class="feedback" id="qcmFeedback"></div>
+      </div>
+
+      <div id="page-match" class="challenge-page">
+        <div class="exercise-box">
+          <div class="scorebar">
+            <h3>Associe le nom au bon pictogramme</h3>
+          </div>
+          <div class="bank" id="labelBank"></div>
+          <div class="dropgrid" id="matchGrid"></div>
+          <div class="action-row">
+            <button class="btn primary" id="checkMatch">Vérifier</button>
+            <button class="btn" id="newMatchRound">Nouvelle série</button>
+            <div class="scorepill" id="matchScore">0 / 0</div>
+          </div>
+        </div>
+        <div class="feedback" id="matchFeedback"></div>
+      </div>
+
+      <div id="page-photo" class="challenge-page">
+        <div class="exercise-box">
+          <div class="photo-wrap" id="photoWrap"></div>
+          <div class="question" id="photoQuestion"></div>
+          <div class="options" id="photoOptions"></div>
+          <div class="action-row">
+            <button class="btn primary" id="checkPhoto">Vérifier</button>
+            <button class="btn" id="photoNext">Question suivante</button>
+            <div class="scorepill" id="photoScore">0 / 0</div>
+          </div>
+        </div>
+        <div class="feedback" id="photoFeedback"></div>
+      </div>
+
+      <div id="page-sort" class="challenge-page">
+        <div class="exercise-box">
+          <h3>Pour chaque pictogramme, choisis la bonne famille : <br>   -  Danger physique <br>   -  Danger pour la santé<br>   -  Danger pour l'environnement</h3>
+          <div class="sort-grid" id="sortGrid"></div>
+          <div class="action-row">
+            <button class="btn primary" id="checkSort">Vérifier</button>
+            <button class="btn" id="newSortRound">Nouvelle série</button>
+            <div class="scorepill" id="sortScore">0 / 0</div>
+          </div>
+        </div>
+        <div class="feedback" id="sortFeedback"></div>
+      </div>
+
+      <div class="top-score">
+        <div class="score-box"><div class="big" id="globalGood">0</div><div class="small">bonnes réponses</div></div>
+        <div class="score-box"><div class="big" id="globalTotal">0</div><div class="small">questions jouées</div></div>
+        <div class="score-box"><div class="big" id="globalPercent">0%</div><div class="small">réussite globale</div></div>
+        <div class="score-box"><div class="big" id="globalStars">☆ ☆ ☆</div><div class="small">niveau</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const pictos = [{"id": "inflammable", "name": "Inflammable", "category": "physique", "categoryLabel": "Danger physique", "short": "Peut s'enflammer au contact d'une flamme, d'une étincelle ou sous l'effet de la chaleur.", "tip": "On éloigne ce produit des flammes et des sources de chaleur.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-inflammable.jpg"}, {"id": "explosif", "name": "Explosif", "category": "physique", "categoryLabel": "Danger physique", "short": "Peut exploser sous l'effet d'une flamme, d'un choc, de frottements, d'une étincelle ou de la chaleur.", "tip": "On évite les chocs, les frottements et la chaleur.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-explosion.jpg"}, {"id": "comburant", "name": "Comburant", "category": "physique", "categoryLabel": "Danger physique", "short": "Peut provoquer ou aggraver un incendie.", "tip": "Un produit comburant aide un feu à se développer.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-comburant.jpg"}, {"id": "gaz", "name": "Gaz sous pression", "category": "physique", "categoryLabel": "Danger physique", "short": "Gaz comprimé, liquéfié ou dissous sous pression.", "tip": "On évite les chocs et la chaleur.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-gaz-sous-pression.jpg"}, {"id": "corrosif", "name": "Corrosif", "category": "sante", "categoryLabel": "Danger pour la santé", "short": "Attaque et ronge les métaux ainsi que les matières organiques : la peau, les yeux...", "tip": "Gants, lunettes et même blouses sont indispensables.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-corrosif.jpg"}, {"id": "toxique", "name": "Toxique / mortel", "category": "sante", "categoryLabel": "Danger pour la santé", "short": "Empoisonne rapidement, même à faible dose. Peut entraîner la mort.", "tip": "On ne sent pas, on ne goûte pas, on ne touche absolument pas !", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-toxique.jpg"}, {"id": "danger_sante", "name": "Fort danger pour la santé", "category": "sante", "categoryLabel": "Danger pour la santé", "short": "Peut être cancérigène, mutagène, toxique pour la reproduction ou provoquer de graves effets sur les poumons à long terme.", "tip": "Le danger peut être grave même s'il n'est pas immédiat.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-CMR.jpg"}, {"id": "nocif", "name": "Nocif / irritant", "category": "sante", "categoryLabel": "Danger pour la santé", "short": "Peut être irritant, provoquer des allergies cutanées ou être nocif à forte dose.", "tip": "On lit l'étiquette avant d'utiliser le produit.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-point-dexclamation.jpg"}, {"id": "polluant", "name": "Polluant pour l'environnement", "category": "environnement", "categoryLabel": "Danger pour l'environnement", "short": "Provoque des effets néfastes sur les organismes du milieu aquatique.", "tip": "On ne jette jamais ce produit dans l'évier ou dans la nature.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-environnement.jpg"}];
+
+const productQuestions = [{"product": "Nettoyant déboucheur", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/D%C3%A9boucheur%20%C3%A9vier.jpg", "hazard": ["corrosif","polluant"], "credit": "Perso"}, {"product": "Adoucissant pour lave-vaisselle", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Adoucissant%20-%20Lave%20vaisselle.png", "hazard": ["nocif"], "credit": "Perso"}, {"product": "Acide formique", "image": "https://raw.githubusercontent.com/Nabo33/Images/48999dc7448cc71d93649bd396ba7c18cd46ebaa/Acide%20formique.png", "hazard": ["corrosif", "inflammable", "toxique"], "credit": "Perso"}, {"product": "Bouteille de dioxygène", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Bouteille%20de%20dioxyg%C3%A8ne.jpg", "hazard": ["inflammable", "gaz"], "credit": "Perso"}, {"product": "Mélange de métaux", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Cobalt%2C%20Carbure%2C%20Tungstene.jpg", "hazard": ["toxique", "danger_sante", "polluant"], "credit": "Perso"}, {"product": "Produit inconnu", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Liquide%20inconnu.jpg", "hazard": ["inflammable", "toxique", "danger_sante"], "credit": "Perso"}, {"product": "Anti-calcaire", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Pictogramme%20-%20Anti-calcaire.jpg", "hazard": ["corrosif"], "credit": "Perso"}, {"product": "Javel", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Pictogramme%20-%20Javel.jpg", "hazard": ["corrosif", "polluant"], "credit": "Perso"}, {"product": "Liquide vaisselle", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Pictogramme%20-%20Liquide%20vaisselle.jpg", "hazard": ["nocif"], "credit": "Perso"}, {"product": "Produit japonais", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Produit%20inconnu%20japonais.jpg", "hazard": ["corrosif", "inflammable"], "credit": "Perso"}];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function makeQueue(items) {
+  let queue = [];
+  let lastItem = null;
+
+  return {
+    next() {
+      if (queue.length === 0) {
+        queue = shuffle(items);
+        if (queue.length > 1 && queue[queue.length - 1] === lastItem) {
+          const i = Math.floor(Math.random() * (queue.length - 1));
+          [queue[i], queue[queue.length - 1]] = [queue[queue.length - 1], queue[i]];
+        }
+      }
+      const item = queue.pop();
+      lastItem = item;
+      return item;
+    }
+  };
+}
+
+const scores = {globalGood:0, globalTotal:0, qcmGood:0, qcmTotal:0, photoGood:0, photoTotal:0, matchGood:0, matchTotal:0, sortGood:0, sortTotal:0};
+function addResult(key, ok) {
+  scores.globalTotal++;
+  if (ok) scores.globalGood++;
+  scores[key + 'Total']++;
+  if (ok) scores[key + 'Good']++;
+  renderScores();
+}
+function pct(a,b) { return b ? Math.round((a/b)*100) : 0; }
+function renderScores() {
+  document.getElementById('globalGood').textContent = scores.globalGood;
+  document.getElementById('globalTotal').textContent = scores.globalTotal;
+  document.getElementById('globalPercent').textContent = pct(scores.globalGood, scores.globalTotal) + '%';
+  const rate = pct(scores.globalGood, scores.globalTotal);
+  document.getElementById('globalStars').textContent = rate >= 85 ? '★ ★ ★' : rate >= 60 ? '★ ★ ☆' : rate > 0 ? '★ ☆ ☆' : '☆ ☆ ☆';
+  document.getElementById('qcmScore').textContent = `${scores.qcmGood} / ${scores.qcmTotal}`;
+  document.getElementById('photoScore').textContent = `${scores.photoGood} / ${scores.photoTotal}`;
+  document.getElementById('matchScore').textContent = `${scores.matchGood} / ${scores.matchTotal}`;
+  document.getElementById('sortScore').textContent = `${scores.sortGood} / ${scores.sortTotal}`;
+}
+
+const mainNav = document.querySelector(".main-nav");
+
+document.querySelectorAll(".main-btn").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll(".main-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.view).classList.add("active");
+
+  if (btn.dataset.view === "cours") {
+    mainNav.classList.remove("defis-active");
+    mainNav.classList.add("cours-active");
+  } else {
+    mainNav.classList.remove("cours-active");
+    mainNav.classList.add("defis-active");
+  }
+}));
+
+document.querySelectorAll('.challenge-btn').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.challenge-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.challenge-page').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(btn.dataset.page).classList.add('active');
+}));
+
+const courseGrid = document.getElementById('courseGrid');
+pictos.forEach(p => {
+  const el = document.createElement('article');
+  el.className = 'card';
+  el.innerHTML = `
+    <img class="picto-img" src="${p.img}" alt="${p.name}">
+    <h3 class="picto-title">${p.name}</h3>
+    <div class="tag ${p.category}">${p.categoryLabel}</div>
+    <p>${p.short}</p>
+    <div class="tip">💡 ${p.tip}</div>
+  `;
+  courseGrid.appendChild(el);
+});
+
+// Défi 1
+const qcmQueue = makeQueue(pictos.map(p => p.id));
+let currentQcm = null;
+let previousQcmId = null;
+let qcmAnswered = false;
+
+function nextQcm() {
+  let nextId = qcmQueue.next();
+  while (nextId === previousQcmId && pictos.length > 1) {
+    nextId = qcmQueue.next();
+  }
+
+  currentQcm = pictos.find(p => p.id === nextId);
+  previousQcmId = nextId;
+  qcmAnswered = false;
+
+  const options = shuffle([
+    currentQcm,
+    ...shuffle(pictos.filter(p => p.id !== currentQcm.id)).slice(0, 3)
+  ]);
+
+  const question = document.getElementById("qcmQuestion");
+  const box = document.getElementById("qcmOptions");
+  const fb = document.getElementById("qcmFeedback");
+
+  question.textContent = `Quel pictogramme correspond à : "${currentQcm.name}" ?`;
+  box.innerHTML = "";
+  fb.textContent = "";
+  fb.className = "feedback";
+
+  options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "option";
+    btn.innerHTML = `<img src="${opt.img}" alt="${opt.name}">`;
+
+    btn.addEventListener("click", () => {
+      if (qcmAnswered) return;
+      qcmAnswered = true;
+
+      const ok = opt.id === currentQcm.id;
+
+      [...box.children].forEach(child => {
+        const childImg = child.querySelector("img");
+        if (childImg && childImg.alt === currentQcm.name) {
+          child.classList.add("good");
+        }
+      });
+
+      if (!ok) btn.classList.add("bad");
+
+      if (ok) {
+        fb.innerHTML = "Bravo ! Bonne réponse.";
+        fb.className = "feedback show ok";
+      } else {
+        fb.innerHTML = `
+          <div>Ce n'est pas correct. La bonne réponse pour <strong>${currentQcm.name}</strong> est :</div>
+          <div style="margin-top:10px; text-align:center;">
+            <img src="${currentQcm.img}" alt="${currentQcm.name}" style="width:70px; height:70px; object-fit:contain;">
+          </div>
+        `;
+        fb.className = "feedback show ko";
+      }
+
+      addResult("qcm", ok);
+    });
+
+    box.appendChild(btn);
+  });
+}
+document.getElementById("qcmNext").onclick = nextQcm;
+
+// Défi 3
+const photoQueue = makeQueue(productQuestions.map((_, i) => i));
+let currentPhoto = null;
+let photoAnswered = false;
+let selectedPhotoAnswers = [];
+let currentPhotoCorrectNames = [];
+
+function nextPhoto() {
+  currentPhoto = productQuestions[photoQueue.next()];
+  photoAnswered = false;
+  selectedPhotoAnswers = [];
+
+  const correctPictos = pictos.filter(p => currentPhoto.hazard.includes(p.id));
+  if (!correctPictos.length) {
+    console.error("Aucun pictogramme trouvé pour hazard =", currentPhoto.hazard);
+    return;
+  }
+
+  currentPhotoCorrectNames = correctPictos.map(p => p.name);
+
+  const wrongAnswers = shuffle(
+    pictos.filter(p => !currentPhoto.hazard.includes(p.id)).map(p => p.name)
+  ).slice(0, Math.max(3, 5 - currentPhotoCorrectNames.length));
+
+  const options = shuffle([...currentPhotoCorrectNames, ...wrongAnswers]);
+
+  const wrap = document.getElementById("photoWrap");
+  const question = document.getElementById("photoQuestion");
+  const box = document.getElementById("photoOptions");
+  const fb = document.getElementById("photoFeedback");
+
+  wrap.innerHTML = `
+    <img class="real-photo" src="${currentPhoto.image}" alt="${currentPhoto.product}"
+         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div class="photo-fallback" style="display:none;">
+      L'image internet n'a pas pu être chargée sur cet appareil.
+    </div>
+    <div class="photo-credit">Photo : ${currentPhoto.credit}</div>
+  `;
+
+  question.textContent =
+    currentPhotoCorrectNames.length === 1
+      ? `Quel est le nom du pictogramme visible sur ce produit : "${currentPhoto.product}" ?`
+      : `Quels sont les noms des pictogrammes visibles sur ce produit : "${currentPhoto.product}" ?`;
+
+  box.innerHTML = "";
+  fb.textContent = "";
+  fb.className = "feedback";
+
+  options.forEach(name => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "option";
+    btn.textContent = name;
+
+    btn.addEventListener("click", () => {
+      if (photoAnswered) return;
+
+      btn.classList.toggle("selected");
+
+      if (selectedPhotoAnswers.includes(name)) {
+        selectedPhotoAnswers = selectedPhotoAnswers.filter(n => n !== name);
+      } else {
+        selectedPhotoAnswers.push(name);
+      }
+    });
+
+    box.appendChild(btn);
+  });
+}
+
+function checkPhotoAnswer() {
+  if (photoAnswered || !currentPhoto) return;
+
+  const fb = document.getElementById("photoFeedback");
+  const box = document.getElementById("photoOptions");
+  const optionButtons = [...box.children];
+  const expectedCount = currentPhotoCorrectNames.length;
+
+  if (selectedPhotoAnswers.length < expectedCount) {
+    fb.textContent = `Il y a ${expectedCount} pictogramme(s), donc ${expectedCount} réponse(s) à donner.`;
+    fb.className = "feedback show ko";
+    return;
+  }
+
+  photoAnswered = true;
+
+  const selectedSorted = [...selectedPhotoAnswers].sort();
+  const correctSorted = [...currentPhotoCorrectNames].sort();
+
+  const ok =
+    selectedSorted.length === correctSorted.length &&
+    selectedSorted.every((val, i) => val === correctSorted[i]);
+
+  optionButtons.forEach(btn => {
+    const name = btn.textContent;
+
+    if (currentPhotoCorrectNames.includes(name)) {
+      btn.classList.add("good");
+    } else if (selectedPhotoAnswers.includes(name)) {
+      btn.classList.add("bad");
+    }
+
+    btn.disabled = true;
+  });
+
+  if (ok) {
+    fb.textContent = "Bravo ! Tu as trouvé tous les bons noms de pictogrammes.";
+    fb.className = "feedback show ok";
+  } else {
+    fb.textContent = `Ce n'est pas correct. Les bonnes réponses étaient : ${currentPhotoCorrectNames.join(", ")}.`;
+    fb.className = "feedback show ko";
+  }
+
+  addResult("photo", ok);
+}
+document.getElementById("checkPhoto").onclick = checkPhotoAnswer;
+document.getElementById("photoNext").onclick = nextPhoto;
+
+// Défi 2
+const matchQueue = makeQueue(pictos.map(p => p.id));
+function initMatchRound() {
+  const subset = [];
+  while (subset.length < 6) {
+    const id = matchQueue.next();
+    const p = pictos.find(x => x.id === id);
+    if (!subset.find(x => x.id === p.id)) subset.push(p);
+  }
+
+  const bank = document.getElementById('labelBank');
+  const grid = document.getElementById('matchGrid');
+  bank.innerHTML = '';
+  grid.innerHTML = '';
+  document.getElementById('matchFeedback').className = 'feedback';
+  document.getElementById('matchFeedback').textContent = '';
+
+  shuffle(subset).forEach(p => {
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.draggable = true;
+    chip.dataset.value = p.name;
+    chip.textContent = p.name;
+    chip.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', p.name));
+    bank.appendChild(chip);
+  });
+
+  subset.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'dropcard';
+    card.innerHTML = `<img class="picto-img" src="${p.img}" alt="${p.name}" style="width:90px;height:90px;"><div class="dropzone" data-answer="${p.name}">Dépose ici le bon nom</div>`;
+    const zone = card.querySelector('.dropzone');
+    zone.addEventListener('dragover', e => e.preventDefault());
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      const value = e.dataTransfer.getData('text/plain');
+      zone.textContent = value;
+      zone.dataset.value = value;
+      zone.classList.add('filled');
+    });
+    grid.appendChild(card);
+  });
+}
+document.getElementById('newMatchRound').addEventListener('click', initMatchRound);
+document.getElementById('checkMatch').addEventListener('click', () => {
+  const zones = [...document.querySelectorAll('#matchGrid .dropzone')];
+  let good = 0;
+  zones.forEach(z => {
+    z.classList.remove('good','bad');
+    if (z.dataset.value === z.dataset.answer) {
+      z.classList.add('good');
+      good++;
+    } else {
+      z.classList.add('bad');
+    }
+  });
+  const ok = good === zones.length;
+  const fb = document.getElementById('matchFeedback');
+  fb.textContent = ok ? "Parfait ! Toute la série est correcte." : `Tu as trouvé ${good} bonne(s) réponse(s) sur ${zones.length}.`;
+  fb.className = 'feedback show ' + (ok ? 'ok' : 'ko');
+  addResult('match', ok);
+});
+
+// Défi 4
+const sortQueue = makeQueue(pictos.map(p => p.id));
+function initSortRound() {
+  const subset = [];
+  while (subset.length < 6) {
+    const id = sortQueue.next();
+    const p = pictos.find(x => x.id === id);
+    if (!subset.find(x => x.id === p.id)) subset.push(p);
+  }
+
+  const grid = document.getElementById('sortGrid');
+  grid.innerHTML = '';
+  document.getElementById('sortFeedback').className = 'feedback';
+  document.getElementById('sortFeedback').textContent = '';
+
+  subset.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'sort-card';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <div style="font-weight:900; text-align:center; margin-bottom:10px;">${p.name}</div>
+      <select data-answer="${p.category}">
+        <option value="">Choisir une catégorie</option>
+        <option value="physique">Danger physique</option>
+        <option value="sante">Danger pour la santé</option>
+        <option value="environnement">Danger pour l'environnement</option>
+      </select>
+    `;
+    grid.appendChild(card);
+  });
+}
+document.getElementById('newSortRound').addEventListener('click', initSortRound);
+document.getElementById('checkSort').addEventListener('click', () => {
+  const selects = [...document.querySelectorAll('#sortGrid select')];
+  let good = 0;
+  selects.forEach(sel => {
+    sel.style.borderColor = '#d7e1ed';
+    if (sel.value === sel.dataset.answer) {
+      sel.style.borderColor = '#22c55e';
+      good++;
+    } else {
+      sel.style.borderColor = '#ef4444';
+    }
+  });
+  const ok = good === selects.length;
+  const fb = document.getElementById('sortFeedback');
+  fb.textContent = ok ? "Excellent ! Toute la série est bien classée." : `Tu as correctement classé ${good} pictogramme(s) sur ${selects.length}.`;
+  fb.className = 'feedback show ' + (ok ? 'ok' : 'ko');
+  addResult('sort', ok);
+});
+
+renderScores();
+nextQcm();
+nextPhoto();
+initMatchRound();
+initSortRound();
+</script>
+</body>
+</html>

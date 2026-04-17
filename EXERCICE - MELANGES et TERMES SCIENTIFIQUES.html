@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Mélanges – Exercices 6ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f7ff;
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --secondary: #7c3aed;
+    --accent: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 4px 24px rgba(37,99,235,0.10);
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background bubbles */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -80px; left: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, #bfdbfe 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: floatA 8s ease-in-out infinite alternate;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -80px; right: -80px;
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, #ede9fe 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: floatB 10s ease-in-out infinite alternate;
+  }
+  @keyframes floatA { from{transform:translate(0,0)} to{transform:translate(40px,30px)} }
+  @keyframes floatB { from{transform:translate(0,0)} to{transform:translate(-30px,-40px)} }
+
+  /* === HEADER === */
+  header {
+    position: relative; z-index: 10;
+    background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
+    color: white;
+    padding: 28px 24px 22px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.3);
+  }
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  header p {
+    font-size: 1rem;
+    opacity: 0.88;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* === SCORE BAR === */
+  #scorebar {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--border);
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+  .score-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--primary-light);
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--primary);
+  }
+  .score-pill .emoji { font-size: 1.3rem; }
+  #progress-bar-wrap {
+    flex: 1; min-width: 120px; max-width: 260px;
+    height: 10px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  #progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(.4,2,.6,1);
+    width: 0%;
+  }
+
+  /* === MENU === */
+  #menu {
+    position: relative; z-index: 5;
+    max-width: 860px;
+    margin: 40px auto 24px;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+  }
+  .menu-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 26px 20px;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 2px solid transparent;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    text-align: center;
+  }
+  .menu-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(37,99,235,0.18);
+    border-color: var(--primary);
+  }
+  .menu-card .icon { font-size: 2.5rem; }
+  .menu-card h3 { font-family: 'Fredoka One', cursive; font-size: 1.15rem; color: var(--primary); }
+  .menu-card p { font-size: 0.85rem; color: var(--text-muted); }
+  .menu-card .badge {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+  }
+
+  /* === GAME CONTAINER === */
+  #game-area {
+    position: relative; z-index: 5;
+    max-width: 760px;
+    margin: 0 auto 40px;
+    padding: 0 18px;
+    display: none;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 30px 28px;
+    animation: slideIn 0.35s cubic-bezier(.4,2,.6,1);
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+
+  .question-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px;
+  }
+  .q-type-badge {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 4px 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .q-counter { color: var(--text-muted); font-size: 0.9rem; font-weight: 700; }
+
+  .question-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.55;
+    margin-bottom: 22px;
+    color: var(--text);
+  }
+
+  /* Highlighted word in question */
+  .highlight {
+    background: #fef3c7;
+    border-radius: 6px;
+    padding: 2px 6px;
+    color: #92400e;
+    font-weight: 800;
+  }
+
+  /* === CHOICES === */
+  .choices { display: flex; flex-direction: column; gap: 12px; }
+  .choice-btn {
+    background: #f8fafc;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+    transform: translateX(4px);
+  }
+  .choice-btn.correct {
+    border-color: var(--success);
+    background: #d1fae5;
+    color: #065f46;
+    animation: popIn 0.3s cubic-bezier(.4,2,.6,1);
+  }
+  .choice-btn.wrong {
+    border-color: var(--danger);
+    background: #fee2e2;
+    color: #991b1b;
+    animation: shake 0.4s;
+  }
+  @keyframes popIn { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-6px)}
+    40%{transform:translateX(6px)}
+    60%{transform:translateX(-4px)}
+    80%{transform:translateX(4px)}
+  }
+
+  /* === DRAG & DROP === */
+  .drag-zone {
+    min-height: 54px;
+    border: 2.5px dashed var(--primary);
+    border-radius: 12px;
+    background: var(--primary-light);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: var(--primary);
+    font-size: 1rem;
+    padding: 10px;
+    transition: background 0.2s;
+    flex-wrap: wrap; gap: 8px;
+  }
+  .drag-zone.drag-over { background: #bfdbfe; }
+  .drag-zone.filled { background: #d1fae5; border-color: var(--success); color: #065f46; }
+
+  .draggable-word {
+    display: inline-flex;
+    align-items: center;
+    background: white;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    padding: 6px 14px;
+    margin: 4px;
+    cursor: grab;
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.95rem;
+    transition: transform 0.1s, box-shadow 0.1s;
+    user-select: none;
+  }
+  .draggable-word:hover { transform: scale(1.06); box-shadow: 0 2px 10px rgba(37,99,235,0.2); }
+  .draggable-word.dragging { opacity: 0.4; }
+
+  /* === FILL IN === */
+  .fill-container {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 2.2;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 4px;
+  }
+  .fill-blank {
+    display: inline-block;
+    border-bottom: 3px solid var(--primary);
+    min-width: 120px;
+    padding: 2px 8px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--primary);
+    font-weight: 800;
+  }
+  .fill-blank.answered { border-style: solid; border-radius: 6px; }
+  .fill-blank.fill-correct { background: #d1fae5; color: #065f46; border-color: var(--success); }
+  .fill-blank.fill-wrong { background: #fee2e2; color: #991b1b; border-color: var(--danger); }
+
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 18px;
+    padding: 14px;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 2px dashed var(--border);
+  }
+  .word-chip {
+    background: white;
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-weight: 700;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.15s;
+  }
+  .word-chip:hover { background: var(--primary); color: white; }
+  .word-chip.used { opacity: 0.35; pointer-events: none; }
+
+  /* === BEAKER ANIMATION === */
+  .beaker-scene {
+    display: flex; gap: 24px; align-items: flex-end; justify-content: center;
+    margin: 18px 0;
+    flex-wrap: wrap;
+  }
+  .beaker-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .beaker-label { font-weight: 700; font-size: 0.85rem; color: var(--text-muted); }
+  .beaker {
+    width: 70px; height: 90px;
+    border: 3px solid #94a3b8;
+    border-top: none;
+    border-radius: 0 0 18px 18px;
+    position: relative;
+    overflow: hidden;
+    background: white;
+    box-shadow: inset 0 -4px 10px rgba(0,0,0,0.06);
+  }
+  .beaker-liquid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  transition: height 0.6s cubic-bezier(.4,2,.6,1);
+}
+  .beaker-arrow { font-size: 1.8rem; color: var(--primary); align-self: center; }
+
+.beaker-solids {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.beaker-solids.balls {
+  border-radius: 0 0 15px 15px;
+  background-color: var(--solid-color, #a16207);
+  background-image:
+    radial-gradient(circle at 10px 10px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 28px 12px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 46px 10px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 18px 26px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 36px 28px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 56px 24px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 8px 40px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 26px 42px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 46px 40px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 18px 56px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 38px 58px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px),
+    radial-gradient(circle at 56px 54px, rgba(255,255,255,0.18) 0 3px, transparent 3.2px);
+  background-size: 64px 64px;
+}
+
+  /* === FEEDBACK === */
+  .feedback {
+    margin-top: 18px;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-weight: 700;
+    display: none;
+    animation: slideIn 0.2s;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok { background: #d1fae5; color: #065f46; border: 2px solid #6ee7b7; }
+  .feedback.ko { background: #fee2e2; color: #991b1b; border: 2px solid #fca5a5; }
+
+  /* === BUTTONS === */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 28px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,99,235,0.35); }
+  .btn:active { transform: scale(0.97); }
+  .btn.secondary {
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    box-shadow: none;
+  }
+
+  /* === RESULTS === */
+  #results {
+    display: none;
+    position: relative; z-index: 5;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    padding: 0 18px;
+    text-align: center;
+  }
+  .result-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px 32px;
+    animation: slideIn 0.4s;
+  }
+  .result-emoji { font-size: 4rem; display: block; margin-bottom: 12px; }
+  .result-score {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5rem;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .result-msg { font-size: 1.15rem; font-weight: 700; margin: 12px 0 8px; }
+  .result-detail { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px; }
+
+  .stars { font-size: 2rem; letter-spacing: 6px; margin: 10px 0; }
+
+  /* Confetti canvas */
+  #confetti-canvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 100;
+  }
+
+  /* Back button */
+  #back-btn {
+    position: relative; z-index: 10;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: none;
+    margin: 18px auto 0;
+    transition: border-color 0.15s;
+    color: var(--text-muted);
+  }
+  #back-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+  /* Sentence builder */
+  .sentence-build {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    min-height: 52px;
+    border: 2px dashed var(--border);
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  }
+  .sent-chip {
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .sent-chip:hover { transform: scale(1.05); background: var(--secondary); }
+
+  /* responsive tweaks */
+  @media(max-width: 500px) {
+    .card { padding: 22px 16px; }
+    .question-text { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<header>
+  <h1>🧪 Les Mélanges</h1>
+  <p>Exercices interactifs · Sciences 6ème</p>
+</header>
+
+<div id="scorebar">
+  <div class="score-pill"><span class="emoji">✅</span> <span id="score-correct">0</span> correctes</div>
+  <div id="progress-bar-wrap"><div id="progress-bar-fill"></div></div>
+  <div class="score-pill"><span class="emoji">🔢</span> <span id="score-total">0</span> réponses</div>
+</div>
+
+<button id="back-btn" onclick="showMenu()">← Choisir un autre exercice</button>
+
+<!-- MENU -->
+<div id="menu">
+  <div class="menu-card" onclick="startGame('classify')">
+    <div class="icon">🔬</div>
+    <h3>Classer les mélanges</h3>
+    <p>Homogène ou hétérogène ? Identifie le bon type.</p>
+    <span class="badge">QCM • Infini</span>
+  </div>
+  <div class="menu-card" onclick="startGame('vocab')">
+    <div class="icon">📝</div>
+    <h3>Vocabulaire scientifique</h3>
+    <p>Miscible, soluble, insoluble… Les bons mots !</p>
+    <span class="badge">QCM • Infini</span>
+  </div>
+  <div class="menu-card" onclick="startGame('fillin')">
+    <div class="icon">✏️</div>
+    <h3>Compléter les phrases</h3>
+    <p>Choisis le bon mot pour compléter la phrase scientifique.</p>
+    <span class="badge">Lacunes • Infini</span>
+  </div>
+  <div class="menu-card" onclick="startGame('sentence')">
+    <div class="icon">🧩</div>
+    <h3>Construire une phrase</h3>
+    <p>Remets les mots dans l'ordre pour former une phrase correcte.</p>
+    <span class="badge">Ordre • Infini</span>
+  </div>
+  <div class="menu-card" onclick="startGame('beaker')">
+    <div class="icon">⚗️</div>
+    <h3>Identifier le résultat</h3>
+    <p>Observe le bécher et dis ce qui s'est passé.</p>
+    <span class="badge">Visuel • Infini</span>
+  </div>
+  <div class="menu-card" onclick="startGame('truefalse')">
+    <div class="icon">💡</div>
+    <h3>Vrai ou Faux ?</h3>
+    <p>Évalue des affirmations scientifiques.</p>
+    <span class="badge">V/F • Infini</span>
+  </div>
+</div>
+
+<!-- GAME AREA -->
+<div id="game-area">
+  <div class="card" id="q-card">
+    <div class="question-header">
+      <span class="q-type-badge" id="q-type-badge">Type</span>
+      <span class="q-counter" id="q-counter">Question 1</span>
+    </div>
+    <div class="question-text" id="q-text"></div>
+    <div id="q-content"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn" id="next-btn" onclick="nextQuestion()" style="display:none">Suivant →</button>
+  </div>
+</div>
+
+<!-- RESULTS (unused in infinite mode, but shown per-session) -->
+<div id="results">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🎉</span>
+    <div class="stars" id="res-stars"></div>
+    <div class="result-score" id="res-score"></div>
+    <div class="result-msg" id="res-msg"></div>
+    <div class="result-detail" id="res-detail"></div>
+    <button class="btn" onclick="showMenu()">🏠 Menu principal</button>
+    <button class="btn secondary" onclick="restartGame()" style="margin-left:8px">🔄 Rejouer</button>
+  </div>
+</div>
+
+<script>
+// ========================
+//  DATA
+// ========================
+
+const EXAMPLES_HOMOGENE = [
+  { name: "Eau sucrée", desc: "eau + sucre dissous" },
+  { name: "Eau salée", desc: "eau + sel dissous" },
+  { name: "Limonade", desc: "eau + jus de citron + sucre dissous" },
+  { name: "Menthe à l'eau", desc: "eau + sirop de menthe" },
+  { name: "Eau de mer", desc: "eau + sels minéraux dissous" },
+  { name: "Vinaigre", desc: "eau + acide acétique" },
+  { name: "Café filtré", desc: "eau + café dissous" },
+  { name: "Lait entier", desc: "eau + matières grasses émulsifiées" },
+  { name: "Eau de Javel", desc: "eau + hypochlorite dissous" },
+];
+
+const EXAMPLES_HETEROGENE = [
+  { name: "Eau et huile", desc: "deux liquides non-miscibles" },
+  { name: "Jus d'orange avec pulpe", desc: "liquide + morceaux de pulpe visibles" },
+  { name: "Eau du lac Neyton", desc: "eau + algues + particules visibles" },
+  { name: "Eau boueuse", desc: "eau + argile non dissoute" },
+  { name: "Sable dans l'eau", desc: "solide insoluble dans l'eau" },
+  { name: "Eau et farine", desc: "eau + particules de farine en suspension" },
+  { name: "Vinaigrette", desc: "huile + vinaigre séparés" },
+  { name: "Granité", desc: "eau + glace visible" },
+  { name: "Craie dans l'eau", desc: "poudre de craie insoluble" },
+];
+
+const VOCAB_QCM = [
+  {
+    q: "On mélange de l'eau et de l'huile. Les deux liquides se séparent. On dit que les 2 liquides sont :",
+    choices: ["Miscibles entre eux", "Non-miscibles entre eux", "Solubles entre eux", "Insolubles entre eux"],
+    correct: 1,
+    expl: "Deux liquides qui ne se mélangent pas sont <strong>non-miscibles</strong>. L'eau et l'huile forment donc un mélange <em>hétérogène</em>."
+  },
+  {
+    q: "On dissout du sucre dans de l'eau. Les deux liquides forment un mélange homogène. On dit que le sucre est :",
+    choices: ["Insoluble dans l'eau", "Non miscible avec l'eau", "Soluble dans l'eau", "Hétérogène"],
+    correct: 2,
+    expl: "Un solide qui se dissout dans un liquide est dit <strong>soluble</strong> dans ce liquide."
+  },
+  {
+    q: "On mélange de l'eau et du sirop de menthe. Le mélange est transparent et uniforme. On dit que les deux liquides sont :",
+    choices: ["Non miscibles", "Insolubles", "Miscibles", "Hétérogènes"],
+    correct: 2,
+    expl: "Deux liquides qui se mélangent uniformément sont <strong>miscibles</strong>. Eau + sirop = mélange <em>homogène</em>."
+  },
+  {
+    q: "On verse du sable dans de l'eau. Le sable tombe au fond et reste visible. Le sable est :",
+    choices: ["Soluble dans l'eau", "Miscible avec l'eau", "Insoluble dans l'eau", "Homogène"],
+    correct: 2,
+    expl: "Un solide qui ne se dissout pas dans un liquide est <strong>insoluble</strong> dans ce liquide. Le mélange est hétérogène."
+  },
+  {
+    q: "On mélange du sel et de l'eau. Après agitation, on ne voit plus le sel. Le sel est :",
+    choices: ["Insoluble", "Non miscible", "Soluble", "Hétérogène"],
+    correct: 2,
+    expl: "Le sel se dissout dans l'eau : il est <strong>soluble</strong>. Le mélange obtenu est <em>homogène</em>."
+  },
+  {
+    q: "Deux liquides forment un mélange homogène. Cela signifie qu'ils sont :",
+    choices: ["Non miscibles entre eux", "Miscibles entre eux", "Insolubles", "Hétérogènes"],
+    correct: 1,
+    expl: "Des liquides <strong>miscibles</strong> se mélangent uniformément et forment un mélange homogène."
+  },
+  {
+    q: "L'huile d'olive versée dans de l'eau forme deux couches distinctes. L'huile et l'eau sont :",
+    choices: ["Miscibles", "Solubles l'un dans l'autre", "Non miscibles", "Homogènes"],
+    correct: 2,
+    expl: "L'huile et l'eau sont <strong>non miscibles</strong> : elles forment un mélange hétérogène avec deux phases visibles."
+  },
+  {
+    q: "Du sucre en poudre est ajouté à de l'eau chaude et disparaît complètement. On dit que le sucre :",
+    choices: ["Est insoluble dans l'eau", "Est non miscible avec l'eau", "Se dissout dans l'eau / est soluble", "Forme un mélange hétérogène"],
+    correct: 2,
+    expl: "Le sucre <strong>se dissout</strong> dans l'eau chaude : il est <strong>soluble</strong>. Le mélange est homogène."
+  },
+  {
+    q: "La farine mélangée à l'eau reste en suspension et rend l'eau trouble. La farine est :",
+    choices: ["Soluble dans l'eau", "Miscible avec l'eau", "Insoluble dans l'eau", "Transparente"],
+    correct: 2,
+    expl: "La farine est <strong>insoluble</strong> dans l'eau : elle ne se dissout pas. Le mélange est hétérogène."
+  },
+];
+
+const FILLIN_QUESTIONS = [
+  {
+    before: "Le sucre est", blank: "soluble", after: "dans l'eau car il se dissout complètement.",
+    choices: ["soluble", "insoluble", "miscible", "non miscible"],
+    expl: "Le sucre <strong>se dissout</strong> dans l'eau : on utilise le mot <strong>soluble</strong>."
+  },
+  {
+    before: "L'huile et l'eau sont", blank: "non miscibles", after: "car elles ne se mélangent pas.",
+    choices: ["miscibles", "non miscibles", "solubles", "insolubles"],
+    expl: "Pour deux <em>liquides</em> qui ne se mélangent pas, on dit qu'ils sont <strong>non miscibles</strong>."
+  },
+  {
+    before: "L'eau et le sirop de grenadine sont", blank: "miscibles", after: "car ils forment un mélange homogène.",
+    choices: ["miscibles", "non miscibles", "insolubles", "hétérogènes"],
+    expl: "Deux liquides qui se mélangent parfaitement sont <strong>miscibles</strong>."
+  },
+  {
+    before: "Le sable est", blank: "insoluble", after: "dans l'eau : on voit encore les grains au fond.",
+    choices: ["soluble", "insoluble", "miscible", "homogène"],
+    expl: "Un solide qui ne se dissout pas est <strong>insoluble</strong>."
+  },
+  {
+    before: "L'eau sucrée est un mélange", blank: "homogène", after: "car on ne distingue pas le sucre à l'œil nu.",
+    choices: ["hétérogène", "homogène", "miscible", "soluble"],
+    expl: "On dit que c'est <strong>homogène</strong> quand on ne distingue pas les constituants à l'œil nu."
+  },
+  {
+    before: "L'eau et l'huile forment un mélange", blank: "hétérogène", after: "car on voit clairement deux couches distinctes.",
+    choices: ["homogène", "hétérogène", "miscible", "soluble"],
+    expl: "On dit que c'est <strong>hétérogène</strong> quand on peut distinguer les constituants à l'œil nu."
+  },
+  {
+    before: "Le sel de cuisine est", blank: "soluble", after: "dans l'eau de mer.",
+    choices: ["soluble", "insoluble", "non miscible", "hétérogène"],
+    expl: "Le sel <strong>se dissout</strong> dans l'eau : il est <strong>soluble</strong>."
+  },
+  {
+    before: "Pour deux liquides, on utilise le mot", blank: "miscibles", after: "s'ils forment un mélange homogène.",
+    choices: ["solubles", "miscibles", "insolubles", "hétérogènes"],
+    expl: "Le vocabulaire <strong>miscible / non miscible</strong> s'utilise pour deux <em>liquides</em>."
+  },
+];
+
+const SENTENCE_QUESTIONS = [
+  {
+    words: ["Le", "sucre", "est", "soluble", "dans", "l'eau."],
+    expl: "Pour un <strong>solide + liquide</strong>, on dit qu'il est <strong>soluble</strong> ou <strong>insoluble</strong>.",
+    q: "Remets les mots dans l'ordre pour former une phrase scientifique correcte :"
+  },
+  {
+    words: ["L'huile", "et", "l'eau", "sont", "non", "miscibles", "entre", "eux."],
+    expl: "Pour deux <strong>liquides</strong> qui ne se mélangent pas, on dit qu'ils sont <strong>non miscibles</strong>.",
+    q: "Remets les mots dans l'ordre :"
+  },
+  {
+    words: ["Le", "sable", "est", "insoluble", "dans", "l'eau."],
+    expl: "Un solide qui ne se dissout pas dans un liquide est <strong>insoluble</strong>.",
+    q: "Remets les mots dans l'ordre :"
+  },
+  {
+    words: ["Le", "sirop", "et", "l'eau", "sont", "miscibles."],
+    expl: "Pour deux <strong>liquides</strong> qui se mélangent bien, on dit qu'ils sont <strong>miscibles</strong>.",
+    q: "Remets les mots dans l'ordre :"
+  },
+  {
+    words: ["L'eau", "sucrée", "est", "un", "mélange", "homogène."],
+    expl: "On ne distingue pas les constituants à l'œil nu → mélange <strong>homogène</strong>.",
+    q: "Remets les mots dans l'ordre :"
+  },
+  {
+    words: ["L'eau", "boueuse", "est", "un", "mélange", "hétérogène."],
+    expl: "On distingue les constituants à l'œil nu → mélange <strong>hétérogène</strong>.",
+    q: "Remets les mots dans l'ordre :"
+  },
+{
+    words: ["Le passage de l'état", "gazeux", "à l'état", "liquide", "est la liquéfaction."],
+    expl: "La <strong>liquéfaction</strong> est visible lorsqu'un nuage se forme ou lorsque de la buée apparait sur une vitre.",
+    q: "Remets les mots dans l'ordre :"
+  },
+{
+    words: ["Le passage de l'état", "liquide", "à l'état", "gazeux", "est la vaporisation."],
+    expl: "La <strong>vaporisation</strong> est visible lorsqu'on fait bouillir de l'eau !.",
+    q: "Remets les mots dans l'ordre :"
+  },
+{
+    words: ["Le passage de l'état", "solide", "à l'état", "liquide", "est la fusion."],
+    expl: "La <strong>fusion</strong> est visible lorsque la neige fond au printemps.",
+    q: "Remets les mots dans l'ordre :"
+  },
+{
+    words: ["Le passage de l'état", "liquide", "à l'état", "solide", "est la solidification."],
+    expl: "La <strong>solidification</strong> est visible lorsque du verglas se forme l'hiver sur la route.",
+    q: "Remets les mots dans l'ordre :"
+  },
+];
+
+const TRUEFALSE_QUESTIONS = [
+  { q: "Un mélange homogène est un mélange dans lequel on peut voir plusieurs constituants à l'œil nu.", ans: false, expl: "C'est l'inverse ! Dans un mélange <strong>homogène</strong>, on <em>ne distingue pas</em> les constituants à l'œil nu." },
+  { q: "L'eau et le sirop de menthe sont miscibles entre eux.", ans: true, expl: "Ils forment un mélange homogène → ils sont bien <strong>miscibles</strong> entre eux." },
+  { q: "Le sable est soluble dans l'eau.", ans: false, expl: "Le sable est <strong>insoluble</strong> dans l'eau. Le sable n'arrive pas à se dissoudre." },
+  { q: "On utilise le mot 'miscible' pour parler d'un solide qui se dissout dans un liquide.", ans: false, expl: "<strong>Miscible</strong> s'utilise pour deux <em>liquides</em>. Pour un solide, on dit <strong>soluble</strong> ou <strong>insoluble</strong>." },
+  { q: "Un mélange hétérogène contient plusieurs constituants qu'on peut distinguer à l'œil nu.", ans: true, expl: "Oui ! C'est la définition du mélange <strong>hétérogène</strong>." },
+  { q: "L'eau de mer est un mélange hétérogène.", ans: false, expl: "L'eau de mer est un mélange <strong>homogène</strong> : le sel est dissous et on ne le voit plus à l'oeil nu." },
+  { q: "L'huile et l'eau sont non-miscibles entre eux.", ans: true, expl: "Ces 2 liquides ne se mélangent pas → Ils sont <strong>non-miscibles</strong> entre eux. Le mélange obtenu est hétérogène." },
+  { q: "Le sucre est insoluble dans l'eau.", ans: false, expl: "Le sucre est <strong>soluble</strong> dans l'eau : il se dissout complètement." },
+  { q: "La vinaigrette (huile + vinaigre) est un mélange homogène.", ans: false, expl: "On voit les deux phases → c'est un mélange <strong>hétérogène</strong>. L'huile et le vinaigre sont non-miscibles." },
+  { q: "Le sel de table est soluble dans l'eau.", ans: true, expl: "Le sel se dissout dans l'eau : il est <strong>soluble</strong>. L'eau salée est homogène." },
+];
+
+const BEAKER_QUESTIONS = [
+  {
+    q: "On verse de l'huile dans un bécher d'eau. Observe le résultat :",
+    top: { color: "#fde68a", label: "Huile" },
+    bottom: { color: "#bfdbfe", label: "Eau" },
+    choices: [
+      "L'huile est miscible avec l'eau.",
+      "L'huile et l'eau sont miscibles entre eux.",
+      "L'huile est non miscible avec l'eau.",
+      "L'huile et l'eau sont non miscibles entre eux."
+    ],
+    correct: 3,
+    expl: "L'huile reste au-dessus de l'eau. Ces deux liquides sont <strong>non miscibles</strong> entre eux. Le mélange est <strong>hétérogène</strong>."
+  },
+  {
+    q: "On dissout du sel dans de l'eau et on agite. Le résultat est limpide :",
+    top: null,
+    bottom: { color: "#bfdbfe", label: "Eau salée (limpide)" },
+    choices: [
+      "Le sel est insoluble dans l'eau.",
+      "Le sel est soluble dans l'eau.",
+      "Le sel est miscible dans l'eau.",
+      "Le sel est non miscible dans l'eau."
+    ],
+    correct: 1,
+    expl: "Le sel est <strong>soluble</strong> dans l'eau. Le mélange est <strong>homogène</strong>."
+  },
+  {
+    q: "On verse du sable dans de l'eau. Des grains restent visibles au fond :",
+    top: { color: "#bfdbfe", label: "Eau" },
+    bottom: { color: "#d97706", label: "Sable" },
+    choices: [
+      "C'est un mélange hétérogène ; le sable et l'eau sont miscibles entre eux.",
+      "C'est un mélange hétérogène ; le sable et l'eau sont non miscibles entre eux.",
+      "C'est un mélange hétérogène ; le sable est insoluble dans l'eau.",
+      "C'est un mélange hétérogène ; le sable est soluble dans l'eau."
+    ],
+    correct: 2,
+    expl: "Le sable est <strong>insoluble</strong> dans l'eau. On voit toujours les grains : le mélange est <strong>hétérogène</strong>."
+  },
+  {
+    q: "On mélange du sirop de framboise et de l'eau. Le liquide est rose et uniforme :",
+    top: null,
+    bottom: { color: "#fbcfe8", label: "Eau + sirop" },
+    choices: [
+      "L'eau et le sirop sont miscibles entre eux.",
+      "Le sirop et l'eau sont non miscibles entre eux.",
+      "Le mélange est hétérogène.",
+      "Le mélange est insoluble."
+    ],
+    correct: 0,
+    expl: "L'eau et le sirop sont <strong>miscibles</strong> entre eux. On obtient un mélange <strong>homogène</strong>."
+  },
+  {
+    q: "On verse du sucre dans de l'eau puis on agite. On ne voit plus les cristaux :",
+    top: null,
+    bottom: { color: "#bfdbfe", label: "Eau sucrée" },
+    choices: [
+      "Le sucre est insoluble dans l'eau.",
+      "Le sucre est soluble dans l'eau.",
+      "Le sucre est miscible dans l'eau.",
+      "Le mélange est hétérogène."
+    ],
+    correct: 1,
+    expl: "Le sucre <strong>se dissout</strong> dans l'eau : il est <strong>soluble</strong>. Le mélange obtenu est <strong>homogène</strong>."
+  },
+  {
+    q: "On mélange de l'eau et du sirop de menthe. Le liquide devient vert et uniforme :",
+    top: null,
+    bottom: { color: "#86efac", label: "Eau + sirop de menthe" },
+    choices: [
+      "L'eau et le sirop de menthe sont miscibles entre eux.",
+      "L'eau et le sirop de menthe sont non miscibles entre eux.",
+      "Le sirop est insoluble dans l'eau.",
+      "Le mélange est hétérogène."
+    ],
+    correct: 0,
+    expl: "Le sirop de menthe se mélange uniformément à l'eau. Les deux liquides sont <strong>miscibles</strong>."
+  },
+  {
+    q: "On verse de la farine dans de l'eau. Le liquide devient trouble et un dépôt apparaît :",
+    top: { color: "#bfdbfe", label: "Eau trouble" },
+    bottom: { color: "#e5e7eb", label: "Farine" },
+    choices: [
+      "La farine est soluble dans l'eau.",
+      "La farine est insoluble dans l'eau.",
+      "La farine est miscible dans l'eau.",
+      "Le mélange est homogène."
+    ],
+    correct: 1,
+    expl: "La farine ne se dissout pas dans l'eau : elle est <strong>insoluble</strong>. Le mélange est <strong>hétérogène</strong>."
+  },
+  {
+    q: "On ajoute de la craie en poudre dans de l'eau. Après un moment, la craie reste visible au fond :",
+    top: { color: "#bfdbfe", label: "Eau" },
+    bottom: { color: "#f3f4f6", label: "Craie" },
+    choices: [
+      "La craie est soluble dans l'eau.",
+      "La craie est insoluble dans l'eau.",
+      "La craie est miscible avec l'eau.",
+      "Le mélange est homogène."
+    ],
+    correct: 1,
+    expl: "La craie reste visible : elle est <strong>insoluble</strong> dans l'eau. Le mélange est <strong>hétérogène</strong>."
+  },
+  {
+    q: "On mélange de l'eau et du vinaigre. Le liquide reste uniforme :",
+    top: null,
+    bottom: { color: "#dbeafe", label: "Eau + vinaigre" },
+    choices: [
+      "L'eau et le vinaigre sont miscibles entre eux.",
+      "L'eau et le vinaigre sont non miscibles entre eux.",
+      "Le vinaigre est insoluble dans l'eau.",
+      "Le mélange est hétérogène."
+    ],
+    correct: 0,
+    expl: "L'eau et le vinaigre se mélangent uniformément : ce sont deux liquides <strong>miscibles</strong>."
+  },
+  {
+    q: "On mélange de l'eau et du jus de citron filtré. Le liquide reste uniforme :",
+    top: null,
+    bottom: { color: "#fde68a", label: "Eau + jus de citron" },
+    choices: [
+      "L'eau et le jus de citron filtré sont miscibles entre eux.",
+      "L'eau et le jus de citron filtré sont non miscibles entre eux.",
+      "Le jus de citron est insoluble dans l'eau.",
+      "Le mélange est hétérogène."
+    ],
+    correct: 0,
+    expl: "Deux liquides qui donnent un mélange uniforme sont <strong>miscibles</strong>. Le mélange est <strong>homogène</strong>."
+  },
+ {
+  q: "On verse du riz dans un bécher d'eau. Les grains restent visibles au fond :",
+  top: { color: "#bfdbfe", label: "Eau" },
+  bottom: { color: "#fef3c7", label: "Riz", texture: "balls" },
+  choices: [
+    "Le riz est soluble dans l'eau.",
+    "Le riz est insoluble dans l'eau.",
+    "Le riz est miscible dans l'eau.",
+    "Le mélange est homogène."
+  ],
+  correct: 1,
+  expl: "Les grains de riz restent visibles : le riz est <strong>insoluble</strong> dans l'eau."
+},
+  {
+    q: "On ajoute du cacao en poudre dans de l'eau froide. Une partie reste visible et forme un dépôt :",
+    top: { color: "#bfdbfe", label: "Eau colorée" },
+    bottom: { color: "#92400e", label: "Cacao" },
+    choices: [
+      "Le cacao est soluble dans l'eau.",
+      "Le cacao est insoluble dans l'eau.",
+      "Le cacao est miscible dans l'eau.",
+      "Le mélange est homogène."
+    ],
+    correct: 1,
+    expl: "Le cacao reste visible : il est ici <strong>insoluble</strong> dans l'eau. Le mélange est <strong>hétérogène</strong>."
+  },
+  {
+    q: "On mélange de l'eau et du sirop de grenadine. Le liquide devient rouge uniforme :",
+    top: null,
+    bottom: { color: "#f87171", label: "Eau + grenadine" },
+    choices: [
+      "L'eau et la grenadine sont miscibles entre eux.",
+      "L'eau et la grenadine sont non miscibles entre eux.",
+      "La grenadine est insoluble dans l'eau.",
+      "Le mélange est hétérogène."
+    ],
+    correct: 0,
+    expl: "Le sirop et l'eau se mélangent complètement : ils sont <strong>miscibles</strong>."
+  },
+  {
+  q: "On verse des lentilles dans de l'eau. Elles restent visibles au fond du bécher :",
+  top: { color: "#bfdbfe", label: "Eau" },
+  bottom: { color: "#a16207", label: "Lentilles", texture: "balls" },
+  choices: [
+    "Les lentilles sont solubles dans l'eau.",
+    "Les lentilles sont insolubles dans l'eau.",
+    "Les lentilles sont miscibles dans l'eau.",
+    "Le mélange est homogène."
+  ],
+  correct: 1,
+  expl: "Les lentilles ne se dissolvent pas : elles sont <strong>insolubles</strong> dans l'eau."
+},
+  {
+    q: "On mélange de l'eau et de l'alcool alimentaire coloré. Le liquide reste uniforme :",
+    top: null,
+    bottom: { color: "#c4b5fd", label: "Eau + alcool" },
+    choices: [
+      "L'eau et l'alcool sont miscibles entre eux.",
+      "L'eau et l'alcool sont non miscibles entre eux.",
+      "L'alcool est insoluble dans l'eau.",
+      "Le mélange est hétérogène."
+    ],
+    correct: 0,
+    expl: "L'eau et l'alcool forment un mélange uniforme : ils sont <strong>miscibles</strong>."
+  },
+  {
+    q: "On verse de l'huile dans du vinaigre. Deux couches se forment :",
+    top: { color: "#fde68a", label: "Huile" },
+    bottom: { color: "#811d11", label: "Vinaigre" },
+    choices: [
+      "L'huile et le vinaigre sont miscibles entre eux.",
+      "L'huile et le vinaigre sont non miscibles entre eux.",
+      "Le vinaigre est insoluble dans l'huile.",
+      "Le mélange est homogène."
+    ],
+    correct: 1,
+    expl: "L'huile et le vinaigre forment deux couches : ils sont <strong>non miscibles</strong> entre eux."
+  },
+  {
+    q: "On verse de petites billes de polystyrène dans de l'eau. Elles restent visibles séparément :",
+    top: { color: "#e0f2fe", label: "Billes visibles" },
+    bottom: { color: "#bfdbfe", label: "Eau" },
+    choices: [
+      "Les billes sont solubles dans l'eau.",
+      "Les billes sont insolubles dans l'eau.",
+      "Les billes sont miscibles dans l'eau.",
+      "Le mélange est homogène."
+    ],
+    correct: 1,
+    expl: "Les billes restent visibles : elles sont <strong>insolubles</strong> dans l'eau. Le mélange est <strong>hétérogène</strong>."
+  },
+  {
+    q: "On mélange de l'eau et un colorant alimentaire. Le liquide devient uniformément coloré :",
+    top: null,
+    bottom: { color: "#93c5fd", label: "Eau colorée" },
+    choices: [
+      "L'eau et le colorant liquide sont miscibles entre eux.",
+      "L'eau et le colorant liquide sont non miscibles entre eux.",
+      "Le colorant est insoluble dans l'eau.",
+      "Le mélange est hétérogène."
+    ],
+    correct: 0,
+    expl: "Le colorant se répartit uniformément dans l'eau : le mélange est <strong>homogène</strong>."
+  },
+  {
+    q: "On mélange de l'eau et du marc de café. Les particules restent visibles :",
+    top: { color: "#cbd5e1", label: "Eau trouble" },
+    bottom: { color: "#6b4f3a", label: "Marc de café" },
+    choices: [
+      "Le marc de café est soluble dans l'eau.",
+      "Le marc de café est insoluble dans l'eau.",
+      "Le marc de café est miscible avec l'eau.",
+      "Le mélange est homogène."
+    ],
+    correct: 1,
+    expl: "Le marc de café reste visible : il est <strong>insoluble</strong> dans l'eau."
+  },
+  {
+    q: "On mélange de l'eau et du sirop de pêche. Le liquide devient jaune uniforme :",
+    top: null,
+    bottom: { color: "#fde68a", label: "Eau + sirop de pêche" },
+    choices: [
+      "L'eau et le sirop de pêche sont miscibles entre eux.",
+      "L'eau et le sirop de pêche sont non miscibles entre eux.",
+      "Le sirop de pêche est insoluble dans l'eau.",
+      "Le mélange est hétérogène."
+    ],
+    correct: 0,
+    expl: "L'eau et le sirop se mélangent complètement : ils sont <strong>miscibles</strong>. Le mélange est <strong>homogène</strong>."
+  }
+];
+
+// ========================
+//  STATE
+// ========================
+let currentGame = null;
+let questionIndex = 0;
+let correctCount = 0;
+let totalAnswered = 0;
+let sessionTotal = 10; // questions per session
+let answered = false;
+let selectedFillIndex = null;
+let currentFillQ = null;
+let sentenceWords = [];
+let builtSentence = [];
+let sentenceOrder = [];
+let fillinOrder = [];
+let classifyOrder = [];
+let vocabOrder = [];
+let beakerOrder = [];
+
+// ========================
+//  UI HELPERS
+// ========================
+function showMenu() {
+  correctCount = 0;
+  totalAnswered = 0;
+  updateScoreBar();
+
+  document.getElementById('menu').style.display = 'grid';
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'none';
+}
+
+function showGame() {
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('game-area').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'block';
+}
+
+function updateScoreBar() {
+  document.getElementById('score-correct').textContent = correctCount;
+  document.getElementById('score-total').textContent = totalAnswered;
+  const pct = totalAnswered === 0 ? 0 : Math.round(correctCount / totalAnswered * 100);
+  document.getElementById('progress-bar-fill').style.width = pct + '%';
+}
+
+function showFeedback(ok, msg) {
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (ok ? 'ok' : 'ko');
+  fb.innerHTML = (ok ? '✅ ' : '❌ ') + msg;
+  document.getElementById('next-btn').style.display = 'inline-flex';
+}
+
+function hideFeedback() {
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  document.getElementById('next-btn').style.display = 'none';
+}
+
+// ========================
+//  GAME START
+// ========================
+function startGame(type) {
+  currentGame = type;
+  questionIndex = 0;
+  answered = false;
+  correctCount = 0;
+  totalAnswered = 0;
+
+  if (type === 'beaker') {
+    beakerOrder = shuffle([...Array(BEAKER_QUESTIONS.length).keys()]);
+  }
+
+  if (type === 'sentence') {
+    sentenceOrder = shuffle([...Array(SENTENCE_QUESTIONS.length).keys()]);
+  }
+
+  if (type === 'fillin') {
+    fillinOrder = shuffle([...Array(FILLIN_QUESTIONS.length).keys()]);
+  }
+
+  if (type === 'classify') {
+    const totalClassify = EXAMPLES_HOMOGENE.length + EXAMPLES_HETEROGENE.length;
+    classifyOrder = shuffle([...Array(totalClassify).keys()]);
+  }
+
+  if (type === 'vocab') {
+    vocabOrder = shuffle([...Array(VOCAB_QCM.length).keys()]);
+  }
+
+  updateScoreBar();
+  showGame();
+  renderQuestion();
+}
+function restartGame() {
+  startGame(currentGame);
+}
+
+function nextQuestion() {
+  questionIndex++;
+  answered = false;
+
+  if (currentGame === 'classify') {
+    const totalClassify = EXAMPLES_HOMOGENE.length + EXAMPLES_HETEROGENE.length;
+    if (questionIndex > 0 && questionIndex % totalClassify === 0) {
+      classifyOrder = shuffle([...Array(totalClassify).keys()]);
+    }
+  }
+
+  if (currentGame === 'beaker') {
+    const totalBeaker = BEAKER_QUESTIONS.length;
+    if (questionIndex > 0 && questionIndex % totalBeaker === 0) {
+      beakerOrder = shuffle([...Array(totalBeaker).keys()]);
+    }
+  }
+
+  if (questionIndex >= sessionTotal) {
+    showResults();
+    return;
+  }
+
+  hideFeedback();
+  renderQuestion();
+}
+
+// ========================
+//  RENDER DISPATCHER
+// ========================
+function renderQuestion() {
+  document.getElementById('q-counter').textContent = `Question ${questionIndex + 1} / ${sessionTotal}`;
+  switch(currentGame) {
+    case 'classify': renderClassify(); break;
+    case 'vocab':    renderVocab(); break;
+    case 'fillin':   renderFillIn(); break;
+    case 'sentence': renderSentence(); break;
+    case 'beaker':   renderBeaker(); break;
+    case 'truefalse':renderTrueFalse(); break;
+  }
+  hideFeedback();
+  // scroll to card
+  document.getElementById('q-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ========================
+//  CLASSIFY
+// ========================
+function renderClassify() {
+  document.getElementById('q-type-badge').textContent = 'Classer un mélange';
+  const allExamples = [...EXAMPLES_HOMOGENE.map(e => ({...e, type:'homogène'})), ...EXAMPLES_HETEROGENE.map(e => ({...e, type:'hétérogène'}))];
+ const ex = allExamples[classifyOrder[questionIndex % classifyOrder.length]];
+
+  document.getElementById('q-text').innerHTML = `Quel est le type du mélange suivant : <span class="highlight">${ex.name}</span><br><small style="font-weight:600;color:#64748b">(${ex.desc})</small> ?`;
+
+  const choices = ['homogène', 'hétérogène'];
+  const html = `<div class="choices">` +
+    choices.map((c, i) => `<button class="choice-btn" onclick="answerClassify(this,'${c}','${ex.type}','${escHtml(ex.name)}')">
+      ${i === 0 ? '🔵' : '🔴'} Mélange ${c}
+    </button>`).join('') +
+    `</div>`;
+  document.getElementById('q-content').innerHTML = html;
+}
+
+function answerClassify(btn, chosen, correct, name) {
+  if (answered) return;
+  answered = true;
+  totalAnswered++;
+  const ok = chosen === correct;
+  if (ok) correctCount++;
+  updateScoreBar();
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  const expl = ok
+    ? `<strong>${name}</strong> est bien un mélange <strong>${correct}</strong>.` + (correct === 'homogène' ? " On ne distingue pas les constituants à l'œil nu." : " On peut distinguer les constituants à l'œil nu.")
+    : `Non ! <strong>${name}</strong> est un mélange <strong>${correct}</strong>.` + (correct === 'homogène' ? " On ne distingue pas les constituants à l'œil nu." : " On peut distinguer les constituants à l'œil nu.");
+  showFeedback(ok, expl);
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+}
+
+// ========================
+//  VOCAB QCM
+// ========================
+function renderVocab() {
+  document.getElementById('q-type-badge').textContent = 'Vocabulaire scientifique';
+
+  const q = VOCAB_QCM[vocabOrder[questionIndex % vocabOrder.length]];
+  document.getElementById('q-text').textContent = q.q;
+
+  const shuffled = shuffle([...q.choices.map((c,i)=>({c,i}))]);
+  const html = `<div class="choices">` +
+    shuffled.map(({c, i}) => `<button class="choice-btn" onclick="answerVocab(this,${i},${q.correct},'${escHtml(q.expl)}')">${c}</button>`).join('') +
+    `</div>`;
+
+  document.getElementById('q-content').innerHTML = html;
+}
+
+function answerVocab(btn, idx, correct, expl) {
+  if (answered) return;
+  answered = true;
+  totalAnswered++;
+  const ok = idx === correct;
+  if (ok) correctCount++;
+  updateScoreBar();
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  showFeedback(ok, expl);
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+}
+
+// ========================
+//  FILL IN THE BLANK
+// ========================
+function renderFillIn() {
+  document.getElementById('q-type-badge').textContent = 'Compléter la phrase';
+
+  const q = FILLIN_QUESTIONS[fillinOrder[questionIndex % fillinOrder.length]];
+  currentFillQ = q;
+  selectedFillIndex = null;
+
+  document.getElementById('q-text').textContent = 'Clique sur le bon mot pour compléter la phrase :';
+
+  const shuffledChoices = shuffle([...q.choices]);
+  const html = `
+    <div class="fill-container">
+      <span>${q.before}</span>
+      <span class="fill-blank" id="fill-blank">___________</span>
+      <span>${q.after}</span>
+    </div>
+    <div class="word-bank" id="word-bank">
+      ${shuffledChoices.map((w,i) => `<button class="word-chip" onclick="selectFill(this,'${w}')">${w}</button>`).join('')}
+    </div>
+  `;
+  document.getElementById('q-content').innerHTML = html;
+}
+
+function selectFill(btn, word) {
+  if (answered) return;
+  const q = currentFillQ;
+  answered = true;
+  totalAnswered++;
+  const ok = word === q.blank;
+  if (ok) correctCount++;
+  updateScoreBar();
+
+  document.getElementById('fill-blank').textContent = word;
+  document.getElementById('fill-blank').classList.add('answered', ok ? 'fill-correct' : 'fill-wrong');
+  document.querySelectorAll('.word-chip').forEach(c => c.disabled = true);
+  showFeedback(ok, q.expl);
+}
+
+// ========================
+//  SENTENCE BUILDER
+// ========================
+function renderSentence() {
+  document.getElementById('q-type-badge').textContent = 'Construire une phrase';
+ const q = SENTENCE_QUESTIONS[sentenceOrder[questionIndex % sentenceOrder.length]];
+  document.getElementById('q-text').textContent = q.q;
+
+  sentenceWords = shuffle([...q.words]);
+  builtSentence = [];
+
+  document.getElementById('q-content').innerHTML = `
+    <div class="sentence-build" id="sent-build" onclick="removeLast()">
+      <span style="color:#94a3b8;font-size:0.9rem" id="sent-hint">Clique sur les mots dans l'ordre...</span>
+    </div>
+    <div class="word-bank" id="sent-bank">
+      ${sentenceWords.map((w,i) => `<button class="word-chip" id="sw-${i}" onclick="addWord(this,'${escHtml(w)}',${i},'${escHtml(q.words.join(' '))}','${escHtml(q.expl)}')">${w}</button>`).join('')}
+    </div>
+    <button class="btn secondary" onclick="checkSentence('${escHtml(q.words.join(' '))}','${escHtml(q.expl)}')" style="margin-top:12px">✔ Vérifier</button>
+  `;
+}
+
+function addWord(btn, word, idx, correct, expl) {
+  if (answered) return;
+  builtSentence.push(word);
+  btn.classList.add('used');
+  const build = document.getElementById('sent-build');
+  const hint = document.getElementById('sent-hint');
+  if (hint) hint.remove();
+  const chip = document.createElement('span');
+  chip.className = 'sent-chip';
+  chip.textContent = word;
+  chip.dataset.idx = idx;
+  build.appendChild(chip);
+}
+
+function removeLast() {
+  if (answered || builtSentence.length === 0) return;
+  builtSentence.pop();
+  const build = document.getElementById('sent-build');
+  const chips = build.querySelectorAll('.sent-chip');
+  if (chips.length > 0) {
+    const last = chips[chips.length - 1];
+    const idx = last.dataset.idx;
+    document.getElementById('sw-' + idx).classList.remove('used');
+    last.remove();
+  }
+  if (builtSentence.length === 0) {
+    build.innerHTML = '<span style="color:#94a3b8;font-size:0.9rem" id="sent-hint">Clique sur les mots dans l\'ordre...</span>';
+  }
+}
+
+function checkSentence(correctStr, expl) {
+  if (answered) return;
+  answered = true;
+  totalAnswered++;
+  const built = builtSentence.join(' ');
+  const ok = built.trim() === correctStr.trim();
+  if (ok) correctCount++;
+  updateScoreBar();
+  const msg = ok ? expl : `La bonne phrase était : <em>${correctStr}</em><br>${expl}`;
+  showFeedback(ok, msg);
+  document.querySelectorAll('.word-chip').forEach(c => c.disabled = true);
+}
+
+// ========================
+//  BEAKER
+// ========================
+function renderBeaker() {
+  document.getElementById('q-type-badge').textContent = 'Observer le bécher';
+  const q = BEAKER_QUESTIONS[beakerOrder[questionIndex % beakerOrder.length]];
+  document.getElementById('q-text').textContent = q.q;
+
+  let layers = '';
+
+  if (q.top) {
+    const bottomLayer = q.bottom.texture === "balls"
+      ? `<div class="beaker-solids balls" style="height:42%; --solid-color:${q.bottom.color};"></div>`
+      : `<div class="beaker-liquid" style="height:42%; background:${q.bottom.color}; bottom:0; border-radius:0 0 15px 15px;"></div>`;
+
+    layers += `
+      <div class="beaker-wrap">
+        <div class="beaker">
+          ${bottomLayer}
+          <div class="beaker-liquid" style="height:42%; background:${q.top.color}; bottom:42%; border-radius:0;"></div>
+        </div>
+        <div class="beaker-label">${q.top.label} (haut)<br>${q.bottom.label} (bas)</div>
+      </div>
+    `;
+  } else {
+    layers += `
+      <div class="beaker-wrap">
+        <div class="beaker">
+          <div class="beaker-liquid" style="height:70%; background:${q.bottom.color}; bottom:0; border-radius:0 0 15px 15px;"></div>
+        </div>
+        <div class="beaker-label">${q.bottom.label}</div>
+      </div>
+    `;
+  }
+
+  const html = `
+    <div class="beaker-scene">${layers}</div>
+    <div class="choices">
+      ${q.choices.map((c,i) => `<button class="choice-btn" onclick="answerBeaker(this,${i},${q.correct},'${escHtml(q.expl)}')">${c}</button>`).join('')}
+    </div>
+  `;
+  document.getElementById('q-content').innerHTML = html;
+}
+
+function answerBeaker(btn, idx, correct, expl) {
+  if (answered) return;
+  answered = true;
+  totalAnswered++;
+  const ok = idx === correct;
+  if (ok) correctCount++;
+  updateScoreBar();
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  showFeedback(ok, expl);
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+}
+
+// ========================
+//  TRUE / FALSE
+// ========================
+function renderTrueFalse() {
+  document.getElementById('q-type-badge').textContent = 'Vrai ou Faux ?';
+  const q = TRUEFALSE_QUESTIONS[questionIndex % TRUEFALSE_QUESTIONS.length];
+  document.getElementById('q-text').innerHTML = `<span class="highlight">Vrai ou faux ?</span><br>${q.q}`;
+
+  const html = `<div class="choices">
+    <button class="choice-btn" onclick="answerTF(this,true,${q.ans},'${escHtml(q.expl)}')">✅ Vrai</button>
+    <button class="choice-btn" onclick="answerTF(this,false,${q.ans},'${escHtml(q.expl)}')">❌ Faux</button>
+  </div>`;
+  document.getElementById('q-content').innerHTML = html;
+}
+
+function answerTF(btn, chosen, correct, expl) {
+  if (answered) return;
+  answered = true;
+  totalAnswered++;
+  const ok = chosen === correct;
+  if (ok) correctCount++;
+  updateScoreBar();
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  const extra = ok ? '' : ` La bonne réponse était <strong>${correct ? 'VRAI' : 'FAUX'}</strong>.`;
+  showFeedback(ok, extra + ' ' + expl);
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+}
+
+// ========================
+//  RESULTS
+// ========================
+function showResults() {
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+
+  const pct = Math.round(correctCount / totalAnswered * 100);
+  let stars = pct >= 90 ? '⭐⭐⭐' : pct >= 60 ? '⭐⭐' : '⭐';
+  let emoji = pct >= 90 ? '🎉' : pct >= 60 ? '😊' : '💪';
+  let msg = pct >= 90 ? 'Excellent travail ! Tu maîtrises les mélanges !'
+          : pct >= 60 ? 'Bien joué ! Encore un peu de pratique !'
+          : 'Continue à t\'entraîner, tu vas y arriver !';
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-stars').textContent = stars;
+  document.getElementById('res-score').textContent = `${correctCount} / ${totalAnswered}`;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-detail').textContent = `Score : ${pct}% de bonnes réponses sur cette session.`;
+
+  if (pct >= 80) launchConfetti();
+}
+
+// ========================
+//  CONFETTI
+// ========================
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#2563eb','#7c3aed','#f59e0b','#10b981','#ef4444','#ec4899'];
+  const pieces = Array.from({length: 120}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    w: 8 + Math.random() * 8,
+    h: 6 + Math.random() * 6,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rot: Math.random() * 360,
+    vx: (Math.random() - 0.5) * 3,
+    vy: 2 + Math.random() * 4,
+    vr: (Math.random() - 0.5) * 6,
+  }));
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      if (p.y > canvas.height) { p.y = -20; p.x = Math.random() * canvas.width; }
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 200) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
+}
+
+// ========================
+//  UTILS
+// ========================
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function escHtml(str) {
+  return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+// Init
+showMenu();
+</script>
+</body>
+</html>

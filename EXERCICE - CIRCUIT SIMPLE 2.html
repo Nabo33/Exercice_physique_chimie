@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les circuits électriques – 6ème</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4ff; color: #222; min-height: 100vh; }
+
+  header {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    border-radius: 0 0 2rem 2rem;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.3);
+  }
+  header h1 { font-size: 2rem; margin-bottom: 0.4rem; }
+  header p { font-size: 1rem; opacity: 0.85; }
+
+  .progress-bar-wrapper {
+    background: rgba(255,255,255,0.25);
+    border-radius: 99px;
+    height: 10px;
+    width: 90%;
+    max-width: 500px;
+    margin: 1rem auto 0;
+    overflow: hidden;
+  }
+  #progress-fill {
+    height: 100%;
+    background: #fde68a;
+    border-radius: 99px;
+    transition: width 0.5s ease;
+    width: 0%;
+  }
+
+  .badge-img { background: #fee2e2; color: #b91c1c; }
+
+  .img-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .img-choice {
+    background: #f8fafc;
+    border: 3px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 0.7rem;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s, background 0.15s;
+    text-align: center;
+  }
+
+  .img-choice:hover {
+    transform: translateY(-2px);
+    border-color: #93c5fd;
+    background: #eff6ff;
+  }
+
+  .img-choice.selected {
+    border-color: #7c3aed;
+    background: #f5f3ff;
+  }
+
+  .img-choice.correct {
+    border-color: #22c55e;
+    background: #f0fdf4;
+  }
+
+  .img-choice.wrong {
+    border-color: #ef4444;
+    background: #fef2f2;
+  }
+
+  .img-choice img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 0.6rem;
+    background: white;
+  }
+
+  .img-choice .img-label {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #475569;
+    font-weight: 600;
+  }
+
+  .doubleqcm-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .question-image {
+    text-align: center;
+  }
+
+  .question-image img {
+    max-width: 100%;
+    max-height: 240px;
+    object-fit: contain;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 0.6rem;
+  }
+
+  .select-block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .select-block label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .quiz-select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 0.8rem;
+    border: 2px solid #cbd5e1;
+    background: #f8fafc;
+    font-size: 1rem;
+    color: #1e293b;
+  }
+
+  .quiz-select:focus {
+    outline: none;
+    border-color: #7c3aed;
+    background: #fff;
+  }
+
+  .score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255,255,255,0.2);
+    border-radius: 99px;
+    padding: 0.3rem 1rem;
+    font-size: 0.9rem;
+    margin-top: 0.8rem;
+  }
+
+  main {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 1rem 4rem;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .intro-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+  .intro-card h2 { font-size: 1.5rem; color: #2563eb; margin-bottom: 1rem; }
+  .intro-card p { color: #555; line-height: 1.6; margin-bottom: 0.6rem; font-size: 1rem; }
+  .topics { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin: 1.5rem 0; }
+  .topic-chip {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 99px;
+    padding: 0.4rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .q-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    margin-bottom: 1.2rem;
+  }
+  .q-type-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: 99px;
+    padding: 0.2rem 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .badge-qcm { background: #dbeafe; color: #1d4ed8; }
+  .badge-vf  { background: #fef3c7; color: #92400e; }
+  .badge-drag { background: #d1fae5; color: #065f46; }
+
+  .q-text {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 0.7rem; }
+  .opt-btn {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.9rem;
+    padding: 0.85rem 1.1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: #1e293b;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: #93c5fd; background: #eff6ff; transform: translateY(-2px); }
+  .opt-btn.correct { border-color: #22c55e; background: #f0fdf4; color: #15803d; }
+  .opt-btn.wrong { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
+  .opt-btn .letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #e2e8f0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.82rem; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .opt-btn.correct .letter { background: #22c55e; color: white; }
+  .opt-btn.wrong .letter { background: #ef4444; color: white; }
+
+  .feedback {
+    border-radius: 0.9rem;
+    padding: 1rem 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    display: none;
+    margin-top: 1rem;
+  }
+  .feedback.show { display: block; }
+  .feedback.good { background: #f0fdf4; border: 1.5px solid #86efac; color: #15803d; }
+  .feedback.bad  { background: #fef2f2; border: 1.5px solid #fca5a5; color: #b91c1c; }
+
+  .dnd-area { display: flex; flex-direction: column; gap: 1.2rem; }
+  .drop-zone {
+    min-width: 160px;
+    min-height: 44px;
+    border: 2.5px dashed #93c5fd;
+    border-radius: 0.7rem;
+    background: #eff6ff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; color: #94a3b8;
+    transition: background 0.2s;
+    padding: 0.3rem 0.7rem;
+    cursor: default;
+  }
+  .drop-zone.over { background: #dbeafe; border-color: #2563eb; }
+  .drag-items { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+  .drag-chip {
+    background: #7c3aed;
+    color: white;
+    border-radius: 0.6rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.9rem;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.1s, opacity 0.2s;
+    border: none;
+  }
+  .drag-chip:active { transform: scale(0.95); opacity: 0.8; }
+  .drag-chip.placed { opacity: 0.35; pointer-events: none; }
+
+  .tf-buttons { display: flex; gap: 1rem; }
+  .tf-btn {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 0.9rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2.5px solid #e2e8f0;
+    background: #f8fafc;
+    transition: all 0.15s;
+    color: #1e293b;
+  }
+  .tf-btn:hover:not(:disabled) { transform: translateY(-2px); }
+  .tf-btn.true-btn { border-color: #34d399; }
+  .tf-btn.false-btn { border-color: #f87171; }
+  .tf-btn.correct { background: #f0fdf4; border-color: #22c55e; color: #15803d; }
+  .tf-btn.wrong   { background: #fef2f2; border-color: #ef4444; color: #b91c1c; }
+
+  .multiqcm-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .multiqcm-option {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.9rem;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    color: #1e293b;
+  }
+
+  .multiqcm-option:hover {
+    border-color: #93c5fd;
+    background: #eff6ff;
+    transform: translateY(-2px);
+  }
+
+  .multiqcm-option.selected {
+    border-color: #7c3aed;
+    background: #f5f3ff;
+  }
+
+  .multiqcm-option.correct {
+    border-color: #22c55e;
+    background: #f0fdf4;
+    color: #15803d;
+  }
+
+  .multiqcm-option.wrong {
+    border-color: #ef4444;
+    background: #fef2f2;
+    color: #b91c1c;
+  }
+
+  .multiqcm-option input {
+    width: 18px;
+    height: 18px;
+    accent-color: #7c3aed;
+    pointer-events: none;
+  }
+
+.multiqcm-option input,
+.multiqcm-option span {
+  pointer-events: none;
+}
+
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border-radius: 99px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.1s, box-shadow 0.15s;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    color: white;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+  }
+  .btn-primary:hover { box-shadow: 0 6px 20px rgba(37,99,235,0.4); transform: translateY(-1px); }
+  .btn-secondary { background: #e2e8f0; color: #334155; }
+  .btn-row { display: flex; justify-content: flex-end; margin-top: 1.2rem; }
+
+  .result-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+  .big-score { font-size: 4rem; font-weight: 800; color: #2563eb; }
+  .score-label { font-size: 1.1rem; color: #64748b; margin-bottom: 1.5rem; }
+  .stars { font-size: 2.5rem; margin: 0.5rem 0 1.5rem; }
+  .result-msg { font-size: 1.1rem; color: #374151; margin-bottom: 2rem; line-height: 1.6; }
+  .recap { text-align: left; margin: 1.5rem 0; }
+  .recap h3 { font-size: 1rem; color: #64748b; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .recap-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.92rem; margin-bottom: 0.5rem; color: #374151; line-height: 1.4; }
+  .recap-item .icon { flex-shrink: 0; font-size: 1rem; }
+
+  @keyframes pop { 0% { transform: scale(0.7); opacity: 0; } 80% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+  .pop { animation: pop 0.35s ease forwards; }
+
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .shake { animation: shake 0.35s ease; }
+
+  .q-counter { font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ Les circuits électriques</h1>
+  <p>Quiz interactif – 6ème</p>
+  <div class="progress-bar-wrapper"><div id="progress-fill"></div></div>
+  <div class="score-badge" id="score-badge">Score : 0 / 0</div>
+</header>
+
+<main>
+  <div class="screen active" id="screen-intro">
+    <div class="intro-card pop">
+      <h2>Prêt(e) à tester tes connaissances ?</h2>
+      <p>Ce quiz porte sur le début du cours des circuits électriques.</p>
+      <div class="topics">
+        <span class="topic-chip">⚡ Les dipôles</span>
+        <span class="topic-chip">🔋 Générateurs & récepteurs</span>
+        <div><span class="topic-chip">💡 Conversion d'énergie</span>
+        <span class="topic-chip">🔛 L'interrupteur</span></div>
+      </div>
+      <p>14 questions · QCM · Choix multiples · Vrai / Faux · Glisser-déposer · Analyse d'images</p>
+      <br>
+      <button class="btn btn-primary" onclick="startQuiz()">Commencer le quiz !</button>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-question">
+    <div class="q-card pop" id="q-card">
+      <div class="q-counter" id="q-counter">Question 1 / 14</div>
+      <div id="q-type-badge"></div>
+      <div class="q-text" id="q-text"></div>
+      <div id="q-content"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btn-next" style="display:none" onclick="nextQuestion()">Suivant →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-results">
+    <div class="result-card pop">
+      <div class="big-score" id="final-score"></div>
+      <div class="score-label" id="score-label"></div>
+      <div class="stars" id="stars"></div>
+      <div class="result-msg" id="result-msg"></div>
+      <div class="recap" id="recap"></div>
+      <button class="btn btn-primary" onclick="restartQuiz()">🔄 Recommencer</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const questions = [
+  {
+    type: "qcm",
+    question: "Combien de bornes (pôles) possède un dipôle ?",
+    options: ["1 borne", "2 bornes", "3 bornes", "4 bornes"],
+    answer: 1,
+    review: "La définition d’un dipôle (objet qui possède 2 bornes)",
+    explanation: "Un dipôle est un objet électrique qui possède exactement 2 bornes (ou 2 pôles). C'est ce qui lui donne son nom : « di » signifie deux !"
+  },
+
+
+
+  {
+    type: "qcm",
+    question: "Lequel de ces objets N'est PAS un dipôle ?",
+    options: ["Une pile", "Un câble simple (fil)", "Une résistance", "Un moteur électrique"],
+    answer: 1,
+    review: "Reconnaître ce qu’est un dipôle : objet qui possède 2 bornes donc 2 endroits où brancher des câbles",
+    explanation: "Un fil conducteur simple n'est pas un dipôle : il n'a pas deux bornes distinctes. La pile, la résistance et le moteur sont bien des dipôles."
+  },
+
+
+
+  {
+    type: "vf",
+    question: "Vrai ou Faux ?\n« La pile est un récepteur car elle fait fonctionner les appareils. »",
+    answer: false,
+    review: "La différence entre générateur et récepteur",
+    explanation: "Faux ! La pile est un générateur : elle produit de l'énergie électrique et du courant. Ce sont les ampoules, moteurs, DEL… qui sont des récepteurs."
+  },
+
+{
+  type: "qcm",
+  question: "Quelles sont les deux bornes d’une ampoule ?",
+  options: [
+    "Le verre et le filament",
+    "Le culot et le plot",
+    "Le verre et le culot",
+    "Le plot et le verre"
+  ],
+  answer: 1,
+  review: "Les deux bornes de l’ampoule",
+  explanation: "Les deux bornes d’une ampoule sont le culot et le plot. Le verre n’est pas une borne électrique."
+},
+
+ {
+  type: "multiimg",
+  question: "Observe les circuits proposés et choisis les 2 circuits dans lesquels la lampe peut fonctionner correctement.",
+  review: "Reconnaître un circuit électrique simple qui fonctionne",
+  images: [
+    {
+      src: "https://raw.githubusercontent.com/Nabo33/Images/d57f19a9ebbcefefa14fb10d4354e2556576b5e9/Mauvais.png",
+      good: false,
+      reason: "Ce circuit ne fonctionne pas car les 2 bornes de la pile sont connectées à la même borne de l'ampoule (le culot).  Ce circuit est même dangereux car au final les 2 bornes de la pile sont connectées entre elles !"
+    },
+    {
+      src: "https://raw.githubusercontent.com/Nabo33/Images/d57f19a9ebbcefefa14fb10d4354e2556576b5e9/Mauvais%20circuit.png",
+      good: false,
+      reason: "Ce circuit ne fonctionne pas car les 2 bornes de la pile sont connectées à la même borne de l'ampoule (le culot).  Ce circuit est même dangereux car au final les 2 bornes de la pile sont connectées entre elles !"
+    },
+    {
+      src: "https://raw.githubusercontent.com/Nabo33/Images/d57f19a9ebbcefefa14fb10d4354e2556576b5e9/Mauvais%204.png",
+      good: false,
+      reason: "Ce circuit ne fonctionne pas : la borne négative est reliée au verre de l’ampoule. (Elle aurait dû être connectée au culot)"
+    },
+    {
+      src: "https://raw.githubusercontent.com/Nabo33/Images/d57f19a9ebbcefefa14fb10d4354e2556576b5e9/MAuvais%203.png",
+      good: false,
+      reason: "Ce circuit ne fonctionne pas car les 2 bornes de la pile sont connectées à la même borne de l'ampoule (le culot).  Ce circuit est même dangereux car au final les 2 bornes de la pile sont connectées entre elles !"
+    },
+    {
+      src: "https://raw.githubusercontent.com/Nabo33/Images/d57f19a9ebbcefefa14fb10d4354e2556576b5e9/MAuvais%202.png",
+      good: false,
+      reason: "Ce circuit ne fonctionne pas car il est ouvert ! Pour que le courant puisse circuler il faut qu'il existe un chemin possible pour aller d'une borne à l'autre de l apile !"
+    },
+    {
+      src: "https://raw.githubusercontent.com/Nabo33/Images/d57f19a9ebbcefefa14fb10d4354e2556576b5e9/Correct.png",
+      good: true,
+      reason: "Ce circuit fonctionne : les deux bornes de la pile sont reliées aux deux bornes de l’ampoule. Il existe donc un chemin possible pour le courant pour aller d'une borne à l'autre de le pile."
+    },
+    {
+      src: "https://raw.githubusercontent.com/Nabo33/Images/03850c1cedaaf03199bfd2582046264dad446087/Correct%202.png",
+      good: true,
+      reason: "Ce circuit fonctionne : les deux bornes de la pile sont reliées aux deux bornes de l’ampoule. Il existe donc un chemin possible pour le courant pour aller d'une borne à l'autre de le pile."
+    }
+  ],
+  explanation: "Un circuit correct doit former une boucle fermée et relier correctement les deux bornes de la pile aux deux bornes de l’ampoule."
+},
+  {
+    type: "doubleqcmimg",
+    question: "Observe le circuit. L’interrupteur est-il ouvert ou fermé ? Choisis aussi la bonne justification.",
+    review: "Comprendre quand un interrupteur est ouvert ou fermé",
+    image: "https://raw.githubusercontent.com/Nabo33/Images/2a74739ecab35ca4a33f71f7c1f4b9eb7cfd1e0a/Cicuit%20simple%20qui%20fonctionne.png",
+    options1: ["Ouvert", "Fermé"],
+    answer1: "Fermé",
+    options2: [
+      "car l'ampoule est allumée, donc le courant circule",
+      "car l'ampoule est allumée, donc le courant ne circule pas",
+      "car l'ampoule est éteinte, donc le courant circule",
+      "car l'ampoule est éteinte, donc le courant ne circule pas"
+    ],
+    answer2: "car l'ampoule est allumée, donc le courant circule",
+    explanation: "Quand l’ampoule est allumée, cela montre que le courant circule dans le circuit. L’interrupteur est donc fermé."
+  },
+  {
+  type: "multiqcm",
+  question: "Pour que le courant électrique circule, il faut <strong>obligatoirement</strong>... <br>[coche <strong>LES</strong> bonnes réponses]",
+  options: [
+    "qu'une pile soit présente",
+    "qu'un interrupteur soit présent",
+    "que le circuit soit fermé",
+    "qu'un moteur soit présent",
+    "que le circuit soit ouvert"
+  ],
+  answers: [0, 2],
+  review: "Les conditions nécessaires pour que le courant électrique circule",
+  explanation: "Pour que le courant circule, il faut un générateur, par exemple une pile, et un circuit fermé. Un interrupteur n'est pas obligatoire, et un moteur non plus."
+},
+  {
+    type: "qcm",
+    question: "Un générateur est un dipôle capable de…",
+    options: [
+      "Convertir l'énergie électrique en énergie lumineuse et thermique",
+      "Produire de l'énergie électrique et du courant électrique",
+      "Transférer du courant électrique",
+      "Transformer l'énergie électrique en énergie chimique"
+    ],
+    answer: 1,
+    review: "Le rôle d’un générateur",
+    explanation: "Un générateur (pile, éolienne, panneau solaire…) produit de l'énergie électrique et fait circuler le courant dans le circuit."
+  },
+  {
+    type: "drag",
+    question: "Associe chaque dipôle à sa catégorie en glissant les étiquettes.",
+    review: "Différencier un générateur (qui produit de l'énergie électrique) et un récepteur (qui reçoit et convertit l'énergie électrique reçue)",
+    pairs: [
+      { label: "Ampoule", zone: "Récepteur" },
+      { label: "Pile", zone: "Générateur" },
+      { label: "Moteur", zone: "Récepteur" },
+      { label: "Éolienne", zone: "Générateur" },
+      { label: "Centrale nucléaire", zone: "Générateur" },
+      { label: "Four", zone: "Récepteur" },
+      { label: "Panneau photovoltaïque", zone: "Générateur" }
+    ],
+    zones: ["Générateur", "Récepteur"],
+    explanation: "La pile et l'éolienne produisent de l'énergie électrique → générateurs. L'ampoule et le moteur consomment cette énergie → récepteurs."
+  },
+  {
+    type: "qcm",
+    question: "Quelle énergie produit une ampoule ?",
+    options: [
+      "Énergie mécanique",
+      "Énergie chimique",
+      "Énergie lumineuse (et thermique)",
+      "Énergie électrique"
+    ],
+    answer: 2,
+    review: "Les énergies produites, converties ou transférées dans un circuit",
+    explanation: "L'ampoule convertit l'énergie électrique en énergie lumineuse (et aussi en chaleur). C'est pour cela qu'elle éclaire… et qu'elle chauffe !"
+  },
+  {
+    type: "vf",
+    question: "Vrai ou Faux ?\n« Quand l'interrupteur est ouvert, le courant peut circuler. »",
+    answer: false,
+    review: "Le fonctionnement d'un interrupteur (ouvert ou fermé)",
+    explanation: "Faux ! Quand l'interrupteur est ouvert, il n'y a aucun courant nulle part dans le circuit. Rien ne fonctionne."
+  },
+  {
+    type: "qcm",
+    question: "À quoi sert un interrupteur dans un circuit électrique ?",
+    options: [
+      "À produire de l'énergie électrique",
+      "À convertir l'énergie",
+      "À commander la circulation du courant",
+      "À mesurer la tension"
+    ],
+    answer: 2,
+    review: "Le rôle de l’interrupteur",
+    explanation: "L'interrupteur permet de commander (contrôler) la circulation du courant. Fermé = courant qui passe. Ouvert = plus de courant."
+  },
+  {
+    type: "qcm",
+    question: "Quelles sont les deux bornes de la pile ?",
+    options: [
+      "Le filament et le culot",
+      "La borne positive et la borne négative",
+      "Le plot central et le culot",
+      "La borne rouge et la borne noire"
+    ],
+    answer: 1,
+    review: "Les bornes de la pile",
+    explanation: "La pile a une borne positive (+) et une borne négative (−). Ce sont ces deux bornes qui créent le courant dans le circuit."
+  },
+  {
+    type: "vf",
+    question: "Vrai ou Faux ?\n« Le courant électrique apporte l'énergie électrique aux récepteurs. »",
+    answer: true,
+    review: "Le rôle du courant électrique : transporter l'énergie électrique du générateur au récepteur",
+    explanation: "Vrai ! C'est exactement le rôle du courant électrique : transporter l'énergie depuis le générateur jusqu'aux récepteurs pour qu'ils puissent fonctionner."
+  }
+];
+
+let currentQ = 0;
+let score = 0;
+let answered = [];
+let shuffled = [];
+
+function startQuiz() {
+  shuffled = shuffle([...questions]);
+  currentQ = 0;
+  score = 0;
+  answered = [];
+  showScreen('screen-question');
+  renderQuestion();
+}
+
+function shuffle(arr) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function updateProgress() {
+  const pct = (currentQ / shuffled.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('score-badge').textContent = `Score : ${score} / ${currentQ}`;
+}
+
+function renderQuestion() {
+  const q = shuffled[currentQ];
+  const content = document.getElementById('q-content');
+
+  document.getElementById('q-counter').textContent = `Question ${currentQ + 1} / ${shuffled.length}`;
+  document.getElementById('q-text').innerHTML = q.question;
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('feedback').innerHTML = '';
+  document.getElementById('btn-next').style.display = 'none';
+  content.innerHTML = '';
+
+  const badge = document.getElementById('q-type-badge');
+  if (q.type === 'qcm') {
+    badge.innerHTML = '<span class="q-type-badge badge-qcm">QCM</span>';
+  } else if (q.type === 'multiqcm') {
+    badge.innerHTML = '<span class="q-type-badge badge-qcm">Choix multiples</span>';
+  } else if (q.type === 'vf') {
+    badge.innerHTML = '<span class="q-type-badge badge-vf">Vrai / Faux</span>';
+  } else if (q.type === 'drag') {
+    badge.innerHTML = '<span class="q-type-badge badge-drag">Glisser-déposer</span>';
+  } else if (q.type === 'multiimg') {
+    badge.innerHTML = '<span class="q-type-badge badge-img">Images</span>';
+  } else if (q.type === 'doubleqcmimg') {
+    badge.innerHTML = '<span class="q-type-badge badge-img">Image + justification</span>';
+  } else {
+    badge.innerHTML = '';
+  }
+
+  if (q.type === 'qcm') renderQCM(q, content);
+  else if (q.type === 'multiqcm') renderMultiQCM(q, content);
+  else if (q.type === 'vf') renderVF(q, content);
+  else if (q.type === 'drag') renderDrag(q, content);
+  else if (q.type === 'multiimg') renderMultiImg(q, content);
+  else if (q.type === 'doubleqcmimg') renderDoubleQCMImg(q, content);
+
+  const card = document.getElementById('q-card');
+  card.classList.remove('pop');
+  void card.offsetWidth;
+  card.classList.add('pop');
+
+  updateProgress();
+}
+
+function renderQCM(q, container) {
+  const letters = ['A', 'B', 'C', 'D'];
+  const div = document.createElement('div');
+  div.className = 'options';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => handleQCM(i, q, div);
+    div.appendChild(btn);
+  });
+  container.appendChild(div);
+}
+
+function handleQCM(chosen, q, div) {
+  const btns = div.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const correct = chosen === q.answer;
+  btns[chosen].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) btns[q.answer].classList.add('correct');
+
+  if (correct) {
+    score++;
+    showFeedback(true, q.explanation);
+  } else {
+    showFeedback(false, q.explanation);
+    div.classList.add('shake');
+    setTimeout(() => div.classList.remove('shake'), 400);
+  }
+
+  answered.push({ review: q.review || q.question, correct });
+  document.getElementById('btn-next').style.display = 'inline-block';
+  updateProgress();
+}
+
+function renderMultiQCM(q, container) {
+  const selected = new Set();
+  const wrapper = document.createElement('div');
+  wrapper.className = 'multiqcm-options';
+
+  q.options.forEach((opt, i) => {
+    const option = document.createElement('div');
+    option.className = 'multiqcm-option';
+    option.innerHTML = `
+      <input type="checkbox" tabindex="-1">
+      <span>${opt}</span>
+    `;
+
+    option.addEventListener('click', () => {
+      if (option.dataset.locked === 'true') return;
+
+      const checkbox = option.querySelector('input');
+
+      if (selected.has(i)) {
+        selected.delete(i);
+        checkbox.checked = false;
+        option.classList.remove('selected');
+      } else {
+        selected.add(i);
+        checkbox.checked = true;
+        option.classList.add('selected');
+      }
+    });
+
+    wrapper.appendChild(option);
+  });
+
+  const submitBtn = document.createElement('button');
+  submitBtn.className = 'btn btn-secondary';
+  submitBtn.style.marginTop = '1rem';
+  submitBtn.textContent = 'Vérifier mes réponses';
+
+  submitBtn.onclick = () => {
+    const options = wrapper.querySelectorAll('.multiqcm-option');
+    const expected = new Set(q.answers);
+
+    if (selected.size === 0) {
+      showFeedback(false, "Tu dois cocher au moins une réponse.");
+      return;
+    }
+
+    let allGood = selected.size === expected.size;
+
+    options.forEach((option, i) => {
+      option.dataset.locked = 'true';
+
+      const isSelected = selected.has(i);
+      const isCorrect = expected.has(i);
+
+      if (isCorrect) {
+        option.classList.add('correct');
+      }
+
+      if (isSelected && !isCorrect) {
+        option.classList.add('wrong');
+        allGood = false;
+      }
+
+      if (!isSelected && isCorrect) {
+        allGood = false;
+      }
+    });
+
+    if (allGood) {
+      score++;
+      showFeedback(true, q.explanation);
+    } else {
+      showFeedback(false, q.explanation);
+      wrapper.classList.add('shake');
+      setTimeout(() => wrapper.classList.remove('shake'), 400);
+    }
+
+    answered.push({ review: q.review || q.question, correct: allGood });
+    submitBtn.disabled = true;
+    document.getElementById('btn-next').style.display = 'inline-block';
+    updateProgress();
+  };
+
+  container.appendChild(wrapper);
+  container.appendChild(submitBtn);
+}
+
+function renderVF(q, container) {
+  const div = document.createElement('div');
+  div.className = 'tf-buttons';
+  ['✅ Vrai', '❌ Faux'].forEach((label, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tf-btn ' + (i === 0 ? 'true-btn' : 'false-btn');
+    btn.textContent = label;
+    const chosen = (i === 0);
+    btn.onclick = () => handleVF(chosen, q, div);
+    div.appendChild(btn);
+  });
+  container.appendChild(div);
+}
+
+function handleVF(chosen, q, div) {
+  const btns = div.querySelectorAll('.tf-btn');
+  btns.forEach(b => b.disabled = true);
+  const correct = chosen === q.answer;
+  const chosenBtn = btns[chosen ? 0 : 1];
+  chosenBtn.classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) btns[q.answer ? 0 : 1].classList.add('correct');
+
+  if (correct) {
+    score++;
+    showFeedback(true, q.explanation);
+  } else {
+    showFeedback(false, q.explanation);
+    div.classList.add('shake');
+    setTimeout(() => div.classList.remove('shake'), 400);
+  }
+
+  answered.push({ review: q.review || q.question, correct });
+  document.getElementById('btn-next').style.display = 'inline-block';
+  updateProgress();
+}
+
+function renderDrag(q, container) {
+  const placed = {};
+  const chipStates = {};
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'dnd-area';
+
+  const zonesDiv = document.createElement('div');
+  zonesDiv.style.cssText = 'display:flex;gap:1.2rem;flex-wrap:wrap;margin-bottom:1rem;';
+
+  q.zones.forEach(zoneName => {
+    const col = document.createElement('div');
+    col.style.cssText = 'flex:1;min-width:140px;';
+
+    const label = document.createElement('div');
+    label.style.cssText = 'font-weight:700;color:#475569;font-size:0.9rem;margin-bottom:0.4rem;';
+    label.textContent = zoneName;
+
+    const zone = document.createElement('div');
+    zone.className = 'drop-zone';
+    zone.dataset.zone = zoneName;
+    zone.innerHTML = '<span style="font-size:0.8rem">Déposer ici</span>';
+    zone.style.minHeight = '80px';
+    zone.style.flexDirection = 'column';
+    zone.style.gap = '0.4rem';
+    zone.style.alignItems = 'flex-start';
+    zone.style.padding = '0.5rem';
+
+    zone.addEventListener('dragover', e => {
+      e.preventDefault();
+      zone.classList.add('over');
+    });
+
+    zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('over');
+      const chipLabel = e.dataTransfer.getData('text/plain');
+      if (!chipLabel) return;
+
+      if (chipStates[chipLabel]) {
+        const prevZone = zonesDiv.querySelector(`[data-zone="${chipStates[chipLabel]}"]`);
+        if (prevZone) {
+          const oldChip = prevZone.querySelector(`[data-chip="${CSS.escape(chipLabel)}"]`);
+          if (oldChip) oldChip.remove();
+          if (!prevZone.querySelector('.chip-in-zone')) {
+            const placeholder = prevZone.querySelector('span');
+            if (placeholder) placeholder.style.display = '';
+          }
+        }
+      }
+
+      chipStates[chipLabel] = zoneName;
+      placed[chipLabel] = zoneName;
+
+      const existing = zone.querySelector('span');
+      if (existing) existing.style.display = 'none';
+
+      const newChip = document.createElement('div');
+      newChip.dataset.chip = chipLabel;
+      newChip.className = 'chip-in-zone';
+      newChip.style.cssText = 'background:#7c3aed;color:white;border-radius:0.5rem;padding:0.3rem 0.7rem;font-size:0.88rem;';
+      newChip.textContent = chipLabel;
+      zone.appendChild(newChip);
+
+      const origChip = chipsDiv.querySelector(`.drag-chip[data-label="${CSS.escape(chipLabel)}"]`);
+      if (origChip) origChip.classList.add('placed');
+    });
+
+    col.appendChild(label);
+    col.appendChild(zone);
+    zonesDiv.appendChild(col);
+  });
+
+  const chipsDiv = document.createElement('div');
+  chipsDiv.className = 'drag-items';
+  chipsDiv.style.marginTop = '0.5rem';
+
+  const shuffledPairs = shuffle([...q.pairs]);
+  shuffledPairs.forEach(p => {
+    const chip = document.createElement('div');
+    chip.className = 'drag-chip';
+    chip.textContent = p.label;
+    chip.draggable = true;
+    chip.dataset.label = p.label;
+    chip.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', p.label);
+    });
+    chipsDiv.appendChild(chip);
+  });
+
+  const submitBtn = document.createElement('button');
+  submitBtn.className = 'btn btn-secondary';
+  submitBtn.style.marginTop = '1rem';
+  submitBtn.textContent = 'Vérifier mes réponses';
+
+  submitBtn.onclick = () => {
+    const total = q.pairs.length;
+    const correctCount = q.pairs.filter(p => placed[p.label] === p.zone).length;
+    const allGood = correctCount === total;
+
+    q.pairs.forEach(p => {
+      const zone = zonesDiv.querySelector(`[data-zone="${p.zone}"]`);
+      const chip = zone && zone.querySelector(`[data-chip="${CSS.escape(p.label)}"]`);
+      if (chip) {
+        chip.style.background = placed[p.label] === p.zone ? '#22c55e' : '#ef4444';
+      }
+    });
+
+    if (allGood) {
+      score++;
+      showFeedback(true, q.explanation);
+    } else {
+      showFeedback(false, `${correctCount}/${total} bonnes réponses. ${q.explanation}`);
+    }
+
+    answered.push({ review: q.review || q.question, correct: allGood });
+    submitBtn.disabled = true;
+    chipsDiv.querySelectorAll('.drag-chip').forEach(c => c.draggable = false);
+    document.getElementById('btn-next').style.display = 'inline-block';
+    updateProgress();
+  };
+
+  wrapper.appendChild(zonesDiv);
+  wrapper.appendChild(chipsDiv);
+  wrapper.appendChild(submitBtn);
+  container.appendChild(wrapper);
+}
+
+function renderMultiImg(q, container) {
+  const selected = new Set();
+  const wrapper = document.createElement('div');
+  const grid = document.createElement('div');
+  grid.className = 'img-grid';
+
+  const shuffledImages = shuffle([...q.images]);
+
+  shuffledImages.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.className = 'img-choice';
+    card.innerHTML = `
+      <img src="${item.src}" alt="Circuit ${index + 1}">
+      <div class="img-label">Circuit ${index + 1}</div>
+    `;
+
+    card.onclick = () => {
+      if (card.dataset.locked === 'true') return;
+
+      if (selected.has(index)) {
+        selected.delete(index);
+        card.classList.remove('selected');
+      } else {
+        if (selected.size >= 2) return;
+        selected.add(index);
+        card.classList.add('selected');
+      }
+    };
+
+    grid.appendChild(card);
+  });
+
+  const submitBtn = document.createElement('button');
+  submitBtn.className = 'btn btn-secondary';
+  submitBtn.style.marginTop = '1rem';
+  submitBtn.textContent = 'Vérifier mes réponses';
+
+  submitBtn.onclick = () => {
+    if (selected.size !== 2) {
+      showFeedback(false, "Tu dois sélectionner exactement 2 circuits.");
+      return;
+    }
+
+    const cards = grid.querySelectorAll('.img-choice');
+    let allGood = true;
+
+    cards.forEach((card, i) => {
+      card.dataset.locked = 'true';
+
+      if (shuffledImages[i].good) {
+        card.classList.add('correct');
+      }
+
+      if (selected.has(i) && !shuffledImages[i].good) {
+        card.classList.add('wrong');
+        allGood = false;
+      }
+
+      if (!selected.has(i) && shuffledImages[i].good) {
+        allGood = false;
+      }
+    });
+
+    let feedbackMsg = "";
+
+    if (allGood) {
+      feedbackMsg = q.explanation;
+      score++;
+      showFeedback(true, feedbackMsg);
+        } else {
+      const wrongSelectedIndexes = [...selected].filter(i => !shuffledImages[i].good);
+      const missedGoodIndexes = shuffledImages
+        .map((img, i) => ({ ...img, index: i }))
+        .filter(img => img.good && !selected.has(img.index))
+        .map(img => img.index);
+
+      function groupByReason(indexes) {
+        const groups = {};
+
+        indexes.forEach(i => {
+          const reason = shuffledImages[i].reason;
+          if (!groups[reason]) groups[reason] = [];
+          groups[reason].push(i + 1);
+        });
+
+        return Object.entries(groups).map(([reason, nums]) => {
+          const label = nums.length === 1
+            ? `Circuit ${nums[0]}`
+            : `Circuits ${nums.join(', ')}`;
+          return `<strong>${label}</strong> : ${reason}`;
+        });
+      }
+
+      const groupedWrong = groupByReason(wrongSelectedIndexes);
+      const groupedGood = groupByReason(missedGoodIndexes);
+
+      feedbackMsg = `
+        ${groupedWrong.length ? "<strong>Pourquoi certaines réponses sont fausses :</strong><br>" + groupedWrong.join("<br><br>") + "<br><br>" : ""}
+        ${groupedGood.length ? "<strong>Circuits corrects à repérer :</strong><br>" + groupedGood.join("<br><br>") + "<br><br>" : ""}
+        <strong>À retenir :</strong> ${q.explanation}
+      `;
+
+      showFeedback(false, feedbackMsg);
+    }
+
+
+    answered.push({ review: q.review || q.question, correct: allGood });
+    submitBtn.disabled = true;
+    document.getElementById('btn-next').style.display = 'inline-block';
+    updateProgress();
+  };
+
+  wrapper.appendChild(grid);
+  wrapper.appendChild(submitBtn);
+  container.appendChild(wrapper);
+}
+function renderDoubleQCMImg(q, container) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'doubleqcm-wrap';
+
+  const imageBox = document.createElement('div');
+  imageBox.className = 'question-image';
+  imageBox.innerHTML = `<img src="${q.image}" alt="Circuit électrique">`;
+
+  const block1 = document.createElement('div');
+  block1.className = 'select-block';
+  block1.innerHTML = `
+    <label>Choisis l’état de l’interrupteur :</label>
+    <select class="quiz-select" id="select-state">
+      <option value="">Choisir…</option>
+      ${q.options1.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+    </select>
+  `;
+
+  const block2 = document.createElement('div');
+  block2.className = 'select-block';
+  block2.innerHTML = `
+    <label>Choisis la bonne justification :</label>
+    <select class="quiz-select" id="select-justification">
+      <option value="">Choisir…</option>
+      ${q.options2.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+    </select>
+  `;
+
+  const submitBtn = document.createElement('button');
+  submitBtn.className = 'btn btn-secondary';
+  submitBtn.style.marginTop = '0.5rem';
+  submitBtn.textContent = 'Vérifier ma réponse';
+
+  submitBtn.onclick = () => {
+    const val1 = wrapper.querySelector('#select-state').value;
+    const val2 = wrapper.querySelector('#select-justification').value;
+
+    if (!val1 || !val2) {
+      showFeedback(false, "Tu dois choisir l’état de l’interrupteur et une justification.");
+      return;
+    }
+
+    const allGood = (val1 === q.answer1 && val2 === q.answer2);
+
+    wrapper.querySelectorAll('select').forEach(s => s.disabled = true);
+    submitBtn.disabled = true;
+
+    if (allGood) {
+      score++;
+      showFeedback(true, q.explanation);
+    } else {
+      showFeedback(false, `La bonne réponse était : <strong>${q.answer1}</strong>, ${q.answer2}. ${q.explanation}`);
+      wrapper.classList.add('shake');
+      setTimeout(() => wrapper.classList.remove('shake'), 400);
+    }
+
+    answered.push({ review: q.review || q.question, correct: allGood });
+    document.getElementById('btn-next').style.display = 'inline-block';
+    updateProgress();
+  };
+
+  wrapper.appendChild(imageBox);
+  wrapper.appendChild(block1);
+  wrapper.appendChild(block2);
+  wrapper.appendChild(submitBtn);
+  container.appendChild(wrapper);
+}
+
+function showFeedback(correct, msg) {
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (correct ? 'good' : 'bad');
+  fb.innerHTML = (correct ? '🎉 <strong>Bravo !</strong> ' : '😕 <strong>Pas tout à fait…</strong> ') + msg;
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= shuffled.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResults() {
+  showScreen('screen-results');
+  document.getElementById('progress-fill').style.width = '100%';
+
+  const total = shuffled.length;
+  document.getElementById('final-score').textContent = `${score} / ${total}`;
+  document.getElementById('score-label').textContent = `Tu as eu ${score} bonne${score > 1 ? 's' : ''} réponse${score > 1 ? 's' : ''} sur ${total}`;
+
+  const pct = score / total;
+  let stars = '⭐', msg = '';
+
+  if (pct >= 0.9) {
+    stars = '⭐⭐⭐';
+    msg = 'Excellent(e) ! Tu maîtrises parfaitement le début du cours sur les circuits. Continue comme ça !';
+  } else if (pct >= 0.7) {
+    stars = '⭐⭐';
+    msg = 'Très bien ! Tu as bien compris les bases. Relis les parties sur les interrupteurs et les dipôles pour viser la perfection.';
+  } else {
+    stars = '⭐';
+    msg = 'Tu peux encore progresser ! Relis ton cours attentivement et recommence : tu vas y arriver !';
+  }
+
+  document.getElementById('stars').textContent = stars;
+  document.getElementById('result-msg').textContent = msg;
+
+  const recap = document.getElementById('recap');
+  if (answered.length > 0) {
+    const wrong = answered.filter(a => !a.correct);
+    if (wrong.length > 0) {
+      recap.innerHTML =
+        '<h3>Notions à retravailler :</h3>' +
+        wrong.map(a => `<div class="recap-item"><span class="icon">🔁</span><span>${a.review}</span></div>`).join('');
+    } else {
+      recap.innerHTML = '<div class="recap-item"><span class="icon">✅</span><span>Toutes les réponses sont correctes !</span></div>';
+    }
+  }
+
+  document.getElementById('score-badge').textContent = `Score : ${score} / ${total}`;
+}
+
+function restartQuiz() {
+  showScreen('screen-intro');
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('score-badge').textContent = 'Score : 0 / 0';
+}
+</script>
+</body>
+</html>

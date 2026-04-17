@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le matériel de Chimie</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu: #1a73e8;
+    --bleu-clair: #e8f0fe;
+    --vert: #0f9d58;
+    --vert-clair: #e6f4ea;
+    --rouge: #ea4335;
+    --rouge-clair: #fce8e6;
+    --jaune: #fbbc04;
+    --jaune-clair: #fef9e3;
+    --violet: #7c4dff;
+    --violet-clair: #ede7f6;
+    --bg: #f0f4ff;
+    --carte: #ffffff;
+    --texte: #1a1a2e;
+    --gris: #6c757d;
+    --ombre: 0 4px 20px rgba(0,0,0,0.10);
+    --ombre-forte: 0 8px 32px rgba(0,0,0,0.15);
+    --radius: 20px;
+    --cadre-bord: #e7ebf3;
+    --cadre-ombre: 0 8px 22px rgba(0,0,0,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--texte);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .bg-bubbles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.07;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(110vh) scale(0.8); opacity: 0; }
+    10% { opacity: 0.07; }
+    90% { opacity: 0.07; }
+    100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+  }
+
+  header {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(135deg, #1a73e8 0%, #7c4dff 100%);
+    padding: 28px 20px 22px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(26,115,232,0.3);
+  }
+
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  header p {
+    color: rgba(255,255,255,0.88);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+
+  .score-global {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 30px;
+    padding: 6px 18px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-top: 12px;
+    backdrop-filter: blur(6px);
+  }
+
+  nav {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 16px 16px 0;
+  }
+
+  .tab-btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 2.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: var(--carte);
+    color: var(--gris);
+    box-shadow: var(--ombre);
+  }
+
+  .tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ombre-forte);
+  }
+
+  .tab-btn.active {
+    background: var(--bleu);
+    color: #fff;
+    border-color: var(--bleu);
+    transform: translateY(-2px);
+  }
+
+  .section { display: none; }
+
+  .section.active {
+    display: block;
+    animation: fadeIn 0.35s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform: translateY(10px); }
+    to { opacity:1; transform:none; }
+  }
+
+  main {
+    position: relative;
+    z-index: 5;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7rem;
+    color: var(--bleu);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title span { font-size: 1.5rem; }
+
+  /* ===== CARTES / IMAGES ===== */
+  .instruments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 8px;
+  }
+
+  .instrument-card {
+    background: var(--carte);
+    border-radius: var(--radius);
+    box-shadow: var(--ombre);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 3px solid transparent;
+  }
+
+  .instrument-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--ombre-forte);
+    border-color: var(--bleu);
+  }
+
+  .card-img,
+  .modal-img,
+.quiz-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  padding: 2px 0;
+  margin-bottom: 6px;
+  min-height: 110px;
+}
+
+  .card-img {
+    width: 100%;
+    height: 200px;
+    padding: 16px;
+  }
+
+  .modal-img {
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    padding: 8px;
+  }
+
+  .img-frame {
+    width: 150px;
+    height: 150px;
+    background: #ffffff;
+    border: 1px solid var(--cadre-bord);
+    border-radius: 18px;
+    box-shadow: var(--cadre-ombre);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    overflow: hidden;
+  }
+
+  .modal-img .img-frame {
+    width: 190px;
+    height: 190px;
+  }
+
+.quiz-image .img-frame {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto;
+}
+
+  .img-frame img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.25s ease;
+  }
+.quiz-image img {
+  display: block;
+  margin: 0 auto;
+}
+
+  .instrument-card:hover .img-frame img {
+    transform: scale(1.04);
+  }
+
+  .card-img .emoji-fallback,
+  .modal-img .emoji-fallback,
+  .quiz-image .emoji-fallback {
+    font-size: 4rem;
+  }
+
+  .card-body {
+    padding: 14px 14px 16px;
+  }
+
+  .card-body h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.08rem;
+    color: var(--bleu);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .card-body p {
+    font-size: 0.85rem;
+    color: var(--gris);
+    line-height: 1.5;
+    min-height: 64px;
+  }
+
+  .card-body .utilise {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .tag {
+    background: var(--bleu-clair);
+    color: var(--bleu);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(26,26,46,0.6);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .modal-overlay.open {
+    display: flex;
+    animation: fadeIn 0.2s;
+  }
+
+  .modal-box {
+    background: #fff;
+    border-radius: 24px;
+    padding: 32px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: var(--ombre-forte);
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--gris);
+    background: none;
+    border: none;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--rouge); }
+
+  .modal-box h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: var(--bleu);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .modal-box p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--texte);
+  }
+
+  .modal-box ul {
+    margin: 10px 0 0 18px;
+  }
+
+  .modal-box ul li {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: var(--texte);
+  }
+
+  /* ===== QUIZ ===== */
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    min-width: 160px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    height: 12px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--bleu), var(--violet));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+  }
+
+  .quiz-score-badge {
+    background: var(--jaune);
+    color: #333;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+  }
+
+.quiz-card {
+  background: var(--carte);
+  border-radius: var(--radius);
+  box-shadow: var(--ombre);
+  padding: 14px 18px;
+  text-align: center;
+}
+
+.quiz-question {
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.35;
+}
+
+  .quiz-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .choice-btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 14px 12px;
+    border-radius: 14px;
+    border: 2.5px solid #dde1f0;
+    background: #f8f9ff;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--texte);
+  }
+
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--bleu);
+    background: var(--bleu-clair);
+    transform: scale(1.03);
+  }
+
+  .choice-btn.correct {
+    background: var(--vert-clair);
+    border-color: var(--vert);
+    color: var(--vert);
+  }
+
+  .choice-btn.wrong {
+    background: var(--rouge-clair);
+    border-color: var(--rouge);
+    color: var(--rouge);
+  }
+
+  .choice-btn:disabled { cursor: default; }
+
+  .feedback {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    display: none;
+    animation: popIn 0.3s ease;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity:0; }
+    to { transform:scale(1); opacity:1; }
+  }
+
+  .feedback.correct {
+    background: var(--vert-clair);
+    color: var(--vert);
+    display: block;
+  }
+
+  .feedback.wrong {
+    background: var(--rouge-clair);
+    color: var(--rouge);
+    display: block;
+  }
+
+  .next-btn,
+  .restart-btn {
+    margin-top: 16px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 12px 32px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .next-btn {
+    background: var(--bleu);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(26,115,232,0.35);
+  }
+
+  .next-btn:hover {
+    background: #1557b0;
+    transform: translateY(-2px);
+  }
+
+  .restart-btn {
+    background: var(--violet);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(124,77,255,0.35);
+  }
+
+  .restart-btn:hover {
+    background: #5c3dbf;
+    transform: translateY(-2px);
+  }
+
+  .result-box {
+    text-align: center;
+    padding: 24px 0;
+  }
+
+  .result-box .big-score {
+    font-family: 'Fredoka One', cursive;
+    font-size: 4rem;
+    color: var(--bleu);
+  }
+
+  .result-box .medal {
+    font-size: 4rem;
+    margin-bottom: 8px;
+  }
+
+  .result-box p {
+    font-size: 1.1rem;
+    color: var(--gris);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  /* ===== DRAG ===== */
+  .drag-instructions {
+    background: var(--jaune-clair);
+    border-left: 4px solid var(--jaune);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #5c4200;
+  }
+
+  .drag-zone {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 700px) {
+    .drag-zone,
+    .quiz-choices {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .images-pool,
+  .labels-list {
+    background: var(--carte);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--ombre);
+  }
+
+  .images-pool h3,
+  .labels-list h3,
+  .words-to-find h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+  }
+
+  .images-pool h3 { color: var(--violet); }
+  .labels-list h3 { color: var(--vert); }
+
+
+
+  .drop-target.drag-over {
+    background: var(--vert-clair);
+    border-color: var(--vert);
+  }
+
+  .drop-target.correct-drop {
+    border-color: var(--vert);
+    background: var(--vert-clair);
+  }
+
+  .drop-target.wrong-drop {
+    border-color: var(--rouge);
+    background: var(--rouge-clair);
+    animation: shake 0.4s;
+  }
+
+  @keyframes shake {
+    0%,100% { transform:none; }
+    25% { transform:translateX(-6px); }
+    75% { transform:translateX(6px); }
+  }
+
+  .drop-slot .img-frame {
+    width: 68px;
+    height: 68px;
+    border-radius: 12px;
+    padding: 6px;
+  }
+
+
+  .drop-result-icon {
+    font-size: 1.4rem;
+    margin-left: 4px;
+  }
+
+  .drag-actions {
+    margin-top: 18px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .check-btn,
+  .reset-drag-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    padding: 10px 26px;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .check-btn {
+    background: var(--vert);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(15,157,88,0.3);
+  }
+
+  .check-btn:hover {
+    background: #0a7a43;
+    transform: translateY(-2px);
+  }
+
+  .reset-drag-btn {
+    background: #f0f0f0;
+    color: var(--gris);
+  }
+
+  .reset-drag-btn:hover {
+    background: #e0e0e0;
+  }
+
+.drag-items-grid,
+#dropTargets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.drag-item,
+.drop-target {
+  height: 88px;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.drag-item {
+  background: var(--violet-clair);
+  padding: 8px;
+  text-align: center;
+  cursor: grab;
+  border: 2px solid transparent;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drag-item:hover {
+  border-color: var(--violet);
+  transform: scale(1.03);
+}
+
+.drag-item.dragging {
+  opacity: 0.4;
+}
+
+.drag-item .img-frame {
+  width: 68px;
+  height: 68px;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+}
+
+.drag-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.drag-item .emoji-fallback {
+  font-size: 1.8rem;
+  pointer-events: none;
+}
+
+.drag-item.placed {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.drop-target {
+  background: #f8fffe;
+  border: 2.5px dashed #a8d5c2;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.drop-label-name {
+  font-weight: 700;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: var(--texte);
+  flex: 1;
+}
+
+.drop-slot {
+  width: 68px;
+  height: 68px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.drop-slot .img-frame {
+  width: 68px;
+  height: 68px;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+}
+
+.drop-slot img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.drop-slot .emoji-fallback {
+  font-size: 1.8rem;
+}
+
+.drop-result-icon {
+  font-size: 1rem;
+  margin-left: 2px;
+}
+
+@media (max-width: 700px) {
+  .drag-items-grid,
+  #dropTargets {
+    grid-template-columns: 1fr;
+  }
+}
+
+  .drag-score {
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--vert);
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ===== MOTS MÊLÉS ===== */
+.word-search-wrap {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 16px;
+  align-items: start;
+  justify-content: start;
+}
+
+  @media (max-width: 800px) {
+    .word-search-wrap {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .grid-container,
+  .words-to-find {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-container {
+  width: fit-content;
+}
+
+.words-to-find {
+  width: fit-content;
+  min-width: 200px;
+}
+
+  #word-grid {
+    display: inline-grid;
+    border: 2px solid #dde1f0;
+    border-radius: 10px;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .grid-cell {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 1px solid #eef;
+    transition: background 0.15s;
+    text-transform: uppercase;
+  }
+
+  .grid-cell:hover { background: var(--bleu-clair); }
+  .grid-cell.selected { background: #c2d7ff; }
+  .grid-cell.found-0 { background: #a8f0c8; color: #0a6035; }
+  .grid-cell.found-1 { background: #ffd6a5; color: #7a3800; }
+  .grid-cell.found-2 { background: #c9b8ff; color: #3d0080; }
+  .grid-cell.found-3 { background: #ffb3c1; color: #8b0020; }
+  .grid-cell.found-4 { background: #b3e5fc; color: #003f6b; }
+  .grid-cell.found-5 { background: #fff9b3; color: #5c4a00; }
+  .grid-cell.found-6 { background: #d0f0c0; color: #1a4d00; }
+  .grid-cell.found-7 { background: #ffd6e0; color: #7a0030; }
+
+  .words-to-find {
+    min-width: 200px;
+  }
+
+  .words-to-find h3 {
+    color: var(--rouge);
+  }
+
+.restart-word-btn {
+  margin-top: 14px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.95rem;
+  padding: 10px 22px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--violet);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(124,77,255,0.30);
+}
+
+.restart-word-btn:hover {
+  background: #5c3dbf;
+  transform: translateY(-2px);
+}
+  .word-chip {
+    display: block;
+    padding: 7px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 7px;
+    background: #f5f5f5;
+    color: var(--texte);
+    transition: all 0.3s;
+  }
+
+  .word-chip.found-chip {
+    text-decoration: line-through;
+    color: #888;
+    opacity: 0.7;
+  }
+
+  .floating-stars {
+    position: fixed;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .star-burst {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: burstAnim 1s ease forwards;
+  }
+
+  @keyframes burstAnim {
+    0% { transform: translateY(0) scale(0); opacity: 1; }
+    100% { transform: translateY(-80px) scale(1.5); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-bubbles" id="bubbles"></div>
+<div class="floating-stars" id="floatingStars"></div>
+
+<header>
+  <h1>🔬 Le matériel de laboratoire 🧪</h1>
+  <p>Cours interactif — Sciences 6ème</p>
+  <div class="score-global">⭐ Score total : <span id="totalScore">0</span> pts / <span id="totalMax">0</span> pts</div>
+</header>
+
+<nav>
+  <button class="tab-btn active" onclick="showTab('cours', this)">📚 Cours</button>
+  <button class="tab-btn" onclick="showTab('quiz', this)">❓ Quiz</button>
+  <button class="tab-btn" onclick="showTab('drag', this)">🖱️ Associer</button>
+  <button class="tab-btn" onclick="showTab('mots', this)">🔤 Jeu - Mots mêlés</button>
+</nav>
+
+<main>
+
+  <div class="section active" id="tab-cours">
+    <div class="section-title"><span>📖</span> Les instruments de verrerie</div>
+    <p style="margin-bottom:18px; color:var(--gris); font-size:0.95rem;">
+      Clique sur un instrument pour en savoir plus !
+    </p>
+    <div class="instruments-grid" id="cours-grid"></div>
+  </div>
+
+  <div class="section" id="tab-quiz">
+    <div class="section-title"><span>🧪</span> Quiz — Reconnais l'instrument !</div>
+    <div class="quiz-header">
+      <div>Question <span id="qNum">1</span> / <span id="qTotal">10</span></div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="quiz-score-badge">⭐ <span id="quizScore">0</span></div>
+    </div>
+
+    <div class="quiz-card" id="quizCard">
+      <div class="quiz-image" id="quizImage"></div>
+      <div class="quiz-question" id="quizQuestion"></div>
+      <div class="quiz-choices" id="quizChoices"></div>
+      <div class="feedback" id="feedback"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()" style="display:none">Question suivante →</button>
+    </div>
+
+    <div id="quizResult" style="display:none">
+      <div class="quiz-card result-box">
+        <div class="medal" id="resultMedal"></div>
+        <div class="big-score" id="resultScore"></div>
+        <p id="resultMsg"></p>
+        <button class="restart-btn" onclick="startQuiz()">🔄 Recommencer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="tab-drag">
+    <div class="section-title"><span>🎯</span> Associe l'image au nom</div>
+    <div class="drag-instructions">
+      💡 <strong>Comment jouer :</strong> Fais glisser chaque image vers le bon nom d'instrument dans la liste à droite. Clique sur <em>Vérifier</em> quand tu as terminé !
+    </div>
+
+    <div class="drag-zone">
+      <div class="images-pool">
+        <h3>🖼️ Images</h3>
+        <div class="drag-items-grid" id="dragItemsGrid"></div>
+      </div>
+
+      <div class="labels-list">
+        <h3>🏷️ Noms</h3>
+        <div id="dropTargets"></div>
+      </div>
+    </div>
+
+    <div class="drag-actions">
+      <button class="check-btn" onclick="checkDrag()">✅ Vérifier</button>
+      <button class="reset-drag-btn" onclick="resetDrag()">🔄 Recommencer</button>
+      <div class="drag-score" id="dragScore" style="display:none">✅ <span id="dragScoreVal">0</span>/8 corrects !</div>
+    </div>
+  </div>
+
+  <div class="section" id="tab-mots">
+    <div class="section-title"><span>🔤</span> Mots mêlés — Trouve les instruments !</div>
+    <p style="margin-bottom:16px; color:var(--gris); font-size:0.9rem;">
+      Clique sur la première lettre, puis sur la dernière lettre du mot à trouver.
+    </p>
+
+    <div class="word-search-wrap">
+      <div class="grid-container">
+        <div id="word-grid"></div>
+      </div>
+
+     <div class="words-to-find">
+  <h3>🔍 À trouver :</h3>
+  <div id="wordList"></div>
+
+  <div id="wsScore" style="margin-top:14px; font-weight:800; font-size:1rem; color:var(--vert); display:none">
+    🎉 Bravo ! Tout trouvé !
+  </div>
+
+  <button class="restart-word-btn" onclick="buildWordSearch()">🔄 Recommencer</button>
+</div>
+    </div>
+  </div>
+
+</main>
+
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+    <div class="modal-img" id="modalImg"></div>
+    <h2 id="modalName"></h2>
+    <p id="modalDesc"></p>
+    <ul id="modalUses" style="margin-top:12px;"></ul>
+  </div>
+</div>
+
+<script>
+const QUIZ_TOTAL = 10;
+const DRAG_TOTAL = 8;
+const WORD_COUNT = 10;
+
+const QUIZ_POINTS = QUIZ_TOTAL * 10;
+const DRAG_POINTS = DRAG_TOTAL * 5;
+const WORD_POINTS = WORD_COUNT * 15;
+const TOTAL_MAX_SCORE = QUIZ_POINTS + DRAG_POINTS + WORD_POINTS;
+
+const instruments = [
+  {
+    id: "becher",
+    nom: "Le bécher",
+    emoji: "🥛",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/ba14ddbb8b62e467d112f1b02370468892a90d01/Verrerie/Becher2.png",
+    desc: "Le bécher est un récipient cylindrique à bords droits, avec un bec verseur. Il sert à contenir, chauffer ou mélanger des substances chimiques.",
+    utilisations: ["Contenir un liquide", "Chauffer un liquide sur une plaque chauffante", "Effectuer des mélanges", "Stocker temporairement un liquide"],
+    tags: ["Contenir", "Chauffer", "Mélanger"]
+  },
+  {
+    id: "erlenmeyer",
+    nom: "L'erlenmeyer",
+    emoji: "🔺",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/ba14ddbb8b62e467d112f1b02370468892a90d01/Verrerie/Erlenmeyer%202.png",
+    desc: "L'erlenmeyer a une forme conique élargie vers le bas et un col étroit. Il limite les projections lorsqu'on agite la subsance présente à l'intérieur.",
+    utilisations: ["Agiter un liquide en évitant les projections", "Chauffer un liquide sur une plaque chauffante", "Effectuer des mélanges", "Stocker un liquide en évitant l'évaporation"],
+    tags: ["Mélanger", "Chauffer"]
+  },
+  {
+    id: "eprouvette",
+    nom: "L'éprouvette graduée",
+    emoji: "📏",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/ba14ddbb8b62e467d112f1b02370468892a90d01/Verrerie/Eprouvette%20gradu%C3%A9e%202.png",
+    desc: "L'éprouvette graduée permet de mesurer avec précision le volume d'un liquide. Elle est graduée en mL.",
+    utilisations: ["Mesurer avec précision un volume"],
+    tags: ["Mesurer"]
+  },
+  {
+    id: "tube_a_essai",
+    nom: "Le tube à essai",
+    emoji: "🧪",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/ba14ddbb8b62e467d112f1b02370468892a90d01/Verrerie/Tube%20%C3%A0%20essai%202.png",
+    desc: "Le tube à essai est un petit tube en verre fermé sur l'une de ses extrémités. Il sert à réaliser de petites expériences ou à observer de petites réactions chimiques.",
+    utilisations: ["Réaliser de petites réactions chimiques", "Observer ou présenter un échantillon"],
+    tags: ["Réaction", "Observer"]
+  },
+  {
+    id: "entonnoir",
+    nom: "L'entonnoir",
+    emoji: "🔽",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/ba14ddbb8b62e467d112f1b02370468892a90d01/Verrerie/Entonnoir%202.png",
+    desc: "L'entonnoir a une forme de cône évasé se terminant par un tube. Il facilite le versement d'un liquide dans un autre récipient à col étroit.",
+    utilisations: ["Filtrer un liquide (avec un filtre en papier)", "Transvaser un liquide dans un autre récipient"],
+    tags: ["Filtrer", "Transvaser"]
+  },
+  {
+    id: "fiole_jaugee",
+    nom: "La fiole jaugée",
+    emoji: "⚗️",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/3467b8aba40903343133cc503b86fea8d948155c/Fiole%20jaug%C3%A9e.png",
+    desc: "La fiole jaugée a un volume très précis indiqué sur le col. Elle sert à préparer des solutions de concentration exacte.",
+    utilisations: ["Préparer une solution à concentration précise", "Mesurer un seul volume précis"],
+    tags: ["Précision", "Mesurer"]
+  },
+  {
+    id: "agitateur",
+    nom: "L'agitateur",
+    emoji: "🪭",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/Agitateur.png",
+    desc: "L'agitateur en verre sert à mélanger ou homogénéiser une solution.",
+    utilisations: ["Mélanger des substances", "Permet d'agiter pour homogénéiser un mélange"],
+    tags: ["Mélanger", "Agiter"]
+  },
+  {
+    id: "pipette",
+    nom: "La pipette",
+    emoji: "💉",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/3467b8aba40903343133cc503b86fea8d948155c/Pipette.png",
+    desc: "La pipette permet de prélever et de transférer de petits volumes de liquide avec précision.",
+    utilisations: ["Prélever un petit volume de liquide", "Transférer une petite quantité de liquide d'un récipient à un autre"],
+    tags: ["Transférer", "Prélever"]
+  },
+  {
+    id: "ampoule_a_decanter",
+    nom: "L'ampoule à décanter",
+    emoji: "🕚",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/ba14ddbb8b62e467d112f1b02370468892a90d01/Verrerie/Ampoule%20%C3%A0%20d%C3%A9canter%202.png",
+    desc: "L'ampoule à décanter permet de séparer, par décantation, deux liquides non miscibles. Sa partie inférieure est munie d'un robinet.",
+    utilisations: ["Séparer des liquides non miscibles", "Réaliser une décantation"],
+    tags: ["Séparer", "Décanter", "Non miscibles"]
+  },
+  {
+    id: "ballon_a_fond_plat",
+    nom: "Le ballon à fond plat",
+    emoji: "🎈",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/Ballon%20%C3%A0%20fond%20plat.png",
+    desc: "Le ballon à fond plat est un récipient à col étroit. Son fond plat lui permet d'être stable sur une surface. Son col étroit permet d'éviter l'évaporation.",
+    utilisations: ["Chauffer un liquide", "Stocker temporairement un liquide"],
+    tags: ["Chauffer", "Stocker"]
+  },
+  {
+    id: "ballon_a_fond_rond",
+    nom: "Le ballon à fond rond",
+    emoji: "🎈",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/Ballon%20%C3%A0%20fond%20rond.png",
+    desc: "Le ballon à fond rond est utilisé surtout pour chauffer un liquide de manière uniforme. Il doit généralement être maintenu par un support.",
+    utilisations: ["Chauffer de manière uniforme un lqiuide (avec un chauffe ballon)"],
+    tags: ["Chauffer", "Montage"]
+  },
+  {
+    id: "boite_de_petri",
+    nom: "La boîte de Pétri",
+    emoji: "🧫",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/Boite%20de%20p%C3%A9tri.png",
+    desc: "La boîte de Pétri est une petite boîte ronde peu profonde, souvent utilisée pour déposer, observer ou cultiver de petits échantillons.",
+    utilisations: ["Déposer un échantillon", "Observer un solide ou un liquide", "Réaliser des cultures en SVT"],
+    tags: ["Observer", "Déposer", "Culture"]
+  },
+  {
+    id: "cristallisoir",
+    nom: "Le cristallisoir",
+    emoji: "🥣",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/Cristallisoir.png",
+    desc: "Le cristallisoir est un récipient large et peu profond. Il sert notamment à favoriser l'évaporation d'un liquide et l'apparition de cristaux.",
+    utilisations: ["Utilisé pour laisser un liquide s'évaporer", "Obtenir des cristaux","Recueillir un gaz par déplacement d'eau"],
+    tags: ["Évaporer", "Cristalliser", "Contenir"]
+  },
+  {
+    id: "filtre",
+    nom: "Le filtre",
+    emoji: "⚪",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/Filtre.png",
+    desc: "Le filtre en papier retient les particules solides lorsqu'on le place dans un entonnoir pour filtrer un mélange.",
+    utilisations: ["Séparer un solide d'un liquide"],
+    tags: ["Filtrer", "Séparer"]
+  },
+  {
+    id: "potence",
+    nom: "La potence",
+    emoji: "🗜️",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/f8891737f407718d9e5a68d7101d840dc38bbdeb/Verrerie/Potence%202.png",
+    desc: "La potence est un support de laboratoire servant à maintenir du matériel à l'aide de pinces ou d'anneaux.",
+    utilisations: ["Maintenir un instrument"],
+    tags: ["Support", "Maintenir", "Montage"]
+  },
+  {
+    id: "spatule",
+    nom: "La spatule",
+    emoji: "🥄",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/Spatule.png",
+    desc: "La spatule sert à prélever de petites quantités de solides en poudre ou en grains.",
+    utilisations: ["Prélever un solide", "Transférer un solide", "Mélanger des substances"],
+    tags: ["Prélever", "Solide"]
+  },
+  {
+    id: "tube_refrigerant",
+    nom: "Le tube réfrigérant",
+    emoji: "❄️",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/Tube%20r%C3%A9frig%C3%A9rant.png",
+    desc: "Le tube réfrigérant permet de refroidir des vapeurs pour les retransformer en liquide lors de certains montages.",
+    utilisations: ["Refroidir une vapeur", "Liquéfier un gaz", "Participer à un montage de distillation"],
+    tags: ["Refroidir", "Condensation", "Montage"]
+  },
+  {
+    id: "verre_a_pied",
+    nom: "Le verre à pied",
+    emoji: "🍷",
+    img: "https://raw.githubusercontent.com/Nabo33/Images/22745850c1d41842ca863d6d04666a8d75bd63b8/Verrerie/verre%20%C3%A0%20pied.jpg",
+    desc: "Le verre à pied est un récipient muni d'un pied. Au laboratoire, il peut servir à contenir ou présenter certaines substances.",
+    utilisations: ["Contenir un liquide", "Observer ou présenter un échantillon"],
+    tags: ["Contenir", "Observer"]
+  }
+];
+
+function cleanArray(arr) {
+  return (arr || []).filter(v => typeof v === "string" && v.trim() !== "");
+}
+
+function shortDesc(text) {
+  const t = (text && text.trim()) ? text.trim() : "Description à compléter.";
+  return t.length > 95 ? t.substring(0, 95) + "…" : t;
+}
+
+(function createBubbles() {
+  const wrap = document.getElementById('bubbles');
+  const colors = ['#1a73e8','#7c4dff','#0f9d58','#fbbc04','#ea4335'];
+  for (let i = 0; i < 14; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const s = 60 + Math.random() * 160;
+    b.style.cssText = `
+      width:${s}px;
+      height:${s}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${12+Math.random()*20}s;
+      animation-delay:-${Math.random()*20}s;
+    `;
+    wrap.appendChild(b);
+  }
+})();
+
+let globalScore = 0;
+let globalMaxReached = 0;
+
+function addGlobalScore(pts, x, y) {
+  globalScore += pts;
+  updateGlobalDisplay();
+  burstStars(x, y);
+}
+
+function updateGlobalDisplay() {
+  document.getElementById('totalScore').textContent = globalScore;
+  document.getElementById('totalMax').textContent = globalMaxReached;
+}
+
+function addGlobalMax(pts) {
+  globalMaxReached += pts;
+  updateGlobalDisplay();
+}
+
+function burstStars(x, y) {
+  const wrap = document.getElementById('floatingStars');
+  const s = document.createElement('div');
+  s.className = 'star-burst';
+  s.textContent = '⭐';
+  s.style.left = (x || 200) + 'px';
+  s.style.top = (y || 300) + 'px';
+  wrap.appendChild(s);
+  setTimeout(() => s.remove(), 1100);
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+function imageHTML(inst, frameClass = "") {
+  const extra = frameClass ? " " + frameClass : "";
+  return `
+    <div class="img-frame${extra}">
+      <img src="${inst.img}" alt="${inst.nom}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+      <span class="emoji-fallback" style="display:none">${inst.emoji || "🧪"}</span>
+    </div>
+  `;
+}
+
+function buildCours() {
+  const grid = document.getElementById('cours-grid');
+  grid.innerHTML = '';
+
+  instruments.forEach(inst => {
+    const tags = cleanArray(inst.tags);
+    const card = document.createElement('div');
+    card.className = 'instrument-card';
+    card.innerHTML = `
+      <div class="card-img">
+        ${imageHTML(inst)}
+      </div>
+      <div class="card-body">
+        <h3>${inst.nom}</h3>
+        <p>${shortDesc(inst.desc)}</p>
+        <div class="utilise">
+          ${tags.length ? tags.map(t => `<span class="tag">${t}</span>`).join('') : `<span class="tag">À compléter</span>`}
+        </div>
+      </div>
+    `;
+    card.addEventListener('click', () => openModal(inst));
+    grid.appendChild(card);
+  });
+}
+
+function openModal(inst) {
+  document.getElementById('modalImg').innerHTML = imageHTML(inst);
+  document.getElementById('modalName').textContent = inst.nom;
+  document.getElementById('modalDesc').textContent = inst.desc && inst.desc.trim() ? inst.desc : "Description à compléter.";
+
+  const ul = document.getElementById('modalUses');
+  ul.innerHTML = '<strong>Utilisations :</strong>';
+
+  const uses = cleanArray(inst.utilisations);
+  if (uses.length) {
+    uses.forEach(u => {
+      const li = document.createElement('li');
+      li.textContent = u;
+      ul.appendChild(li);
+    });
+  } else {
+    const li = document.createElement('li');
+    li.textContent = "À compléter.";
+    ul.appendChild(li);
+  }
+
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+  }
+}
+
+/* ===== QUIZ ===== */
+let quizQuestions = [];
+let qIndex = 0;
+let quizScore = 0;
+
+
+function buildQuizQuestion(inst) {
+  const type = Math.floor(Math.random() * 3);
+
+  if (type === 1) {
+    const usesPool = instruments
+      .map(i => cleanArray(i.utilisations)[0])
+      .filter(Boolean);
+
+    const firstUse = cleanArray(inst.utilisations)[0] || "Utilisation à compléter";
+
+    return {
+      inst,
+      image: inst.img,
+      emoji: inst.emoji,
+      question: `À quoi sert ${inst.nom} ?`,
+      answer: firstUse,
+      choices: getChoices(firstUse, usesPool)
+    };
+  }
+
+  return {
+    inst,
+    image: inst.img,
+    emoji: inst.emoji,
+    question: "Quel est le nom de cet instrument ?",
+    answer: inst.nom,
+    choices: getChoices(inst.nom, instruments.map(i => i.nom))
+  };
+}
+
+function getChoices(correct, pool) {
+  const uniquePool = [...new Set(pool.filter(Boolean))];
+  const wrong = uniquePool.filter(x => x !== correct).sort(() => Math.random() - 0.5).slice(0, 3);
+  return [correct, ...wrong].sort(() => Math.random() - 0.5);
+}
+
+function startQuiz() {
+  quizScore = 0;
+  qIndex = 0;
+
+  const total = Math.min(QUIZ_TOTAL, instruments.length);
+  const shuffled = [...instruments].sort(() => Math.random() - 0.5).slice(0, total);
+  quizQuestions = shuffled.map(buildQuizQuestion);
+
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizCard').style.display = 'block';
+  document.getElementById('qTotal').textContent = quizQuestions.length;
+  document.getElementById('quizScore').textContent = 0;
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = quizQuestions[qIndex];
+  document.getElementById('qNum').textContent = qIndex + 1;
+  document.getElementById('progressFill').style.width = ((qIndex / quizQuestions.length) * 100) + '%';
+
+  document.getElementById('quizImage').innerHTML = imageHTML(q.inst);
+  document.getElementById('quizQuestion').textContent = q.question;
+
+  const choices = document.getElementById('quizChoices');
+  choices.innerHTML = '';
+
+  q.choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.addEventListener('click', () => answerQuiz(c, q.answer, btn));
+    choices.appendChild(btn);
+  });
+
+  const feedback = document.getElementById('feedback');
+  feedback.className = 'feedback';
+  feedback.textContent = '';
+  document.getElementById('nextBtn').style.display = 'none';
+}
+
+function answerQuiz(chosen, answer, btn) {
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+  const fb = document.getElementById('feedback');
+
+  addGlobalMax(10);
+
+  if (chosen === answer) {
+    btn.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = "✅ Bravo ! C'est la bonne réponse !";
+    quizScore++;
+    document.getElementById('quizScore').textContent = quizScore;
+    const rect = btn.getBoundingClientRect();
+    addGlobalScore(10, rect.left + rect.width / 2, rect.top);
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'feedback wrong';
+    fb.textContent = `❌ Pas tout à fait ! La bonne réponse était : ${answer}`;
+    document.querySelectorAll('.choice-btn').forEach(b => {
+      if (b.textContent === answer) b.classList.add('correct');
+    });
+  }
+
+  document.getElementById('nextBtn').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  qIndex++;
+  if (qIndex >= quizQuestions.length) showResult();
+  else renderQuestion();
+}
+
+function showResult() {
+  document.getElementById('quizCard').style.display = 'none';
+  document.getElementById('progressFill').style.width = '100%';
+
+  const pct = quizScore / quizQuestions.length;
+  let medal = '😕';
+  let msg = "Continue à t'entraîner !";
+
+  if (pct >= 0.9) {
+    medal = '🏆';
+    msg = "Excellent ! Tu es un(e) pro de la verrerie !";
+  } else if (pct >= 0.7) {
+    medal = '🥇';
+    msg = "Très bien ! Tu maîtrises bien la verrerie !";
+  } else if (pct >= 0.5) {
+    medal = '🥈';
+    msg = "Pas mal ! Revois le cours pour progresser.";
+  }
+
+  document.getElementById('resultMedal').textContent = medal;
+  document.getElementById('resultScore').textContent = `${quizScore}/${quizQuestions.length}`;
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('quizResult').style.display = 'block';
+}
+
+/* ===== DRAG ===== */
+let dragSrc = null;
+let dragPairs = [];
+
+function buildDrag() {
+  dragPairs = [...instruments].sort(() => Math.random() - 0.5).slice(0, Math.min(8, instruments.length));
+
+  const shuffledImages = [...dragPairs].sort(() => Math.random() - 0.5);
+  const shuffledLabels = [...dragPairs].sort(() => Math.random() - 0.5);
+
+  const grid = document.getElementById('dragItemsGrid');
+  grid.innerHTML = '';
+
+  shuffledImages.forEach(inst => {
+    const item = document.createElement('div');
+    item.className = 'drag-item';
+    item.draggable = true;
+    item.dataset.id = inst.id;
+    item.innerHTML = imageHTML(inst);
+
+    item.addEventListener('dragstart', () => {
+      dragSrc = item;
+      item.classList.add('dragging');
+    });
+
+    item.addEventListener('dragend', () => {
+      item.classList.remove('dragging');
+    });
+
+    item.addEventListener('touchstart', touchStart, { passive: true });
+    item.addEventListener('touchmove', touchMove, { passive: false });
+    item.addEventListener('touchend', touchEnd);
+
+    grid.appendChild(item);
+  });
+
+  const targets = document.getElementById('dropTargets');
+  targets.innerHTML = '';
+
+  shuffledLabels.forEach(inst => {
+    const target = document.createElement('div');
+    target.className = 'drop-target';
+    target.dataset.id = inst.id;
+    target.innerHTML = `
+      <div class="drop-slot" id="slot-${inst.id}">
+        <span style="color:#ccc;font-size:0.65rem">ici</span>
+      </div>
+      <div class="drop-label-name">${inst.nom}</div>
+      <span class="drop-result-icon" id="icon-${inst.id}"></span>
+    `;
+
+    target.addEventListener('dragover', e => {
+      e.preventDefault();
+      target.classList.add('drag-over');
+    });
+
+    target.addEventListener('dragleave', () => target.classList.remove('drag-over'));
+
+    target.addEventListener('drop', e => {
+      e.preventDefault();
+      target.classList.remove('drag-over');
+
+      if (dragSrc && !target.dataset.filled) {
+        const slot = document.getElementById('slot-' + inst.id);
+        slot.innerHTML = imageHTML(dragPairs.find(i => i.id === dragSrc.dataset.id));
+        target.dataset.dropped = dragSrc.dataset.id;
+        target.dataset.filled = '1';
+        dragSrc.classList.add('placed');
+        dragSrc.draggable = false;
+        dragSrc = null;
+      }
+    });
+
+    targets.appendChild(target);
+  });
+
+  document.getElementById('dragScore').style.display = 'none';
+}
+
+let touchDragItem = null;
+let touchClone = null;
+
+function touchStart(e) {
+  touchDragItem = e.currentTarget;
+  touchClone = touchDragItem.cloneNode(true);
+  touchClone.style.cssText = 'position:fixed; opacity:0.7; pointer-events:none; z-index:9999; width:90px;';
+  document.body.appendChild(touchClone);
+}
+
+function touchMove(e) {
+  if (!touchClone) return;
+  e.preventDefault();
+
+  const t = e.touches[0];
+  touchClone.style.left = (t.clientX - 45) + 'px';
+  touchClone.style.top = (t.clientY - 45) + 'px';
+
+  document.querySelectorAll('.drop-target').forEach(dt => {
+    const r = dt.getBoundingClientRect();
+    if (t.clientX > r.left && t.clientX < r.right && t.clientY > r.top && t.clientY < r.bottom) {
+      dt.classList.add('drag-over');
+    } else {
+      dt.classList.remove('drag-over');
+    }
+  });
+}
+
+function touchEnd(e) {
+  if (!touchClone) return;
+
+  const t = e.changedTouches[0];
+  document.querySelectorAll('.drop-target').forEach(dt => {
+    const r = dt.getBoundingClientRect();
+    if (t.clientX > r.left && t.clientX < r.right && t.clientY > r.top && t.clientY < r.bottom && !dt.dataset.filled) {
+      const slot = document.getElementById('slot-' + dt.dataset.id);
+      slot.innerHTML = imageHTML(dragPairs.find(i => i.id === touchDragItem.dataset.id));
+      dt.dataset.dropped = touchDragItem.dataset.id;
+      dt.dataset.filled = '1';
+      touchDragItem.classList.add('placed');
+      touchDragItem.draggable = false;
+    }
+    dt.classList.remove('drag-over');
+  });
+
+  touchClone.remove();
+  touchClone = null;
+  touchDragItem = null;
+}
+
+function checkDrag() {
+  let correct = 0;
+
+  addGlobalMax(dragPairs.length * 5);
+
+  document.querySelectorAll('.drop-target').forEach(dt => {
+    const icon = document.getElementById('icon-' + dt.dataset.id);
+    dt.classList.remove('correct-drop', 'wrong-drop');
+
+    if (!dt.dataset.dropped) {
+      icon.textContent = '';
+      return;
+    }
+
+    if (dt.dataset.dropped === dt.dataset.id) {
+      dt.classList.add('correct-drop');
+      icon.textContent = '✅';
+      correct++;
+    } else {
+      dt.classList.add('wrong-drop');
+      icon.textContent = '❌';
+    }
+  });
+
+  const sd = document.getElementById('dragScore');
+  sd.style.display = 'flex';
+  document.getElementById('dragScoreVal').textContent = correct;
+
+  if (correct > 0) addGlobalScore(correct * 5, 400, 400);
+}
+
+function resetDrag() {
+  buildDrag();
+}
+
+/* ===== MOTS MÊLÉS ===== */
+const WORD_POOL = [...new Set(
+  instruments
+    .flatMap(inst =>
+      inst.nom
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")     // enlève les accents
+        .replace(/\b(le|la|les|l)\b/gi, "")  // enlève les articles
+        .replace(/'/g, " ")
+        .replace(/-/g, " ")
+        .split(/\s+/)
+        .map(w => w.trim().toUpperCase())
+        .filter(w => w.length >= 4 && w.length <= 12)
+    )
+)];
+
+const GRID_SIZE = 15;
+
+let wsWords = [];
+let wsGrid = [];
+let wsFound = [];
+let wsSelecting = false;
+let wsFirst = null;
+let wsCells = [];
+let wsPlacedWords = [];
+
+const WS_DIRECTIONS = [
+  { dr: 0, dc: 1 },
+  { dr: 0, dc: -1 },
+  { dr: 1, dc: 0 },
+  { dr: -1, dc: 0 },
+  { dr: 1, dc: 1 },
+  { dr: -1, dc: -1 },
+  { dr: 1, dc: -1 },
+  { dr: -1, dc: 1 }
+];
+
+function shuffleArray(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
+
+function shuffleArray(arr) {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function pickRandomWords() {
+  return shuffleArray(WORD_POOL).slice(0, 10);
+}
+
+function canPlaceWord(word, r, c, dr, dc) {
+  for (let i = 0; i < word.length; i++) {
+    const nr = r + dr * i;
+    const nc = c + dc * i;
+
+    if (nr < 0 || nr >= GRID_SIZE || nc < 0 || nc >= GRID_SIZE) return false;
+    if (wsGrid[nr][nc] !== '' && wsGrid[nr][nc] !== word[i]) return false;
+  }
+  return true;
+}
+
+function placeWord(word, r, c, dr, dc) {
+  const cells = [];
+  for (let i = 0; i < word.length; i++) {
+    const nr = r + dr * i;
+    const nc = c + dc * i;
+    wsGrid[nr][nc] = word[i];
+    cells.push([nr, nc]);
+  }
+  return cells;
+}
+
+function buildWordSearch() {
+  wsSelecting = false;
+  wsFirst = null;
+  wsCells = [];
+  wsPlacedWords = [];
+  wsWords = pickRandomWords();
+  wsGrid = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(''));
+  wsFound = Array(wsWords.length).fill(false);
+
+  wsWords.forEach((word, wi) => {
+    let placed = false;
+    let tries = 0;
+
+    while (!placed && tries < 500) {
+      tries++;
+
+      const dir = WS_DIRECTIONS[Math.floor(Math.random() * WS_DIRECTIONS.length)];
+      const r = Math.floor(Math.random() * GRID_SIZE);
+      const c = Math.floor(Math.random() * GRID_SIZE);
+
+      if (canPlaceWord(word, r, c, dir.dr, dir.dc)) {
+        const cells = placeWord(word, r, c, dir.dr, dir.dc);
+        wsPlacedWords.push({ word, wi, cells });
+        placed = true;
+      }
+    }
+  });
+
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (let r = 0; r < GRID_SIZE; r++) {
+    for (let c = 0; c < GRID_SIZE; c++) {
+      if (!wsGrid[r][c]) {
+        wsGrid[r][c] = letters[Math.floor(Math.random() * letters.length)];
+      }
+    }
+  }
+
+  const gridEl = document.getElementById('word-grid');
+  gridEl.innerHTML = '';
+  gridEl.style.gridTemplateColumns = `repeat(${GRID_SIZE},36px)`;
+
+  for (let r = 0; r < GRID_SIZE; r++) {
+    wsCells[r] = [];
+    for (let c = 0; c < GRID_SIZE; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'grid-cell';
+      cell.textContent = wsGrid[r][c];
+      cell.dataset.r = r;
+      cell.dataset.c = c;
+      cell.addEventListener('click', () => wsClick(r, c));
+      gridEl.appendChild(cell);
+      wsCells[r][c] = cell;
+    }
+  }
+
+  const wl = document.getElementById('wordList');
+  wl.innerHTML = '';
+
+  wsWords.forEach((w, i) => {
+    const chip = document.createElement('div');
+    chip.className = 'word-chip';
+    chip.id = 'wchip-' + i;
+    chip.textContent = w;
+    const colors = ['#a8f0c8','#ffd6a5','#c9b8ff','#ffb3c1','#b3e5fc','#fff9b3','#d0f0c0','#ffd6e0','#c8ffd4','#ffe4b8'];
+    chip.style.background = colors[i % colors.length];
+    wl.appendChild(chip);
+  });
+
+  document.getElementById('wsScore').style.display = 'none';
+}
+
+function wsClick(r, c) {
+  if (!wsSelecting) {
+    wsSelecting = true;
+    wsFirst = { r, c };
+    wsCells[r][c].classList.add('selected');
+    return;
+  }
+
+  wsSelecting = false;
+  wsCells[wsFirst.r][wsFirst.c].classList.remove('selected');
+
+  const cells = getCellsBetween(wsFirst.r, wsFirst.c, r, c);
+
+  if (cells) {
+    const word = cells.map(([rr, cc]) => wsGrid[rr][cc]).join('');
+    const reversed = word.split('').reverse().join('');
+
+    let foundIdx = wsWords.indexOf(word);
+    if (foundIdx < 0) foundIdx = wsWords.indexOf(reversed);
+
+    if (foundIdx >= 0 && !wsFound[foundIdx]) {
+  wsFound[foundIdx] = true;
+  cells.forEach(([rr, cc]) => wsCells[rr][cc].classList.add('found-' + (foundIdx % 8)));
+  document.getElementById('wchip-' + foundIdx).classList.add('found-chip');
+  addGlobalMax(15);
+  addGlobalScore(15, 400, 200);
+
+  if (wsFound.every(Boolean)) {
+    document.getElementById('wsScore').style.display = 'block';
+  }
+}
+  }
+
+  wsFirst = null;
+}
+
+function getCellsBetween(r1, c1, r2, c2) {
+  const rowDiff = r2 - r1;
+  const colDiff = c2 - c1;
+
+  const dr = Math.sign(rowDiff);
+  const dc = Math.sign(colDiff);
+
+  const sameRow = rowDiff === 0;
+  const sameCol = colDiff === 0;
+  const diagonal = Math.abs(rowDiff) === Math.abs(colDiff);
+
+  if (!sameRow && !sameCol && !diagonal) return null;
+
+  const dist = Math.max(Math.abs(rowDiff), Math.abs(colDiff));
+  const cells = [];
+
+  for (let i = 0; i <= dist; i++) {
+    cells.push([r1 + dr * i, c1 + dc * i]);
+  }
+
+  return cells;
+}
+
+/* ===== INIT ===== */
+buildCours();
+startQuiz();
+buildDrag();
+buildWordSearch();
+</script>
+</body>
+</html>

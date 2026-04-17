@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>États physiques et changements d'état – 6ème</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #1a1a2e; min-height: 100vh; }
+  header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: white; padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1rem; }
+  header h1 { font-size: 1.5rem; font-weight: 700; }
+  header p { font-size: 0.9rem; opacity: 0.8; margin-top: 0.2rem; }
+  .atom { font-size: 2rem; }
+
+  .nav { display: flex; gap: 0.5rem; padding: 1rem 2rem; background: white; border-bottom: 2px solid #e2e8f0; flex-wrap: wrap; }
+  .nav-btn { padding: 0.5rem 1rem; border: 2px solid #cbd5e1; background: white; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; color: #475569; transition: all 0.2s; }
+  .nav-btn:hover { border-color: #0f3460; color: #0f3460; }
+  .nav-btn.active { background: #0f3460; color: white; border-color: #0f3460; }
+  .badge { display: inline-block; font-size: 0.7rem; background: #e2e8f0; color: #64748b; border-radius: 10px; padding: 1px 7px; margin-left: 4px; }
+  .nav-btn.active .badge { background: rgba(255,255,255,0.3); color: white; }
+
+  .section { display: none; padding: 1.5rem 2rem 3rem; max-width: 900px; margin: 0 auto; }
+  .section.active { display: block; }
+
+  h2 { font-size: 1.3rem; color: #0f3460; margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e2e8f0; }
+  h3 { font-size: 1rem; color: #1a1a2e; margin-bottom: 0.8rem; }
+
+  .intro-card { background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.6; }
+  .intro-card strong { color: #1d4ed8; }
+
+  /* === SECTION 1 : LEÇON === */
+  .states-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+  .state-card { border-radius: 12px; padding: 1.2rem; text-align: center; border: 2px solid transparent; }
+  .state-card.solid { background: #fef3c7; border-color: #f59e0b; }
+  .state-card.liquid { background: #dbeafe; border-color: #3b82f6; }
+  .state-card.gas { background: #dcfce7; border-color: #22c55e; }
+  .state-card h3 { font-size: 1rem; margin-bottom: 0.5rem; }
+  .state-card.solid h3 { color: #92400e; }
+  .state-card.liquid h3 { color: #1e40af; }
+  .state-card.gas h3 { color: #166534; }
+  .state-emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .state-card p { font-size: 0.8rem; line-height: 1.5; }
+
+  .schema-wrapper { background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #e2e8f0; margin-bottom: 1.5rem; }
+  svg.schema { width: 100%; height: auto; display: block; }
+
+  /* === EXERCICES === */
+  .exo-block { background: white; border-radius: 12px; padding: 1.5rem; border: 1px solid #e2e8f0; margin-bottom: 1.5rem; }
+  .exo-block h3 { font-size: 0.9rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+  .exo-block .question { font-size: 1rem; color: #1a1a2e; margin-bottom: 1rem; line-height: 1.6; }
+
+  /* Texte à trou */
+  .blank { border: none; border-bottom: 2px solid #0f3460; background: transparent; font-size: 1rem; color: #0f3460; font-weight: 600; padding: 0 4px; min-width: 100px; outline: none; }
+  .blank.correct { border-bottom-color: #22c55e; color: #166534; background: #dcfce7; border-radius: 4px; }
+  .blank.incorrect { border-bottom-color: #ef4444; color: #b91c1c; background: #fee2e2; border-radius: 4px; }
+
+  /* Associations */
+  .assoc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .assoc-col h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; margin-bottom: 0.8rem; }
+  .assoc-item { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 0.5rem; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; user-select: none; }
+  .assoc-item:hover { border-color: #0f3460; }
+  .assoc-item.selected { background: #eff6ff; border-color: #3b82f6; color: #1d4ed8; font-weight: 600; }
+  .assoc-item.matched-ok { background: #dcfce7; border-color: #22c55e; color: #166534; cursor: default; }
+  .assoc-item.matched-fail { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+
+  /* QCM */
+  .qcm-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .qcm-btn { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 0.7rem 1rem; cursor: pointer; font-size: 0.9rem; text-align: left; transition: all 0.2s; }
+  .qcm-btn:hover { border-color: #0f3460; background: #eff6ff; }
+  .qcm-btn.correct { background: #dcfce7; border-color: #22c55e; color: #166534; font-weight: 600; }
+  .qcm-btn.incorrect { background: #fee2e2; border-color: #ef4444; color: #b91c1c; }
+  .qcm-btn.disabled { cursor: default; pointer-events: none; }
+
+  /* Drag & drop */
+  .drag-area { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; min-height: 48px; }
+  .drag-token { background: #e0e7ff; border: 2px solid #a5b4fc; border-radius: 8px; padding: 0.4rem 0.9rem; cursor: grab; font-size: 0.85rem; font-weight: 600; color: #3730a3; user-select: none; transition: all 0.15s; }
+  .drag-token:hover { background: #c7d2fe; }
+  .drag-token.dragging { opacity: 0.4; }
+  .drop-zone { border: 2px dashed #cbd5e1; border-radius: 8px; padding: 0.5rem 1rem; min-height: 44px; min-width: 120px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem; color: #94a3b8; transition: all 0.15s; }
+  .drop-zone.over { border-color: #3b82f6; background: #eff6ff; }
+  .drop-zone.filled { border-style: solid; border-color: #a5b4fc; background: #e0e7ff; color: #3730a3; font-weight: 600; }
+  .drop-zone.correct-drop { border-color: #22c55e; background: #dcfce7; color: #166534; }
+  .drop-zone.incorrect-drop { border-color: #ef4444; background: #fee2e2; color: #b91c1c; }
+
+  /* Boutons d'action */
+  .btn { padding: 0.6rem 1.4rem; border: none; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; margin-top: 1rem; }
+  .btn-check { background: #0f3460; color: white; }
+  .btn-check:hover { background: #1a237e; }
+  .btn-reset { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; margin-left: 0.5rem; }
+  .btn-reset:hover { background: #e2e8f0; }
+  .feedback { margin-top: 0.8rem; padding: 0.7rem 1rem; border-radius: 8px; font-size: 0.9rem; font-weight: 500; display: none; }
+  .feedback.ok { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; display: block; }
+  .feedback.ko { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; display: block; }
+
+  /* Score */
+  .score-bar { background: white; border-radius: 12px; padding: 1.2rem 1.5rem; border: 1px solid #e2e8f0; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+  .score-num { font-size: 2rem; font-weight: 700; color: #0f3460; }
+  .score-label { font-size: 0.85rem; color: #64748b; }
+  .progress-bar-outer { flex: 1; height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+  .progress-bar-inner { height: 100%; background: linear-gradient(90deg, #3b82f6, #22c55e); border-radius: 5px; transition: width 0.4s; }
+
+  /* Molecule anim */
+  .mol-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+  .mol-box { text-align: center; cursor: pointer; border-radius: 12px; padding: 1rem; border: 2px solid #e2e8f0; background: white; transition: all 0.2s; }
+  .mol-box:hover { border-color: #0f3460; }
+  .mol-box.selected-mol { border-color: #3b82f6; background: #eff6ff; }
+  .mol-title { font-size: 0.85rem; font-weight: 600; margin-top: 0.5rem; }
+
+  @media (max-width: 600px) {
+    .states-grid, .mol-container { grid-template-columns: 1fr; }
+    .assoc-grid, .qcm-choices { grid-template-columns: 1fr; }
+    .section { padding: 1rem; }
+    header h1 { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="atom">⚗️</div>
+  <div>
+    <h1>États physiques et changements d'état</h1>
+    <p>Sciences – Classe de 6ème</p>
+  </div>
+</header>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showSection('lecon')">📖 Leçon</button>
+  <button class="nav-btn" onclick="showSection('exo1')">✏️ Exercice 1 <span class="badge">Facile</span></button>
+  <button class="nav-btn" onclick="showSection('exo2')">🔗 Exercice 2 <span class="badge">Facile</span></button>
+  <button class="nav-btn" onclick="showSection('exo3')">❓ Exercice 3 <span class="badge">Moyen</span></button>
+  <button class="nav-btn" onclick="showSection('exo4')">🧩 Exercice 4 <span class="badge">Moyen</span></button>
+  <button class="nav-btn" onclick="showSection('exo5')">🚀 Exercice 5 <span class="badge">Difficile</span></button>
+</nav>
+
+<!-- ======= LEÇON ======= -->
+<div id="lecon" class="section active">
+  <h2>📖 Les états physiques de la matière</h2>
+
+  <div class="intro-card">
+    La matière existe sous <strong>trois états physiques</strong> différents.
+<p><em>Remarque : L'état physique d'un corps dépend de sa <strong>température</strong> et de la <strong>pression</strong> qui lui est appliquée.</p></em>
+  </div>
+
+  <div class="states-grid">
+    <div class="state-card solid">
+      <div class="state-emoji">🧊</div>
+      <h3>L'état solide</h3>
+      <p><em>Exemples : la glace, le fer, le bois, le sel.</em></p>
+    </div>
+    <div class="state-card liquid">
+      <div class="state-emoji">🌊</div>
+      <h3>L'état liquide</h3>
+      <p><em>Exemples : l'eau d'un lac, d'une rivière, de l'océan ; un nuage; l'huile, le mercure.</em></p>
+    </div>
+    <div class="state-card gas">
+      <div class="state-emoji">💨</div>
+      <h3>L'état gazeux</h3>
+      <p>Très souvent invisible.<br><em>Exemples : la vapeur d'eau, l'air, le dioxyde de carbone.</em></p>
+    </div>
+  </div>
+
+  <h2>🔄 Les changements d'état</h2>
+<div class="intro-card">
+  Un <strong>changement d'état</strong> correspond au passage d'un état physique à un autre.<br>
+  <p><em>Remarque : Un changement d'état a lieu lors d'un changement de température ou lors d'un changement de pression.</p></em>
+</div>
+
+<div class="schema-wrapper">
+  <svg class="schema" viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+    
+    <!-- Solide -->
+    <rect x="30" y="120" width="140" height="80" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+    <text x="100" y="153" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e">SOLIDE</text>
+    <text x="100" y="172" text-anchor="middle" font-size="11" fill="#78350f">ex : glace,</text>
+    <text x="100" y="186" text-anchor="middle" font-size="11" fill="#78350f">fer, sel</text>
+
+    <!-- Liquide -->
+    <rect x="310" y="120" width="140" height="80" rx="12" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+    <text x="380" y="153" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">LIQUIDE</text>
+    <text x="380" y="172" text-anchor="middle" font-size="11" fill="#1e3a8a">ex : lac, rivière,</text>
+    <text x="380" y="186" text-anchor="middle" font-size="11" fill="#1e3a8a">océan, huile</text>
+
+    <!-- Gazeux -->
+    <rect x="590" y="120" width="140" height="80" rx="12" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+    <text x="660" y="153" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">GAZEUX</text>
+    <text x="660" y="172" text-anchor="middle" font-size="11" fill="#14532d">ex : vapeur d'eau,</text>
+    <text x="660" y="186" text-anchor="middle" font-size="11" fill="#14532d">air, CO₂</text>
+
+    <defs>
+      <marker id="arrowR" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 Z" fill="#dc2626"/>
+      </marker>
+      <marker id="arrowL" markerWidth="8" markerHeight="8" refX="0" refY="4" orient="left">
+        <path d="M8,0 L0,4 L8,8 Z" fill="#2563eb"/>
+      </marker>
+      <marker id="arrowR2" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+        <path d="M0,0 L8,4 L0,8 Z" fill="#dc2626"/>
+      </marker>
+      <marker id="arrowL2" markerWidth="8" markerHeight="8" refX="0" refY="4" orient="left">
+        <path d="M8,0 L0,4 L8,8 Z" fill="#2563eb"/>
+      </marker>
+    </defs>
+
+    <!-- Fusion -->
+    <path d="M170,148 L310,148" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowR)" fill="none"/>
+    <rect x="200" y="122" width="80" height="20" rx="5" fill="#fff0f0"/>
+    <text x="240" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">FUSION</text>
+    <text x="240" y="158" text-anchor="middle" font-size="9" fill="#dc2626">▲ chauffe</text>
+
+    <!-- Solidification -->
+    <path d="M310,172 L170,172" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowL)" fill="none"/>
+    <rect x="191" y="176" width="98" height="20" rx="5" fill="#eff6ff"/>
+    <text x="240" y="190" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">SOLIDIFICATION</text>
+    <text x="240" y="208" text-anchor="middle" font-size="9" fill="#2563eb">▼ refroidit</text>
+
+    <!-- Vaporisation -->
+    <path d="M450,148 L590,148" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowR2)" fill="none"/>
+    <rect x="466" y="122" width="108" height="20" rx="5" fill="#fff0f0"/>
+    <text x="520" y="136" text-anchor="middle" font-size="11" font-weight="700" fill="#dc2626">VAPORISATION</text>
+    <text x="520" y="158" text-anchor="middle" font-size="9" fill="#dc2626">▲ chauffe</text>
+
+    <!-- Liquéfaction -->
+    <path d="M590,172 L450,172" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowL2)" fill="none"/>
+    <rect x="477" y="176" width="86" height="20" rx="5" fill="#eff6ff"/>
+    <text x="520" y="190" text-anchor="middle" font-size="11" font-weight="700" fill="#2563eb">LIQUÉFACTION</text>
+    <text x="520" y="208" text-anchor="middle" font-size="9" fill="#2563eb">▼ refroidit</text>
+
+    <!-- Légende -->
+    <rect x="30" y="265" width="14" height="14" rx="3" fill="#fff0f0" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="50" y="277" font-size="11" fill="#666">Changements nécessitant de chauffer (apport d'énergie)</text>
+    <rect x="30" y="285" width="14" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="50" y="297" font-size="11" fill="#666">Changements nécessitant de refroidir (perte d'énergie)</text>
+  </svg>
+</div>
+
+  <div class="exo-block" style="background:#f8fafc;">
+    <h3>Résumé des 4 changements d'état</h3>
+    <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;margin-top:0.5rem;">
+      <thead>
+        <tr style="background:#0f3460;color:white;">
+          <th style="padding:0.6rem 1rem;text-align:left;border-radius:8px 0 0 0;">Nom</th>
+          <th style="padding:0.6rem 1rem;text-align:left;">Transformation</th>
+          <th style="padding:0.6rem 1rem;text-align:left;">Température</th>
+          <th style="padding:0.6rem 1rem;text-align:left;border-radius:0 8px 0 0;">Exemple</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:#fff8f8;">
+          <td style="padding:0.6rem 1rem;font-weight:700;color:#dc2626;">Fusion</td>
+          <td style="padding:0.6rem 1rem;">Solide → Liquide</td>
+          <td style="padding:0.6rem 1rem;">Nécessitée de chauffer</td>
+          <td style="padding:0.6rem 1rem;">Un glaçon fond au Soleil</td>
+        </tr>
+        <tr style="background:#f0f4ff;">
+          <td style="padding:0.6rem 1rem;font-weight:700;color:#2563eb;">Solidification</td>
+          <td style="padding:0.6rem 1rem;">Liquide → Solide</td>
+          <td style="padding:0.6rem 1rem;">Nécessitée de refroidir</td>
+          <td style="padding:0.6rem 1rem;">De la neige se forme l'hiver</td>
+        </tr>
+        <tr style="background:#fff8f8;">
+          <td style="padding:0.6rem 1rem;font-weight:700;color:#dc2626;">Vaporisation</td>
+          <td style="padding:0.6rem 1rem;">Liquide → Gazeux</td>
+          <td style="padding:0.6rem 1rem;">Nécessitée de chauffer</td>
+          <td style="padding:0.6rem 1rem;">L'eau bout quand on la fait chauffer</td>
+        </tr>
+        <tr style="background:#f0f4ff;">
+          <td style="padding:0.6rem 1rem;font-weight:700;color:#2563eb;">Liquéfaction</td>
+          <td style="padding:0.6rem 1rem;">Gazeux → Liquide</td>
+          <td style="padding:0.6rem 1rem;">Nécessitée de refroidir</td>
+          <td style="padding:0.6rem 1rem;">Un nuage se forme</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- ======= EXERCICE 1 : Texte à trous ======= -->
+<div id="exo1" class="section">
+  <h2>✏️ Exercice 1 — Texte à trous</h2>
+  <div class="intro-card">
+    Complète les définitions en choisissant le bon mot dans chaque liste.
+  </div>
+
+  <div class="exo-block">
+    <h3>Définitions des états</h3>
+
+    <p class="question trous-question">
+      Un objet à l'état 
+      <select class="blank-select" id="t1">
+        <option value="">Choisir…</option>
+        <option value="liquide">liquide</option>
+        <option value="solide">solide</option>
+        <option value="gazeux">gazeux</option>
+      </select>
+      ne coule pas et on ne peut pas changer sa forme.
+      On ne peut pas le comprimer.
+      <br><br>
+
+      Un objet à l'état 
+      <select class="blank-select" id="t2">
+        <option value="">Choisir…</option>
+        <option value="gazeux">gazeux</option>
+        <option value="liquide">liquide</option>
+        <option value="solide">solide</option>
+      </select>
+      prend la forme du récipient qui le contient.
+      On ne peut pas le comprimer.
+      <br><br>
+
+      Un objet à l'état 
+      <select class="blank-select" id="t3">
+        <option value="">Choisir…</option>
+        <option value="solide">solide</option>
+        <option value="gazeux">gazeux</option>
+        <option value="liquide">liquide</option>
+      </select>
+      occupe tout l'espace qui lui est disponible. Très souvent il est invisible.
+    </p>
+
+    <div class="btn-row">
+      <button type="button" class="btn btn-check" onclick="checkTrous()">Vérifier</button>
+<button type="button" class="btn btn-reset" onclick="resetTrous()">Réinitialiser</button>
+    </div>
+
+    <div class="feedback" id="fb-trous"></div>
+  </div>
+
+  <div class="exo-block">
+    <h3>Définitions des changements d'état</h3>
+<div class="intro-card">
+    Ecrire le nom des changements d'états (sans faire de fautes d'orthographe !)
+  </div>
+
+    <p class="question" style="line-height:2.2;">
+      Le passage de l'état solide à l'état liquide s'appelle la 
+      <input class="blank" id="t5" placeholder="?">.
+      <br>
+
+      Le passage de l'état liquide à l'état solide s'appelle la 
+      <input class="blank" id="t6" placeholder="?">.
+      <br>
+
+      Le passage de l'état liquide à l'état gazeux s'appelle la 
+      <input class="blank" id="t7" placeholder="?">.
+      <br>
+
+      Le passage de l'état gazeux à l'état liquide s'appelle la 
+      <input class="blank" id="t8" placeholder="?">.
+    </p>
+
+    <button type="button" class="btn btn-check" onclick="checkTrous2()">Vérifier</button>
+<button type="button" class="btn btn-reset" onclick="resetTrous2()">Réinitialiser</button>
+    <div class="feedback" id="fb-trous2"></div>
+  </div>
+</div>
+
+<style>
+  .trous-question {
+    line-height: 2.2;
+  }
+
+  .blank-select {
+    min-width: 145px;
+    padding: 0.45rem 0.7rem;
+    margin: 0 0.2rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    color: #1e293b;
+    font-size: 0.95rem;
+    vertical-align: middle;
+    transition: 0.2s ease;
+  }
+
+  .blank-select:focus,
+  .blank:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96,165,250,0.2);
+  }
+
+  .blank-select.good,
+  .blank.good {
+    border-color: #16a34a;
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  .blank-select.bad,
+  .blank.bad {
+    border-color: #dc2626;
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  .blank {
+    min-width: 140px;
+    padding: 0.45rem 0.7rem;
+    margin: 0 0.2rem;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+</style>
+
+<script>
+  function checkTrous() {
+  const answers = {
+    t1: "solide",
+    t2: "liquide",
+    t3: "gazeux"
+  };
+
+  const explanations = {
+    t1: "Un solide garde sa forme.",
+    t2: "Un liquide prend la forme du récipient.",
+    t3: "Un gaz occupe tout l'espace disponible."
+  };
+
+  let score = 0;
+  let erreurs = [];
+
+  for (const id in answers) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+
+    el.classList.remove("good", "bad");
+
+    if (el.value === answers[id]) {
+      el.classList.add("good");
+      score++;
+    } else {
+      el.classList.add("bad");
+      erreurs.push(explanations[id]);
+    }
+  }
+
+  const fb = document.getElementById("fb-trous");
+  if (!fb) return;
+
+ fb.style.display = "block";
+
+  if (score === 3) {
+    fb.innerHTML = "✅ Bravo ! Toutes les réponses sont correctes.";
+    fb.style.color = "#166534";
+  } else {
+    fb.innerHTML =
+      `Tu as <strong>${score}</strong> bonne(s) réponse(s) sur 3.<br>` +
+      `À retenir : ${erreurs.join(" ")}`;
+    fb.style.color = "#b45309";
+  }
+}
+  function resetTrous() {
+    ["t1", "t2", "t3"].forEach(id => {
+      const el = document.getElementById(id);
+      el.value = "";
+      el.classList.remove("good", "bad");
+    });
+
+    const fb = document.getElementById("fb-trous");
+  fb.innerHTML = "";
+  fb.style.display = "none";
+  }
+
+  function checkTrous2() {
+    const answers = {
+      t5: "fusion",
+      t6: "solidification",
+      t7: "vaporisation",
+      t8: "liquéfaction"
+    };
+
+    let score = 0;
+
+    for (const id in answers) {
+      const el = document.getElementById(id);
+      el.classList.remove("good", "bad");
+
+      const value = el.value.trim().toLowerCase();
+
+      if (value === answers[id]) {
+        el.classList.add("good");
+        score++;
+      } else {
+        el.classList.add("bad");
+      }
+    }
+
+    const fb = document.getElementById("fb-trous2");
+
+fb.style.display = "block";
+
+    if (score === 4) {
+      fb.innerHTML = "✅ Bravo ! Toutes les réponses sont correctes.";
+      fb.style.color = "#166534";
+    } else {
+      fb.innerHTML = `Tu as <strong>${score}</strong> bonne(s) réponse(s) sur 4.`;
+      fb.style.color = "#b45309";
+    }
+  }
+
+  function resetTrous2() {
+    ["t5", "t6", "t7", "t8"].forEach(id => {
+      const el = document.getElementById(id);
+      el.value = "";
+      el.classList.remove("good", "bad");
+    });
+
+    const fb = document.getElementById("fb-trous");
+  fb.innerHTML = "";
+  fb.style.display = "none";
+  }
+</script>
+
+<!-- ======= EXERCICE 2 : Associations ======= -->
+<div id="exo2" class="section">
+  <h2>🔗 Exercice 2 — Associations</h2>
+  <div class="intro-card">Clique d'abord sur un changement d'état à gauche, puis sur la bonne description à droite.</div>
+
+  <div class="exo-block">
+    <div class="assoc-grid">
+      <div>
+        <h4>Changement d'état</h4>
+        <div class="assoc-item" id="a1" onclick="selectLeft('a1','fusion')" data-key="fusion">Fusion</div>
+        <div class="assoc-item" id="a2" onclick="selectLeft('a2','solidification')" data-key="solidification">Solidification</div>
+        <div class="assoc-item" id="a3" onclick="selectLeft('a3','vaporisation')" data-key="vaporisation">Vaporisation</div>
+        <div class="assoc-item" id="a4" onclick="selectLeft('a4','liquefaction')" data-key="liquefaction">Liquéfaction</div>
+      </div>
+      <div>
+        <h4>Description / Exemple</h4>
+        <div class="assoc-item" id="b1" onclick="selectRight('b1','vaporisation')" data-key="vaporisation">L'eau bout à 100 °C et se transforme en vapeur</div>
+        <div class="assoc-item" id="b2" onclick="selectRight('b2','solidification')" data-key="solidification">L'eau se transforme en glace au congélateur</div>
+        <div class="assoc-item" id="b3" onclick="selectRight('b3','fusion')" data-key="fusion">La glace fond dans un verre d'eau tiède</div>
+        <div class="assoc-item" id="b4" onclick="selectRight('b4','liquefaction')" data-key="liquefaction">Des gouttelettes d'eau apparaissent sur un miroir froid</div>
+      </div>
+    </div>
+    <div class="feedback" id="fb-assoc"></div>
+  </div>
+</div>
+
+<!-- ======= EXERCICE 3 : QCM ======= -->
+<div id="exo3" class="section">
+  <h2>❓ Exercice 3 — Questions à choix multiple</h2>
+
+  <div id="qcm-container"></div>
+
+  <div id="qcm-score" style="display:none" class="score-bar">
+    <div>
+      <div class="score-num" id="qcm-score-num">0/6</div>
+      <div class="score-label">Score</div>
+    </div>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="qcm-progress" style="width:0%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= EXERCICE 4 : Drag & drop ======= -->
+<div id="exo4" class="section">
+  <h2>🧩 Exercice 4 — Complète le schéma</h2>
+  <div class="intro-card">Déplacer au bon endroit les noms des changements d'état.</div>
+
+  <div class="exo-block">
+    
+    <div class="drag-area" id="drag-bank">
+      <div class="drag-token" draggable="true" id="tok-fusion" data-word="fusion">Fusion</div>
+      <div class="drag-token" draggable="true" id="tok-solidification" data-word="solidification">Solidification</div>
+      <div class="drag-token" draggable="true" id="tok-vaporisation" data-word="vaporisation">Vaporisation</div>
+      <div class="drag-token" draggable="true" id="tok-liquefaction" data-word="liquefaction">Liquéfaction</div>
+    </div>
+
+    <style>
+      .schema-wrap {
+        position: relative;
+        width: 100%;
+        max-width: 660px;
+        margin: 1.5rem auto;
+      }
+
+      .schema-wrap svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .drop-zone-on-schema {
+        position: absolute;
+        width: 120px;
+        min-height: 42px;
+        padding: 0.5rem;
+        border: 2px dashed #94a3b8;
+        border-radius: 12px;
+        background: #ffffffee;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #475569;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      }
+
+      .drop-zone-on-schema.good {
+        border-color: #16a34a;
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .drop-zone-on-schema.bad {
+        border-color: #dc2626;
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* Positions des zones sur le schéma */
+      #dz-fusion {
+        left: 140px;
+        top: 52px;
+      }
+
+      #dz-solidification {
+        left: 140px;
+        top: 175px;
+      }
+
+      /* corrigé : recentré sur les flèches de droite */
+      #dz-vaporisation {
+        left: 375px;
+        top: 52px;
+      }
+
+      #dz-liquefaction {
+        left: 375px;
+        top: 175px;
+      }
+
+      @media (max-width: 720px) {
+        .drop-zone-on-schema {
+          width: 100px;
+          min-height: 38px;
+          font-size: 0.8rem;
+          padding: 0.35rem;
+        }
+
+        #dz-fusion { left: 21%; top: 18%; }
+        #dz-solidification { left: 21%; top: 63%; }
+
+        /* corrigé aussi en version mobile */
+        #dz-vaporisation { left: 57%; top: 18%; }
+        #dz-liquefaction { left: 57%; top: 63%; }
+      }
+    </style>
+
+    <div class="schema-wrap">
+      <svg viewBox="0 0 660 280" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+        <rect x="20" y="105" width="140" height="70" rx="10" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="90" y="138" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e">SOLIDE</text>
+        <text x="90" y="158" text-anchor="middle" font-size="10" fill="#78350f">🧊 ex: glace</text>
+
+        <rect x="250" y="105" width="140" height="70" rx="10" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+        <text x="320" y="138" text-anchor="middle" font-size="13" font-weight="700" fill="#1e40af">LIQUIDE</text>
+        <text x="320" y="158" text-anchor="middle" font-size="10" fill="#1e3a8a">💧 ex: lac</text>
+
+        <rect x="480" y="105" width="140" height="70" rx="10" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+        <text x="550" y="138" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">GAZEUX</text>
+        <text x="550" y="158" text-anchor="middle" font-size="10" fill="#14532d">💨 ex: vapeur</text>
+
+        <defs>
+          <marker id="ar1" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto">
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="#dc2626"/>
+          </marker>
+          <marker id="ar2" markerWidth="7" markerHeight="7" refX="0" refY="3.5" orient="left">
+            <path d="M7,0 L0,3.5 L7,7 Z" fill="#2563eb"/>
+          </marker>
+          <marker id="ar3" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto">
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="#dc2626"/>
+          </marker>
+          <marker id="ar4" markerWidth="7" markerHeight="7" refX="0" refY="3.5" orient="left">
+            <path d="M7,0 L0,3.5 L7,7 Z" fill="#2563eb"/>
+          </marker>
+        </defs>
+
+        <!-- sol→liq haut -->
+        <line x1="160" y1="125" x2="250" y2="125" stroke="#dc2626" stroke-width="2" marker-end="url(#ar1)"/>
+        <!-- liq→sol bas -->
+        <line x1="250" y1="155" x2="160" y2="155" stroke="#2563eb" stroke-width="2" marker-end="url(#ar2)"/>
+        <!-- liq→gaz haut -->
+        <line x1="390" y1="125" x2="480" y2="125" stroke="#dc2626" stroke-width="2" marker-end="url(#ar3)"/>
+        <!-- gaz→liq bas -->
+        <line x1="480" y1="155" x2="390" y2="155" stroke="#2563eb" stroke-width="2" marker-end="url(#ar4)"/>
+
+        <text x="200" y="118" text-anchor="middle" font-size="9" fill="#dc2626">▲ chauffe</text>
+        <text x="200" y="170" text-anchor="middle" font-size="9" fill="#2563eb">▼ refroidit</text>
+        <text x="432" y="118" text-anchor="middle" font-size="9" fill="#dc2626">▲ chauffe</text>
+        <text x="432" y="170" text-anchor="middle" font-size="9" fill="#2563eb">▼ refroidit</text>
+      </svg>
+
+      <!-- Zones de dépôt sur le schéma -->
+      <div class="drop-zone drop-zone-on-schema" id="dz-fusion" data-answer="fusion" ondragover="ev(event)" ondrop="drop(event)">Dépose ici</div>
+      <div class="drop-zone drop-zone-on-schema" id="dz-solidification" data-answer="solidification" ondragover="ev(event)" ondrop="drop(event)">Dépose ici</div>
+      <div class="drop-zone drop-zone-on-schema" id="dz-vaporisation" data-answer="vaporisation" ondragover="ev(event)" ondrop="drop(event)">Dépose ici</div>
+      <div class="drop-zone drop-zone-on-schema" id="dz-liquefaction" data-answer="liquefaction" ondragover="ev(event)" ondrop="drop(event)">Dépose ici</div>
+    </div>
+
+    <button class="btn btn-check" onclick="checkDrop()">Vérifier</button>
+    <button class="btn btn-reset" onclick="resetDrop()">Réinitialiser</button>
+    <div class="feedback" id="fb-drop"></div>
+  </div>
+</div>
+
+<!-- ======= EXERCICE 5 : Mode infini ======= -->
+<div id="exo5" class="section">
+  <h2>🚀 Exercice 5 — Situations de la vie courante</h2>
+  <div class="intro-card">Identifie le changement d'état ou l'état physique observé dans chaque situation. Les situations se succèdent à l'infini — essaie de battre ton record !</div>
+
+  <div class="score-bar" style="margin-bottom:1.2rem;">
+    <div>
+      <div class="score-num" id="inf-score">0</div>
+      <div class="score-label">bonne(s) réponse(s)</div>
+    </div>
+    <div style="flex:1;">
+      <div style="font-size:0.85rem;color:#64748b;margin-bottom:4px;">Situation n° <span id="inf-counter">1</span></div>
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" id="inf-progress" style="width:0%"></div>
+      </div>
+    </div>
+    <div style="text-align:right;">
+      <div class="score-num" id="inf-streak" style="color:#f59e0b;">🔥 0</div>
+      <div class="score-label">série en cours</div>
+    </div>
+  </div>
+
+  <div class="exo-block" id="inf-card">
+    <div style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:1rem;">
+      <span style="font-size:2.8rem;" id="inf-img"></span>
+      <p style="font-size:0.95rem;line-height:1.6;color:#374151;" id="inf-desc"></p>
+    </div>
+    <p class="question" style="margin-bottom:0.8rem;" id="inf-q"></p>
+    <div class="qcm-choices" id="inf-choices"></div>
+    <div class="feedback" id="inf-fb"></div>
+    <div style="margin-top:1rem;display:none;" id="inf-next-wrap">
+      <button class="btn btn-check" onclick="nextSituation()">Situation suivante →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// =========== NAVIGATION ===========
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// =========== EXO 1 : Textes à trous ===========
+const repTrous1 = { t1:'solide', t2:'liquide', t3:'gazeux' };
+const repTrous2 = { t5:'fusion', t6:'solidification', t7:'vaporisation', t8:'liquéfaction' };
+
+function normalize(s) { return s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+
+function checkTrous() {
+  let ok = 0;
+  for (const [id, answer] of Object.entries(repTrous1)) {
+    const el = document.getElementById(id);
+    const val = el.value;
+    const correct = normalize(answer);
+    if (val === correct) { el.classList.add('correct'); el.classList.remove('incorrect'); ok++; }
+    else if (val.length > 0) { el.classList.add('incorrect'); el.classList.remove('correct'); }
+  }
+  const fb = document.getElementById('fb-trous');
+  if (ok === 3) { fb.className='feedback ok'; fb.textContent='✅ Parfait ! Toutes les réponses sont correctes.'; }
+  else { fb.className='feedback ko'; fb.textContent=`${ok}/3 correct(s). Vérifie les cases en rouge.`; }
+}
+
+function resetTrous() {
+  for (const id of Object.keys(repTrous1)) {
+    const el = document.getElementById(id);
+    el.value=''; el.className='blank';
+  }
+  document.getElementById('fb-trous').className='feedback';
+}
+
+function checkTrous2() {
+  let ok = 0;
+  for (const [id, answer] of Object.entries(repTrous2)) {
+    const el = document.getElementById(id);
+    const val = normalize(el.value);
+    const correct = normalize(answer);
+    if (val === correct) { el.classList.add('correct'); el.classList.remove('incorrect'); ok++; }
+    else if (val.length > 0) { el.classList.add('incorrect'); el.classList.remove('correct'); }
+  }
+  const fb = document.getElementById('fb-trous2');
+  if (ok === 4) { fb.className='feedback ok'; fb.textContent='✅ Excellent ! Tous les changements d\'état sont bien nommés.'; }
+  else { fb.className='feedback ko'; fb.textContent=`${ok}/4 correct(s). Vérifie les cases en rouge.`; }
+}
+
+function resetTrous2() {
+  for (const id of Object.keys(repTrous2)) {
+    const el = document.getElementById(id);
+    el.value=''; el.className='blank';
+  }
+  document.getElementById('fb-trous2').className='feedback';
+}
+
+// =========== EXO 2 : Associations ===========
+let selectedLeft = null;
+let selectedLeftKey = null;
+const matched = {};
+
+function selectLeft(id, key) {
+  const el = document.getElementById(id);
+  if (el.classList.contains('matched-ok')) return;
+  document.querySelectorAll('[id^="a"]').forEach(e => { if (!e.classList.contains('matched-ok')) e.classList.remove('selected'); });
+  el.classList.add('selected');
+  selectedLeft = id;
+  selectedLeftKey = key;
+}
+
+function selectRight(id, key) {
+  if (!selectedLeft) { 
+    document.getElementById('fb-assoc').className='feedback ko';
+    document.getElementById('fb-assoc').textContent='👈 Clique d\'abord sur un changement d\'état à gauche !';
+    return;
+  }
+  const leftEl = document.getElementById(selectedLeft);
+  const rightEl = document.getElementById(id);
+  if (rightEl.classList.contains('matched-ok')) return;
+
+  if (selectedLeftKey === key) {
+    leftEl.classList.remove('selected'); leftEl.classList.add('matched-ok');
+    rightEl.classList.add('matched-ok');
+    matched[selectedLeft] = true;
+    document.getElementById('fb-assoc').className='feedback ok';
+    document.getElementById('fb-assoc').textContent='✅ Bonne association !';
+    if (Object.keys(matched).length === 4) {
+      document.getElementById('fb-assoc').textContent='🎉 Bravo ! Toutes les associations sont correctes !';
+    }
+  } else {
+    leftEl.classList.remove('selected'); leftEl.classList.add('matched-fail');
+    rightEl.classList.add('matched-fail');
+    document.getElementById('fb-assoc').className='feedback ko';
+    document.getElementById('fb-assoc').textContent='❌ Mauvaise association. Réessaie !';
+    setTimeout(() => {
+      leftEl.classList.remove('matched-fail', 'selected');
+      rightEl.classList.remove('matched-fail');
+      document.getElementById('fb-assoc').className='feedback';
+    }, 1200);
+  }
+  selectedLeft = null; selectedLeftKey = null;
+}
+
+// =========== EXO 3 : QCM ===========
+const qcmData = [
+  { q: "Quel est l'état physique d'un cube de glace sorti du congélateur ?", choices: ["Solide","Liquide","Gazeux","Solide et liquide"], answer: 0, expl: "La glace est de l'eau à l'état solide : elle a une forme et un volume propres." },
+  { q: "Lorsqu'une casserole d'eau est portée à ébullition, quel changement d'état se produit ?", choices: ["Fusion","Solidification","Vaporisation","Liquéfaction"], answer: 2, expl: "L'eau passe de l'état liquide à l'état gazeux : c'est la vaporisation." },
+  { q: "Au congélateur, l'eau liquide se transforme en glace. Ce changement d'état s'appelle :", choices: ["Fusion","Solidification","Vaporisation","Liquéfaction"], answer: 1, expl: "Le passage de l'état liquide à l'état solide est la solidification." },
+  { q: "Quel changement d'état subit la vapeur d'eau lorsqu'elle se dépose sur une vitre froide ?", choices: ["Fusion","Vaporisation","Solidification","Liquéfaction"], answer: 3, expl: "La vapeur (gaz) se transforme en eau liquide : c'est la liquéfaction." },
+  { q: "Quelle propriété est vraie UNIQUEMENT pour les gaz ?", choices: ["Ils coulent","Ils gardent leur forme tout seuls","On peut les comprimer","Ils sont transparents"], answer: 2, expl: "Seuls les gaz sont compressibles : on peut réduire leur volume en les comprimant. Les liquides et les solides ne peuvent pas être comprimés." },
+  { q: "Que faut-il faire pour qu'un changement d'état puisse avoir lieu ?", choices: ["Il faut changer d'altitude","Il faut augmenter ou diminuer température","Il faut changer de récipient","Il faut utiliser un thermomètre"], answer: 1, expl: "Pour effectuer un changement d'état, il faut chauffer ou refroidir donc augmenter ou diminuer la température !" }
+];
+
+let qcmAnswered = 0;
+let qcmCorrect = 0;
+
+function buildQcm() {
+  const container = document.getElementById('qcm-container');
+  container.innerHTML = '';
+  qcmData.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'exo-block';
+    div.innerHTML = `
+      <h3>Question ${i+1}/6</h3>
+      <p class="question">${q.q}</p>
+      <div class="qcm-choices" id="qcm-${i}">
+        ${q.choices.map((c,j)=>`<button class="qcm-btn" onclick="answerQcm(${i},${j})">${c}</button>`).join('')}
+      </div>
+      <div class="feedback" id="qfb-${i}"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function answerQcm(qIdx, cIdx) {
+  const group = document.getElementById(`qcm-${qIdx}`);
+  if (group.querySelector('.correct, .incorrect')) return;
+  const btns = group.querySelectorAll('.qcm-btn');
+  btns.forEach(b => b.classList.add('disabled'));
+  const q = qcmData[qIdx];
+  btns[cIdx].classList.add(cIdx === q.answer ? 'correct' : 'incorrect');
+  if (cIdx !== q.answer) btns[q.answer].classList.add('correct');
+  const fb = document.getElementById(`qfb-${qIdx}`);
+  fb.className = cIdx === q.answer ? 'feedback ok' : 'feedback ko';
+  fb.textContent = (cIdx === q.answer ? '✅ ' : '❌ ') + q.expl;
+  qcmAnswered++;
+  if (cIdx === q.answer) qcmCorrect++;
+  if (qcmAnswered === qcmData.length) {
+    const scoreDiv = document.getElementById('qcm-score');
+    scoreDiv.style.display = 'flex';
+    document.getElementById('qcm-score-num').textContent = `${qcmCorrect}/${qcmData.length}`;
+    document.getElementById('qcm-progress').style.width = `${(qcmCorrect/qcmData.length)*100}%`;
+  }
+}
+
+// =========== EXO 4 : Drag & Drop ===========
+let dragging = null;
+
+document.addEventListener('dragstart', e => {
+  if (e.target.classList.contains('drag-token')) {
+    dragging = e.target;
+    e.target.classList.add('dragging');
+    e.dataTransfer.setData('text', e.target.dataset.word);
+  }
+});
+document.addEventListener('dragend', e => {
+  if (e.target.classList.contains('drag-token')) e.target.classList.remove('dragging');
+});
+
+function ev(e) { e.preventDefault(); e.currentTarget.classList.add('over'); }
+document.querySelectorAll && document.addEventListener('dragleave', e => {
+  if (e.target.classList && e.target.classList.contains('drop-zone')) e.target.classList.remove('over');
+});
+
+function drop(e) {
+  e.preventDefault();
+  const zone = e.currentTarget;
+  zone.classList.remove('over');
+  const word = e.dataTransfer.getData('text');
+  const tok = document.querySelector(`[data-word="${word}"]`);
+  // if zone already has a token, swap back
+  if (zone.dataset.current) {
+    const prev = document.querySelector(`[data-word="${zone.dataset.current}"]`);
+    if (prev) { document.getElementById('drag-bank').appendChild(prev); prev.style.display=''; }
+  }
+  zone.textContent = tok.textContent;
+  zone.dataset.current = word;
+  zone.classList.add('filled');
+  zone.classList.remove('correct-drop','incorrect-drop');
+  tok.style.display = 'none';
+}
+
+function checkDrop() {
+  const zones = document.querySelectorAll('.drop-zone');
+  let ok = 0;
+  zones.forEach(z => {
+    if (!z.dataset.current) return;
+    if (z.dataset.current === z.dataset.answer) {
+      z.classList.add('correct-drop'); z.classList.remove('incorrect-drop'); ok++;
+    } else {
+      z.classList.add('incorrect-drop'); z.classList.remove('correct-drop');
+    }
+  });
+  const filled = document.querySelectorAll('.drop-zone[data-current]').length;
+  const fb = document.getElementById('fb-drop');
+  if (ok === 4) { fb.className='feedback ok'; fb.textContent='🎉 Parfait ! Tous les changements d\'état sont bien placés.'; }
+  else { fb.className='feedback ko'; fb.textContent=`${ok}/4 correct(s). Les cases en rouge sont incorrectes.`; }
+}
+
+function resetDrop() {
+  document.querySelectorAll('.drop-zone').forEach(z => {
+    z.textContent = 'Dépose ici';
+    z.className = 'drop-zone';
+    delete z.dataset.current;
+  });
+  document.querySelectorAll('.drag-token').forEach(t => { t.style.display=''; });
+  document.getElementById('fb-drop').className='feedback';
+}
+
+// =========== EXO 5 : Mode infini ===========
+const allSituations = [
+  { img:'🕯️', desc:"Une bougie est allumée. La cire, chauffée par la flamme, devient liquide autour de la mèche.", q:"Quel changement d'état subit la cire ?", choices:["Vaporisation","Fusion","Solidification","Liquéfaction","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:1, expl:"La cire passe de l'état solide à l'état liquide sous l'effet de la chaleur : c'est la fusion." },
+  { img:'☁️', desc:"Par temps froid, la vapeur d'eau présente dans l'air se transforme en nuage ou en brouillard.", q:"Quel changement d'état se produit ?", choices:["Fusion","Solidification","Vaporisation","Liquéfaction","Pas de changement d'état","Gazeux","Solide","Liquide"], answer:3, expl:"La vapeur d'eau (gaz) se transforme en eau liquide visibles (gouttelettes) : c'est la liquéfaction." },
+  { img:'🧃', desc:"Tu sors une bouteille froide du réfrigérateur. Des gouttelettes apparaissent sur sa paroi extérieure.", q:"Pourquoi ces gouttelettes se forment-elles ?", choices:["L'eau traverse la paroi de la bouteille","La vapeur d'eau présente dans l'air se liquéfie au contact de la paroi froide","L'eau s'évapore et devient visible","La bouteille fond"], answer:1, expl:"La vapeur d'eau présente dans l'air ambiant se liquéfie au contact de la surface froide : c'est la liquéfaction." },
+  { img:'🌋', desc:"Le magma sort d'un volcan. Au contact de l'air froid, il se transforme en roche.", q:"Quel changement d'état subit le magma ?", choices:["Solidification","Liquéfaction","Vaporisation","Fusion","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:0, expl:"Le magma passe de l'état liquide à l'état solide en refroidissant : c'est la solidification." },
+  { img:'👕', desc:"Des vêtements mouillés mis à sécher à l'air libre deviennent secs au bout de quelques heures.", q:"Quel phénomène explique que les vêtements sèchent ?", choices:["Vaporisation","Fusion","Solidification","Liquéfaction","Evaporation","Liquide","Gazeux","Solide"], answer:4, expl:"L'eau liquide des vêtements se transforme lentement en vapeur d'eau : c'est l'évaporation." },
+  { img:'❄️', desc:"En hiver, l'eau d'une flaque se transforme en glace lorsque la température descend sous 0°C.", q:"Comment s'appelle ce changement d'état ?", choices:["Fusion","Solidification","Vaporisation","Liquéfaction","Pas de changement d'état","Gazeux","Solide","Liquide"], answer:2, expl:"L'eau liquide se transforme en glace solide par refroidissement : c'est la solidification." },
+  { img:'🍦', desc:"Une glace à la vanille sort du congélateur. Laissée à température ambiante, elle commence à couler.", q:"Quel changement d'état observe-t-on ?", choices:["Solidification","Liquéfaction","Vaporisation","Fusion","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:3, expl:"La glace (solide) se transforme en crème liquide sous l'effet de la chaleur ambiante : c'est la fusion." },
+  { img:'🌫️', desc:"Le matin, on observe de la buée sur les vitres froides d'une voiture.", q:"Par quel changement d'état cette buée s'est-elle formée ?", choices:["Fusion","Solidification","Vaporisation","Liquéfaction","Pas de changement d'état","Gazeux","Solide","Liquide"], answer:3, expl:"La vapeur d'eau de l'air s'est transformée en eau liquide au contact de la vitre froide : c'est la liquéfaction." },
+  { img:'🏔️', desc:"Au printemps, la neige des sommets fond et l'eau coule dans les torrents de montagne.", q:"Quel changement d'état subit la neige ?", choices:["Vaporisation","Fusion","Solidification","Liquéfaction","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:1, expl:"La neige solide se transforme en eau liquide sous l'effet de la chaleur du soleil : c'est la fusion." },
+  { img:'🧊', desc:"On fabrique des glaçons en versant de l'eau liquide dans un bac, puis en le plaçant au congélateur.", q:"Quel changement d'état se produit dans le congélateur ?", choices:["Fusion","Vaporisation","Solidification","Liquéfaction","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:2, expl:"L'eau liquide se transforme en glace (solide) par refroidissement : c'est la solidification." },
+  { img:'🍲', desc:"De l'eau chauffée dans une casserole se met à bouillir. Il y a de moins en moins d'eau dans la casserole", q:"Quel changement d'état se produit ?", choices:["Fusion","Solidification","Liquéfaction","Vaporisation","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:3, expl:"L'eau liquide se transforme en vapeur d'eau (gaz) par chauffage : c'est la vaporisation." },
+  { img:'⚒️', desc:"Du fer est chauffé à très haute température dans une forge afin de pouvoir le faire couler dans des moules pour fabriquer des clous.", q:"Quel changement d'état subit le fer dans la forge ?", choices:["Solidification","Liquéfaction","Vaporisation","Fusion","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:3, expl:"Le fer (solide) se transforme en métal liquide par chauffage intense : c'est la fusion." },
+  { img:'🌧️', desc:"L'eau contenue dans les nuages tombe sous forme de pluie.", q:"Quel changement d'état a lieu ?", choices:["Fusion","Solidification","Vaporisation","Liquéfaction","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:4, expl:"L'eau dans le nuage est à l'état liquide (sous forme de milliards de petites goutellettes très petites). La pluie est aussi à l'état liquide (les goutelletes se rassemblent, deviennent plus grosses et tombent." },
+  { img:'🍫', desc:"Un carré de chocolat tenu dans la main devient mou.", q:"Quel changement d'état subit le chocolat ?", choices:["Vaporisation","Solidification","Fusion","Liquéfaction","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:2, expl:"Le chocolat (solide) se transforme en liquide par chauffage : c'est la fusion." },
+  { img:'⛸️', desc:"Un lac est recouvert de glace en hiver. Un patineur peut glisser dessus.", q:"A quel état physique se trouve l'eau du lac en surface ?", choices:["Vaporisation","Fusion","Solidification","Liquéfaction","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:7, expl:"La glace est de l'eau à l'état solide : elle est rigide et ne coule pas." },
+  { img:'🌊', desc:"L'océan Pacifique contient des milliards de litres d'eau de mer. Au Soleil, l'eau de mer chauffe", q:"A quel état physique se trouve l'eau de l'océan ?", choices:["Vaporisation","Fusion","Solidification","Liquéfaction","Evaporation","Liquide","Gazeux","Solide"], answer:5, expl:"L'eau de l'océan est à l'état liquide : elle coule et prend la forme du récipient." },
+  { img:'🫧', desc:"On souffle de l'air pour gonfler un ballon de baudruche.", q:"A quel état physique se trouve l'air à l'intérieur du ballon ?", choices:["Fusion","Solidification","Liquéfaction","Vaporisation","Pas de changement d'état","Liquide","Gazeux","Solide"], answer:6, expl:"L'air est à l'état gazeux : il est invisible." },
+  { img:'🍵', desc:"On observe de la fumée au dessus d'une tasse de thé chaud.", q:"A quel état physique se trouve cette fumée ?", choices:["Fusion","Solidification","Vaporisation","Liquéfaction","Pas de changement d'état","Gazeux","Solide","Liquide"], answer:7, expl:"La fumée est liquide car cette fumée est visible : elle est composée de milliards de goutellettes d'eau liquide." },
+];
+
+let infIndex = 0;
+let infOrder = [];
+let infScore = 0;
+let infTotal = 0;
+let infStreak = 0;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function loadSituation() {
+  if (infIndex >= infOrder.length) {
+    infOrder = shuffle(allSituations);
+    infIndex = 0;
+  }
+  const s = infOrder[infIndex];
+  document.getElementById('inf-img').textContent = s.img;
+  document.getElementById('inf-desc').textContent = s.desc;
+  document.getElementById('inf-q').textContent = s.q;
+  document.getElementById('inf-fb').className = 'feedback';
+  document.getElementById('inf-next-wrap').style.display = 'none';
+  document.getElementById('inf-counter').textContent = infTotal + 1;
+  const choicesDiv = document.getElementById('inf-choices');
+  choicesDiv.innerHTML = s.choices.map((c,j) =>
+    `<button class="qcm-btn" onclick="answerInf(${j})">${c}</button>`
+  ).join('');
+}
+
+function answerInf(cIdx) {
+  const s = infOrder[infIndex];
+  const btns = document.querySelectorAll('#inf-choices .qcm-btn');
+  btns.forEach(b => b.classList.add('disabled'));
+  const correct = cIdx === s.answer;
+  btns[cIdx].classList.add(correct ? 'correct' : 'incorrect');
+  if (!correct) btns[s.answer].classList.add('correct');
+  infTotal++;
+  if (correct) { infScore++; infStreak++; } else { infStreak = 0; }
+  const fb = document.getElementById('inf-fb');
+  fb.className = correct ? 'feedback ok' : 'feedback ko';
+  fb.textContent = (correct ? '✅ ' : '❌ ') + s.expl;
+  document.getElementById('inf-score').textContent = infScore;
+  document.getElementById('inf-streak').textContent = '🔥 ' + infStreak;
+  document.getElementById('inf-progress').style.width = Math.round((infScore/infTotal)*100) + '%';
+  document.getElementById('inf-next-wrap').style.display = 'block';
+  infIndex++;
+}
+
+function nextSituation() { loadSituation(); }
+
+// Init
+buildQcm();
+infOrder = shuffle(allSituations);
+loadSituation();
+</script>
+</body>
+</html>

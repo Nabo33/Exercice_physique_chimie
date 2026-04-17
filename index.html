@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sciences au collège — Accueil</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --secondary: #7c3aed;
+      --accent: #f59e0b;
+      --success: #10b981;
+      --border: #e5e7eb;
+      --shadow: 0 10px 30px rgba(37, 99, 235, 0.10);
+      --radius: 22px;
+      --max-width: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,0.10), transparent 30%),
+        radial-gradient(circle at top right, rgba(124,58,237,0.10), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: min(92%, var(--max-width));
+      margin: 0 auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1.2rem 0 0;
+      box-shadow: var(--shadow);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      transition: background 0.2s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .hero {
+      padding: 3.8rem 0 4.4rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto 1.8rem;
+      font-size: 1.08rem;
+      opacity: 0.95;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 0.95rem 1.35rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.14);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.28);
+    }
+
+    main {
+      padding: 2.5rem 0 4rem;
+    }
+
+    section {
+      margin-bottom: 2.3rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-text {
+      color: var(--muted);
+      margin-bottom: 1.3rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.4rem;
+    }
+
+    .card h3 {
+      margin-bottom: 0.6rem;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 0.8rem;
+    }
+
+    .tag-blue { background: #dbeafe; color: #1d4ed8; }
+    .tag-purple { background: #ede9fe; color: #6d28d9; }
+    .tag-orange { background: #fef3c7; color: #b45309; }
+    .tag-green { background: #d1fae5; color: #047857; }
+
+    .card a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(124,58,237,0.08));
+      border: 1px solid rgba(37,99,235,0.12);
+      border-radius: var(--radius);
+      padding: 1.4rem;
+    }
+
+    .info-box ul {
+      padding-left: 1.2rem;
+      margin-top: 0.8rem;
+    }
+
+    .info-box li + li {
+      margin-top: 0.45rem;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 700px) {
+      .topbar {
+        justify-content: center;
+      }
+
+      nav {
+        justify-content: center;
+      }
+
+      .hero {
+        padding-top: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="topbar">
+        <div class="brand">🔬 Sciences au collège</div>
+        <nav>
+          <a href="#activites">Activités</a>
+          <a href="#niveaux">Niveaux</a>
+          <a href="#apropos">À propos</a>
+        </nav>
+      </div>
+
+      <div class="hero">
+        <h1>Bienvenue sur mon espace d’activités interactives</h1>
+        <p>
+          Retrouve ici des exercices, des animations et des défis pour progresser en sciences au collège.
+          Chaque activité permet de réviser, s’entraîner et mieux comprendre les notions vues en classe.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#activites">Voir les activités</a>
+          <a class="btn btn-secondary" href="#apropos">En savoir plus</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="activites">
+      <h2 class="section-title">Activités disponibles</h2>
+      <p class="section-text">
+        Voici quelques exemples de rubriques que tu pourras compléter avec tes propres fichiers HTML.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <div class="tag tag-blue">Physique</div>
+          <h3>Circuits électriques</h3>
+          <p>Des activités pour reconnaître les dipôles, comprendre le fonctionnement d’un circuit et s’entraîner de façon interactive.</p>
+          <a href="circuits.html">Accéder à l’activité</a>
+        </article>
+
+        <article class="card">
+          <div class="tag tag-purple">Chimie</div>
+          <h3>Pictogrammes de danger</h3>
+          <p>Révise les pictogrammes, leur signification et apprends à identifier les risques dans la vie courante et au laboratoire.</p>
+          <a href="pictogrammes.html">Accéder à l’activité</a>
+        </article>
+
+        <article class="card">
+          <div class="tag tag-orange">Mesures</div>
+          <h3>Masse et volume</h3>
+          <p>Manipule virtuellement une balance ou une éprouvette graduée pour t’entraîner à réaliser des mesures avec précision.</p>
+          <a href="mesures.html">Accéder à l’activité</a>
+        </article>
+
+        <article class="card">
+          <div class="tag tag-green">États de la matière</div>
+          <h3>Changements d’état</h3>
+          <p>Observe et révise la fusion, la vaporisation, la liquéfaction et la solidification grâce à des exercices ludiques.</p>
+          <a href="changements-etat.html">Accéder à l’activité</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="niveaux">
+      <h2 class="section-title">Par niveau</h2>
+      <p class="section-text">
+        Cette partie peut servir à organiser ton site par classe pour que les élèves trouvent plus facilement leurs activités.
+      </p>
+
+      <div class="grid">
+        <article class="card">
+          <h3>6ème</h3>
+          <p>Découvrir les sciences, manipuler, observer et apprendre les premières méthodes de travail.</p>
+          <a href="6eme.html">Voir les activités de 6ème</a>
+        </article>
+
+        <article class="card">
+          <h3>5ème</h3>
+          <p>Approfondir les notions et commencer à raisonner de façon plus autonome à travers des défis variés.</p>
+          <a href="5eme.html">Voir les activités de 5ème</a>
+        </article>
+
+        <article class="card">
+          <h3>4ème</h3>
+          <p>Renforcer les méthodes scientifiques, interpréter des résultats et consolider les connaissances du cycle 4.</p>
+          <a href="4eme.html">Voir les activités de 4ème</a>
+        </article>
+
+        <article class="card">
+          <h3>3ème</h3>
+          <p>Réviser, se préparer au lycée et développer des compétences solides en physique-chimie.</p>
+          <a href="3eme.html">Voir les activités de 3ème</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="apropos">
+      <h2 class="section-title">À propos du site</h2>
+      <div class="info-box">
+        <p>
+          Ce site a pour objectif de proposer des ressources simples, accessibles et interactives pour les élèves.
+          Il peut être enrichi progressivement avec de nouvelles pages HTML mises en ligne au fil de l’année.
+        </p>
+        <ul>
+          <li>Des exercices interactifs accessibles depuis un ordinateur, une tablette ou un téléphone.</li>
+          <li>Une organisation possible par thème ou par niveau.</li>
+          <li>Une mise à jour facile en ajoutant simplement de nouveaux fichiers HTML.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 — Site de sciences au collège
+    </div>
+  </footer>
+</body>
+</html>
