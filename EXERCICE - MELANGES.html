@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Mélanges – Classer les mélanges</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f7ff;
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --secondary: #7c3aed;
+    --accent: #f59e0b;
+    --success: #10b981;
+    --danger: #ef4444;
+    --card: #ffffff;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 4px 24px rgba(37,99,235,0.10);
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -80px;
+    left: -80px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #bfdbfe 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: floatA 8s ease-in-out infinite alternate;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -80px;
+    right: -80px;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, #ede9fe 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+    animation: floatB 10s ease-in-out infinite alternate;
+  }
+
+  @keyframes floatA {
+    from { transform: translate(0,0); }
+    to { transform: translate(40px,30px); }
+  }
+
+  @keyframes floatB {
+    from { transform: translate(0,0); }
+    to { transform: translate(-30px,-40px); }
+  }
+
+  header {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
+    color: white;
+    padding: 28px 24px 22px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.3);
+  }
+
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  header p {
+    font-size: 1rem;
+    opacity: 0.88;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  #scorebar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--border);
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+
+  .score-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary-light);
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--primary);
+  }
+
+  .score-pill .emoji { font-size: 1.3rem; }
+
+  #progress-bar-wrap {
+    flex: 1;
+    min-width: 120px;
+    max-width: 260px;
+    height: 10px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(.4,2,.6,1);
+    width: 0%;
+  }
+
+  #menu {
+    position: relative;
+    z-index: 5;
+    max-width: 360px;
+    margin: 40px auto 24px;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .menu-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 26px 20px;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(37,99,235,0.18);
+    border-color: var(--primary);
+  }
+
+  .menu-card .icon { font-size: 2.5rem; }
+
+  .menu-card h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.15rem;
+    color: var(--primary);
+  }
+
+  .menu-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .menu-card .badge {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+  }
+
+  #game-area {
+    position: relative;
+    z-index: 5;
+    max-width: 760px;
+    margin: 0 auto 40px;
+    padding: 0 18px;
+    display: none;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 30px 28px;
+    animation: slideIn 0.35s cubic-bezier(.4,2,.6,1);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  .q-type-badge {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 4px 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .q-counter {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .question-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.55;
+    margin-bottom: 22px;
+    color: var(--text);
+  }
+
+  .highlight {
+    background: #fef3c7;
+    border-radius: 6px;
+    padding: 2px 6px;
+    color: #92400e;
+    font-weight: 800;
+  }
+
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .choice-btn {
+    background: #f8fafc;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .choice-btn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+    transform: translateX(4px);
+  }
+
+  .choice-btn.correct {
+    border-color: var(--success);
+    background: #d1fae5;
+    color: #065f46;
+    animation: popIn 0.3s cubic-bezier(.4,2,.6,1);
+  }
+
+  .choice-btn.wrong {
+    border-color: var(--danger);
+    background: #fee2e2;
+    color: #991b1b;
+    animation: shake 0.4s;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+
+  .feedback {
+    margin-top: 18px;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-weight: 700;
+    display: none;
+    animation: slideIn 0.2s;
+    line-height: 1.5;
+  }
+
+  .feedback.show { display: block; }
+
+  .feedback.ok {
+    background: #d1fae5;
+    color: #065f46;
+    border: 2px solid #6ee7b7;
+  }
+
+  .feedback.ko {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 2px solid #fca5a5;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 28px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.3);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37,99,235,0.35);
+  }
+
+  .btn:active { transform: scale(0.97); }
+
+  .btn.secondary {
+    background: white;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    box-shadow: none;
+  }
+
+  #results {
+    display: none;
+    position: relative;
+    z-index: 5;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    padding: 0 18px;
+    text-align: center;
+  }
+
+  .result-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px 32px;
+    animation: slideIn 0.4s;
+  }
+
+  .result-emoji {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .result-score {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3.5rem;
+    color: var(--primary);
+    line-height: 1;
+  }
+
+  .result-msg {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 12px 0 8px;
+  }
+
+  .result-detail {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+
+  .stars {
+    font-size: 2rem;
+    letter-spacing: 6px;
+    margin: 10px 0;
+  }
+
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  #back-btn {
+    position: relative;
+    z-index: 10;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: none;
+    margin: 18px auto 0;
+    transition: border-color 0.15s;
+    color: var(--text-muted);
+  }
+
+  #back-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  @media(max-width: 500px) {
+    .card { padding: 22px 16px; }
+    .question-text { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<header>
+  <h1>🧪 Les Mélanges</h1>
+  <p>Classer les mélanges · Sciences 6ème</p>
+</header>
+
+<div id="scorebar">
+  <div class="score-pill"><span class="emoji">✅</span> <span id="score-correct">0</span> correctes</div>
+  <div id="progress-bar-wrap"><div id="progress-bar-fill"></div></div>
+  <div class="score-pill"><span class="emoji">🔢</span> <span id="score-total">0</span> réponses</div>
+</div>
+
+<button id="back-btn" onclick="showMenu()">← Revenir au menu</button>
+
+<div id="menu">
+  <div class="menu-card" onclick="startGame()">
+    <div class="icon">🔬</div>
+    <h3>Classer les mélanges</h3>
+    <p>Homogène ou hétérogène ? Identifie le bon type.</p>
+    <span class="badge">QCM • 10 questions</span>
+  </div>
+</div>
+
+<div id="game-area">
+  <div class="card" id="q-card">
+    <div class="question-header">
+      <span class="q-type-badge" id="q-type-badge">Classer un mélange</span>
+      <span class="q-counter" id="q-counter">Question 1 / 10</span>
+    </div>
+    <div class="question-text" id="q-text"></div>
+    <div id="q-content"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn" id="next-btn" onclick="nextQuestion()" style="display:none">Suivant →</button>
+  </div>
+</div>
+
+<div id="results">
+  <div class="result-card">
+    <span class="result-emoji" id="res-emoji">🎉</span>
+    <div class="stars" id="res-stars"></div>
+    <div class="result-score" id="res-score"></div>
+    <div class="result-msg" id="res-msg"></div>
+    <div class="result-detail" id="res-detail"></div>
+    <button class="btn" onclick="showMenu()">🏠 Menu principal</button>
+    <button class="btn secondary" onclick="restartGame()" style="margin-left:8px">🔄 Rejouer</button>
+  </div>
+</div>
+
+<script>
+const EXAMPLES_HOMOGENE = [
+  { name: "Eau sucrée", desc: "eau + sucre dissous" },
+  { name: "Eau salée", desc: "eau + sel dissous" },
+  { name: "Limonade", desc: "eau + jus de citron + sucre dissous" },
+  { name: "Menthe à l'eau", desc: "eau + sirop de menthe" },
+  { name: "Eau de mer", desc: "eau + sels minéraux dissous" },
+  { name: "Vinaigre", desc: "eau + acide acétique" },
+  { name: "Café filtré", desc: "eau + café dissous" },
+  { name: "Lait entier", desc: "eau + matières grasses émulsifiées" },
+  { name: "Eau de Javel", desc: "eau + hypochlorite dissous" }
+];
+
+const EXAMPLES_HETEROGENE = [
+  { name: "Eau et huile", desc: "deux liquides non-miscibles" },
+  { name: "Jus d'orange avec pulpe", desc: "liquide + morceaux de pulpe visibles" },
+  { name: "Eau du lac Neyton", desc: "eau + algues + particules visibles" },
+  { name: "Eau boueuse", desc: "eau + argile non dissoute" },
+  { name: "Sable dans l'eau", desc: "solide insoluble dans l'eau" },
+  { name: "Eau et farine", desc: "eau + particules de farine en suspension" },
+  { name: "Vinaigrette", desc: "huile + vinaigre séparés" },
+  { name: "Granité", desc: "eau + glace visible" },
+  { name: "Craie dans l'eau", desc: "poudre de craie insoluble" }
+];
+
+let questionIndex = 0;
+let correctCount = 0;
+let totalAnswered = 0;
+let sessionTotal = 10;
+let answered = false;
+let classifyOrder = [];
+
+function showMenu() {
+  correctCount = 0;
+  totalAnswered = 0;
+  questionIndex = 0;
+  updateScoreBar();
+
+  document.getElementById('menu').style.display = 'grid';
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'none';
+}
+
+function showGame() {
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('game-area').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'block';
+}
+
+function updateScoreBar() {
+  document.getElementById('score-correct').textContent = correctCount;
+  document.getElementById('score-total').textContent = totalAnswered;
+  const pct = totalAnswered === 0 ? 0 : Math.round(correctCount / totalAnswered * 100);
+  document.getElementById('progress-bar-fill').style.width = pct + '%';
+}
+
+function showFeedback(ok, msg) {
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback show ' + (ok ? 'ok' : 'ko');
+  fb.innerHTML = (ok ? '✅ ' : '❌ ') + msg;
+  document.getElementById('next-btn').style.display = 'inline-flex';
+}
+
+function hideFeedback() {
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback';
+  fb.innerHTML = '';
+  document.getElementById('next-btn').style.display = 'none';
+}
+
+function startGame() {
+  questionIndex = 0;
+  correctCount = 0;
+  totalAnswered = 0;
+  answered = false;
+
+  const totalClassify = EXAMPLES_HOMOGENE.length + EXAMPLES_HETEROGENE.length;
+  classifyOrder = shuffle([...Array(totalClassify).keys()]);
+
+  updateScoreBar();
+  showGame();
+  renderQuestion();
+}
+
+function restartGame() {
+  startGame();
+}
+
+function nextQuestion() {
+  questionIndex++;
+  answered = false;
+
+  const totalClassify = EXAMPLES_HOMOGENE.length + EXAMPLES_HETEROGENE.length;
+  if (questionIndex > 0 && questionIndex % totalClassify === 0) {
+    classifyOrder = shuffle([...Array(totalClassify).keys()]);
+  }
+
+  if (questionIndex >= sessionTotal) {
+    showResults();
+    return;
+  }
+
+  hideFeedback();
+  renderQuestion();
+}
+
+function renderQuestion() {
+  document.getElementById('q-counter').textContent = `Question ${questionIndex + 1} / ${sessionTotal}`;
+  document.getElementById('q-type-badge').textContent = 'Classer un mélange';
+
+  const allExamples = [
+    ...EXAMPLES_HOMOGENE.map(e => ({ ...e, type: 'homogène' })),
+    ...EXAMPLES_HETEROGENE.map(e => ({ ...e, type: 'hétérogène' }))
+  ];
+
+  const ex = allExamples[classifyOrder[questionIndex % classifyOrder.length]];
+
+  document.getElementById('q-text').innerHTML =
+    `Quel est le type du mélange suivant : <span class="highlight">${ex.name}</span><br>` +
+    `<small style="font-weight:600;color:#64748b">(${ex.desc})</small> ?`;
+
+  const choices = ['homogène', 'hétérogène'];
+  const html = `<div class="choices">` +
+    choices.map((c, i) => `
+      <button class="choice-btn" onclick="answerClassify(this,'${c}','${ex.type}','${escHtml(ex.name)}')">
+        ${i === 0 ? '🔵' : '🔴'} Mélange ${c}
+      </button>
+    `).join('') +
+    `</div>`;
+
+  document.getElementById('q-content').innerHTML = html;
+  hideFeedback();
+  document.getElementById('q-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function answerClassify(btn, chosen, correct, name) {
+  if (answered) return;
+
+  answered = true;
+  totalAnswered++;
+
+  const ok = chosen === correct;
+  if (ok) correctCount++;
+
+  updateScoreBar();
+  btn.classList.add(ok ? 'correct' : 'wrong');
+
+  const expl = ok
+    ? `<strong>${name}</strong> est bien un mélange <strong>${correct}</strong>.` +
+      (correct === 'homogène'
+        ? " On ne distingue pas les constituants à l'œil nu."
+        : " On peut distinguer les constituants à l'œil nu.")
+    : `Non ! <strong>${name}</strong> est un mélange <strong>${correct}</strong>.` +
+      (correct === 'homogène'
+        ? " On ne distingue pas les constituants à l'œil nu."
+        : " On peut distinguer les constituants à l'œil nu.");
+
+  showFeedback(ok, expl);
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+}
+
+function showResults() {
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+
+  const pct = totalAnswered === 0 ? 0 : Math.round(correctCount / totalAnswered * 100);
+  const stars = pct >= 90 ? '⭐⭐⭐' : pct >= 60 ? '⭐⭐' : '⭐';
+  const emoji = pct >= 90 ? '🎉' : pct >= 60 ? '😊' : '💪';
+  const msg = pct >= 90 ? 'Excellent travail ! Tu maîtrises les mélanges !'
+            : pct >= 60 ? 'Bien joué ! Encore un peu de pratique !'
+            : 'Continue à t’entraîner, tu vas y arriver !';
+
+  document.getElementById('res-emoji').textContent = emoji;
+  document.getElementById('res-stars').textContent = stars;
+  document.getElementById('res-score').textContent = `${correctCount} / ${totalAnswered}`;
+  document.getElementById('res-msg').textContent = msg;
+  document.getElementById('res-detail').textContent = `Score : ${pct}% de bonnes réponses sur cette session.`;
+
+  if (pct >= 80) launchConfetti();
+}
+
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const colors = ['#2563eb','#7c3aed','#f59e0b','#10b981','#ef4444','#ec4899'];
+  const pieces = Array.from({ length: 120 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    w: 8 + Math.random() * 8,
+    h: 6 + Math.random() * 6,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rot: Math.random() * 360,
+    vx: (Math.random() - 0.5) * 3,
+    vy: 2 + Math.random() * 4,
+    vr: (Math.random() - 0.5) * 6
+  }));
+
+  let frame = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.vr;
+
+      if (p.y > canvas.height) {
+        p.y = -20;
+        p.x = Math.random() * canvas.width;
+      }
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+
+    frame++;
+    if (frame < 200) {
+      requestAnimationFrame(draw);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  draw();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/\\/g, "\\\\")
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '&quot;');
+}
+
+showMenu();
+</script>
+</body>
+</html>
