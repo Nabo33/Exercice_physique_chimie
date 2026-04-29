@@ -1033,57 +1033,69 @@ function renderAnswersFindCorrect(correct) {
 function checkAnswer(btn, isCorrect, correct) {
   if(answered) return;
   answered = true;
+
   const fb = document.getElementById('feedback-bar');
   const allBtns = document.querySelectorAll('.answer-btn');
 
   if(isCorrect) {
     btn.classList.add('correct');
-    fb.className='feedback-bar correct show';
-    fb.textContent='✅ Bravo ! C\'est le bon symbole !';
+    fb.className = 'feedback-bar correct show';
+
+    if(quizMode === 'symbole-vers-nom') {
+      fb.textContent = '✅ Bravo ! C’est le bon nom !';
+    } else {
+      fb.textContent = '✅ Bravo ! C’est le bon symbole !';
+    }
+
     score++;
   } else {
     btn.classList.add('wrong');
-    fb.className='feedback-bar wrong show';
-    fb.textContent='❌ Pas tout à fait… Regarde la bonne réponse en vert !';
+    fb.className = 'feedback-bar wrong show';
+    fb.textContent = '❌ Pas tout à fait… Regarde la bonne réponse en vert !';
     lives--;
+
     // Montrer la bonne réponse
-if(quizMode === 'nom-vers-symbole') {
-  allBtns.forEach(b => {
-    if(b.dataset.dipoleId === correct.id) {
-      b.classList.add('reveal-correct');
-    }
-  });
-}
-    } else if(quizMode === 'symbole-vers-nom') {
-      allBtns.forEach(b=>{
-        const label = b.querySelector('span')?.textContent?.trim();
-        const match = DIPOLES.find(d=>d.nom===label);
-        if(match && match.id===correct.id) b.classList.add('reveal-correct');
+    if(quizMode === 'nom-vers-symbole') {
+      allBtns.forEach(b => {
+        if(b.dataset.dipoleId === correct.id) {
+          b.classList.add('reveal-correct');
+        }
       });
+
+    } else if(quizMode === 'symbole-vers-nom') {
+      allBtns.forEach(b => {
+        const label = b.querySelector('span')?.textContent?.trim();
+        const match = DIPOLES.find(d => d.nom === label);
+        if(match && match.id === correct.id) {
+          b.classList.add('reveal-correct');
+        }
+      });
+
     } else {
       // Dans le mode "Trouve le bon", marquer le bon en vert
-      allBtns.forEach(b=>{
-        if(b !== btn && !b.classList.contains('wrong')) {
-          if(b.dataset.correct === 'true') b.classList.add('reveal-correct');
+      allBtns.forEach(b => {
+        if(b.dataset.correct === 'true') {
+          b.classList.add('reveal-correct');
         }
       });
     }
   }
 
-  allBtns.forEach(b=>b.disabled=true);
+  allBtns.forEach(b => b.disabled = true);
   updateStatus();
 
   if(lives <= 0) {
-    setTimeout(()=>endQuiz(), 1200);
+    setTimeout(() => endQuiz(), 1200);
     return;
   }
 
   document.getElementById('next-btn').classList.add('show');
 
-  if(currentQ === TOTAL_Q-1) {
-    document.getElementById('next-btn').textContent='Voir les résultats 🏆';
+  if(currentQ === TOTAL_Q - 1) {
+    document.getElementById('next-btn').textContent = 'Voir les résultats 🏆';
   }
 }
+
 
 function nextQuestion() {
   currentQ++;
