@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Symboles des Dipôles — 6ème</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bleu: #1a73e8;
+    --bleu-clair: #e8f0fe;
+    --vert: #0f9d58;
+    --vert-clair: #e6f4ea;
+    --rouge: #ea4335;
+    --rouge-clair: #fce8e6;
+    --jaune: #fbbc04;
+    --jaune-clair: #fef9e3;
+    --violet: #7c4dff;
+    --violet-clair: #ede7f6;
+    --rose: #ec4899;
+    --rose-clair: #fce7f3;
+    --bg: #f0f4ff;
+    --carte: #ffffff;
+    --texte: #1a1a2e;
+    --gris: #6c757d;
+    --ombre: 0 4px 20px rgba(0,0,0,0.10);
+    --ombre-forte: 0 8px 32px rgba(0,0,0,0.15);
+    --radius: 20px;
+    --cadre-bord: #e7ebf3;
+    --cadre-ombre: 0 8px 22px rgba(0,0,0,0.10);
+    --correct: var(--vert);
+    --wrong: var(--rouge);
+    --accent1: var(--bleu);
+    --accent2: var(--jaune);
+    --accent3: var(--rose);
+    --accent4: var(--vert);
+    --text: var(--texte);
+    --text-dim: var(--gris);
+    --panel: var(--carte);
+    --card: var(--carte);
+    --border: #dde1f0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--texte);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before { display:none; }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .star {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--bleu), var(--violet));
+    opacity: 0.055;
+    animation: float var(--d, 9s) ease-in-out infinite alternate;
+  }
+  @keyframes float {
+    from { transform: translateY(12px) scale(0.85); }
+    to { transform: translateY(-18px) scale(1.08); }
+  }
+
+  header {
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(135deg, #1a73e8 0%, #7c4dff 100%);
+    padding: 28px 20px 22px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(26,115,232,0.3);
+  }
+
+  .lightning-icon {
+    font-size: 2.6rem;
+    display: inline-block;
+    margin-bottom: 4px;
+    animation: pulseIcon 2.1s ease-in-out infinite;
+  }
+  @keyframes pulseIcon {
+    0%,100% { transform: scale(1) rotate(-5deg); }
+    50% { transform: scale(1.08) rotate(5deg); }
+  }
+
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    margin-bottom: 0;
+  }
+
+  header p {
+    color: rgba(255,255,255,0.88);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+
+  .tabs {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 16px 16px 0;
+  }
+
+  .tab-btn {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 22px;
+    border-radius: 50px;
+    border: 2.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s;
+    background: var(--carte);
+    color: var(--gris);
+    box-shadow: var(--ombre);
+  }
+  .tab-btn::before { display:none; }
+  .tab-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ombre-forte);
+  }
+  .tab-btn.active {
+    background: var(--bleu);
+    color: #fff;
+    border-color: var(--bleu);
+    transform: translateY(-2px);
+  }
+
+  .section {
+    display: none;
+    position: relative;
+    z-index: 5;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+  }
+  .section.active {
+    display: block;
+    animation: fadeIn 0.35s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity:0; transform: translateY(10px); }
+    to { opacity:1; transform:none; }
+  }
+
+  .section-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7rem;
+    color: var(--bleu);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .lesson-intro {
+    margin-bottom: 18px;
+    color: var(--gris);
+    font-size: 0.95rem;
+  }
+
+  .lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 8px;
+  }
+
+  .dipole-card {
+    background: var(--carte);
+    border-radius: var(--radius);
+    box-shadow: var(--ombre);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 3px solid transparent;
+    display: block;
+    padding: 0;
+  }
+  .dipole-card::after { display:none; }
+  .dipole-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--ombre-forte);
+    border-color: var(--bleu);
+  }
+
+  .card-symbol {
+    width: 100%;
+    height: 155px;
+    background: linear-gradient(180deg, #ffffff, #f8f9ff);
+    border-radius: 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 20px 18px 10px;
+    position: relative;
+  }
+  .card-symbol::before {
+    content: '';
+    width: 150px;
+    height: 112px;
+    position: absolute;
+    background: #ffffff;
+    border: 1px solid var(--cadre-bord);
+    border-radius: 18px;
+    box-shadow: var(--cadre-ombre);
+    z-index: 0;
+  }
+  .card-symbol svg,
+  .card-symbol img {
+    position: relative;
+    z-index: 1;
+    max-width: 122px;
+    max-height: 82px;
+  }
+  .symbol-img {
+    display: block;
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+  }
+
+  .card-info { padding: 14px 14px 16px; }
+  .card-info h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.08rem;
+    color: var(--bleu);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .card-info p {
+    font-size: 0.85rem;
+    color: var(--gris);
+    line-height: 1.5;
+    min-height: 64px;
+  }
+
+  .badge {
+    display:inline-block;
+    font-size:0.75rem;
+    font-weight:700;
+    padding:3px 10px;
+    border-radius:20px;
+    margin-top:10px;
+  }
+  .badge-source { background:var(--jaune-clair); color:#7a5200; }
+  .badge-recepteur { background:var(--bleu-clair); color:var(--bleu); }
+  .badge-controle { background:var(--rose-clair); color:var(--rose); }
+  .badge-liaison { background:var(--vert-clair); color:var(--vert); }
+  .hint-tag {
+    display:inline-block;
+    font-size:0.72rem;
+    font-weight:800;
+    background: var(--violet-clair);
+    color: var(--violet);
+    border-radius:20px;
+    padding:3px 10px;
+    margin-top:8px;
+  }
+
+  .mode-toggle {
+    display:flex;
+    gap:8px;
+    flex-wrap: wrap;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+  .mode-btn {
+    font-family:'Nunito',sans-serif;
+    font-weight:700;
+    font-size:0.9rem;
+    padding:10px 18px;
+    border-radius:50px;
+    border:2.5px solid transparent;
+    background:var(--carte);
+    color:var(--gris);
+    box-shadow: var(--ombre);
+    cursor:pointer;
+    transition:all 0.25s;
+  }
+  .mode-btn:hover { transform: translateY(-2px); box-shadow: var(--ombre-forte); }
+  .mode-btn.active { background:var(--bleu); color:#fff; border-color:var(--bleu); }
+
+  .quiz-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:20px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+  }
+  .quiz-score {
+    background: var(--jaune);
+    color: #333;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: 'Nunito', sans-serif;
+  }
+  .quiz-progress-wrap {
+    flex:1;
+    min-width:160px;
+    margin:0;
+    background:#e0e0e0;
+    border-radius:10px;
+    height:12px;
+    overflow:hidden;
+  }
+  .quiz-progress-bar {
+    height:100%;
+    background: linear-gradient(90deg, var(--bleu), var(--violet));
+    border-radius:10px;
+    transition: width 0.5s ease;
+  }
+  .quiz-lives { font-size:1.25rem; letter-spacing:2px; }
+
+  .question-card,
+  .end-screen {
+    background: var(--carte);
+    border-radius: var(--radius);
+    box-shadow: var(--ombre);
+    border: none;
+    padding: 22px 20px;
+    text-align:center;
+    margin-bottom:18px;
+    min-height: 185px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  .question-label {
+    font-size:0.9rem;
+    font-weight:800;
+    color:var(--gris);
+    text-transform:none;
+    letter-spacing:0;
+    margin-bottom:10px;
+  }
+  .question-name {
+    font-family:'Fredoka One', cursive;
+    font-size:clamp(1.4rem, 4vw, 2rem);
+    color:var(--bleu);
+    margin-bottom:1rem;
+  }
+  .question-symbol-display {
+    background:#ffffff;
+    border:1px solid var(--cadre-bord);
+    border-radius:18px;
+    box-shadow:var(--cadre-ombre);
+    padding:18px 26px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:170px;
+    min-height:105px;
+  }
+  .question-symbol-display svg,
+  .question-symbol-display img { max-width:140px; max-height:90px; }
+
+  .answers-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .answer-btn {
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    font-size:0.95rem;
+    background:#f8f9ff;
+    border:2.5px solid #dde1f0;
+    border-radius:14px;
+    padding:14px 12px;
+    color:var(--texte);
+    cursor:pointer;
+    transition:all 0.2s;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:0.6rem;
+    min-height:100px;
+  }
+  .answer-btn svg,
+  .answer-btn img { max-width:100px; max-height:60px; }
+  .answer-btn:hover:not(:disabled) {
+    border-color:var(--bleu);
+    background:var(--bleu-clair);
+    transform:scale(1.03);
+    box-shadow:none;
+  }
+  .answer-btn.correct,
+  .answer-btn.reveal-correct {
+    background:var(--vert-clair);
+    border-color:var(--vert);
+    color:var(--vert);
+  }
+  .answer-btn.wrong {
+    background:var(--rouge-clair);
+    border-color:var(--rouge);
+    color:var(--rouge);
+  }
+  .answer-btn:disabled { cursor: default; }
+
+  @keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+  .feedback-bar {
+    min-height:56px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:1rem;
+    margin-bottom:1rem;
+    transition: all 0.3s ease;
+    opacity:0;
+    padding: 12px;
+  }
+  .feedback-bar.show { opacity:1; }
+  .feedback-bar.correct { background:var(--vert-clair); color:var(--vert); border:1px solid var(--vert); }
+  .feedback-bar.wrong { background:var(--rouge-clair); color:var(--rouge); border:1px solid var(--rouge); }
+
+  .next-btn,
+  .restart-btn {
+    margin-top: 4px;
+    font-family:'Fredoka One', cursive;
+    font-size:1.05rem;
+    padding:12px 32px;
+    border-radius:50px;
+    border:none;
+    cursor:pointer;
+    transition:all 0.2s;
+    background:var(--bleu);
+    color:#fff;
+    box-shadow:0 4px 14px rgba(26,115,232,0.35);
+  }
+  .next-btn { display:none; }
+  .next-btn.show { display:inline-block; animation: fadeIn 0.3s ease; }
+  .next-btn:hover,
+  .restart-btn:hover { background:#1557b0; transform:translateY(-2px); }
+
+  .end-screen { display:none; }
+  .end-screen.show { display:block; animation: fadeIn 0.5s ease; }
+  .end-trophy { font-size:4rem; margin-bottom:1rem; }
+  .end-screen h2 { font-family:'Fredoka One', cursive; font-size:2rem; color:var(--bleu); margin-bottom:0.5rem; }
+  .end-score-big { font-family:'Fredoka One', cursive; font-size:3.4rem; color:var(--bleu); margin:1rem 0; }
+
+  .modal-overlay {
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:rgba(26,26,46,0.6);
+    backdrop-filter:blur(4px);
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+  }
+  .modal-overlay.open { display:flex; animation: fadeIn 0.2s; }
+  .modal-box {
+    background:#fff;
+    border-radius:24px;
+    padding:32px;
+    max-width:560px;
+    width:100%;
+    box-shadow:var(--ombre-forte);
+    position:relative;
+  }
+  .modal-close {
+    position:absolute;
+    top:14px;
+    right:18px;
+    font-size:1.6rem;
+    cursor:pointer;
+    color:var(--gris);
+    background:none;
+    border:none;
+    transition:color 0.2s;
+  }
+  .modal-close:hover { color:var(--rouge); }
+  .modal-symbol {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+  .modal-symbol-frame {
+    width:190px;
+    height:150px;
+    background:#ffffff;
+    border:1px solid var(--cadre-bord);
+    border-radius:18px;
+    box-shadow:var(--cadre-ombre);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px;
+  }
+  .modal-symbol-frame svg,
+  .modal-symbol-frame img { max-width:160px; max-height:110px; }
+  .modal-box h2 {
+    font-family:'Fredoka One', cursive;
+    font-size:1.5rem;
+    color:var(--bleu);
+    margin-bottom:12px;
+    line-height:1.3;
+  }
+  .modal-box p { font-size:0.95rem; line-height:1.7; color:var(--texte); }
+  .modal-box ul { margin:10px 0 0 18px; }
+  .modal-box li { font-size:0.92rem; line-height:1.75; color:var(--texte); }
+
+  @media(max-width:700px){
+    .answers-grid { grid-template-columns:1fr; }
+    .quiz-header { align-items:stretch; }
+    .lesson-grid { grid-template-columns:1fr; }
+    .modal-box { padding:26px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<header>
+  <div class="lightning-icon">⚡</div>
+  <h1>🔌 Les symboles des dipôles ⚡</h1>
+  <p>Cours interactif — Physique-Chimie 6ème</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('lecon')">📖 Leçon</button>
+  <button class="tab-btn" onclick="showTab('quiz')">🎯 Quiz</button>
+</div>
+
+<!-- ====== LEÇON ====== -->
+<div class="section active" id="lecon-section">
+  <div class="section-title"><span>📖</span> Les symboles à connaître</div>
+  <p class="lesson-intro">Clique sur une vignette pour afficher davantage de renseignements sur le symbole du dipôle.</p>
+  <div class="lesson-grid" id="lesson-grid"></div>
+</div>
+
+<!-- ====== QUIZ ====== -->
+<div class="section" id="quiz-section">
+  <div class="section-title"><span>🎯</span> Quiz — Reconnais les symboles !</div>
+  <div class="mode-toggle">
+    <button class="mode-btn active" onclick="setMode('nom-vers-symbole')" id="mode-btn-1">Nom → Symbole</button>
+    <button class="mode-btn" onclick="setMode('symbole-vers-nom')" id="mode-btn-2">Symbole → Nom</button>
+    <button class="mode-btn" onclick="setMode('trouver-bon')" id="mode-btn-3">Trouve l'erreur</button>
+  </div>
+
+  <div class="quiz-header">
+    <div class="quiz-score">⭐ <span id="score-val">0</span></div>
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+    <div class="quiz-lives" id="lives-display">❤️❤️❤️</div>
+  </div>
+
+  <div id="quiz-play">
+    <div class="question-card" id="question-card">
+      <div class="question-label" id="q-label">Quel est le symbole de…</div>
+      <div class="question-name" id="q-name"></div>
+      <div class="question-symbol-display" id="q-symbol" style="display:none"></div>
+    </div>
+
+    <div class="answers-grid" id="answers-grid"></div>
+    <div class="feedback-bar" id="feedback-bar"></div>
+    <div style="text-align:center">
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">Question suivante →</button>
+    </div>
+  </div>
+
+  <div class="end-screen" id="end-screen">
+    <div class="end-trophy" id="end-trophy">🏆</div>
+    <h2 id="end-title">Bravo !</h2>
+    <div class="end-score-big" id="end-score-big">0/10</div>
+    <p id="end-msg" style="color:var(--text-dim)"></p>
+    <button class="restart-btn" onclick="startQuiz()">🔄 Recommencer</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="dipole-modal" onclick="closeDipoleModal(event)">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" onclick="document.getElementById('dipole-modal').classList.remove('open')" aria-label="Fermer">✕</button>
+    <div class="modal-symbol" id="modal-symbol"></div>
+    <h2 id="modal-title"></h2>
+    <p id="modal-desc"></p>
+    <ul id="modal-details"></ul>
+  </div>
+</div>
+
+<script>
+// ===== ÉTOILES =====
+(function() {
+  const c = document.getElementById('stars');
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.setProperty('--d',(2+Math.random()*4)+'s');
+    s.style.animationDelay=(Math.random()*4)+'s';
+    c.appendChild(s);
+  }
+})();
+
+// ===== DONNÉES =====
+const DIPOLES = [
+  {
+    id: 'pile',
+    nom: 'Pile',
+    description: 'Dipôle indispensable qui fournit du courant et de l\'énergie électrique. <br>Le trait long = borne positive (+).<br>Le trait court = borne négative (-).',
+    categorie: 'source', badgeLabel: 'Source d\'énergie',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/PIle.png',
+    svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="25" x2="32" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <line x1="32" y1="10" x2="32" y2="40" stroke="#1a73e8" stroke-width="3"/>
+      <line x1="45" y1="17" x2="45" y2="33" stroke="#1a73e8" stroke-width="5"/>
+      <line x1="45" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <text x="26" y="9" fill="#ffd700" font-size="9" font-family="Nunito" font-weight="bold">+</text>
+      <text x="47" y="9" fill="#ffd700" font-size="9" font-family="Nunito" font-weight="bold">−</text>
+    </svg>`
+  },
+  {
+    id: 'ampoule',
+    nom: 'Ampoule / Lampe',
+    description: 'Convertit l\'énergie électrique en énergie lumineuse et thermique.<br>Symbole : une croix en diagonale dans un cercle.',
+    categorie: 'recepteur', badgeLabel: 'Récepteur',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/Ampoule.png',
+    svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="25" x2="28" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <circle cx="50" cy="25" r="20" stroke="#1a73e8" stroke-width="2.5"/>
+      <line x1="35.8" y1="10.8" x2="64.2" y2="39.2" stroke="#1a73e8" stroke-width="2.5"/>
+      <line x1="64.2" y1="10.8" x2="35.8" y2="39.2" stroke="#1a73e8" stroke-width="2.5"/>
+      <line x1="70" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+    </svg>`
+  },
+  {
+    id: 'interrupteur_ouvert',
+    nom: 'Interrupteur ouvert',
+    description: 'Contrôle la circulation du courant électrique.<br>L\'interrupteur est ouvert (interrompu), il n\'y a plus de courant nulle part ! Rien ne fonctionne.',
+    categorie: 'controle', badgeLabel: 'Contrôle',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/Int%20ouvert.png',
+    svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="25" x2="25" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <circle cx="25" cy="25" r="3.5" fill="#1a73e8"/>
+      <line x1="28" y1="25" x2="72" y2="12" stroke="#1a73e8" stroke-width="2.5"/>
+      <circle cx="75" cy="25" r="3.5" fill="#1a73e8"/>
+      <line x1="75" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+    </svg>`
+  },
+  {
+    id: 'interrupteur_ferme',
+    nom: 'Interrupteur fermé',
+    description: 'Contrôle la circulation du courant électrique.<br>L\'interrupteur est fermé. Le courant peut circuler et apporter l\'énergie électrique jusqu\'au récepteur.',
+    categorie: 'controle', badgeLabel: 'Contrôle',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/Int%20ferm%C3%A9.png',
+    svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="25" x2="25" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <circle cx="25" cy="25" r="3.5" fill="#1a73e8"/>
+      <line x1="28" y1="25" x2="72" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <circle cx="75" cy="25" r="3.5" fill="#1a73e8"/>
+      <line x1="75" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+    </svg>`
+  },
+  {
+    id: 'fils',
+    nom: 'Fils de connexion',
+    description: 'Relie les composants entre eux. Représenté par une simple ligne droite ou un angle droit.',
+    categorie: 'liaison', badgeLabel: 'Liaison',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/bcd689323466d74a77e643f7afd94aa224d82df9/Fil.png',
+    svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+    </svg>`
+  },
+  {
+    id: 'moteur',
+    nom: 'Moteur',
+    description: 'Convertit l\'énergie électrique en énergie mécanique (mouvement).<br>Symbole : la lettre M dans un cercle.',
+    categorie: 'recepteur', badgeLabel: 'Récepteur',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/Moteur.png',
+    svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="25" x2="28" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <circle cx="50" cy="25" r="20" stroke="#1a73e8" stroke-width="2.5"/>
+      <text x="50" y="31" fill="#1a73e8" font-size="16" font-family="Nunito" font-weight="bold" text-anchor="middle">M</text>
+      <line x1="70" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+    </svg>`
+  },
+  {
+    id: 'diode',
+    nom: 'Diode',
+    description: 'Laisse passer le courant dans un seul sens.<br>Symbole : un triangle pointé vers une barre positionnée à la verticale.',
+    categorie: 'recepteur', badgeLabel: 'Récepteur',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/Diode.png',
+    svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="25" x2="30" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <polygon points="30,10 30,40 62,25" stroke="#1a73e8" stroke-width="2.5" fill="rgba(26,115,232,0.15)"/>
+      <line x1="62" y1="10" x2="62" y2="40" stroke="#1a73e8" stroke-width="3"/>
+      <line x1="62" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+    </svg>`
+  },
+  {
+    id: 'del',
+    nom: 'DEL (Diode Électro-Luminescente)',
+    description: 'Laisse passer le courant dans un seul sens en émettant de la lumière. Symbole : identique à la diode + deux flèches sortantes.',
+    categorie: 'recepteur', badgeLabel: 'Récepteur',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/DEL.png',
+    svg: `<svg viewBox="0 0 100 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="33" x2="30" y2="33" stroke="#1a73e8" stroke-width="2.5"/>
+      <polygon points="30,18 30,48 62,33" stroke="#1a73e8" stroke-width="2.5" fill="rgba(26,115,232,0.15)"/>
+      <line x1="62" y1="18" x2="62" y2="48" stroke="#1a73e8" stroke-width="3"/>
+      <line x1="62" y1="33" x2="95" y2="33" stroke="#1a73e8" stroke-width="2.5"/>
+      <line x1="63" y1="18" x2="75" y2="6" stroke="#ffd700" stroke-width="2" marker-end="url(#arrow)"/>
+      <line x1="71" y1="14" x2="83" y2="2" stroke="#ffd700" stroke-width="2" marker-end="url(#arrow)"/>
+      <defs>
+        <marker id="arrow" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
+          <polygon points="0,0 4,2 0,4" fill="#ffd700"/>
+        </marker>
+      </defs>
+    </svg>`
+  },
+  {
+    id: 'resistance',
+    nom: 'Résistance',
+    description: 'Limite le passage du courant et convertit l\'énergie électrique en énergie thermique.<br> Symbole : un rectangle allongé.',
+    categorie: 'recepteur', badgeLabel: 'Récepteur',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/bcd689323466d74a77e643f7afd94aa224d82df9/Resistance.png',
+    svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="5" y1="25" x2="22" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+      <rect x="22" y="14" width="56" height="22" stroke="#1a73e8" stroke-width="2.5" fill="rgba(26,115,232,0.1)"/>
+      <line x1="78" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
+    </svg>`
+  }
+];
+
+const BADGE_CLASSES = {
+  source: 'badge-source',
+  recepteur: 'badge-recepteur',
+  controle: 'badge-controle',
+  liaison: 'badge-liaison'
+};
+
+function getDipoleVisual(d) {
+  if (d.image) {
+    return `<img class="symbol-img" src="${d.image}" alt="Symbole : ${d.nom}" loading="lazy">`;
+  }
+  return d.svg;
+}
+
+// ===== LEÇON =====
+const DIPOLE_DETAILS = {
+  pile: ["Elle fournit du courant et de l'énergie électrique au circuit. Cette énergie élecitrque est essentielle pour faire fonctionner les récepteurs", "Le courant produit par la pile permet juste de transporter l'énergie électrique jusqu'au récepteur" , "Sur le symbole, le trait le plus long représente la borne +."],
+  ampoule: ["C'est un récepteur : elle utilise l'énergie électrique et la transforme en énergie thermique et lumineuse.", "La croix rappelle le filament présent dans l'ampoule."],
+  interrupteur_ouvert: ["L\'interrupteur est ouvert : le circuit est coupé.", "Le courant électrique ne peut pas circuler.", "C'est la position qui correspond à une lampe éteinte dans un circuit simple."],
+  interrupteur_ferme: ["L\'interrupteur est fermé : il existe un chemin possible pour le courant pour aller d'une borne à l'autre de la pile.", "Le courant électrique peut circuler.", "C'est la position qui correspond à une lampe allumée si le montage est correct."],
+  fils: ["Les fils relient les dipôles entre eux.", "Sur un schéma, on les représente par des traits droits ou un angle droit.", "Ne pas les confondre avec un récepteur car ils ne consomment pas l'énergie électrique qu'ils transportent."],
+  moteur: ["C'est un récepteur : il utilise et consomme de l'énergie électrique.", "Il transforme l'énergie électrique en énergie mécanique (mouvement).", "La lettre M permet de le distinguer facilement."],
+  diode: ["La diode ne laisse passer le courant que dans un seul sens.", "La barre verticale indique le côté bloquant dans le symbole.", "Son sens de branchement est donc important."],
+  del: ["DEL signifie diode électro-luminescente.", "Elle ne laisse passer le courant que dans un seul sens, comme une diode.", "Les deux flèches sortantes au-dessus indiquent qu'elle émet de la lumière."],
+  resistance: ["C'est un récepteur qui limite le passage du courant.", "Elle peut servir à protéger certains dipôles, comme une DEL.", "Elle convertit l'énergie électrique reçue en énergie thermique", "On la représente par un rectangle allongé."]
+};
+
+// ===== LEÇON =====
+function buildLesson() {
+  const grid = document.getElementById('lesson-grid');
+  grid.innerHTML = '';
+  DIPOLES.forEach(d => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'dipole-card';
+    card.setAttribute('aria-label', 'Afficher les informations sur ' + d.nom);
+    card.innerHTML = `
+      <div class="card-symbol">${getDipoleVisual(d)}</div>
+      <div class="card-info">
+        <h3>${d.nom}</h3>
+        <p>${d.description}</p>
+        <span class="badge ${BADGE_CLASSES[d.categorie]}">${d.badgeLabel}</span><br>
+        <span class="hint-tag">Cliquer pour en savoir +</span>
+      </div>
+    `;
+    card.addEventListener('click', () => openDipoleModal(d.id));
+    grid.appendChild(card);
+  });
+}
+
+function openDipoleModal(id) {
+  const d = DIPOLES.find(item => item.id === id);
+  if(!d) return;
+  document.getElementById('modal-symbol').innerHTML = `<div class="modal-symbol-frame">${getDipoleVisual(d)}</div>`;
+  document.getElementById('modal-title').textContent = d.nom;
+  document.getElementById('modal-desc').innerHTML = d.description;
+  const details = DIPOLE_DETAILS[id] || [];
+  document.getElementById('modal-details').innerHTML = details.map(info => `<li>${info}</li>`).join('');
+  document.getElementById('dipole-modal').classList.add('open');
+}
+
+function closeDipoleModal(event) {
+  if(event.target.id === 'dipole-modal') {
+    event.currentTarget.classList.remove('open');
+  }
+}
+
+document.addEventListener('keydown', (event) => {
+  if(event.key === 'Escape') {
+    const modal = document.getElementById('dipole-modal');
+    if(modal) modal.classList.remove('open');
+  }
+});
+
+// ===== QUIZ =====
+let quizMode = 'nom-vers-symbole';
+let currentQ = 0;
+let score = 0;
+let lives = 3;
+let answered = false;
+const TOTAL_Q = 10;
+
+// Symboles avec erreurs intentionnelles pour le mode "Trouve l'erreur"
+function getVariants(dipole) {
+  const variantImages = {
+    pile: [
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20pile.png',
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20pile%202.png',
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20PIle%204.png'
+    ],
+    ampoule: [
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20ampoule.png'
+    ],
+    interrupteur_ouvert: [
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvais%20interrupteur%20ouvert.png'
+    ],
+    interrupteur_ferme: [
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvais%20interrupteur%20ferm%C3%A9.png'
+    ],
+    diode: [
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20diode.png',
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20diode%202.png',
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20diode%203.png'
+    ],
+    del: [
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20DEL.png',
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20DEL%202.png',
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20DEL%203.png'
+    ],
+    resistance: [
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20r%C3%A9sistance.png',
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20r%C3%A9sistance%202.png',
+      'https://raw.githubusercontent.com/Nabo33/Images/77f7ef4b48498d93083e7e5aecdd99df5ebe8f73/Mauvaise%20r%C3%A9sistance%203.png'
+    ]
+  };
+
+  const customVariants = (variantImages[dipole.id] || []).map((url, index) => ({
+    html: `<img class="symbol-img" src="${url}" alt="Symbole erroné de ${dipole.nom} (${index + 1})" loading="lazy">`,
+    key: `custom-${dipole.id}-${index}`
+  }));
+
+  const otherDipoles = shuffle(DIPOLES.filter(d => d.id !== dipole.id)).map((d, index) => ({
+    html: getDipoleVisual(d),
+    key: `other-${d.id}-${index}`
+  }));
+
+  const selected = [...customVariants];
+  const usedKeys = new Set(selected.map(item => item.key));
+
+  for (const item of otherDipoles) {
+    if (selected.length >= 3) break;
+    if (!usedKeys.has(item.key)) {
+      selected.push(item);
+      usedKeys.add(item.key);
+    }
+  }
+
+  return selected.slice(0, 3);
+}
+
+function setMode(mode) {
+  quizMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  const map = {'nom-vers-symbole':'mode-btn-1','symbole-vers-nom':'mode-btn-2','trouver-bon':'mode-btn-3'};
+  document.getElementById(map[mode]).classList.add('active');
+  startQuiz();
+}
+
+function shuffle(arr) {
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+let questions = [];
+
+function generateQuestions() {
+  questions = [];
+  const pool = shuffle(DIPOLES);
+  for(let i=0;i<TOTAL_Q;i++){
+    const correct = pool[i % pool.length];
+    questions.push(correct);
+  }
+}
+
+function startQuiz() {
+  currentQ = 0; score = 0; lives = 3; answered = false;
+  generateQuestions();
+  document.getElementById('end-screen').classList.remove('show');
+  document.getElementById('quiz-play').style.display='block';
+  updateStatus();
+  renderQuestion();
+}
+
+function updateStatus() {
+  document.getElementById('score-val').textContent = score;
+  document.getElementById('progress-bar').style.width = (currentQ/TOTAL_Q*100)+'%';
+  const hearts = ['','❤️','❤️❤️','❤️❤️❤️'];
+  document.getElementById('lives-display').textContent = hearts[Math.max(0,lives)] || '💔';
+}
+
+function renderQuestion() {
+  answered = false;
+  const fb = document.getElementById('feedback-bar');
+  fb.className='feedback-bar'; fb.textContent='';
+  document.getElementById('next-btn').classList.remove('show');
+
+  const d = questions[currentQ];
+  const qLabel = document.getElementById('q-label');
+  const qName = document.getElementById('q-name');
+  const qSym = document.getElementById('q-symbol');
+
+  if(quizMode === 'nom-vers-symbole') {
+    qLabel.textContent = '🔍 Quel est le symbole de…';
+    qName.textContent = d.nom;
+    qName.style.display='block';
+    qSym.style.display='none';
+    renderAnswersSymbols(d);
+  } else if(quizMode === 'symbole-vers-nom') {
+    qLabel.textContent = '🔍 Quel est le nom de ce composant ?';
+    qName.style.display='none';
+    qSym.style.display='inline-flex';
+    qSym.innerHTML = getDipoleVisual(d);
+    renderAnswersNames(d);
+  } else {
+    // Mode "Trouve le bon symbole"
+    qLabel.textContent = '✅ Quel est le VRAI symbole normalisé de…';
+    qName.textContent = d.nom;
+    qName.style.display='block';
+    qSym.style.display='none';
+    renderAnswersFindCorrect(d);
+  }
+}
+
+function renderAnswersSymbols(correct) {
+  const grid = document.getElementById('answers-grid');
+  grid.innerHTML='';
+  // 3 mauvais dipôles + 1 correct
+  const others = shuffle(DIPOLES.filter(x=>x.id!==correct.id)).slice(0,3);
+  const all = shuffle([correct, ...others]);
+  all.forEach(d=>{
+    const btn = document.createElement('button');
+    btn.className='answer-btn';
+    btn.innerHTML=`${getDipoleVisual(d)}<span style="font-size:0.78rem;color:var(--text-dim)">${d.nom.length>25?d.nom.split('(')[0].trim():d.nom}</span>`;
+    btn.onclick=()=>checkAnswer(btn, d.id===correct.id, correct);
+    grid.appendChild(btn);
+  });
+}
+
+function renderAnswersNames(correct) {
+  const grid = document.getElementById('answers-grid');
+  grid.innerHTML='';
+  const others = shuffle(DIPOLES.filter(x=>x.id!==correct.id)).slice(0,3);
+  const all = shuffle([correct, ...others]);
+  all.forEach(d=>{
+    const btn = document.createElement('button');
+    btn.className='answer-btn';
+    btn.innerHTML=`<span style="font-size:1rem;font-weight:800">${d.nom}</span>`;
+    btn.style.minHeight='70px';
+    btn.onclick=()=>checkAnswer(btn, d.id===correct.id, correct);
+    grid.appendChild(btn);
+  });
+}
+
+function renderAnswersFindCorrect(correct) {
+  const grid = document.getElementById('answers-grid');
+  grid.innerHTML='';
+  const variants = getVariants(correct);
+  const wrongBtns = variants.map((variant, i) => ({html: variant.html, isCorrect: false, id: 'wrong'+i}));
+  const correctBtn = {html: getDipoleVisual(correct), isCorrect: true, id: correct.id};
+  const all = shuffle([correctBtn, ...wrongBtns]);
+  all.forEach(item=>{
+    const btn = document.createElement('button');
+    btn.className='answer-btn';
+    if(item.isCorrect) btn.dataset.correct = 'true';
+    btn.innerHTML=item.html;
+    btn.onclick=()=>checkAnswer(btn, item.isCorrect, correct);
+    grid.appendChild(btn);
+  });
+}
+
+function checkAnswer(btn, isCorrect, correct) {
+  if(answered) return;
+  answered = true;
+  const fb = document.getElementById('feedback-bar');
+  const allBtns = document.querySelectorAll('.answer-btn');
+
+  if(isCorrect) {
+    btn.classList.add('correct');
+    fb.className='feedback-bar correct show';
+    fb.textContent='✅ Bravo ! C\'est le bon symbole !';
+    score++;
+  } else {
+    btn.classList.add('wrong');
+    fb.className='feedback-bar wrong show';
+    fb.textContent='❌ Pas tout à fait… Regarde la bonne réponse en vert !';
+    lives--;
+    // Montrer la bonne réponse
+    if(quizMode === 'nom-vers-symbole') {
+      allBtns.forEach(b=>{
+        if(b !== btn) {
+          const span = b.querySelector('span');
+          const label = span ? span.textContent.trim() : '';
+          const match = DIPOLES.find(d=>d.nom.startsWith(label) || d.nom.includes(label));
+          if(match && match.id === correct.id) b.classList.add('reveal-correct');
+        }
+      });
+    } else if(quizMode === 'symbole-vers-nom') {
+      allBtns.forEach(b=>{
+        const label = b.querySelector('span')?.textContent?.trim();
+        const match = DIPOLES.find(d=>d.nom===label);
+        if(match && match.id===correct.id) b.classList.add('reveal-correct');
+      });
+    } else {
+      // Dans le mode "Trouve le bon", marquer le bon en vert
+      allBtns.forEach(b=>{
+        if(b !== btn && !b.classList.contains('wrong')) {
+          if(b.dataset.correct === 'true') b.classList.add('reveal-correct');
+        }
+      });
+    }
+  }
+
+  allBtns.forEach(b=>b.disabled=true);
+  updateStatus();
+
+  if(lives <= 0) {
+    setTimeout(()=>endQuiz(), 1200);
+    return;
+  }
+
+  document.getElementById('next-btn').classList.add('show');
+
+  if(currentQ === TOTAL_Q-1) {
+    document.getElementById('next-btn').textContent='Voir les résultats 🏆';
+  }
+}
+
+function nextQuestion() {
+  currentQ++;
+  if(currentQ >= TOTAL_Q) {
+    endQuiz();
+  } else {
+    renderQuestion();
+  }
+}
+
+function endQuiz() {
+  document.getElementById('quiz-play').style.display='none';
+  const es = document.getElementById('end-screen');
+  es.classList.add('show');
+
+  const pct = score/TOTAL_Q;
+  let trophy='🏆', title='Excellent !', msg='';
+  if(pct===1){ trophy='🌟'; title='Parfait !'; msg='Tu maîtrises tous les symboles !'; }
+  else if(pct>=0.8){ trophy='🏆'; title='Très bien !'; msg='Encore un peu de pratique et ce sera parfait !'; }
+  else if(pct>=0.6){ trophy='👍'; title='Pas mal !'; msg='Retourne voir la leçon pour les symboles difficiles.'; }
+  else if(pct>=0.4){ trophy='📚'; title='Continue !'; msg='Revois la leçon, tu vas y arriver !'; }
+  else{ trophy='💪'; title='Courage !'; msg='Commence par bien apprendre la leçon, puis retente !'; }
+
+  document.getElementById('end-trophy').textContent=trophy;
+  document.getElementById('end-title').textContent=title;
+  document.getElementById('end-score-big').textContent=score+'/'+TOTAL_Q;
+  document.getElementById('end-msg').textContent=msg;
+}
+
+function showTab(tab) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(tab+'-section').classList.add('active');
+  const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + tab + "'"));
+  if(clickedBtn) clickedBtn.classList.add('active');
+  if(tab==='quiz') startQuiz();
+}
+
+// Init
+buildLesson();
+</script>
+</body>
+</html>
