@@ -940,7 +940,10 @@ function startQuiz() {
 
 function updateStatus() {
   document.getElementById('score-val').textContent = score;
-  document.getElementById('progress-bar').style.width = (currentQ/TOTAL_Q*100)+'%';
+
+  const progress = answered ? currentQ + 1 : currentQ;
+  document.getElementById('progress-bar').style.width = (progress / TOTAL_Q * 100) + '%';
+
   const hearts = ['','❤️','❤️❤️','❤️❤️❤️'];
   document.getElementById('lives-display').textContent = hearts[Math.max(0,lives)] || '💔';
 }
