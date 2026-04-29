@@ -976,15 +976,24 @@ function renderQuestion() {
 
 function renderAnswersSymbols(correct) {
   const grid = document.getElementById('answers-grid');
-  grid.innerHTML='';
+  grid.innerHTML = '';
+
   // 3 mauvais dipôles + 1 correct
-  const others = shuffle(DIPOLES.filter(x=>x.id!==correct.id)).slice(0,3);
+  const others = shuffle(DIPOLES.filter(x => x.id !== correct.id)).slice(0, 3);
   const all = shuffle([correct, ...others]);
-  all.forEach(d=>{
+
+  all.forEach(d => {
     const btn = document.createElement('button');
-    btn.className='answer-btn';
-    btn.innerHTML=`${getDipoleVisual(d)}<span style="font-size:0.78rem;color:var(--text-dim)">${d.nom.length>25?d.nom.split('(')[0].trim():d.nom}</span>`;
-    btn.onclick=()=>checkAnswer(btn, d.id===correct.id, correct);
+    btn.className = 'answer-btn';
+
+    // On affiche uniquement le symbole, sans le nom du dipôle
+    btn.innerHTML = getDipoleVisual(d);
+
+    // On garde l'information de la bonne réponse dans le bouton
+    // pour pouvoir l'identifier ensuite sans afficher le nom à l'élève
+    btn.dataset.dipoleId = d.id;
+
+    btn.onclick = () => checkAnswer(btn, d.id === correct.id, correct);
     grid.appendChild(btn);
   });
 }
@@ -1038,15 +1047,13 @@ function checkAnswer(btn, isCorrect, correct) {
     fb.textContent='❌ Pas tout à fait… Regarde la bonne réponse en vert !';
     lives--;
     // Montrer la bonne réponse
-    if(quizMode === 'nom-vers-symbole') {
-      allBtns.forEach(b=>{
-        if(b !== btn) {
-          const span = b.querySelector('span');
-          const label = span ? span.textContent.trim() : '';
-          const match = DIPOLES.find(d=>d.nom.startsWith(label) || d.nom.includes(label));
-          if(match && match.id === correct.id) b.classList.add('reveal-correct');
-        }
-      });
+if(quizMode === 'nom-vers-symbole') {
+  allBtns.forEach(b => {
+    if(b.dataset.dipoleId === correct.id) {
+      b.classList.add('reveal-correct');
+    }
+  });
+}
     } else if(quizMode === 'symbole-vers-nom') {
       allBtns.forEach(b=>{
         const label = b.querySelector('span')?.textContent?.trim();
