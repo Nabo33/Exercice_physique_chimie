@@ -4,226 +4,343 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pictogrammes de danger</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg1:#fff8e8; --bg2:#eef7ff; --card:#ffffff; --ink:#223446; --muted:#607286; --line:#d6e1ed;
-  --blue:#3b82f6; --cyan:#06b6d4; --green:#22c55e; --red:#ef4444; --purple:#8b5cf6; --pink:#ec4899;
-  --shadow:0 16px 34px rgba(34,52,70,.12);
+:root{
+  --bg:#f0f7ff;--primary:#2563eb;--primary-light:#dbeafe;--secondary:#7c3aed;--accent:#f59e0b;
+  --success:#10b981;--danger:#ef4444;--card:#fff;--text:#1e293b;--text-muted:#64748b;
+  --border:#e2e8f0;--shadow:0 4px 24px rgba(37,99,235,.10);--radius:18px;
 }
-* { box-sizing:border-box; }
-body {
-  margin:0; font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif; color:var(--ink);
-  background:
-    radial-gradient(circle at 10% 0%, rgba(251,191,36,.18), transparent 18%),
-    radial-gradient(circle at 90% 0%, rgba(59,130,246,.16), transparent 18%),
-    linear-gradient(180deg, var(--bg1), var(--bg2));
-}
-.container { max-width:1260px; margin:0 auto; padding:18px; }
-.hero, .panel {
-  background:rgba(255,255,255,.9); border:1px solid var(--line); border-radius:28px; box-shadow:var(--shadow);
-}
-.hero { padding:24px; }
-.panel { margin-top:18px; padding:22px; }
-h1 { margin:0 0 8px 0; font-size:clamp(2rem,4vw,3.2rem); }
-.hero p { margin:0; color:var(--muted); line-height:1.55; font-size:1.05rem; }
-.badges { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
-.badge { background:#fff; border:1px solid var(--line); border-radius:999px; padding:8px 14px; font-weight:900; }
-.main-nav, .challenge-nav { display:grid; gap:12px; margin-top:18px; }
-.main-nav { grid-template-columns:1fr 1fr; }
-.challenge-nav { grid-template-columns:repeat(4,1fr); margin-bottom:18px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body:before{content:'';position:fixed;top:-80px;left:-80px;width:300px;height:300px;background:radial-gradient(circle,#bfdbfe 0%,transparent 70%);border-radius:50%;z-index:0;animation:floatA 8s ease-in-out infinite alternate}
+body:after{content:'';position:fixed;right:-80px;bottom:-80px;width:350px;height:350px;background:radial-gradient(circle,#ede9fe 0%,transparent 70%);border-radius:50%;z-index:0;animation:floatB 10s ease-in-out infinite alternate}
+@keyframes floatA{from{transform:translate(0,0)}to{transform:translate(40px,30px)}}
+@keyframes floatB{from{transform:translate(0,0)}to{transform:translate(-30px,-40px)}}
+.hero{position:relative;z-index:10;background:linear-gradient(135deg,#1d4ed8,#7c3aed);color:#fff;padding:28px 24px 22px;text-align:center;box-shadow:0 4px 20px rgba(37,99,235,.3)}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(1.5rem,5vw,2.45rem);letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.15);margin:0 0 6px}
+.hero p{font-size:1rem;opacity:.9;margin-top:6px;font-weight:700}.hero .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 12px;margin-top:8px;font-weight:900;color:#fff}
+.container,.wrap{position:relative;z-index:5;max-width:900px;margin:26px auto 44px;padding:0 18px}
+.main-nav,.challenge-nav{position:sticky;top:0;z-index:20;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:2px solid var(--border);border-radius:var(--radius);padding:10px 16px;margin-bottom:18px;box-shadow:var(--shadow)}
+.main-btn,.challenge-btn,.btn{border:2px solid var(--border);background:white;color:var(--text-muted);border-radius:30px;padding:8px 15px;font-family:'Nunito',sans-serif;font-weight:900;cursor:pointer;transition:.15s;font-size:.95rem}
+.btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;border:none;border-radius:12px;padding:12px 24px;margin-top:12px;box-shadow:0 4px 14px rgba(37,99,235,.3)}
+.btn.primary,.main-btn.active,.challenge-btn.active,.main-btn:hover,.challenge-btn:hover{border-color:var(--primary);background:var(--primary-light);color:var(--primary);transform:translateY(-1px)}
+.btn.primary{border:2px solid var(--primary);box-shadow:0 3px 12px rgba(37,99,235,.16)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.35)}
+.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}.btn.small{font-size:.85rem;padding:8px 12px;border-radius:12px}.btn.secondary{background:white;color:var(--primary);border:2px solid var(--primary);box-shadow:none}.action-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.view,.challenge-page{display:none}.view.active,.challenge-page.active{display:block;animation:slideIn .35s cubic-bezier(.4,2,.6,1)}
+@keyframes slideIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.panel,.cours-card,.exercise-box,.challenge-card,.scorebar,.top-score,.score-box,.callout{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);padding:26px 24px;margin-bottom:18px}
+.callout{background:var(--primary-light);border-left:5px solid var(--primary);box-shadow:none;line-height:1.55;font-weight:800}.tip{background:#fffbeb;border-left-color:var(--accent)}
+.section-title,h2{font-family:'Fredoka One',cursive;color:var(--primary);font-size:1.35rem;margin:0 0 18px}.section-sub,h3{font-size:.9rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);margin-bottom:12px;font-weight:900}
+.grid,.pictos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}.pictos-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.course-intro{font-size:1.02rem;line-height:1.6;color:var(--text);font-weight:700;margin:0 0 18px;text-transform:none;letter-spacing:0}.danger-classes-title{font-weight:900;margin-bottom:12px}.danger-classes-list{display:flex;flex-direction:column;gap:10px}
+.picto-card,.mini-item{background:#f8fafc;border:2px solid var(--border);border-radius:18px;padding:16px;text-align:center;font-weight:800;transition:.15s}.picto-card:hover{border-color:var(--primary);background:var(--primary-light);transform:translateY(-2px)}.picto-img{width:88px;height:88px;object-fit:contain;margin:0 auto 10px;display:block}.picto-title{font-family:'Fredoka One',cursive;color:#1e40af;font-size:1.02rem;margin-bottom:6px}.mini-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.mini-item{text-align:left}.big{font-size:1.2rem}.small,.photo-credit{font-size:.82rem;color:var(--text-muted);font-weight:800;line-height:1.35}
+.question{font-size:1.05rem;font-weight:900;line-height:1.65;margin-bottom:16px}.options,.bank{display:flex;flex-direction:column;gap:10px}.bank{flex-direction:row;flex-wrap:wrap}.options button,.bank button,.choice-btn{background:#f8fafc;border:2px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:0;font-family:'Nunito',sans-serif;font-weight:900;cursor:pointer;transition:.15s;color:var(--text);text-align:left}.options button:hover:not(:disabled),.bank button:hover:not(:disabled),.choice-btn:hover:not(:disabled){border-color:var(--primary);background:var(--primary-light);color:var(--primary);transform:translateX(4px)}.options button.correct,.choice-btn.correct{border-color:var(--success)!important;background:#d1fae5!important;color:#065f46!important}.options button.wrong,.choice-btn.wrong{border-color:var(--danger)!important;background:#fee2e2!important;color:#991b1b!important}.options button:disabled{pointer-events:none;opacity:.86}
+.feedback{margin-top:18px;border-radius:12px;padding:14px 18px;font-weight:900;display:none;line-height:1.5}.feedback.ok{display:block;background:#d1fae5;color:#065f46;border:2px solid #6ee7b7}.feedback.ko{display:block;background:#fee2e2;color:#991b1b;border:2px solid #fca5a5}
+.scorebar,.top-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.scorepill,.score-box{font-weight:900;color:var(--primary);font-size:1rem;background:#eef2ff;border:1px solid #c7d2fe;border-radius:999px;padding:8px 14px}.score-box{border-radius:var(--radius)}
+.dropgrid,.sort-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}.dropzone{min-height:110px;background:#f8fafc;border:2px dashed #94a3b8;border-radius:18px;padding:14px;font-weight:900;color:#475569}.dropzone.over{border-color:var(--primary);background:var(--primary-light)}.dropzone.correct{border-color:var(--success);background:#d1fae5}.dropzone.wrong{border-color:var(--danger);background:#fee2e2}.photo-wrap{text-align:center;margin-bottom:16px}.real-photo{max-width:100%;max-height:260px;object-fit:contain;border-radius:18px;border:1px solid var(--border);box-shadow:var(--shadow);background:#fff}.photo-fallback{font-size:4rem;background:#f8fafc;border:2px dashed var(--border);border-radius:18px;padding:26px}.hidden{display:none!important}
+.main-btn:focus-visible,.challenge-btn:focus-visible,.btn:focus-visible,.options button:focus-visible,.bank button:focus-visible{outline:3px solid rgba(37,99,235,.35);outline-offset:2px}
+@media(max-width:700px){.grid,.pictos-grid{grid-template-columns:1fr}.container,.wrap{padding:0 12px}.panel,.cours-card,.exercise-box,.challenge-card,.scorebar,.top-score,.score-box,.callout{padding:20px 16px}.main-nav,.challenge-nav{position:relative}.hero{padding:24px 14px}}
 
-.main-btn, .challenge-btn, .btn {
-  border-radius:18px;
-  padding:13px 14px;
-  cursor:pointer;
-  font-weight:900;
-  font-size:.98rem;
-}
 
-.action-row{
-  margin-top:14px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-}
+/* === Correctifs : leçon lisible + images proportionnées dans les défis === */
+#courseGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;align-items:stretch;}
+#courseGrid .card{background:#ffffff;border:2px solid var(--border);border-radius:18px;box-shadow:0 4px 18px rgba(37,99,235,.10);padding:18px 16px;min-height:260px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;}
+#courseGrid .card h3{font-family:'Fredoka One',cursive;text-transform:none;letter-spacing:0;font-size:1.05rem;color:var(--primary);margin-bottom:4px;}
+#courseGrid .card img{width:96px;height:96px;object-fit:contain;display:block;background:#fff;border-radius:14px;padding:6px;border:1px solid var(--border);}
+#courseGrid .card p{font-size:.92rem;line-height:1.45;font-weight:800;color:var(--text);}
+#courseGrid .card small{display:block;margin-top:auto;font-size:.78rem;line-height:1.35;color:var(--text-muted);font-weight:800;}
+#photoWrap{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:250px;margin:14px 0 18px;}
+.real-photo,#photoWrap img{width:auto;max-width:min(100%,360px);max-height:260px;object-fit:contain;display:block;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:0 4px 16px rgba(15,23,42,.08);}
 
-.action-row .scorepill{
-  margin-left:auto;
+/* ===== Leçon : encarts des pictogrammes remis au format d'origine ===== */
+#courseGrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px;
 }
-
-.main-btn {
-  transition: all 0.2s ease;
+#courseGrid .card{
+  background:linear-gradient(180deg,#ffffff,#f9fcff);
+  border:2px solid #d6e1ed;
+  border-radius:22px;
+  padding:18px;
+  box-shadow:0 16px 34px rgba(34,52,70,.12);
+  display:block;
+  min-height:0;
+  text-align:left;
+  transition:.15s ease;
 }
-
-/* État : cours affiché */
-.main-nav.cours-active .main-btn[data-view="cours"] {
-  background: linear-gradient(135deg, var(--blue), var(--cyan));
-  color: white;
-  border: 2px solid transparent;
+#courseGrid .card:hover{
+  transform:translateY(-3px);
+  border-color:#3b82f6;
 }
-
-.main-nav.cours-active .main-btn[data-view="defis"] {
-  background: white;
-  color: var(--pink);
-  border: 2px solid var(--pink);
-}
-
-/* État : défis affichés */
-.main-nav.defis-active .main-btn[data-view="cours"] {
-  background: white;
-  color: var(--blue);
-  border: 2px solid var(--blue);
-}
-
-.main-nav.defis-active .main-btn[data-view="defis"] {
-  background: linear-gradient(135deg, var(--purple), var(--pink));
-  color: white;
-  border: 2px solid transparent;
-}
-
-.challenge-btn, .btn {
+#courseGrid .card img{
+  width:112px;
+  height:112px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 12px;
+  background:transparent;
   border:0;
-  background:#eef4ff;
-  color:#164a8f;
+  border-radius:0;
+  padding:0;
+}
+#courseGrid .card h3{
+  margin:0 0 8px;
+  color:#1e3a8a;
+  font-size:1.05rem;
+  font-family:'Nunito',sans-serif;
+  text-transform:none;
+  letter-spacing:0;
+}
+#courseGrid .tag{
+  display:block;
+  width:100%;
+  font-size:.76rem;
+  font-weight:800;
+  padding:8px 10px;
+  border-radius:999px;
+  margin:0 0 10px;
+  text-align:center;
+}
+#courseGrid .tag.physique{background:#fff2c9;color:#996500;}
+#courseGrid .tag.sante{background:#fee2e2;color:#b91c1c;}
+#courseGrid .tag.environnement{background:#dcfce7;color:#15803d;}
+#courseGrid .card p{
+  margin:0;
+  font-size:.95rem;
+  line-height:1.45;
+  font-weight:700;
+  color:#223446;
+}
+#courseGrid .tip{
+  margin-top:12px;
+  background:#f7fbff;
+  border-left:4px solid #3b82f6;
+  border-radius:12px;
+  padding:10px;
+  font-size:.9rem;
+  line-height:1.35;
+  font-weight:700;
+  color:#223446;
+}
+#courseGrid .card small{
+  display:block;
+  margin-top:8px;
+  color:#607286;
+  font-size:.78rem;
+  line-height:1.35;
+  font-weight:700;
 }
 
-.challenge-btn.active, .btn.primary {
-  background:linear-gradient(135deg, var(--purple), var(--pink));
-  color:white;
+#qcmOptions{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;}
+#qcmOptions .option{min-height:128px;display:flex;align-items:center;justify-content:center;padding:12px;}
+#qcmOptions 
+.option.selected{border-color:var(--primary)!important;background:var(--primary-light)!important;color:var(--primary)!important;box-shadow:0 4px 14px rgba(37,99,235,.18);transform:translateX(4px)}.option img,.option img,.answer-card img,.choice img{width:86px;height:86px;max-width:100%;object-fit:contain;display:block;margin:0 auto;}
+#matchGrid img,#sortGrid img{width:72px;height:72px;object-fit:contain;}
+.good{border-color:var(--success)!important;background:#d1fae5!important;color:#065f46!important;}
+.bad{border-color:var(--danger)!important;background:#fee2e2!important;color:#991b1b!important;}
+.feedback.show{display:block;}
+.feedback.show.good{background:#d1fae5;color:#065f46;border:2px solid #6ee7b7;}
+.feedback.show.bad{background:#fee2e2;color:#991b1b;border:2px solid #fca5a5;}
+@media(max-width:700px){#courseGrid{grid-template-columns:1fr;}#photoWrap{min-height:190px;}.real-photo,#photoWrap img{max-height:210px;}#qcmOptions{grid-template-columns:repeat(2,minmax(0,1fr));}#qcmOptions .option img,.option img{width:72px;height:72px;}}
+
+/* === Ajustements demandés : menu Défis + défi 2 === */
+#main-panel.defis-mode{background:transparent;border:0;box-shadow:none;padding:0;}
+#defis .defis-intro{text-transform:none;letter-spacing:0;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:18px;}
+#defis .challenge-card{margin-bottom:22px;}
+#defis .challenge-nav{margin-bottom:18px;background:transparent;border:0;box-shadow:none;padding:0;backdrop-filter:none;}
+#defis .bank{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin:14px 0 18px;}
+#defis .chip,#defis .bank .chip{display:flex;align-items:center;justify-content:center;min-height:58px;padding:12px 14px;background:linear-gradient(135deg,#ffffff,#eef2ff);border:2px solid #a5b4fc;border-radius:16px;box-shadow:0 6px 16px rgba(37,99,235,.12);color:#3730a3;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:900;text-align:center;cursor:grab;user-select:none;transition:.15s ease;}
+#page-match .chip-in-drop{display:flex;align-items:center;justify-content:center;width:100%;height:58px;padding:12px 14px;background:linear-gradient(135deg,#ffffff,#eef2ff);border:2px solid #a5b4fc;border-radius:16px;box-shadow:0 6px 16px rgba(37,99,235,.12);color:#3730a3;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:900;text-align:center;line-height:1.15;}
+#photoOptions .option.selected{border-color:var(--primary);background:var(--primary-light);color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.12);transform:translateY(-1px);}
+#defis .chip:hover,#defis .bank .chip:hover{transform:translateY(-2px);border-color:var(--primary);background:var(--primary-light);color:var(--primary);}
+#defis .chip:active,#defis .bank .chip:active{cursor:grabbing;transform:scale(.98);}
+#defis .dropzone{background:#ffffff;border:2px dashed #94a3b8;border-radius:18px;min-height:126px;padding:14px;}
+#defis .dropzone strong{display:block;margin-bottom:8px;color:var(--primary);}
+
+
+/* === Ajustements défi 2 : titre sans cadre + zones de dépôt compactes === */
+#page-match .match-title{
+  margin-bottom:16px;
+  color:var(--text);
+}
+#page-match .bank button{
+  min-width:155px;
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+#page-match .chip.drag-used{display:none!important}
+.dropgrid{
+  grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  align-items:start;
+}
+#page-match .dropcard{
+  background:#f8fafc;
+  border:2px solid var(--border);
+  border-radius:18px;
+  padding:14px;
+  text-align:center;
+  box-shadow:0 3px 16px rgba(15,23,42,.06);
+}
+#page-match .dropcard .picto-img{
+  width:80px!important;
+  height:80px!important;
+  object-fit:contain;
+  margin:0 auto 10px;
+}
+#page-match .dropzone{
+  min-height:58px;
+  height:58px;
+  padding:0;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  line-height:1.2;
+  font-size:.95rem;
+}
+#page-match .dropzone.filled{
+  border-style:solid;
+}
+@media(max-width:700px){
+  #page-match .dropgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  #page-match .dropzone{font-size:.85rem;padding:0;}
+  #page-match .chip-in-drop{font-size:.85rem;padding:8px;}
 }
 
-.view, .challenge-page { display:none; }
-.view.active, .challenge-page.active { display:block; }
 
-.challenge-page.active{
+
+/* === Correction défi 2 : les étiquettes gardent toujours la même taille === */
+#page-match #labelBank{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  align-items:flex-start;
+  gap:12px;
+  margin:14px 0 18px;
+}
+#page-match #labelBank .chip{
+  flex:0 0 155px;
+  width:155px;
+  min-width:155px;
+  max-width:155px;
+  height:58px;
+  min-height:58px;
+  max-height:58px;
+}
+@media(max-width:700px){
+  #page-match #labelBank .chip{
+    flex-basis:155px;
+    width:155px;
+    min-width:155px;
+    max-width:155px;
+  }
+}
+
+/* ===== Améliorations Défi 4 ===== */
+.sort-question{
+  margin-bottom:18px;
+  line-height:1.55;
+}
+.sort-help-list{
+  display:block;
+  margin-top:8px;
+  font-size:.98rem;
+  color:var(--text);
+}
+.sort-grid{
+  align-items:stretch;
+}
+.sort-card{
   display:flex;
   flex-direction:column;
-  gap:18px;
+  align-items:center;
+  justify-content:flex-start;
+  text-align:center;
+  gap:10px;
+}
+.sort-card img{
+  display:block;
+  margin:0 auto 4px;
+  object-fit:contain;
+}
+.sort-card-name{
+  width:100%;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:900;
+  line-height:1.2;
+}
+.sort-card select{
+  width:100%;
+  margin-top:auto;
+  appearance:none;
+  -webkit-appearance:none;
+  border:2px solid var(--border);
+  border-radius:14px;
+  padding:11px 42px 11px 14px;
+  background:
+    linear-gradient(45deg, transparent 50%, var(--primary) 50%) calc(100% - 20px) 50% / 7px 7px no-repeat,
+    linear-gradient(135deg, var(--primary) 50%, transparent 50%) calc(100% - 15px) 50% / 7px 7px no-repeat,
+    #ffffff;
+  color:var(--text);
+  font-family:"Nunito",sans-serif;
+  font-weight:900;
+  font-size:.92rem;
+  box-shadow:0 3px 12px rgba(37,99,235,.08);
+  cursor:pointer;
+  transition:.15s;
+}
+.sort-card select:hover{
+  border-color:var(--primary);
+  background-color:var(--primary-light);
+}
+.sort-card select:focus{
+  outline:none;
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(37,99,235,.20);
+}
+#sortGrid select[style*="22c55e"]{
+  background-color:#d1fae5;
+}
+#sortGrid select[style*="ef4444"]{
+  background-color:#fee2e2;
 }
 
-.section-title { margin:0 0 6px 0; font-size:1.75rem; }
-.section-sub { margin:0 0 18px 0; color:var(--muted); line-height:1.5; }
-.callouts {
-  display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:16px;
-  margin-bottom:18px;
-}
-
-.callout {
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:16px 18px;
-  margin-bottom:28px; /* espace ajouté avant la grille des pictogrammes */
-}
-.mini-list { display:grid; gap:10px; }
-.mini-item { background:#f9fcff; border:1px dashed #cddbeb; border-radius:16px; padding:10px 12px; font-weight:900; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:16px; }
-.card, .score-box, .dropcard, .sort-card {
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:16px;
-}
-
-.exercise-box {
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:16px;
-  margin-bottom:28px;
-}.picto-img { width:112px; height:112px; object-fit:contain; display:block; margin:0 auto 10px auto; }
-.picto-title { margin:0 0 8px 0; font-size:1.1rem; text-align:center; }
-.tag {
-  display:inline-block; width:100%; text-align:center; padding:8px 10px; border-radius:999px; font-weight:900; font-size:.86rem; margin-bottom:10px;
-}
-.tag.physique { background:#fff2c9; color:#996500; }
-.tag.sante { background:#fee2e2; color:#b91c1c; }
-.tag.environnement { background:#dcfce7; color:#15803d; }
-.tip { background:#f7fbff; border-left:5px solid var(--blue); padding:10px 12px; border-radius:14px; color:#28445c; font-size:.95rem; }
-.top-score { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:18px; }
-.score-box { text-align:center; }
-.score-box .big { font-size:1.5rem; font-weight:900; }
-.score-box .small { color:var(--muted); font-size:.92rem; }
-.scorebar { display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:14px; }
-.scorepill { background:#eef6ff; color:#164a8f; border-radius:999px; padding:10px 16px; font-weight:900; }
-.question { font-size:1.18rem; font-weight:900; margin-bottom:14px; line-height:1.45; }
-.options { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; }
-.option {
-  border:2px solid #d7e1ed; background:#fff; border-radius:20px; padding:12px; cursor:pointer; font-weight:900; text-align:center;
-}
-.option.selected { border-color:#3b82f6; background:#eff6ff; }
-.option img { width:84px; height:84px; object-fit:contain; display:block; margin:0 auto 8px auto; }
-.option.good { border-color: var(--green); background:#f0fdf4; }
-.option.bad { border-color: var(--red); background:#fef2f2; }
-
-.feedback {
-  padding:12px 14px;
-  border-radius:22px;
-  font-weight:800;
-  display:none;
-  background:#fff;
-  border:1px solid var(--line);
-  box-shadow:var(--shadow);
-}
-.feedback.show { display:block; }
-.feedback.ok { background:#f0fdf4; color:#166534; }
-.feedback.ko { background:#fef2f2; color:#b91c1c; }
-
-.bank { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
-.chip { padding:10px 14px; background:#fff; border:2px solid #d7e1ed; border-radius:999px; cursor:grab; font-weight:900; }
-.dropgrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px; }
-.dropzone {
-  min-height:62px; border:2px dashed #c6d7ea; border-radius:16px; display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:10px; color:var(--muted); background:#fff;
-}
-.dropzone.filled { color:var(--ink); font-weight:900; }
-.dropzone.good { border-color: var(--green); background:#f0fdf4; }
-.dropzone.bad { border-color: var(--red); background:#fef2f2; }
-.photo-wrap { max-width:620px; margin:0 auto 14px auto; text-align:center; }
-.real-photo {
-  width:100%; max-height:420px; object-fit:contain; background:#f6f9fc; border:1px solid var(--line); border-radius:20px; padding:10px;
-}
-.photo-credit { margin-top:8px; color:var(--muted); font-size:.86rem; }
-.photo-fallback {
-  border:1px dashed #cbd5e1; border-radius:20px; padding:28px 16px; color:var(--muted); background:#f8fafc;
-}
-.sort-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:14px; }
-.sort-card img { width:84px; height:84px; object-fit:contain; display:block; margin:0 auto 8px auto; }
-.sort-card select {
-  width:100%; border:2px solid #d7e1ed; border-radius:14px; padding:10px; font-weight:800; background:white;
-}
-.helper { color:var(--muted); font-size:.95rem; }
-@media (max-width: 980px) {
-  .callouts, .challenge-nav, .top-score { grid-template-columns:1fr; }
-}
 </style>
 </head>
 <body>
-<div class="container">
-  <section class="hero">
-    <h1>🧪 Mission Pictogrammes</h1>
-    <div class="main-nav cours-active">
-      <button class="main-btn active" data-view="cours">📚 Reprendre le cours</button>
-      <button class="main-btn" data-view="defis">🎮 Défis interactifs</button>
-    </div>
-  </section>
+<header class="hero">
+  <h1>⚠️ Pictogrammes de danger</h1>
+  <p>Sciences · Classe de 6ème</p>
+</header>
 
-  <section class="panel">
+<nav class="main-nav cours-active">
+  <button class="main-btn active" data-view="cours">📖 Leçon</button>
+  <button class="main-btn" data-view="defis">🎮 Défis interactifs</button>
+</nav>
+
+<div class="wrap">
+  <section class="panel" id="main-panel">
     <div id="cours" class="view active">
       <h2 class="section-title">Leçon sur les pictogrammes de danger</h2>
       <br>
-      <p class="section-sub">
-        Un <strong>pictogramme</strong> permet d'identifier rapidement quel est le
-        <strong>danger</strong> et les <strong>précautions</strong> qu'il est nécessaire
-        de prendre lors du stockage ou lors de l'utilisation de produits chimiques.
+      <p class="course-intro">
+        Un pictogramme permet d'identifier rapidement quel est le danger et les précautions qu'il est nécessaire de prendre lors du stockage ou lors de l'utilisation de produits chimiques.
       </p>
 
       <div class="callout">
-        <div class="mini-list">
-          <div>Il existe plusieurs classes de dangers :</div>
+        <div class="danger-classes-title">Il existe plusieurs classes de dangers :</div>
+        <div class="danger-classes-list">
           <div class="mini-item">⚡ <u>Dangers physiques</u> : explosif, inflammable, comburant, gaz sous pression</div>
           <div class="mini-item">🩺 <u>Dangers pour la santé</u> : corrosif, toxique, fort danger pour la santé, nocif / irritant</div>
           <div class="mini-item">🌿 <u>Danger pour l'environnement</u> : polluant</div>
@@ -235,7 +352,7 @@ h1 { margin:0 0 8px 0; font-size:clamp(2rem,4vw,3.2rem); }
 
     <div id="defis" class="view">
       <h2 class="section-title">Défis interactifs</h2>
-      <h3>Tu peux changer de défi quand tu le souhaites. Les questions reviennent en boucle seulement après avoir parcouru toute la banque.</h3>
+      <div class="callout defis-intro">Tu peux changer de défi quand tu le souhaites. Les questions reviennent en boucle seulement après avoir parcouru toute la banque.</div>
 
       <div class="challenge-nav">
         <button class="challenge-btn active" data-page="page-qcm">Défi 1<br>Reconnaître les <br> pictogrammes</button>
@@ -258,9 +375,7 @@ h1 { margin:0 0 8px 0; font-size:clamp(2rem,4vw,3.2rem); }
 
       <div id="page-match" class="challenge-page">
         <div class="exercise-box">
-          <div class="scorebar">
-            <h3>Associe le nom au bon pictogramme</h3>
-          </div>
+          <p class="question match-title">Associe le nom au bon pictogramme</p>
           <div class="bank" id="labelBank"></div>
           <div class="dropgrid" id="matchGrid"></div>
           <div class="action-row">
@@ -288,7 +403,7 @@ h1 { margin:0 0 8px 0; font-size:clamp(2rem,4vw,3.2rem); }
 
       <div id="page-sort" class="challenge-page">
         <div class="exercise-box">
-          <h3>Pour chaque pictogramme, choisis la bonne famille : <br>   -  Danger physique <br>   -  Danger pour la santé<br>   -  Danger pour l'environnement</h3>
+          <p class="question sort-question">Pour chaque pictogramme, choisis la bonne famille :<span class="sort-help-list">• Danger physique<br>• Danger pour la santé<br>• Danger pour l'environnement</span></p>
           <div class="sort-grid" id="sortGrid"></div>
           <div class="action-row">
             <button class="btn primary" id="checkSort">Vérifier</button>
@@ -364,12 +479,14 @@ function renderScores() {
 }
 
 const mainNav = document.querySelector(".main-nav");
+const mainPanel = document.getElementById("main-panel");
 
 document.querySelectorAll(".main-btn").forEach(btn => btn.addEventListener("click", () => {
   document.querySelectorAll(".main-btn").forEach(b => b.classList.remove("active"));
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
 
   btn.classList.add("active");
+  if (mainPanel) mainPanel.classList.toggle("defis-mode", btn.dataset.view === "defis");
   document.getElementById(btn.dataset.view).classList.add("active");
 
   if (btn.dataset.view === "cours") {
@@ -511,7 +628,6 @@ function nextPhoto() {
     <div class="photo-fallback" style="display:none;">
       L'image internet n'a pas pu être chargée sur cet appareil.
     </div>
-    <div class="photo-credit">Photo : ${currentPhoto.credit}</div>
   `;
 
   question.textContent =
@@ -539,6 +655,10 @@ function nextPhoto() {
       } else {
         selectedPhotoAnswers.push(name);
       }
+
+      const fb = document.getElementById("photoFeedback");
+      fb.className = selectedPhotoAnswers.length ? "feedback show" : "feedback";
+      fb.textContent = selectedPhotoAnswers.length ? `${selectedPhotoAnswers.length} réponse(s) sélectionnée(s). Clique sur Valider quand tu as terminé.` : "";
     });
 
     box.appendChild(btn);
@@ -623,15 +743,35 @@ function initMatchRound() {
   subset.forEach(p => {
     const card = document.createElement('div');
     card.className = 'dropcard';
-    card.innerHTML = `<img class="picto-img" src="${p.img}" alt="${p.name}" style="width:90px;height:90px;"><div class="dropzone" data-answer="${p.name}">Dépose ici le bon nom</div>`;
+    card.innerHTML = `<img class="picto-img" src="${p.img}" alt="${p.name}" style="width:90px;height:90px;"><div class="dropzone" data-answer="${p.name}"><span class="drop-placeholder">Dépose ici le bon nom</span></div>`;
     const zone = card.querySelector('.dropzone');
     zone.addEventListener('dragover', e => e.preventDefault());
     zone.addEventListener('drop', e => {
       e.preventDefault();
       const value = e.dataTransfer.getData('text/plain');
-      zone.textContent = value;
+      const chip = document.querySelector(`#labelBank .chip[data-value="${value}"]`);
+      if (!chip) return;
+
+      // Si cette zone contenait déjà une étiquette, elle redevient disponible en haut.
+      if (zone.dataset.value && zone.dataset.value !== value) {
+        const previousChip = document.querySelector(`#labelBank .chip[data-value="${zone.dataset.value}"]`);
+        if (previousChip) previousChip.classList.remove('drag-used');
+      }
+
+      // La même étiquette ne doit pas apparaître deux fois.
+      document.querySelectorAll('#matchGrid .dropzone').forEach(otherZone => {
+        if (otherZone !== zone && otherZone.dataset.value === value) {
+          delete otherZone.dataset.value;
+          otherZone.innerHTML = '<span class="drop-placeholder">Dépose ici le bon nom</span>';
+          otherZone.classList.remove('filled','good','bad');
+        }
+      });
+
+      zone.innerHTML = `<span class="chip-in-drop">${value}</span>`;
       zone.dataset.value = value;
       zone.classList.add('filled');
+      zone.classList.remove('good','bad');
+      chip.classList.add('drag-used');
     });
     grid.appendChild(card);
   });
@@ -676,7 +816,7 @@ function initSortRound() {
     card.className = 'sort-card';
     card.innerHTML = `
       <img src="${p.img}" alt="${p.name}">
-      <div style="font-weight:900; text-align:center; margin-bottom:10px;">${p.name}</div>
+      <div class="sort-card-name">${p.name}</div>
       <select data-answer="${p.category}">
         <option value="">Choisir une catégorie</option>
         <option value="physique">Danger physique</option>
