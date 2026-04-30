@@ -782,8 +782,8 @@ function getDipoleVisual(d) {
 const DIPOLE_DETAILS = {
   pile: ["Elle fournit du courant et de l'énergie électrique au circuit. Cette énergie élecitrque est essentielle pour faire fonctionner les récepteurs", "Le courant produit par la pile permet juste de transporter l'énergie électrique jusqu'au récepteur" , "Sur le symbole, le trait le plus long représente la borne +."],
   ampoule: ["C'est un récepteur : elle utilise l'énergie électrique et la transforme en énergie thermique et lumineuse.", "La croix rappelle le filament présent dans l'ampoule."],
-  interrupteur_ouvert: ["L\'interrupteur est ouvert : le circuit est coupé.", "Le courant électrique ne peut pas circuler.", "C'est la position qui correspond à une lampe éteinte dans un circuit simple."],
-  interrupteur_ferme: ["L\'interrupteur est fermé : il existe un chemin possible pour le courant pour aller d'une borne à l'autre de la pile.", "Le courant électrique peut circuler.", "C'est la position qui correspond à une lampe allumée si le montage est correct."],
+  interrupteur_ouvert: ["L'interrupteur est ouvert : le circuit est coupé.", "Le courant électrique ne peut pas circuler.", "C'est la position qui correspond à une lampe éteinte dans un circuit simple."],
+  interrupteur_ferme: ["L'interrupteur est fermé : il existe un chemin possible pour le courant pour aller d'une borne à l'autre de la pile.", "Le courant électrique peut circuler.", "C'est la position qui correspond à une lampe allumée si le montage est correct."],
   fils: ["Les fils relient les dipôles entre eux.", "Sur un schéma, on les représente par des traits droits ou un angle droit.", "Ne pas les confondre avec un récepteur car ils ne consomment pas l'énergie électrique qu'ils transportent."],
   moteur: ["C'est un récepteur : il utilise et consomme de l'énergie électrique.", "Il transforme l'énergie électrique en énergie mécanique (mouvement).", "La lettre M permet de le distinguer facilement."],
   diode: ["La diode ne laisse passer le courant que dans un seul sens.", "La barre verticale indique le côté bloquant dans le symbole.", "Son sens de branchement est donc important."],
@@ -930,7 +930,15 @@ function generateQuestions() {
 }
 
 function startQuiz() {
-  currentQ = 0; score = 0; lives = 3; answered = false;
+  currentQ = 0; 
+  score = 0; 
+  lives = 3; 
+  answered = false;
+
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.textContent = 'Question suivante →';
+  nextBtn.classList.remove('show');
+
   generateQuestions();
   document.getElementById('end-screen').classList.remove('show');
   document.getElementById('quiz-play').style.display='block';
@@ -951,8 +959,12 @@ function updateStatus() {
 function renderQuestion() {
   answered = false;
   const fb = document.getElementById('feedback-bar');
-  fb.className='feedback-bar'; fb.textContent='';
-  document.getElementById('next-btn').classList.remove('show');
+  fb.className='feedback-bar'; 
+  fb.textContent='';
+
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.classList.remove('show');
+  nextBtn.textContent = 'Question suivante →';
 
   const d = questions[currentQ];
   const qLabel = document.getElementById('q-label');
@@ -1096,13 +1108,15 @@ function checkAnswer(btn, isCorrect, correct) {
     return;
   }
 
-  document.getElementById('next-btn').classList.add('show');
+  const nextBtn = document.getElementById('next-btn');
+  nextBtn.classList.add('show');
 
   if(currentQ === TOTAL_Q - 1) {
-    document.getElementById('next-btn').textContent = 'Voir les résultats 🏆';
+    nextBtn.textContent = 'Voir les résultats 🏆';
+  } else {
+    nextBtn.textContent = 'Question suivante →';
   }
 }
-
 
 function nextQuestion() {
   currentQ++;
