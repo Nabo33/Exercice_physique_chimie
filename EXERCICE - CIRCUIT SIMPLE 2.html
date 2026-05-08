@@ -20,17 +20,15 @@
   header p { font-size: 1rem; opacity: 0.85; }
 
   .progress-bar-wrapper {
-    background: rgba(255,255,255,0.25);
+    background: #e2e8f0;
     border-radius: 99px;
-    height: 10px;
-    width: 90%;
-    max-width: 500px;
-    margin: 1rem auto 0;
+    height: 12px;
+    width: 100%;
     overflow: hidden;
   }
   #progress-fill {
     height: 100%;
-    background: #fde68a;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
     border-radius: 99px;
     transition: width 0.5s ease;
     width: 0%;
@@ -142,11 +140,37 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    background: rgba(255,255,255,0.2);
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1.5px solid #bfdbfe;
     border-radius: 99px;
-    padding: 0.3rem 1rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 800;
+  }
+
+  .quiz-status {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 1.2rem;
+    padding: 1rem 1.1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  }
+
+  .quiz-status-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  .progress-label {
+    color: #64748b;
     font-size: 0.9rem;
-    margin-top: 0.8rem;
+    font-weight: 800;
   }
 
   main {
@@ -684,9 +708,7 @@
 
 <header>
   <h1>⚡ Les circuits électriques</h1>
-  <p>Quiz interactif – 6ème</p>
-  <div class="progress-bar-wrapper"><div id="progress-fill"></div></div>
-  <div class="score-badge" id="score-badge">Score : 0 / 0</div>
+  <p>Sciences · Classe de 6ème</p>
 </header>
 
 <main>
@@ -775,7 +797,7 @@
 
         <div class="mini-schema">
           <div class="mini-card"><span class="big">🔒💡</span><span class="mini-text">Interrupteur fermé : le courant circule.<br>L'énergie électrique arrive aux récepteurs : ils peuvent fonctionner.</span></div>
-          <div class="mini-card"><span class="big with-img">🔓<img class="off-bulb-img" src="https://raw.githubusercontent.com/Nabo33/Images/0a1e8098286910d01301f865b45b166c97f35e14/Ampoule%20%C3%A9teinte.jpg" alt="Ampoule éteinte"></span><span class="mini-text">Interrupteur ouvert : aucun courant ne circule. Rien ne fonctionne.</span></div>
+          <div class="mini-card"><span class="big with-img">🔓<img class="off-bulb-img" src="https://raw.githubusercontent.com/Nabo33/Images/0a1e8098286910d01301f865b45b166c97f35e14/Ampoule%20%C3%A9teinte.jpg" alt="Ampoule éteinte"></span><span class="mini-text">Interrupteur ouvert : aucun courant ne circule. Pas d'énergie électrique. Rien ne fonctionne.</span></div>
         </div>
       </div>
 
@@ -787,6 +809,14 @@
   </div>
 
   <div class="screen" id="screen-question">
+    <button type="button" class="back-menu-btn" onclick="showMenu()">← Revenir au menu</button>
+    <div class="quiz-status" id="quiz-status">
+      <div class="quiz-status-top">
+        <div class="score-badge" id="score-badge">Score : 0 / 0</div>
+        <div class="progress-label" id="progress-label">Progression : 0 %</div>
+      </div>
+      <div class="progress-bar-wrapper"><div id="progress-fill"></div></div>
+    </div>
     <div class="q-card pop" id="q-card">
       <div class="q-counter" id="q-counter">Question 1 / 14</div>
       <div id="q-type-badge"></div>
@@ -1019,16 +1049,20 @@ let score = 0;
 let answered = [];
 let shuffled = [];
 
-function showMenu() {
-  showScreen('screen-intro');
+function resetQuizStatus() {
   document.getElementById('progress-fill').style.width = '0%';
   document.getElementById('score-badge').textContent = 'Score : 0 / 0';
+  document.getElementById('progress-label').textContent = 'Progression : 0 %';
+}
+
+function showMenu() {
+  showScreen('screen-intro');
+  resetQuizStatus();
 }
 
 function showLesson() {
   showScreen('screen-lesson');
-  document.getElementById('progress-fill').style.width = '0%';
-  document.getElementById('score-badge').textContent = 'Score : 0 / 0';
+  resetQuizStatus();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1059,6 +1093,7 @@ function updateProgress() {
   const pct = (currentQ / shuffled.length) * 100;
   document.getElementById('progress-fill').style.width = pct + '%';
   document.getElementById('score-badge').textContent = `Score : ${score} / ${currentQ}`;
+  document.getElementById('progress-label').textContent = `Progression : ${Math.round(pct)} %`;
 }
 
 function renderQuestion() {
@@ -1629,6 +1664,7 @@ function showResults() {
   }
 
   document.getElementById('score-badge').textContent = `Score : ${score} / ${total}`;
+  document.getElementById('progress-label').textContent = 'Progression : 100 %';
 }
 
 function restartQuiz() {
