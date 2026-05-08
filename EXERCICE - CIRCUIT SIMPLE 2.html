@@ -392,6 +392,292 @@
   .shake { animation: shake 0.35s ease; }
 
   .q-counter { font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.5rem; }
+
+
+  /* ===== Menu + leçon ajoutés ===== */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .menu-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    border-color: #93c5fd;
+    box-shadow: 0 10px 30px rgba(37,99,235,0.16);
+  }
+
+  .menu-card .icon {
+    font-size: 3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .menu-card h2 {
+    color: #2563eb;
+    font-size: 1.35rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .menu-card p {
+    color: #555;
+    line-height: 1.55;
+    font-size: 0.98rem;
+  }
+
+  .menu-badge {
+    display: inline-block;
+    margin-top: 1rem;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1.5px solid #bfdbfe;
+    border-radius: 99px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+  }
+
+  .back-menu-btn {
+    display: inline-block;
+    margin: 0 0 1rem 0;
+    background: white;
+    color: #475569;
+    border: 2px solid #e2e8f0;
+    border-radius: 99px;
+    padding: 0.55rem 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, transform 0.15s;
+  }
+
+  .back-menu-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+    transform: translateY(-1px);
+  }
+
+  .lesson-card {
+    background: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+
+  .lesson-title {
+    font-size: 1.55rem;
+    color: #2563eb;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .lesson-intro {
+    color: #475569;
+    line-height: 1.6;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+
+  .lesson-section {
+    margin-top: 1.2rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 1.2rem;
+    padding: 1.2rem;
+    background: #f8fafc;
+  }
+
+  .lesson-section h3 {
+    color: #2563eb;
+    font-size: 1.12rem;
+    margin-bottom: 0.9rem;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+    text-decoration-color: #93c5fd;
+  }
+
+  .lesson-section.generator h3 {
+    color: #1d4ed8;
+    text-decoration-color: #60a5fa;
+  }
+
+  .lesson-section.receiver h3 {
+    color: #7c3aed;
+    text-decoration-color: #c4b5fd;
+  }
+
+  .lesson-section.switch h3 {
+    color: #c2410c;
+    text-decoration-color: #fdba74;
+  }
+
+  .lesson-section p, .lesson-section li {
+    color: #334155;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+
+  .lesson-section ul {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 0.7rem;
+  }
+
+  .lesson-section li {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.8rem;
+    padding: 0.65rem 0.8rem;
+    font-weight: 700;
+  }
+
+  .lesson-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .lesson-section.generator { background: #eff6ff; border-color: #bfdbfe; }
+  .lesson-section.receiver { background: #f5f3ff; border-color: #ddd6fe; }
+  .lesson-section.switch { background: #fff7ed; border-color: #fed7aa; }
+
+  .mini-schema {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+    margin-top: 0.8rem;
+  }
+
+  .mini-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 1rem;
+    padding: 0.9rem 1rem;
+    text-align: left;
+    font-weight: 800;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .mini-card .big {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    min-width: 2.4rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .mini-card .mini-text {
+    display: block;
+    flex: 1;
+  }
+
+
+  .mini-card .big.with-img {
+    gap: 0.35rem;
+    min-width: 5rem;
+  }
+
+  .mini-card .off-bulb-img {
+    width: 2rem;
+    height: 2rem;
+    object-fit: contain;
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .switch-illustrations {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .switch-card {
+    background: white;
+    border: 2px solid #fed7aa;
+    border-radius: 1.2rem;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 16px rgba(249,115,22,0.10);
+  }
+
+  .switch-card img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+    border-radius: 0.9rem;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    padding: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+
+  .circuit-example-img {
+    margin-top: 0.9rem;
+    max-height: 210px !important;
+    background: #ffffff !important;
+    border: 2px solid #e2e8f0 !important;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.08);
+  }
+
+  .switch-card h4 {
+    font-size: 1rem;
+    margin-bottom: 0.45rem;
+    color: #c2410c;
+  }
+
+  .switch-card p {
+    font-weight: 700;
+    color: #334155;
+    line-height: 1.5;
+  }
+
+  .method-box {
+    margin-top: 1.2rem;
+    background: linear-gradient(135deg, #fef3c7, #fff7ed);
+    border: 2px solid #fbbf24;
+    border-radius: 1.2rem;
+    padding: 1.2rem;
+  }
+
+  .method-box h3 { color: #92400e; margin-bottom: 0.6rem; }
+  .method-box p { color: #334155; line-height: 1.65; font-weight: 800; }
+
+  .lesson-actions {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.4rem;
+  }
+
+  @media(max-width: 700px) {
+    .menu-grid, .lesson-columns, .mini-schema, .switch-illustrations { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
@@ -406,17 +692,97 @@
 <main>
   <div class="screen active" id="screen-intro">
     <div class="intro-card pop">
-      <h2>Prêt(e) à tester tes connaissances ?</h2>
-      <p>Ce quiz porte sur le début du cours des circuits électriques.</p>
+      <h2>⚡ Le circuit simple</h2>
+      <p>Commence par relire la leçon, puis entraîne-toi avec les exercices interactifs.</p>
       <div class="topics">
         <span class="topic-chip">⚡ Les dipôles</span>
         <span class="topic-chip">🔋 Générateurs & récepteurs</span>
-        <div><span class="topic-chip">💡 Conversion d'énergie</span>
-        <span class="topic-chip">🔛 L'interrupteur</span></div>
+        <span class="topic-chip">💡 Énergie électrique</span>
+        <span class="topic-chip">🔛 L'interrupteur</span>
       </div>
-      <p>14 questions · QCM · Choix multiples · Vrai / Faux · Glisser-déposer · Analyse d'images</p>
-      <br>
-      <button class="btn btn-primary" onclick="startQuiz()">Commencer le quiz !</button>
+      <div class="menu-grid">
+        <div class="menu-card" onclick="showLesson()">
+          <div class="icon">📖</div>
+          <h2>Leçon</h2>
+          <p>Revoir les notions importantes du cours : dipôle, générateur, récepteur et interrupteur.</p>
+          <span class="menu-badge">Cours • À retenir</span>
+        </div>
+        <div class="menu-card" onclick="startQuiz()">
+          <div class="icon">🎯</div>
+          <h2>Exercices</h2>
+          <p>Tester ses connaissances avec 14 questions : QCM, vrai/faux, choix multiples, images et glisser-déposer.</p>
+          <span class="menu-badge">Quiz • 14 questions</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-lesson">
+    <button class="back-menu-btn" onclick="showMenu()">← Revenir au menu</button>
+    <div class="lesson-card pop">
+      <h2 class="lesson-title">📖 Le circuit simple : ce qu'il faut retenir</h2>
+      <p class="lesson-intro">
+        Cette leçon résume les notions essentielles du cours sur le circuit simple : les dipôles, le rôle des différents dipôles et le fonctionnement de l'interrupteur.
+      </p>
+
+      <div class="lesson-section">
+        <h3>1. Définition d'un dipôle</h3>
+        <ul>
+          <p>Un <strong>dipôle</strong> est un objet électrique qui possède <strong>2 bornes</strong> (ou <strong>2 pôles</strong>).</p>
+        </ul>
+      <p>   🔋 La pile : une borne positive (+) et une borne négative (−).</p>
+      <p>   💡 L'ampoule : le culot et le plot central.</p>
+      </div>
+
+        <div class="lesson-section generator">
+          <h3>2. Le générateur</h3>
+          <ul>
+          <p>Un <strong>générateur</strong> est un dipôle capable de <strong>produire</strong> de <strong>l'énergie électrique</strong> et du <strong>courant électrique</strong>.</p> 
+        </ul>
+        </div>
+        <div class="lesson-section receiver">
+          <h3>3. Les récepteurs</h3>
+          <p>Les <strong>dipôles récepteurs</strong>, comme une lampe, un moteur ou une DEL, ont besoin d'énergie électrique pour fonctionner.</p>
+          <p>Ils convertissent cette énergie électrique en d'autres formes d'énergie : lumineuse, thermique, mécanique...</p>
+        </div>
+      </div>
+
+      <div class="method-box">
+        <h3>🧠 Idée importante</h3>
+        <p>Les récepteurs ont besoin seulement d'énergie électrique pour fonctionner ! </p> 
+        <br>
+        <p>Le courant électrique permet juste d'apporter l'énergie électrique aux récepteurs.</p>
+      </div>
+
+      <div class="lesson-section switch">
+        <h3>4. Le rôle de l'interrupteur</h3>
+        <p>L'interrupteur permet de <strong>commander la circulation du courant</strong>.</p>
+
+        <div class="switch-illustrations">
+          <div class="switch-card">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/51d7015f949362523f370f143c4967a50b7ac8eb/Tower_bridge_ferme.png" alt="Pont fermé : le passage est possible">
+            <h4>🔒 Interrupteur fermé</h4>
+            <p>Le pont est fermé, les voitures peuvent traverser le pont.</p> <br><p>Quand l'interrupteur est fermé, le courant électrique peut circuler et apporter l'énergie électrique jusqu'au récepteur.</p>
+            <img class="circuit-example-img" src="https://raw.githubusercontent.com/Nabo33/Images/d149e0a147984c37f4912e19627993af30027292/Circuit_simple_lampe_ferme.png" alt="Circuit avec interrupteur fermé : la lampe brille">
+          </div>
+          <div class="switch-card">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/51d7015f949362523f370f143c4967a50b7ac8eb/Tower_bridge_ouvert.png" alt="Pont ouvert : le passage est impossible">
+            <h4>🔓 Interrupteur ouvert</h4>
+            <p>Le pont est ouvert, les voitures ne peuvent pas traverser le pont.</p> <br><p>Quand l'interrupteur est ouvert, le courant électrique ne peut pas circuler. Pas d'énergie électrique, rien ne fonctionne.</p>
+            <img class="circuit-example-img" src="https://raw.githubusercontent.com/Nabo33/Images/d149e0a147984c37f4912e19627993af30027292/Circuit_simple_lampe_ouverte.png" alt="Circuit avec interrupteur ouvert : la lampe ne brille pas">
+          </div>
+        </div>
+
+        <div class="mini-schema">
+          <div class="mini-card"><span class="big">🔒💡</span><span class="mini-text">Interrupteur fermé : le courant circule.<br>L'énergie électrique arrive aux récepteurs : ils peuvent fonctionner.</span></div>
+          <div class="mini-card"><span class="big with-img">🔓<img class="off-bulb-img" src="https://raw.githubusercontent.com/Nabo33/Images/0a1e8098286910d01301f865b45b166c97f35e14/Ampoule%20%C3%A9teinte.jpg" alt="Ampoule éteinte"></span><span class="mini-text">Interrupteur ouvert : aucun courant ne circule. Rien ne fonctionne.</span></div>
+        </div>
+      </div>
+
+      <div class="lesson-actions">
+        <button class="btn btn-primary" onclick="startQuiz()">🎯 Commencer les exercices</button>
+        <button class="btn btn-secondary" onclick="showMenu()">🏠 Retour au menu</button>
+      </div>
     </div>
   </div>
 
@@ -652,6 +1018,19 @@ let currentQ = 0;
 let score = 0;
 let answered = [];
 let shuffled = [];
+
+function showMenu() {
+  showScreen('screen-intro');
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('score-badge').textContent = 'Score : 0 / 0';
+}
+
+function showLesson() {
+  showScreen('screen-lesson');
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('score-badge').textContent = 'Score : 0 / 0';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 function startQuiz() {
   shuffled = shuffle([...questions]);
@@ -1253,9 +1632,7 @@ function showResults() {
 }
 
 function restartQuiz() {
-  showScreen('screen-intro');
-  document.getElementById('progress-fill').style.width = '0%';
-  document.getElementById('score-badge').textContent = 'Score : 0 / 0';
+  showMenu();
 }
 </script>
 </body>
