@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mesure de volume – Éprouvette graduée</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap');
 
   :root {
     --blue-light: #d0eeff;
@@ -27,7 +27,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px 10px 40px;
+    padding: 0 10px 40px;
     background-image:
       radial-gradient(circle at 20% 20%, #cce8ff 0%, transparent 50%),
       radial-gradient(circle at 80% 80%, #d5f0ff 0%, transparent 50%);
@@ -49,6 +49,319 @@
     text-align: center;
   }
 
+
+  header {
+    position: relative;
+    z-index: 10;
+    width: calc(100% + 20px);
+    background: linear-gradient(135deg, #1d4ed8 0%, #38bdf8 100%);
+    color: white;
+    padding: 28px 24px 22px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(26,111,168,0.24);
+    border-radius: 0 0 28px 28px;
+    margin: 0 -10px 22px;
+  }
+
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.45rem);
+    font-weight: 900;
+    color: white;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  header p {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 700;
+  }
+
+  #menu {
+    position: relative;
+    z-index: 5;
+    max-width: 760px;
+    width: 100%;
+    margin: 18px auto 24px;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .menu-card {
+    background: var(--panel);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 26px 20px;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(26,111,168,0.18);
+    border-color: var(--blue-mid);
+  }
+
+  .menu-card .icon { font-size: 2.6rem; }
+
+  .menu-card h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--blue-deep);
+  }
+
+  .menu-card p {
+    font-size: 0.9rem;
+    color: #5580a0;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .menu-card .badge {
+    background: var(--blue-light);
+    color: var(--blue-deep);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 4px 12px;
+  }
+
+  #back-btn {
+    position: relative;
+    z-index: 10;
+    background: white;
+    border: 2px solid #b0d0e8;
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: none;
+    margin: 0 auto 18px;
+    transition: border-color 0.15s, color 0.15s;
+    color: #5580a0;
+  }
+
+  #back-btn:hover {
+    border-color: var(--blue-deep);
+    color: var(--blue-deep);
+  }
+
+
+  .exercise-menu-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 18px;
+  }
+
+  .exercise-back-menu-btn {
+    background: white;
+    color: #5580a0;
+    border: 2px solid #b0d0e8;
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(26,111,168,0.10);
+    transition: border-color 0.15s, color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+
+  .exercise-back-menu-btn:hover {
+    border-color: var(--blue-deep);
+    color: var(--blue-deep);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(26,111,168,0.16);
+  }
+
+  #lesson-area {
+    position: relative;
+    z-index: 5;
+    max-width: 980px;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0 18px;
+    display: none;
+  }
+
+  .lesson-card {
+    background: var(--panel);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 30px 28px;
+    animation: slideIn 0.35s cubic-bezier(.4,2,.6,1);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .lesson-title {
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue-deep);
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    font-weight: 900;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .lesson-intro {
+    color: #5580a0;
+    font-weight: 800;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .lesson-image-card {
+    background: #f8fcff;
+    border: 2px solid #c5dff2;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.75);
+  }
+
+  .lesson-image {
+    display: block;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    border-radius: 14px;
+    object-fit: contain;
+  }
+
+
+
+  .graduation-method {
+    margin-top: 20px;
+    background: linear-gradient(135deg, #fef3c7, #fff7ed);
+    border: 2px solid #fbbf24;
+    border-radius: 18px;
+    padding: 20px;
+  }
+
+  .graduation-method h3 {
+    font-family: 'Fredoka One', cursive;
+    color: #92400e;
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+
+  .graduation-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .graduation-step {
+    background: rgba(255,255,255,0.78);
+    border: 1px solid rgba(251,191,36,0.55);
+    border-radius: 14px;
+    padding: 12px 14px;
+    font-weight: 800;
+    line-height: 1.45;
+  }
+
+  .graduation-step span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: white;
+    color: var(--blue-deep);
+    border: 2px solid #fbbf24;
+    font-weight: 900;
+  }
+
+  .graduation-example {
+    background: white;
+    border: 2px dashed #fbbf24;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-weight: 800;
+    line-height: 1.6;
+    color: #5b3b06;
+  }
+
+  .graduation-example + .graduation-example {
+    margin-top: 12px;
+  }
+
+  .graduation-example strong {
+    color: var(--blue-deep);
+  }
+
+  .lesson-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 22px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue-deep));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 28px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(26,111,168,0.3);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26,111,168,0.35);
+  }
+
+  .btn.secondary {
+    background: white;
+    color: var(--blue-deep);
+    border: 2px solid var(--blue-deep);
+    box-shadow: none;
+  }
+
+  #game-area {
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    display: none;
+    text-align: center;
+  }
+
+  #game-area .subtitle {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 18px;
+  }
+
   .main-layout {
     display: flex;
     gap: 28px;
@@ -57,6 +370,8 @@
     justify-content: center;
     width: 100%;
     max-width: 980px;
+    margin: 0 auto;
+    text-align: left;
   }
 
   .eprouvette-panel {
@@ -168,6 +483,7 @@
     flex-direction:column;
     gap:20px;
     width:320px;
+    align-items: stretch;
   }
 
   .zoom-panel, .answer-panel, .score-panel {
@@ -315,6 +631,8 @@
   }
 
   @media (max-width: 760px) {
+    #menu { grid-template-columns: 1fr; max-width: 420px; }
+    .lesson-card { padding: 22px 16px; }
     .eprouvette-container {
       width: 315px;
       height: 473px;
@@ -327,7 +645,70 @@
 </style>
 </head>
 <body>
-<h1>📏 Mesures de volumes !</h1>
+<header>
+  <h1>📏 Mesures de volumes !</h1>
+  <p>Lire correctement le volume d'un liquide dans une éprouvette graduée.</p>
+</header>
+
+<button type="button" id="back-btn" onclick="showMenu()">← Revenir au menu</button>
+
+<div id="menu">
+  <div class="menu-card" onclick="showLesson()">
+    <div class="icon">📖</div>
+    <h3>Leçon</h3>
+    <p>Revoir la méthode pour lire correctement le volume au niveau du ménisque.</p>
+    <span class="badge">Cours • Méthode</span>
+  </div>
+  <div class="menu-card" onclick="showExercise()">
+    <div class="icon">🔍</div>
+    <h3>S'entraîner</h3>
+    <p>Observe les graduations et indique le volume d'eau dans l'éprouvette.</p>
+    <span class="badge">Exercice interactif</span>
+  </div>
+</div>
+
+<div id="lesson-area">
+  <div class="lesson-card">
+    <h2 class="lesson-title"><span>📖</span> Lire un volume dans une éprouvette graduée</h2>
+    <p class="lesson-intro">
+      Pour mesurer correctement un volume, il faut placer son œil à la bonne hauteur et lire la valeur au bas du ménisque.
+    </p>
+
+    <div class="lesson-image-card">
+      <img class="lesson-image" src="https://raw.githubusercontent.com/Nabo33/Images/fc4df222c3dba9f3dcad014f1fbf688dc8b56cf2/Methode_mensique_volume.png" crossorigin="anonymous" alt="Méthode pour lire le volume au niveau du ménisque">
+    </div>
+
+    <div class="graduation-method">
+      <h3>🧠 Comment connaître la valeur d’une graduation ?</h3>
+      <div class="graduation-steps">
+        <div class="graduation-step"><span>1</span>Je repère deux nombres qui se suivent.</div>
+        <div class="graduation-step"><span>2</span>Je regarde l’écart entre ces deux nombres.</div>
+        <div class="graduation-step"><span>3</span>Je compte les petits espaces, puis je partage l’écart.</div>
+      </div>
+      <div class="graduation-example">
+        <strong>Exemple 1 :</strong> entre <strong>20 mL</strong> et <strong>30 mL</strong>, il y a <strong>10 mL</strong> d’écart.<br>
+        S’il y a <strong>10 petits espaces</strong>, je fais : <strong>10 mL ÷ 10 = 1 mL</strong>.<br>
+        Donc une petite graduation vaut <strong>1 mL</strong>.
+      </div>
+
+      <div class="graduation-example">
+        <strong>Exemple 2 :</strong> entre <strong>20 mL</strong> et <strong>21 mL</strong>, il y a <strong>1 mL</strong> d’écart.<br>
+        S’il y a <strong>5 petits espaces</strong>, je fais : <strong>1 mL ÷ 5 = 0,2 mL</strong>.<br>
+        Donc une petite graduation vaut <strong>0,2 mL</strong>.
+      </div>
+    </div>
+
+    <div class="lesson-actions">
+      <button type="button" class="btn" onclick="showExercise()">🔍 Commencer l'exercice</button>
+      <button type="button" class="btn secondary" onclick="showMenu()">🏠 Retour au menu</button>
+    </div>
+  </div>
+</div>
+
+<div id="game-area">
+<div class="exercise-menu-row">
+  <button type="button" class="exercise-back-menu-btn" onclick="showMenu()">← Revenir au menu</button>
+</div>
 <p class="subtitle">Analyse les graduations afin de déterminer le volume d'eau présent dans l'éprouvette graduée. Clique sur "Nouveau niveau" pour recommencer.</p>
 
 <div class="main-layout">
@@ -364,7 +745,7 @@
         <input type="number" id="studentAnswer" placeholder="?" step="1" min="0" max="50" inputmode="decimal">
         <span class="unit-label">mL</span>
       </div>
-      <button class="check-btn" onclick="checkAnswer()">✅ Vérifier ma réponse</button>
+      <button type="button" class="check-btn" onclick="checkAnswer(event)">✅ Vérifier ma réponse</button>
       <div class="feedback" id="feedback"></div>
     </div>
 
@@ -373,9 +754,10 @@
         <div class="score-label">Score</div>
         <div class="score-numbers"><span id="scoreOk">0</span> / <span id="scoreTotal">0</span></div>
       </div>
-      <button class="new-btn" onclick="newQuestion()">🔄 Nouveau niveau</button>
+      <button type="button" class="new-btn" onclick="newQuestion()">🔄 Nouveau niveau</button>
     </div>
   </div>
+</div>
 </div>
 
 <img id="srcEp" src="https://raw.githubusercontent.com/Nabo33/Images/3ff2d118c280bc279f76300d6bb4fa9a02b61c52/Eprouvette%20gradu%C3%A9e%20nue.png" crossorigin="anonymous" style="display:none">
@@ -414,6 +796,32 @@ const zoomCanvas = document.getElementById('zoomCanvas');
 const ctx = zoomCanvas.getContext('2d');
 const srcEp = document.getElementById('srcEp');
 const srcMen = document.getElementById('srcMen');
+
+
+function showMenu() {
+  document.getElementById('menu').style.display = 'grid';
+  document.getElementById('lesson-area').style.display = 'none';
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'none';
+}
+
+function showLesson() {
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('lesson-area').style.display = 'block';
+  document.getElementById('game-area').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'block';
+  document.getElementById('lesson-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showExercise() {
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('lesson-area').style.display = 'none';
+  document.getElementById('game-area').style.display = 'block';
+  document.getElementById('back-btn').style.display = 'none';
+  applyTubeCalibration();
+  updateMeniscus(currentVolume);
+  document.getElementById('game-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 function displayScaleX() {
   return epImg.clientWidth / SRC_W;
@@ -524,11 +932,13 @@ function drawZoom(ml) {
   const pxPerMl = (SRC_Y_0ML - SRC_Y_50ML) / 50;
 
   const config =
-    precision === 1
-      ? { tickStep: 1,  labelStep: 10, majorStep: 10, midStep: 5, zoomSpanMl: 18, fontSize: 38, outline: 6 }
-      : precision === 0.5
-        ? { tickStep: 0.5, labelStep: 5, majorStep: 5, midStep: 1, zoomSpanMl: 9, fontSize: 34, outline: 6 }
-        : { tickStep: 0.2, labelStep: 1, majorStep: 1, midStep: 0.5, zoomSpanMl: 3.6, fontSize: 28, outline: 5 };
+    precision === 2
+      ? { tickStep: 2,  labelStep: 10, majorStep: 10, midStep: 4, zoomSpanMl: 24, fontSize: 38, outline: 6 }
+      : precision === 1
+        ? { tickStep: 1,  labelStep: 10, majorStep: 10, midStep: 5, zoomSpanMl: 18, fontSize: 38, outline: 6 }
+        : precision === 0.5
+          ? { tickStep: 0.5, labelStep: 5, majorStep: 5, midStep: 1, zoomSpanMl: 9, fontSize: 34, outline: 6 }
+          : { tickStep: 0.2, labelStep: 1, majorStep: 1, midStep: 0.5, zoomSpanMl: 3.6, fontSize: 28, outline: 5 };
 
   const cropHalf = (config.zoomSpanMl * pxPerMl) / 2;
   const srcYCenter = sourceYFromVolume(ml);
@@ -616,7 +1026,8 @@ function updateScoreDisplay() {
   
 }
 
-function checkAnswer() {
+function checkAnswer(event) {
+  if (event) event.preventDefault();
   if (questionAlreadyChecked) return;
 
   const raw = (studentAnswer.value || '').replace(',', '.');
@@ -644,7 +1055,7 @@ function checkAnswer() {
 }
 
 function randomPrecision() {
-  const steps = [1, 0.5, 0.2];
+  const steps = [2, 1, 0.5, 0.2];
   return steps[Math.floor(Math.random() * steps.length)];
 }
 
@@ -733,6 +1144,7 @@ function init() {
   volumeSlider.value = String(currentVolume);
   updateMeniscus(currentVolume);
   updateScoreDisplay();
+  showMenu();
 }
 
 if (srcEp.complete && srcMen.complete) {
