@@ -245,6 +245,10 @@
     object-fit: contain;
   }
 
+  .lesson-image-mobile {
+    display: none;
+  }
+
 
 
   .graduation-method {
@@ -632,7 +636,67 @@
 
   @media (max-width: 760px) {
     #menu { grid-template-columns: 1fr; max-width: 420px; }
-    .lesson-card { padding: 22px 16px; }
+
+    #lesson-area {
+      padding: 0 10px;
+    }
+
+    .lesson-card {
+      padding: 22px 14px;
+      overflow: hidden;
+    }
+
+    .lesson-image-card {
+      padding: 10px;
+      border-radius: 16px;
+    }
+
+    .lesson-image-desktop {
+      display: none;
+    }
+
+    .lesson-image-mobile {
+      display: block;
+      max-width: 100%;
+    }
+
+    .graduation-method {
+      padding: 16px 12px;
+    }
+
+    .graduation-method h3 {
+      font-size: 1.08rem;
+      line-height: 1.25;
+    }
+
+    .graduation-steps {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .graduation-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+      min-width: 0;
+      padding: 12px;
+      font-size: 0.95rem;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    .graduation-step span {
+      flex: 0 0 28px;
+      margin-right: 0;
+    }
+
+    .graduation-example {
+      padding: 12px;
+      font-size: 0.95rem;
+      overflow-wrap: anywhere;
+    }
+
     .eprouvette-container {
       width: 315px;
       height: 473px;
@@ -641,6 +705,17 @@
       width: 315px;
       height: 473px;
     }
+  }
+
+  @media (max-width: 390px) {
+    body { padding-left: 6px; padding-right: 6px; }
+    header { width: calc(100% + 12px); margin-left: -6px; margin-right: -6px; }
+    #lesson-area { padding: 0 4px; }
+    .lesson-card { padding: 20px 10px; }
+    .lesson-image-card { padding: 10px; }
+    .graduation-method { padding: 14px 10px; }
+    .graduation-step { font-size: 0.9rem; line-height: 1.35; }
+    .graduation-example { font-size: 0.9rem; line-height: 1.5; }
   }
 </style>
 </head>
@@ -675,7 +750,8 @@
     </p>
 
     <div class="lesson-image-card">
-      <img class="lesson-image" src="https://raw.githubusercontent.com/Nabo33/Images/fc4df222c3dba9f3dcad014f1fbf688dc8b56cf2/Methode_mensique_volume.png" crossorigin="anonymous" alt="Méthode pour lire le volume au niveau du ménisque">
+      <img class="lesson-image lesson-image-desktop" src="https://raw.githubusercontent.com/Nabo33/Images/fc4df222c3dba9f3dcad014f1fbf688dc8b56cf2/Methode_mensique_volume.png" crossorigin="anonymous" alt="Méthode pour lire le volume au niveau du ménisque">
+      <img class="lesson-image lesson-image-mobile" src="https://raw.githubusercontent.com/Nabo33/Images/a99c77fd3c27425cd46743d683cd97b9f1b38746/Methode_mensique_volume_telephone.png" crossorigin="anonymous" alt="Méthode pour lire le volume au niveau du ménisque sur téléphone">
     </div>
 
     <div class="graduation-method">
@@ -686,13 +762,13 @@
         <div class="graduation-step"><span>3</span>Je compte les petits espaces, puis je partage l’écart.</div>
       </div>
       <div class="graduation-example">
-        <strong>Exemple 1 :</strong> entre <strong>20 mL</strong> et <strong>30 mL</strong>, il y a <strong>10 mL</strong> d’écart.<br>
+        <strong><u>Exemple 1 :</u></strong> <br>Entre <strong>20 mL</strong> et <strong>30 mL</strong>, il y a <strong>10 mL</strong> d’écart.<br>
         S’il y a <strong>10 petits espaces</strong>, je fais : <strong>10 mL ÷ 10 = 1 mL</strong>.<br>
         Donc une petite graduation vaut <strong>1 mL</strong>.
       </div>
 
       <div class="graduation-example">
-        <strong>Exemple 2 :</strong> entre <strong>20 mL</strong> et <strong>21 mL</strong>, il y a <strong>1 mL</strong> d’écart.<br>
+        <strong><u>Exemple 1 :</u></strong> <br>Entre <strong>20 mL</strong> et <strong>21 mL</strong>, il y a <strong>1 mL</strong> d’écart.<br>
         S’il y a <strong>5 petits espaces</strong>, je fais : <strong>1 mL ÷ 5 = 0,2 mL</strong>.<br>
         Donc une petite graduation vaut <strong>0,2 mL</strong>.
       </div>
