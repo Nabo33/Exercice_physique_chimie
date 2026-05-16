@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mesure de volume – Solide par déplacement d’eau</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap');
+
+  :root {
+    --blue-light: #d0eeff;
+    --blue-mid: #5bb3e8;
+    --blue-deep: #1a6fa8;
+    --bg: #f0f6fc;
+    --panel: #ffffff;
+    --text: #1a2b3c;
+    --shadow: 0 8px 32px rgba(26,111,168,0.12);
+    --orange: #f97316;
+    --green: #16a34a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px 40px;
+    background-image:
+      radial-gradient(circle at 20% 20%, #cce8ff 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, #d5f0ff 0%, transparent 50%);
+  }
+
+  header {
+    position: relative;
+    z-index: 10;
+    width: calc(100% + 20px);
+    background: linear-gradient(135deg, #1d4ed8 0%, #38bdf8 100%);
+    color: white;
+    padding: 28px 24px 22px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(26,111,168,0.24);
+    border-radius: 0 0 28px 28px;
+    margin: 0 -10px 22px;
+  }
+
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.6rem, 5vw, 2.45rem);
+    font-weight: 900;
+    color: white;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  header p { font-size: 1rem; opacity: 0.92; font-weight: 700; }
+
+  #menu {
+    position: relative;
+    z-index: 5;
+    max-width: 760px;
+    width: 100%;
+    margin: 18px auto 24px;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .menu-card {
+    background: var(--panel);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 26px 20px;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(26,111,168,0.18);
+    border-color: var(--blue-mid);
+  }
+
+  .menu-card .icon { font-size: 2.6rem; }
+  .menu-card h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--blue-deep);
+  }
+  .menu-card p {
+    font-size: 0.9rem;
+    color: #5580a0;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+  .menu-card .badge {
+    background: var(--blue-light);
+    color: var(--blue-deep);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 4px 12px;
+  }
+
+  #back-btn, .exercise-back-menu-btn {
+    background: white;
+    border: 2px solid #b0d0e8;
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #5580a0;
+    transition: border-color 0.15s, color 0.15s, transform 0.15s;
+  }
+
+  #back-btn { position: relative; z-index: 10; display: none !important; margin: 0 auto 18px; }
+  #back-btn:hover, .exercise-back-menu-btn:hover { border-color: var(--blue-deep); color: var(--blue-deep); transform: translateY(-1px); }
+  .exercise-menu-row { width: 100%; display: flex; justify-content: center; margin: -24px auto 8px; }
+
+  #lesson-area, #game-area { position: relative; z-index: 5; width: 100%; display: none; }
+  #lesson-area { max-width: 980px; margin: 0 auto 40px; padding: 0 18px; }
+  .lesson-card, .zoom-panel, .answer-panel, .score-panel, .control-card {
+    background: var(--panel);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+  .lesson-card { padding: 30px 28px; animation: slideIn 0.35s cubic-bezier(.4,2,.6,1); }
+
+  @keyframes slideIn { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+  .lesson-title {
+    font-family: 'Fredoka One', cursive;
+    color: var(--blue-deep);
+    font-size: clamp(1.45rem, 4vw, 2rem);
+    font-weight: 900;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .lesson-intro { color: #5580a0; font-weight: 800; line-height: 1.55; margin-bottom: 22px; }
+  .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0; }
+  .method-step {
+    background: linear-gradient(135deg, #f8fcff, #eef8ff);
+    border: 2px solid #c5dff2;
+    border-radius: 18px;
+    padding: 16px;
+    font-weight: 900;
+    color: #24506b;
+    line-height: 1.45;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 10px;
+  }
+  .method-step .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: white;
+    color: var(--blue-deep);
+    border: 2px solid var(--blue-mid);
+    flex-shrink: 0;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+  }
+  .method-step .step-text {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+  .method-step strong { color: var(--blue-deep); }
+  .formula-box {
+    margin-top: 18px;
+    background: linear-gradient(135deg, #fff7ed, #fffbeb);
+    border-left: 8px solid #f59e0b;
+    border-radius: 18px;
+    padding: 20px 24px;
+    color: #5b3b06;
+    line-height: 1.6;
+  }
+  .formula-title {
+    color: #92400e;
+    font-weight: 900;
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .formula-main {
+    color: var(--blue-deep);
+    font-size: clamp(1.55rem, 4vw, 2.15rem);
+    font-weight: 900;
+    text-align: center;
+    margin: 6px 0 18px;
+    white-space: nowrap;
+  }
+  .formula-main sub, .volume-symbol sub, .calc-line sub, .example-values-simple sub {
+    font-size: 0.58em;
+    vertical-align: sub;
+    line-height: 0;
+  }
+  .example-simple {
+    border-top: 2px dashed #fbbf24;
+    padding-top: 14px;
+    margin-top: 4px;
+  }
+  .example-values-simple {
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 8px 0 12px;
+    color: #5b3b06;
+    font-weight: 900;
+  }
+  .calculation {
+    max-width: 420px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+  }
+  .calc-line {
+    display: grid;
+    grid-template-columns: minmax(95px, auto) 24px 1fr;
+    align-items: baseline;
+    gap: 6px;
+    color: #5b3b06;
+    font-weight: 900;
+  }
+  .calc-left { color: var(--blue-deep); text-align: right; }
+  .calc-equal { text-align: center; color: #92400e; }
+  .result-sentence {
+    margin-top: 12px;
+    color: #166534;
+    font-weight: 900;
+    text-align: left;
+    width: 100%;
+  }
+  .lesson-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, var(--blue-mid), var(--blue-deep));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 28px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(26,111,168,0.3);
+  }
+  .btn.secondary { background: white; color: var(--blue-deep); border: 2px solid var(--blue-deep); box-shadow: none; }
+
+  #game-area { text-align: center; }
+  #game-area .subtitle { max-width: 820px; margin: 0 auto 20px; padding: 0 18px; color: #5580a0; font-weight: 800; line-height: 1.45; }
+  .exercise-steps {
+    width: 100%;
+    max-width: 740px;
+    margin: -6px auto 10px;
+    padding: 0 8px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7px;
+  }
+  .exercise-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 8px;
+    background: #f8fcff;
+    border: 1.5px solid #c5dff2;
+    border-radius: 14px;
+    padding: 10px 8px;
+    box-shadow: 0 4px 12px rgba(26,111,168,0.08);
+    min-height: 96px;
+    min-width: 0;
+  }
+  .exercise-step-bubble {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: white;
+    color: var(--blue-deep);
+    border: 2px solid var(--blue-mid);
+    flex-shrink: 0;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+  }
+  .exercise-step-text {
+    display: block;
+    width: 100%;
+    color: #35617f;
+    font-weight: 900;
+    font-size: 0.98rem;
+    line-height: 1.25;
+    padding-top: 0;
+    min-width: 0;
+  }
+  .exercise-status {
+    width: 100%;
+    max-width: 740px;
+    margin: 0 auto 14px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #fff8e8, #fff3d1);
+    border: 2px solid #f7d37a;
+    border-radius: 16px;
+    box-shadow: 0 8px 18px rgba(247, 211, 122, 0.18);
+    text-align: left;
+  }
+  .status-badge {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 82px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #f59e0b;
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.82rem;
+    letter-spacing: .2px;
+  }
+  .status-text {
+    color: #7a5411;
+    font-weight: 900;
+    line-height: 1.35;
+    font-size: 0.92rem;
+  }
+  .main-layout { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1040px; margin: 0 auto; text-align: left; }
+  .eprouvette-panel { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+  .eprouvette-container {
+    position: relative;
+    width: 382px;
+    height: 573px;
+    user-select: none;
+    flex-shrink: 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .ep-layer, .object-img, .meniscus-img, .water-fill {
+    position: absolute;
+    display: block;
+    pointer-events: none;
+  }
+
+  .ep-layer { inset: 0; width: 382px; height: 573px; object-fit: contain; }
+  #epBack { z-index: 2; }
+  #epFront { z-index: 8; }
+  .water-fill {
+    z-index: 3;
+    background: transparent;
+    border-radius: 0;
+    mix-blend-mode: normal;
+    transition: top 0.45s ease, height 0.45s ease;
+  }
+  .meniscus-img {
+    z-index: 7;
+    transition: bottom 0.45s ease, width 0.2s linear, left 0.2s linear;
+    mix-blend-mode: multiply;
+    object-fit: fill;
+  }
+  .object-img {
+    z-index: 5;
+    opacity: 0;
+    transform: translateY(-260px) scale(0.94) rotate(var(--obj-rotate, 0deg));
+    transition: opacity 0.35s ease, transform 0.55s cubic-bezier(.2,1.4,.5,1);
+    object-fit: contain;
+    filter: drop-shadow(0 8px 10px rgba(0,0,0,0.18));
+    transform-origin: center bottom;
+  }
+  .object-img.inserted { opacity: 1; transform: translateY(0) scale(1) rotate(var(--obj-rotate, 0deg)); }
+
+  .control-card { width: 382px; padding: 16px; display: grid; gap: 10px; border: 2px solid #d7ebfb; }
+  .control-row { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .control-row label { font-weight: 900; color: var(--blue-deep); font-size: .98rem; }
+  .mini-help { color: #6a8ba4; font-size: .84rem; font-weight: 800; line-height: 1.35; margin-top: -2px; }
+  select {
+    width: 100%;
+    padding: 12px 13px;
+    border: 2px solid #b0d0e8;
+    border-radius: 12px;
+    background: white;
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    outline: none;
+  }
+  select:focus, .answer-row input:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 4px rgba(91,179,232,.18); }
+  .insert-btn {
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--orange), #fb923c);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(249,115,22,.25);
+  }
+  .insert-btn.inserted { background: linear-gradient(135deg, var(--green), #22c55e); }
+
+  .right-panel { display:flex; flex-direction:column; gap:16px; width:390px; align-items: stretch; }
+  .zoom-panel, .answer-panel, .score-panel { padding: 16px 16px; border: 2px solid #d7ebfb; }
+  .panel-title { font-size: 1rem; font-weight: 900; color: var(--blue-deep); margin-bottom: 8px; }
+
+  .zoom-canvas-wrap { position:relative; width:100%; height:220px; overflow:hidden; border-radius:10px; border:2px solid #c5dff2; background:#f8fcff; touch-action: none; }
+  #zoomCanvas { display:block; width:100%; height:100%; }
+  .zoom-guide-line {
+    position: absolute;
+    left: 8%;
+    right: 3%;
+    top: 26%;
+    height: 28px;
+    transform: translateY(-50%);
+    z-index: 6;
+    cursor: ns-resize;
+    touch-action: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    user-select: none;
+  }
+  .zoom-guide-line::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 10px;
+    top: 50%;
+    height: 3px;
+    transform: translateY(-50%);
+    background: rgba(37,99,235,.68);
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(37,99,235,.28);
+  }
+  .zoom-guide-line::after {
+    content: "↕";
+    position: relative;
+    z-index: 1;
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(37,99,235,.68);
+    color: #ffffff;
+    border: 2px solid rgba(37,99,235,.68);
+    font-weight: 900;
+    box-shadow: 0 2px 8px rgba(0,0,0,.16);
+    margin-right: -6px;
+  }
+  .zoom-guide-line.is-dragging::before { height: 4px; background: rgba(29,78,216,.82); }
+  .zoom-info { font-size:.78rem; color:#6690aa; text-align:center; font-style:italic; margin-top:6px; }
+  .answer-grid { display: grid; gap: 10px; margin: 12px 0; }
+  .answer-row { display:grid; grid-template-columns: max-content 16px 92px 26px 30px; align-items:center; gap:5px; padding: 10px 10px; margin-bottom:0; border-radius: 14px; background: #f8fcff; border: 1.5px solid #d9ecf8; }
+  .answer-row label { font-size:.94rem; font-weight:900; color:#446680; white-space: nowrap; }
+  .answer-equal { color:#92400e; font-family:'Fredoka One', cursive; font-size:1.15rem; font-weight:900; text-align:center; }
+  .answer-row input { width:100%; padding:10px 10px; border:2px solid #b0d0e8; border-radius:10px; font-family:'Nunito',sans-serif; font-size:1.08rem; font-weight:800; color:var(--text); outline:none; text-align:center; }
+  .answer-row input::-webkit-outer-spin-button,
+  .answer-row input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .answer-row input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  .calculation-block {
+    display: grid;
+    gap: 5px;
+    padding: 8px 12px;
+    border-radius: 14px;
+    background: #f8fcff;
+    border: 1.5px solid #d9ecf8;
+  }
+  .calculation-label {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #446680;
+  }
+  .calculation-entry-row {
+    display: grid;
+    grid-template-columns: minmax(185px, 1fr) 42px 88px;
+    align-items: center;
+    gap: 7px;
+    margin-top: 6px;
+  }
+  .calculation-entry-row input {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 2px solid #b0d0e8;
+    border-radius: 10px;
+    font-family:'Nunito',sans-serif;
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--text);
+    outline: none;
+    text-align: center;
+  }
+  .calculation-entry-row input:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 4px rgba(91,179,232,.18); }
+  .mini-calc-btn {
+    width: 38px;
+    height: 34px;
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.55rem;
+    line-height: 1;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(249,115,22,.22);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    bottom: 36px;
+    transform: translateX(-50%);
+  }
+  .mini-calc-btn:hover { transform: translateX(-50%) translateY(-1px); }
+  .calc-equal-column {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 46px;
+  }
+  .calc-equal-sign {
+    color: #92400e;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.7rem;
+    font-weight: 900;
+    line-height: 46px;
+  }
+  .calculation-result {
+    display: flex;
+    min-height: 46px;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 9px;
+    border-radius: 10px;
+    font-size: .98rem;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.15;
+    background: #fff7ed;
+    color: #92400e;
+    border: 1.5px solid #fed7aa;
+    white-space: nowrap;
+  }
+  .calculation-result.show { display: flex; }
+  .calculation-result.neutral { background: #fff7ed; color: #92400e; border-color: #fed7aa; }
+  .unit-label { font-size:.9rem; font-weight:800; color:#446680; }
+  .answer-mark {
+    width: 30px;
+    min-height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.28rem;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0;
+    transform: scale(0.85);
+    transition: opacity .18s ease, transform .18s ease;
+  }
+  .answer-mark.show { opacity: 1; transform: scale(1); }
+  .answer-mark.ok { color: #16a34a; }
+  .answer-mark.wrong { color: #dc2626; }
+  .check-btn { width:100%; padding:12px; border:none; border-radius:12px; background:linear-gradient(135deg, var(--blue-mid), var(--blue-deep)); color:white; font-family:'Nunito',sans-serif; font-size:1rem; font-weight:900; cursor:pointer; box-shadow:0 4px 12px rgba(26,111,168,.3); }
+  .feedback { min-height:0; border-radius:10px; padding:0 14px; font-size:.95rem; font-weight:800; text-align:center; margin-top:6px; opacity:0; transition:opacity .25s, padding .25s; white-space: pre-line; }
+  .feedback.show { opacity:1; min-height:32px; padding:7px 14px; }
+  .feedback.correct { background:#d4f7e0; color:#1a7a3f; }
+  .feedback.wrong { background:#fde8e6; color:#b52b1c; }
+  .score-panel { display:flex; align-items:center; gap:16px; }
+  .score-label { font-size:.85rem; font-weight:800; color:#446680; text-transform:uppercase; letter-spacing:.5px; }
+  .score-numbers { font-size:1.3rem; font-weight:900; color:var(--blue-deep); }
+  .new-btn { margin-left:auto; padding:8px 14px; border:2px solid var(--blue-mid); border-radius:12px; background:white; color:var(--blue-deep); font-family:'Nunito',sans-serif; font-size:.9rem; font-weight:900; cursor:pointer; white-space:nowrap; }
+
+  @media (max-width: 760px) {
+    .exercise-status { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .status-badge { min-width: 0; }
+    #menu { grid-template-columns: 1fr; max-width: 420px; }
+    #lesson-area { padding: 0 10px; }
+    .lesson-card { padding: 22px 14px; overflow: hidden; }
+    .method-grid { grid-template-columns: 1fr; }
+    .example-values-simple { display: block; text-align: left; }
+    .calc-line { grid-template-columns: minmax(72px, auto) 18px 1fr; font-size: .96rem; }
+    .formula-box { padding: 18px 14px; }
+    .exercise-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; padding: 0 8px; margin-bottom: 10px; }
+    .exercise-step { padding: 9px 8px; min-height: 92px; }
+    .exercise-step-text { font-size: 0.9rem; line-height: 1.18; }
+    .eprouvette-container { width: 315px; height: 473px; }
+    .ep-layer { width: 315px; height: 473px; }
+    .control-card { width: 315px; }
+    .right-panel { width: min(360px, calc(100vw - 24px)); }
+    .answer-row { grid-template-columns: max-content 14px 82px 24px 28px; gap: 5px; padding: 9px 8px; }
+    .calculation-entry-row { grid-template-columns: minmax(140px, 1fr) 36px 74px; gap: 6px; margin-top: 6px; }
+    .mini-calc-btn { width: 34px; height: 32px; font-size: 1.42rem; bottom: 35px; }
+    .calc-equal-column { min-width: 36px; }
+    .answer-row label { font-size: .88rem; }
+    .answer-row input { font-size: 1rem; }
+    .calculation-result { font-size: .9rem; padding: 7px 6px; }
+  }
+
+  /* Sécurité : le bouton "Commencer l'exercice" ne doit jamais apparaître dans la page exercice. */
+  #game-area button[onclick="showExercise()"] { display: none !important; }
+
+
+  /* Bouton de démarrage : visible uniquement dans la leçon, jamais dans les exercices. */
+  #game-area .start-exercise-btn,
+  #game-area .lesson-actions,
+  #game-area button[onclick="showExercise()"] {
+    display: none !important;
+  }
+
+</style>
+</head>
+<body>
+<header>
+  <h1>📏 Volume d’un solide !</h1>
+  <p>Niveau 5e • Mesurer le volume d’un objet grâce à l’élévation du niveau d’eau.</p>
+</header>
+
+<div id="lesson-area">
+  <div class="lesson-card">
+    <h2 class="lesson-title"><span>📖</span> Mesurer le volume d’un solide</h2>
+    <p class="lesson-intro">
+      Pour connaître le volume d’un solide qui rentre dans une éprouvette graduée, on peut le plonger dans l’eau. Le niveau de l’eau monte : cette augmentation correspond au volume du solide.
+    </p>
+
+    <div class="method-grid">
+      <div class="method-step">
+        <span class="step-number">1</span>
+        <span class="step-text">Je mesure le volume d'eau présent au départ dans l'éprouvette graduée. <br><span style="color: green;">V<sub>initial</sub></span></span>
+      </div>
+      <div class="method-step">
+        <span class="step-number">2</span>
+        <span class="step-text">J’ajoute doucement le solide dans l’éprouvette graduée.<br>Le niveau de l'eau augmente.</span>
+      </div>
+      <div class="method-step">
+        <span class="step-number">3</span>
+        <span class="step-text">Je mesure de nouveau le volume présent dans l'éprouvette graudée : c'est le volume final <br><span style="color: red;">V<sub>final</sub></span></span>
+      </div>
+
+    </div>
+
+    <div class="formula-box">
+  <div class="formula-title">🧮 <u>Expression littérale :</u></div>
+
+  <div class="formula-main">
+    <span style="color: blue;">V<sub>solide</sub></span>
+    <span style="color: black;"> = </span>
+    <span style="color: red;">V<sub>final</sub></span>
+    <span style="color: black;"> − </span>
+    <span style="color: green;">V<sub>initial</sub></span>
+  </div>
+
+  <div class="example-simple">
+    <div class="formula-title"><u>Exemple :</u></div>
+
+<div class="example-values-simple">
+  <span style="color: green;">V<sub>initial</sub></span>
+  <span style="color: black;"> = </span>
+  <span style="color: green;">24,0 mL</span>
+  <span style="color: black;"> et </span>
+  <span style="color: red;">V<sub>final</sub></span>
+  <span style="color: black;"> = </span>
+  <span style="color: red;">26,0 mL</span>
+</div>
+
+<div class="calculation" aria-label="Calcul du volume du solide">
+  <div class="calc-line">
+    <span class="calc-left" style="color: blue;">V<sub>solide</sub></span>
+    <span class="calc-equal" style="color: black;"> = </span>
+    <span>
+      <span style="color: red;">V<sub>final</sub></span>
+      <span style="color: black;"> − </span>
+      <span style="color: green;">V<sub>initial</sub></span>
+    </span>
+  </div>
+
+  <div class="calc-line">
+    <span class="calc-left" style="color: blue;"> </span>
+    <span class="calc-equal" style="color: black;"> = </span>
+    <span>
+      <span style="color: red;">26,0</span>
+      <span style="color: black;"> − </span>
+      <span style="color: green;">24,0</span>
+    </span>
+  </div>
+
+  <div class="calc-line">
+    <span class="calc-left" style="color: blue;"> </span>
+    <span class="calc-equal" style="color: black;"> = </span>
+    <span style="color: blue;">2,0 mL</span>
+  </div>
+</div>
+    </div>
+<div class="result-sentence">
+  <span style="color: black;">💪 Le solide a donc un volume de 2,0 mL. </span>
+</div>
+  </div>
+    </div>
+      </div>
+
+    <div class="lesson-actions">
+      <button type="button" class="btn start-exercise-btn" onclick="showExercise()">🔍 Commencer l'exercice</button>
+    </div>
+  </div>
+</div>
+
+<div id="game-area">
+  <div class="exercise-menu-row">
+    <button type="button" class="exercise-back-menu-btn" onclick="showLesson()">🏠 Retour à la leçon</button>
+  </div>
+  <div class="exercise-steps" aria-label="Étapes de l'exercice">
+
+    <div class="exercise-step"><span class="exercise-step-bubble">1</span><div class="exercise-step-text">Choisir l’objet qu'on souhaite étudier.</div></div>
+    <div class="exercise-step"><span class="exercise-step-bubble">2</span><div class="exercise-step-text">Mesurer le volume initial.</div></div>
+    <div class="exercise-step"><span class="exercise-step-bubble">3</span><div class="exercise-step-text">Insérer l’objet. Mesurer le volume final</div></div>
+    <div class="exercise-step"><span class="exercise-step-bubble">4</span><div class="exercise-step-text">Calculer le volume de l’objet&nbsp;!</div></div>
+  </div>
+
+  <div class="main-layout">
+    <div class="eprouvette-panel">
+      <div class="eprouvette-container" id="epContainer">
+        <div class="water-fill" id="waterFill"></div>
+        <img class="ep-layer" id="epBack" src="https://raw.githubusercontent.com/Nabo33/Images/b1fb9ac0cb22231f6ae0d0e806edfb1eba8e360c/eprouvette_arriere_transparente.png" crossorigin="anonymous" alt="arrière de l'éprouvette graduée">
+        <img class="object-img" id="objectImg" src="https://raw.githubusercontent.com/Nabo33/Images/b1fb9ac0cb22231f6ae0d0e806edfb1eba8e360c/Vis_sans%20fond.png" crossorigin="anonymous" alt="objet placé dans l'éprouvette">
+        <img class="meniscus-img" id="menImg" src="https://raw.githubusercontent.com/Nabo33/Images/1568bde5e4735db0a446fd54091c9e5042da1b16/menisque_seul%20%C3%A9troit.png" crossorigin="anonymous" alt="ménisque">
+        <img class="ep-layer" id="epFront" src="https://raw.githubusercontent.com/Nabo33/Images/c0abc4f152bb101c54a4a5e54eafafc8d3cbd465/eprouvette_avant_transparent.png" crossorigin="anonymous" alt="avant de l'éprouvette graduée">
+      </div>
+
+      <div class="control-card">
+        <div class="panel-title">🧪 Objet à placer dans l’éprouvette</div>
+        <div class="control-row">
+          <select id="objectSelect" onchange="changeObject()" aria-label="Objet à placer dans l’éprouvette"></select>
+        </div>
+        <button type="button" class="insert-btn" id="insertBtn" onclick="toggleObject()">⬇️ Insérer l’objet</button>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="zoom-panel">
+        <div class="panel-title">🔍 Je lis le niveau d’eau</div>
+        <div class="zoom-canvas-wrap" id="zoomCanvasWrap">
+          <canvas id="zoomCanvas" width="600" height="420"></canvas>
+          <div class="zoom-guide-line" id="zoomGuideLine" title="Déplace cette barre pour viser le bas du ménisque"></div>
+        </div>
+        <div class="zoom-info">Déplace la barre bleu pour t’aider à repérer la bonne graduation.</div>
+      </div>
+
+      <div class="answer-panel">
+        <div class="panel-title">✏️ 2. J’écris mes réponses</div>
+        <div class="mini-help">Tu peux écrire avec une virgule ou un point.</div>
+        <div class="answer-grid">
+          <div class="answer-row">
+            <label for="initialAnswer">Volume initial</label>
+            <span class="answer-equal" aria-hidden="true">=</span>
+            <input type="number" id="initialAnswer" placeholder="ex : 12,4" step="0.2" min="0" max="50" inputmode="decimal" autocomplete="off">
+            <span class="unit-label">mL</span>
+            <span class="answer-mark" id="initialMark" aria-live="polite"></span>
+          </div>
+          <div class="answer-row">
+            <label for="finalAnswer">Volume final</label>
+            <span class="answer-equal" aria-hidden="true">=</span>
+            <input type="number" id="finalAnswer" placeholder="ex : 15,6" step="0.2" min="0" max="50" inputmode="decimal" autocomplete="off">
+            <span class="unit-label">mL</span>
+            <span class="answer-mark" id="finalMark" aria-live="polite"></span>
+          </div>
+          <div class="calculation-block">
+            <div class="calculation-label">Calcul du volume :</div>
+            <div class="calculation-entry-row">
+              <input type="text" id="calculationAnswer" placeholder="ex : 28,4-26,2" inputmode="decimal" autocomplete="off">
+              <div class="calc-equal-column">
+                <button type="button" class="mini-calc-btn" onclick="calculateSolidVolume()" aria-label="Calculer">🧮</button>
+                <span class="calc-equal-sign">=</span>
+              </div>
+              <div class="calculation-result" id="calculationResult"></div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="check-btn" onclick="checkAnswer(event)">✅ Valider mes réponses</button>
+        <div class="feedback" id="feedback"></div>
+      </div>
+
+      <div class="score-panel">
+        <div><div class="score-label">Score</div><div class="score-numbers"><span id="scoreOk">0</span> / <span id="scoreTotal">0</span></div></div>
+        <button type="button" class="new-btn" onclick="newQuestion()">🔄 Nouveau niveau</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<img id="srcEp" src="https://raw.githubusercontent.com/Nabo33/Images/3ff2d118c280bc279f76300d6bb4fa9a02b61c52/Eprouvette%20gradu%C3%A9e%20nue.png" crossorigin="anonymous" style="display:none">
+<img id="srcBack" src="https://raw.githubusercontent.com/Nabo33/Images/b1fb9ac0cb22231f6ae0d0e806edfb1eba8e360c/eprouvette_arriere_transparente.png" crossorigin="anonymous" style="display:none">
+<img id="srcFront" src="https://raw.githubusercontent.com/Nabo33/Images/c0abc4f152bb101c54a4a5e54eafafc8d3cbd465/eprouvette_avant_transparent.png" crossorigin="anonymous" style="display:none">
+<img id="srcMen" src="https://raw.githubusercontent.com/Nabo33/Images/1568bde5e4735db0a446fd54091c9e5042da1b16/menisque_seul%20%C3%A9troit.png" crossorigin="anonymous" style="display:none">
+
+<script>
+const SRC_W = 1006;
+const SRC_H = 1507;
+const SRC_TUBE_LEFT = 417;
+const SRC_TUBE_RIGHT = 611;
+const SRC_Y_50ML = 331;
+const SRC_Y_0ML = 1245;
+// Calibration spécifique pour la vue zoomée : elle réutilise l'image nette de l'éprouvette nue.
+const ZOOM_SRC_Y_0ML = 1206;
+const MEN_SRC_W = 194;
+const MEN_SRC_H = 41;
+const MEN_LOWEST_POINT_RATIO = 1;
+const DEFAULT_PRECISION = 0.2;
+
+const OBJECTS = {
+  vis: {
+    label: 'Vis',
+    volume: 3.2,
+    graduation: 0.2,
+    minFinalVolume: 12.0,
+    src: 'https://raw.githubusercontent.com/Nabo33/Images/b1fb9ac0cb22231f6ae0d0e806edfb1eba8e360c/Vis_sans%20fond.png',
+    widthRatio: 0.72,
+    heightRatio: 0.30,
+    bottomOffsetRatio: -0.006,
+    rotateDeg: 0
+  },
+  clefPlate: {
+    label: 'Clef plate',
+    volume: 7.5,
+    graduation: 0.5,
+    minFinalVolume: 24.0,
+    src: 'https://raw.githubusercontent.com/Nabo33/Images/5a24907692895352fcfb7a6fc402a7cdd2c08fd9/Clef_plate_sans_fond_2.png',
+    presized: true,
+    displayScale: 0.28,
+    bottomOffsetRatio: 0,
+    rotateDeg: 0
+  },
+  clefAncienne: {
+    label: 'Clef ancienne',
+    volume: 4.3,
+    graduation: 0.1,
+    minFinalVolume: 18.0,
+    src: 'https://raw.githubusercontent.com/Nabo33/Images/5a24907692895352fcfb7a6fc402a7cdd2c08fd9/Clef_sans_fond_2.png',
+    presized: true,
+    displayScale: 0.28,
+    bottomOffsetRatio: 0,
+    rotateDeg: 0
+  },
+  caillou: {
+    label: 'Caillou',
+    volume: 8.8,
+    graduation: 0.2,
+    minFinalVolume: 20.0,
+    src: 'https://raw.githubusercontent.com/Nabo33/Images/5a24907692895352fcfb7a6fc402a7cdd2c08fd9/Caillou_sans_fond_2.png',
+    presized: true,
+    displayScale: 0.28,
+    bottomOffsetRatio: 0,
+    rotateDeg: 0
+  },
+  bague: {
+    label: 'Bague',
+    volume: 1.9,
+    graduation: 0.1,
+    minFinalVolume: 8.0,
+    src: 'https://raw.githubusercontent.com/Nabo33/Images/5a24907692895352fcfb7a6fc402a7cdd2c08fd9/Bague_sans_fond_2.png',
+    presized: true,
+    displayScale: 0.28,
+    bottomOffsetRatio: 0,
+    rotateDeg: 0
+  }
+};
+
+let currentObjectKey = 'vis';
+let initialVolume = 24.0;
+let currentVolume = initialVolume;
+let objectInserted = false;
+let scoreOk = 0;
+let scoreTotal = 0;
+let questionAlreadyChecked = false;
+
+const epContainer = document.getElementById('epContainer');
+const epBack = document.getElementById('epBack');
+const objectImg = document.getElementById('objectImg');
+const menImg = document.getElementById('menImg');
+const waterFill = document.getElementById('waterFill');
+const initialAnswer = document.getElementById('initialAnswer');
+const finalAnswerInput = document.getElementById('finalAnswer');
+const calculationAnswer = document.getElementById('calculationAnswer');
+const calculationResult = document.getElementById('calculationResult');
+const feedback = document.getElementById('feedback');
+const zoomInfo = document.getElementById('zoomInfo');
+const zoomCanvas = document.getElementById('zoomCanvas');
+const zoomCanvasWrap = document.getElementById('zoomCanvasWrap');
+const zoomGuideLine = document.getElementById('zoomGuideLine');
+const ctx = zoomCanvas.getContext('2d');
+const srcEp = document.getElementById('srcEp');
+const srcBack = document.getElementById('srcBack');
+const srcFront = document.getElementById('srcFront');
+const srcMen = document.getElementById('srcMen');
+const insertBtn = document.getElementById('insertBtn');
+const exerciseStatus = document.getElementById('exerciseStatus');
+const initialMark = document.getElementById('initialMark');
+const finalMark = document.getElementById('finalMark');
+
+
+function setAnswerMark(element, isCorrect) {
+  if (!element) return;
+  element.textContent = isCorrect ? '✔️' : '❌';
+  element.className = 'answer-mark show ' + (isCorrect ? 'ok' : 'wrong');
+}
+
+function clearAnswerMarks() {
+  [initialMark, finalMark].forEach(mark => {
+    if (!mark) return;
+    mark.textContent = '';
+    mark.className = 'answer-mark';
+  });
+}
+
+function clearAnswers() {
+  initialAnswer.value = '';
+  finalAnswerInput.value = '';
+  calculationAnswer.value = '';
+  calculationResult.textContent = '';
+  calculationResult.className = 'calculation-result';
+  clearAnswerMarks();
+}
+
+function updateExerciseStatus() {
+  // Le bandeau de mission a été supprimé pour laisser les élèves lire et calculer eux-mêmes.
+}
+
+function readStudentValue(input) {
+  const raw = (input.value || '').trim().replace(',', '.');
+  if (raw === '') return NaN;
+  return Number(raw);
+}
+
+function isCloseToExpected(answer, expected) {
+  return Number.isFinite(answer) && Math.abs(answer - expected) <= 0.06;
+}
+
+function showMenu() {
+  showLesson();
+}
+function showLesson() {
+  document.getElementById('lesson-area').style.display = 'block';
+  document.getElementById('game-area').style.display = 'none';
+
+  // Le bouton « Commencer l'exercice » est utile uniquement dans la leçon.
+  document.querySelectorAll('.start-exercise-btn').forEach(btn => {
+    btn.style.display = 'inline-flex';
+  });
+
+  document.getElementById('lesson-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function showExercise() {
+  document.getElementById('lesson-area').style.display = 'none';
+  document.getElementById('game-area').style.display = 'block';
+
+  // Sécurité : aucun bouton « Commencer l'exercice » ne doit être visible dans la partie exercice.
+  document.querySelectorAll('.start-exercise-btn, button[onclick="showExercise()"]').forEach(btn => {
+    btn.style.display = 'none';
+  });
+
+  chooseRandomObject();
+  newQuestion();
+  document.getElementById('game-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function displayScaleX() { return epContainer.clientWidth / SRC_W; }
+function displayScaleY() { return epContainer.clientHeight / SRC_H; }
+function tubeLeftDisp() { return SRC_TUBE_LEFT * displayScaleX(); }
+function tubeRightDisp() { return SRC_TUBE_RIGHT * displayScaleX(); }
+function y50Disp() { return SRC_Y_50ML * displayScaleY(); }
+function y0Disp() { return SRC_Y_0ML * displayScaleY(); }
+function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+function currentGraduation() { return OBJECTS[currentObjectKey]?.graduation || DEFAULT_PRECISION; }
+function currentDecimals() { return 1; }
+function roundToStep(value, step = currentGraduation()) {
+  return Number((Math.round(value / step) * step).toFixed(currentDecimals()));
+}
+function clampVolume(value, step = currentGraduation()) { return clamp(roundToStep(value, step), 0, 50); }
+function formatVolume(value) { return Number(value).toFixed(currentDecimals()).replace('.', ','); }
+function sourceYFromVolume(ml) {
+  const t = (50 - clamp(ml, 0, 50)) / 50;
+  return SRC_Y_50ML + t * (SRC_Y_0ML - SRC_Y_50ML);
+}
+function displayYFromVolume(ml) {
+  const t = (50 - clamp(ml, 0, 50)) / 50;
+  return y50Disp() + t * (y0Disp() - y50Disp());
+}
+function expectedVolume() { return OBJECTS[currentObjectKey].volume; }
+function minFinalVolumeForImmersion() {
+  const obj = OBJECTS[currentObjectKey];
+  return obj.minFinalVolume || 0;
+}
+function minInitialVolumeForImmersion() {
+  const step = currentGraduation();
+  const minFinal = minFinalVolumeForImmersion();
+  const minInitial = Math.max(step * 5, minFinal - expectedVolume());
+  return Math.ceil((minInitial - 1e-9) / step) * step;
+}
+function maxInitialVolumeAllowed() {
+  const step = currentGraduation();
+  const maxInitial = 50 - expectedVolume();
+  return Math.floor((maxInitial + 1e-9) / step) * step;
+}
+
+function graduationInfoText() {
+  return '';
+}
+
+function updateInputSteps() {
+  const step = String(currentGraduation());
+  [initialAnswer, finalAnswerInput].forEach(input => {
+    input.step = step;
+  });
+  // Indication de graduation masquée : l'élève doit lire l'éprouvette.
+}
+
+function updateObjectPosition() {
+  const obj = OBJECTS[currentObjectKey];
+  objectImg.style.setProperty('--obj-rotate', (obj.rotateDeg || 0) + 'deg');
+
+  if (obj.presized) {
+    // Les images fournies sont conservées sans rotation : on ajuste seulement leur taille d'affichage
+    // et on les cale au fond, au centre du tube, pour qu'elles ne dépassent pas les bords.
+    const tubeWidth = tubeRightDisp() - tubeLeftDisp();
+    const scale = obj.displayScale || 1;
+    const maxW = Math.min(epContainer.clientWidth * scale, tubeWidth * 0.92);
+    const maxH = epContainer.clientHeight * scale;
+    objectImg.style.width = maxW + 'px';
+    objectImg.style.height = 'auto';
+    objectImg.style.maxHeight = maxH + 'px';
+    objectImg.style.left = (tubeLeftDisp() + (tubeWidth - maxW) / 2) + 'px';
+    objectImg.style.bottom = (epContainer.clientHeight - y0Disp() + epContainer.clientHeight * (obj.bottomOffsetRatio || 0)) + 'px';
+    return;
+  }
+
+  const tubeWidth = tubeRightDisp() - tubeLeftDisp();
+  const maxW = tubeWidth * obj.widthRatio;
+  const maxH = epContainer.clientHeight * obj.heightRatio;
+  objectImg.style.width = maxW + 'px';
+  objectImg.style.height = 'auto';
+  objectImg.style.maxHeight = maxH + 'px';
+  objectImg.style.left = (tubeLeftDisp() + (tubeWidth - maxW) / 2) + 'px';
+  objectImg.style.bottom = (epContainer.clientHeight - y0Disp() + epContainer.clientHeight * obj.bottomOffsetRatio) + 'px';
+}
+
+function updateMeniscusAndWater(ml) {
+  currentVolume = clampVolume(ml);
+  const lineY = displayYFromVolume(currentVolume);
+  const tubeWidth = tubeRightDisp() - tubeLeftDisp();
+  const menHeight = tubeWidth * (MEN_SRC_H / MEN_SRC_W);
+  const bottomShift = menHeight * (1 - MEN_LOWEST_POINT_RATIO);
+
+  menImg.style.left = tubeLeftDisp() + 'px';
+  menImg.style.width = tubeWidth + 'px';
+  menImg.style.height = menHeight + 'px';
+  menImg.style.bottom = (epContainer.clientHeight - lineY - bottomShift) + 'px';
+
+  waterFill.style.left = (tubeLeftDisp() + tubeWidth * 0.04) + 'px';
+  waterFill.style.width = (tubeWidth * 0.92) + 'px';
+  waterFill.style.top = lineY + 'px';
+  waterFill.style.height = Math.max(0, y0Disp() - lineY) + 'px';
+
+  drawZoom(currentVolume);
+}
+
+function updateScene() {
+  const finalVolume = initialVolume + expectedVolume();
+  const displayedVolume = objectInserted ? finalVolume : initialVolume;
+  objectImg.classList.toggle('inserted', objectInserted);
+  insertBtn.classList.toggle('inserted', objectInserted);
+  insertBtn.textContent = objectInserted ? '↩️ Retirer l’objet' : '⬇️ Insérer l’objet';
+  updateInputSteps();
+  updateObjectPosition();
+  updateMeniscusAndWater(displayedVolume);
+  updateExerciseStatus();
+}
+
+function changeObject() {
+  currentObjectKey = document.getElementById('objectSelect').value;
+  objectImg.src = OBJECTS[currentObjectKey].src;
+  newQuestion();
+}
+
+function chooseRandomObject() {
+  const keys = Object.keys(OBJECTS);
+  if (!keys.length) return;
+  currentObjectKey = keys[Math.floor(Math.random() * keys.length)];
+  const select = document.getElementById('objectSelect');
+  if (select) select.value = currentObjectKey;
+  objectImg.src = OBJECTS[currentObjectKey].src;
+}
+
+function toggleObject() {
+  objectInserted = !objectInserted;
+  updateScene();
+  resetZoomGuideLine();
+}
+
+
+function setZoomGuideFromClientY(clientY) {
+  if (!zoomCanvasWrap || !zoomGuideLine) return;
+  const rect = zoomCanvasWrap.getBoundingClientRect();
+  const y = clamp(clientY - rect.top, 10, rect.height - 10);
+  zoomGuideLine.style.top = (y / rect.height * 100) + '%';
+}
+
+function resetZoomGuideLine() {
+  if (!zoomGuideLine) return;
+  // La barre repart en bas du zoom pour ne pas indiquer directement la mesure.
+  zoomGuideLine.style.top = '92%';
+}
+
+let zoomGuideDragging = false;
+
+function startZoomGuideDrag(event) {
+  if (!zoomGuideLine) return;
+  zoomGuideDragging = true;
+  zoomGuideLine.classList.add('is-dragging');
+  const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+  setZoomGuideFromClientY(clientY);
+  event.preventDefault();
+}
+
+function moveZoomGuideDrag(event) {
+  if (!zoomGuideDragging) return;
+  const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+  setZoomGuideFromClientY(clientY);
+  event.preventDefault();
+}
+
+function stopZoomGuideDrag() {
+  zoomGuideDragging = false;
+  if (zoomGuideLine) zoomGuideLine.classList.remove('is-dragging');
+}
+
+function drawZoom(ml) {
+  // Le zoom utilise l'image propre de l'éprouvette nue, comme dans l'animation initiale.
+  // Les calques avant/arrière restent réservés à la grande éprouvette avec l'objet.
+  if (!srcEp.complete || !srcMen.complete) return;
+
+  const W = zoomCanvas.width;
+  const H = zoomCanvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, W, H);
+
+  const graduation = currentGraduation();
+  const zoomSourceYFromVolume = (value) => {
+    const t = (50 - clamp(value, 0, 50)) / 50;
+    return SRC_Y_50ML + t * (ZOOM_SRC_Y_0ML - SRC_Y_50ML);
+  };
+
+  const pxPerMl = (ZOOM_SRC_Y_0ML - SRC_Y_50ML) / 50;
+  const config = graduation === 0.5
+    ? { tickStep: 0.5, labelStep: 5, majorStep: 5, midStep: 1, zoomSpanMl: 9, fontSize: 34, outline: 6 }
+    : graduation === 0.1
+      ? { tickStep: 0.1, labelStep: 1, majorStep: 1, midStep: 0.5, zoomSpanMl: 2.6, fontSize: 28, outline: 5 }
+      : { tickStep: 0.2, labelStep: 1, majorStep: 1, midStep: 0.5, zoomSpanMl: 3.6, fontSize: 28, outline: 5 };
+
+  const cropHalf = (config.zoomSpanMl * pxPerMl) / 2;
+  const srcYCenter = zoomSourceYFromVolume(ml);
+  const cropY = clamp(srcYCenter - cropHalf, 0, SRC_H - 2 * cropHalf);
+  const cropH = cropHalf * 2;
+  const cropX = 320;
+  const cropW = 360;
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(srcEp, cropX, cropY, cropW, cropH, 0, 0, W, H);
+
+  const cLeft = ((SRC_TUBE_LEFT - cropX) / cropW) * W;
+  const cRight = ((SRC_TUBE_RIGHT - cropX) / cropW) * W;
+  const menYCanvas = ((srcYCenter - cropY) / cropH) * H;
+  const menWCanvas = cRight - cLeft;
+  const menHCanvas = menWCanvas * (MEN_SRC_H / MEN_SRC_W);
+
+  // Ménisque puis graduations : les traits et les chiffres restent bien au premier plan.
+  ctx.drawImage(srcMen, cLeft, menYCanvas - menHCanvas, menWCanvas, menHCanvas);
+
+  const decimals = 1;
+  const startValue = Math.ceil((clamp(ml - config.zoomSpanMl / 2 - config.tickStep, 0, 50)) / config.tickStep) * config.tickStep;
+  const endValue = clamp(ml + config.zoomSpanMl / 2 + config.tickStep, 0, 50);
+  const labelX = (cLeft + cRight) / 2;
+
+  for (let v = startValue; v <= endValue + 1e-9; v = Number((v + config.tickStep).toFixed(3))) {
+    const value = Number(v.toFixed(decimals));
+    const srcYLine = zoomSourceYFromVolume(value);
+    const yCanvas = ((srcYLine - cropY) / cropH) * H;
+    if (yCanvas < -4 || yCanvas > H + 4) continue;
+
+    const isLabel = Math.abs((value / config.labelStep) - Math.round(value / config.labelStep)) < 1e-9;
+    const isMajor = Math.abs((value / config.majorStep) - Math.round(value / config.majorStep)) < 1e-9;
+    const isMid = !isMajor && Math.abs((value / config.midStep) - Math.round(value / config.midStep)) < 1e-9;
+
+    const lineLenRatio = isMajor ? 0.36 : (isMid ? 0.28 : 0.20);
+    const lineWidth = isMajor ? 5.6 : (isMid ? 4.3 : 3.0);
+    const lineLen = menWCanvas * lineLenRatio;
+
+    ctx.strokeStyle = 'rgba(15, 15, 18, 0.96)';
+    ctx.lineWidth = lineWidth;
+    ctx.lineCap = 'round';
+
+    ctx.beginPath();
+    ctx.moveTo(cLeft, yCanvas);
+    ctx.lineTo(cLeft + lineLen, yCanvas);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cRight, yCanvas);
+    ctx.lineTo(cRight - lineLen, yCanvas);
+    ctx.stroke();
+
+    if (isLabel) {
+      const label = String(Math.round(value)).replace('.', ',');
+      ctx.font = `800 ${config.fontSize}px Nunito, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.lineWidth = config.outline;
+      ctx.strokeStyle = 'rgba(255,255,255,0.98)';
+      ctx.fillStyle = 'rgba(20,20,24,0.98)';
+      ctx.strokeText(label, labelX, yCanvas);
+      ctx.fillText(label, labelX, yCanvas);
+    }
+  }
+}
+
+function parseCalculation() {
+  const raw = (calculationAnswer.value || '').trim();
+  if (raw === '') {
+    return { ok: false, reason: 'format', message: '❌ Le calcul n’est pas lisible. Écris par exemple : 26,0 - 24,0.' };
+  }
+
+  const normalized = raw
+    .replace(/,/g, '.')
+    .replace(/[–—−]/g, '-')
+    .replace(/\s+/g, ' ');
+
+  const match = normalized.match(/^\s*(\d+(?:\.\d+)?)\s*([+\-])\s*(\d+(?:\.\d+)?)\s*$/);
+  if (!match) {
+    return { ok: false, reason: 'format', message: '❌ Le calcul n’est pas lisible. Écris par exemple : 26,0 - 24,0.' };
+  }
+
+  const first = Number(match[1]);
+  const operator = match[2];
+  const second = Number(match[3]);
+  const expectedInitial = clampVolume(initialVolume);
+  const expectedFinal = clampVolume(initialVolume + expectedVolume());
+  const expectedSolid = clampVolume(expectedVolume());
+  const displayed = `${formatVolume(first)} ${operator === '-' ? '−' : '+'} ${formatVolume(second)}`;
+  const result = Number(((operator === '-') ? first - second : first + second).toFixed(1));
+
+  if (operator === '+') {
+    return { ok: false, reason: 'addition', first, second, operator, result, displayed, message: '❌ Ici, il faut faire une soustraction.' };
+  }
+
+  const firstIsFinal = isCloseToExpected(first, expectedFinal);
+  const secondIsInitial = isCloseToExpected(second, expectedInitial);
+  const firstIsInitial = isCloseToExpected(first, expectedInitial);
+  const secondIsFinal = isCloseToExpected(second, expectedFinal);
+
+  if (firstIsInitial && secondIsFinal) {
+    return { ok: false, reason: 'reversed', first, second, operator, result, displayed, message: '❌ Attention :  Volume final − Volume initial.' };
+  }
+
+  if (firstIsFinal && secondIsInitial && isCloseToExpected(result, expectedSolid)) {
+    return { ok: true, first, second, operator, result, displayed, message: '' };
+  }
+
+  return { ok: false, reason: 'wrongValues', first, second, operator, result, displayed, message: '❌ Les nombres utilisés dans le calcul ne correspondent pas aux volumes mesurés.' };
+}
+
+function readCalculationForDisplay() {
+  const raw = (calculationAnswer.value || '').trim();
+  if (raw === '') {
+    return { ok: false, message: '?' };
+  }
+
+  const normalized = raw
+    .replace(/,/g, '.')
+    .replace(/[–—−]/g, '-')
+    .replace(/\s+/g, ' ');
+
+  const match = normalized.match(/^\s*(\d+(?:\.\d+)?)\s*([+\-])\s*(\d+(?:\.\d+)?)\s*$/);
+  if (!match) {
+    return { ok: false, message: '?' };
+  }
+
+  const first = Number(match[1]);
+  const operator = match[2];
+  const second = Number(match[3]);
+  const result = operator === '-' ? first - second : first + second;
+  const opSymbol = operator === '-' ? '−' : '+';
+
+  return {
+    ok: true,
+    message: `${formatVolume(result)} mL`
+  };
+}
+
+function updateCalculationResultDisplay() {
+  const calculation = readCalculationForDisplay();
+  calculationResult.innerHTML = calculation.message;
+  calculationResult.className = 'calculation-result show neutral';
+}
+
+function calculateSolidVolume() {
+  updateCalculationResultDisplay();
+}
+
+function showFeedback(message, ok) {
+  feedback.textContent = message;
+  feedback.className = 'feedback show ' + (ok ? 'correct' : 'wrong');
+}
+function updateScoreDisplay() {
+  document.getElementById('scoreOk').textContent = scoreOk;
+  document.getElementById('scoreTotal').textContent = scoreTotal;
+}
+function checkAnswer(event) {
+  if (event) event.preventDefault();
+
+  const expectedInitial = clampVolume(initialVolume);
+  const expectedFinal = clampVolume(initialVolume + expectedVolume());
+
+  const studentInitial = readStudentValue(initialAnswer);
+  const studentFinal = readStudentValue(finalAnswerInput);
+
+  // Lors de la validation, on recalcule toujours le résultat affiché à partir
+  // du calcul actuellement écrit par l'élève. Ainsi, si l'élève modifie son calcul
+  // sans recliquer sur 🧮, la case résultat est automatiquement mise à jour.
+  updateCalculationResultDisplay();
+  const calculationCheck = parseCalculation();
+
+  const initialOk = isCloseToExpected(studentInitial, expectedInitial);
+  const finalOk = isCloseToExpected(studentFinal, expectedFinal);
+
+  setAnswerMark(initialMark, initialOk);
+  setAnswerMark(finalMark, finalOk);
+
+  const feedbackMessages = [];
+
+  if (!initialOk && !finalOk) {
+    feedbackMessages.push('❌ Il y a des erreurs sur le "volume initial" et sur le "volume final".');
+  } else if (!initialOk) {
+    feedbackMessages.push('❌ Il y a des erreurs sur le "volume initial"');
+  } else if (!finalOk) {
+    feedbackMessages.push('❌ Il y a des erreurs sur le "volume final"');
+  }
+
+  const calculationMatchesMeasuredVolumes =
+    calculationCheck.operator === '-' &&
+    Number.isFinite(studentInitial) &&
+    Number.isFinite(studentFinal) &&
+    isCloseToExpected(calculationCheck.first, studentFinal) &&
+    isCloseToExpected(calculationCheck.second, studentInitial);
+
+  if (calculationMatchesMeasuredVolumes && (!initialOk || !finalOk)) {
+    if (!initialOk && !finalOk) {
+      feedbackMessages.push('❌ Le calcul serait juste si tu corriges les 2 mesures de volume.');
+    } else if (!initialOk) {
+      feedbackMessages.push('❌ Le calcul serait juste si tu corriges la mesure du "volume initial"');
+    } else if (!finalOk) {
+      feedbackMessages.push('❌ Le calcul serait juste si tu corriges la mesure du "volume final"');
+    }
+  } else if (!calculationCheck.ok) {
+    feedbackMessages.push(calculationCheck.message);
+  }
+
+  scoreTotal += 1;
+
+  if (feedbackMessages.length === 0) {
+    scoreOk += 1;
+    showFeedback('🎉 Bravo ! Tout est juste.', true);
+  } else {
+    showFeedback(feedbackMessages.join('\n'), false);
+  }
+
+  updateScoreDisplay();
+}
+function newQuestion() {
+  questionAlreadyChecked = false;
+  objectInserted = false;
+  const step = currentGraduation();
+
+  // Limite basse : après insertion, l'objet doit être complètement immergé.
+  // Limite haute : après insertion, le volume final ne doit jamais dépasser 50 mL.
+  const minInitial = minInitialVolumeForImmersion();
+  const maxInitial = maxInitialVolumeAllowed();
+
+  const possible = [];
+  for (let v = minInitial; v <= maxInitial + 1e-9; v = Number((v + step).toFixed(3))) {
+    possible.push(Number(v.toFixed(1)));
+  }
+
+  if (possible.length === 0) {
+    initialVolume = clampVolume(maxInitial, step);
+  } else {
+    initialVolume = possible[Math.floor(Math.random() * possible.length)];
+  }
+
+  currentVolume = initialVolume;
+  clearAnswers();
+  feedback.className = 'feedback';
+  feedback.textContent = '';
+  resetZoomGuideLine();
+  updateScene();
+}
+window.addEventListener('resize', updateScene);
+function populateObjectSelect() {
+  const select = document.getElementById('objectSelect');
+  select.innerHTML = '';
+  Object.entries(OBJECTS).forEach(([key, obj]) => {
+    const option = document.createElement('option');
+    option.value = key;
+    option.textContent = obj.label;
+    if (key === currentObjectKey) option.selected = true;
+    select.appendChild(option);
+  });
+}
+
+function init() {
+  if (zoomGuideLine && zoomCanvasWrap) {
+    zoomGuideLine.addEventListener('mousedown', startZoomGuideDrag);
+    zoomCanvasWrap.addEventListener('mousedown', startZoomGuideDrag);
+    window.addEventListener('mousemove', moveZoomGuideDrag);
+    window.addEventListener('mouseup', stopZoomGuideDrag);
+
+    zoomGuideLine.addEventListener('touchstart', startZoomGuideDrag, { passive: false });
+    zoomCanvasWrap.addEventListener('touchstart', startZoomGuideDrag, { passive: false });
+    window.addEventListener('touchmove', moveZoomGuideDrag, { passive: false });
+    window.addEventListener('touchend', stopZoomGuideDrag);
+  }
+  populateObjectSelect();
+  objectImg.src = OBJECTS[currentObjectKey].src;
+  newQuestion();
+  updateScoreDisplay();
+  showLesson();
+}
+let readyCount = 0;
+function markReady() { readyCount += 1; if (readyCount >= 4) init(); }
+[srcEp, srcBack, srcFront, srcMen].forEach(img => { if (img.complete) markReady(); else img.addEventListener('load', markReady); img.addEventListener('error', markReady); });
+</script>
+</body>
+</html>
