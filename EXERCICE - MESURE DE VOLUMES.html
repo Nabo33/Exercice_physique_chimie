@@ -512,12 +512,64 @@
     border-radius:10px;
     border:2px solid #c5dff2;
     background:#f8fcff;
+    touch-action: none;
   }
 
   #zoomCanvas {
     display:block;
     width:100%;
     height:100%;
+  }
+
+  .zoom-guide-line {
+    position: absolute;
+    left: 8%;
+    right: 3%;
+    top: 88%;
+    height: 28px;
+    transform: translateY(-50%);
+    z-index: 6;
+    cursor: ns-resize;
+    touch-action: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    user-select: none;
+  }
+
+  .zoom-guide-line::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 10px;
+    top: 50%;
+    height: 3px;
+    transform: translateY(-50%);
+    background: rgba(37,99,235,.68);
+    border-radius: 999px;
+    box-shadow: 0 2px 8px rgba(37,99,235,.28);
+  }
+
+  .zoom-guide-line::after {
+    content: "↕";
+    position: relative;
+    z-index: 1;
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(37,99,235,.68);
+    color: #ffffff;
+    border: 2px solid rgba(37,99,235,.68);
+    font-weight: 900;
+    box-shadow: 0 2px 8px rgba(0,0,0,.16);
+    margin-right: -6px;
+  }
+
+  .zoom-guide-line.is-dragging::before {
+    height: 4px;
+    background: rgba(29,78,216,.82);
   }
 
   .zoom-info {
@@ -808,10 +860,11 @@
   <div class="right-panel">
     <div class="zoom-panel">
       <div class="panel-title">🔍 Vue agrandie du ménisque</div>
-      <div class="zoom-canvas-wrap">
+      <div class="zoom-canvas-wrap" id="zoomCanvasWrap">
         <canvas id="zoomCanvas" width="600" height="420"></canvas>
+        <div class="zoom-guide-line" id="zoomGuideLine" title="Déplace cette barre pour viser le bas du ménisque"></div>
       </div>
-      <div class="zoom-info">Analyse correctement le volume correspondant à chaque petite graduation avant d'inscrire ci-dessous le volume mesuré !</div>
+      <div class="zoom-info">Déplace la barre bleue pour t’aider à repérer la bonne graduation.</div>
     </div>
 
     <div class="answer-panel">
@@ -869,6 +922,8 @@ const studentAnswer = document.getElementById('studentAnswer');
 const feedback = document.getElementById('feedback');
 const precisionInfo = document.getElementById('precisionInfo');
 const zoomCanvas = document.getElementById('zoomCanvas');
+const zoomCanvasWrap = document.getElementById('zoomCanvasWrap');
+const zoomGuideLine = document.getElementById('zoomGuideLine');
 const ctx = zoomCanvas.getContext('2d');
 const srcEp = document.getElementById('srcEp');
 const srcMen = document.getElementById('srcMen');
@@ -896,6 +951,7 @@ function showExercise() {
   document.getElementById('back-btn').style.display = 'none';
   applyTubeCalibration();
   updateMeniscus(currentVolume);
+  resetZoomGuideLine();
   document.getElementById('game-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -1148,6 +1204,7 @@ function newQuestion() {
   feedback.className = 'feedback';
   feedback.textContent = '';
   updateMeniscus(next);
+  resetZoomGuideLine();
 }
 
 function setPrecision(step) {
@@ -1164,6 +1221,58 @@ function volumeFromPointerY(clientY) {
   const localY = clamp(clientY - rect.top, 0, rect.height);
   return volumeFromDisplayY(y50Disp() + localY);
 }
+
+
+function resetZoomGuideLine() {
+  if (!zoomGuideLine) return;
+  zoomGuideLine.style.top = '88%';
+}
+
+function setZoomGuideFromClientY(clientY) {
+  if (!zoomCanvasWrap || !zoomGuideLine) return;
+  const rect = zoomCanvasWrap.getBoundingClientRect();
+  const y = clamp(clientY - rect.top, 10, rect.height - 10);
+  zoomGuideLine.style.top = (y / rect.height * 100) + '%';
+}
+
+let draggingZoomGuide = false;
+
+if (zoomGuideLine) {
+  zoomGuideLine.addEventListener('mousedown', (e) => {
+    draggingZoomGuide = true;
+    zoomGuideLine.classList.add('is-dragging');
+    setZoomGuideFromClientY(e.clientY);
+    e.preventDefault();
+  });
+
+  zoomGuideLine.addEventListener('touchstart', (e) => {
+    draggingZoomGuide = true;
+    zoomGuideLine.classList.add('is-dragging');
+    setZoomGuideFromClientY(e.touches[0].clientY);
+    e.preventDefault();
+  }, { passive: false });
+}
+
+window.addEventListener('mousemove', (e) => {
+  if (!draggingZoomGuide) return;
+  setZoomGuideFromClientY(e.clientY);
+});
+
+window.addEventListener('mouseup', () => {
+  draggingZoomGuide = false;
+  if (zoomGuideLine) zoomGuideLine.classList.remove('is-dragging');
+});
+
+window.addEventListener('touchmove', (e) => {
+  if (!draggingZoomGuide) return;
+  setZoomGuideFromClientY(e.touches[0].clientY);
+  e.preventDefault();
+}, { passive: false });
+
+window.addEventListener('touchend', () => {
+  draggingZoomGuide = false;
+  if (zoomGuideLine) zoomGuideLine.classList.remove('is-dragging');
+});
 
 volumeSlider.addEventListener('input', () => {
   updateMeniscus(parseFloat(volumeSlider.value));
@@ -1212,6 +1321,7 @@ window.addEventListener('touchend', () => {
 window.addEventListener('resize', () => {
   applyTubeCalibration();
   updateMeniscus(currentVolume);
+  resetZoomGuideLine();
 });
 
 function init() {
@@ -1219,6 +1329,7 @@ function init() {
   applyTubeCalibration();
   volumeSlider.value = String(currentVolume);
   updateMeniscus(currentVolume);
+  resetZoomGuideLine();
   updateScoreDisplay();
   showMenu();
 }
