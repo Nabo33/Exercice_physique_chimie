@@ -125,18 +125,18 @@ const ENERGIES=[
  {id:'electrique',nom:'Énergie électrique',icon:'⚡',stock:false,def:'Énergie transportée par le courant électrique.',permet:'faire fonctionner : alimentation des appareils',ex:'Les câbles transfèrent l’énergie électrique de la centrale jusqu’au collège.',img:IMG.ligne}
 ];
 const EXAMPLES=[
- {label:'Ampoule',img:IMG.ampoule,energy:'lumineuse',phrase:'Une ampoule convertit l’énergie électrique reçue en énergie lumineuse et thermique.'},
- {label:'Feu',img:IMG.feu,energy:'thermique',phrase:'Le feu produit de l’énergie thermique et lumineuse.'},
- {label:'Sandwich',img:IMG.sandwich,energy:'chimique',phrase:'Un sandwich stocke de l’énergie chimique.'},
- {label:'Noyau',img:IMG.noyau,energy:'nucleaire',phrase:'L’énergie nucléaire est stockée au cœur de la matière.'},
- {label:'Voiture',img:IMG.voiture,energy:'cinetique',phrase:'Une voiture en mouvement possède de l’énergie cinétique.'},
- {label:'Parachutiste',img:IMG.parachutiste,energy:'pesanteur',phrase:'Un parachutiste en hauteur possède de l’énergie de pesanteur.'},
- {label:'Ligne électrique',img:IMG.ligne,energy:'electrique',phrase:'Les câbles transfèrent l’énergie électrique.'},
- {label:'Barrage',img:IMG.barrage,energy:'pesanteur',phrase:'L’eau qui tombe d’un barrage possède de l’énergie de pesanteur qui peut se transformer.'},
- {label:'Cycliste',img:IMG.cycliste,energy:'cinetique',phrase:'Un cycliste en mouvement possède de l’énergie cinétique.'},
- {label:'Café chaud',img:IMG.cafe,energy:'thermique',phrase:'Un café chaud possède de l’énergie thermique.'},
- {label:'Pile',img:IMG.pile,energy:'chimique',phrase:'Une pile stocke de l’énergie chimique.'},
- {label:'Soleil',img:IMG.soleil,energy:'lumineuse',phrase:'Le Soleil émet de l’énergie lumineuse.'}
+ {label:'Ampoule',img:IMG.ampoule,energies:['electrique','thermique','lumineuse'],phrase:'Une ampoule reçoit de l’énergie électrique et produit de l’énergie lumineuse et thermique.'},
+ {label:'Feu',img:IMG.feu,energies:['thermique','lumineuse'],phrase:'Le feu produit de l’énergie thermique et lumineuse.'},
+ {label:'Sandwich',img:IMG.sandwich,energies:['chimique'],phrase:'Un sandwich stocke de l’énergie chimique.'},
+ {label:'Noyau',img:IMG.noyau,energies:['nucleaire'],phrase:'L’énergie nucléaire est stockée au cœur de la matière.'},
+ {label:'Voiture',img:IMG.voiture,energies:['cinetique'],phrase:'Une voiture en mouvement possède de l’énergie cinétique.'},
+ {label:'Parachutiste',img:IMG.parachutiste,energies:['cinetique','pesanteur'],phrase:'Un parachutiste en hauteur et en mouvement possède de l’énergie de pesanteur et de l’énergie cinétique.'},
+ {label:'Ligne électrique',img:IMG.ligne,energies:['electrique'],phrase:'Les câbles transfèrent l’énergie électrique.'},
+ {label:'Barrage',img:IMG.barrage,energies:['pesanteur'],phrase:'L’eau située en hauteur dans un barrage possède de l’énergie de pesanteur qui peut se transformer.'},
+ {label:'Cycliste',img:IMG.cycliste,energies:['cinetique','pesanteur'],phrase:'Un cycliste en mouvement possède de l’énergie cinétique ; s’il est en hauteur, il possède aussi de l’énergie de pesanteur.'},
+ {label:'Café chaud',img:IMG.cafe,energies:['thermique'],phrase:'Un café chaud possède de l’énergie thermique.'},
+ {label:'Pile',img:IMG.pile,energies:['chimique','electrique'],phrase:'Une pile stocke de l’énergie chimique et peut fournir de l’énergie électrique.'},
+ {label:'Soleil',img:IMG.soleil,energies:['nucleaire','thermique','lumineuse'],phrase:'Le Soleil stocke de l’énergie nucléaire et produit de l’énergie lumineuse et thermique.'}
 ];
 const SOURCES=[
  {source:'Soleil',primary:'« Énergie solaire »',img:IMG.soleil},
@@ -216,8 +216,15 @@ function renderQCM(){
 function makeImagePool(){return shuffle(EXAMPLES)}
 function renderImages(){
  const x=takeFromPool('images', makeImagePool);
- const choices=shuffle([ENERGIES.find(e=>e.id===x.energy),...shuffle(ENERGIES.filter(e=>e.id!==x.energy)).slice(0,3)]);
- document.getElementById('playArea').innerHTML=`<div class="question-card"><div class="q-label">Quelle forme d’énergie est principalement illustrée ?</div><div class="q-main">${x.label}</div><img class="q-img" src="${x.img}" alt="${x.label}"></div><div class="answers">${choices.map(e=>`<button class="answer" data-correct="${e.id===x.energy}" onclick="answerButton(${e.id===x.energy}, '${x.phrase.replace(/'/g,'’')}')">${e.icon} ${e.nom}</button>`).join('')}</div>`;
+ const correctIds=x.energies || [x.energy];
+ const correctEnergies=ENERGIES.filter(e=>correctIds.includes(e.id));
+ const wrongEnergies=shuffle(ENERGIES.filter(e=>!correctIds.includes(e.id))).slice(0, Math.max(0,4-correctEnergies.length));
+ const choices=shuffle([...correctEnergies,...wrongEnergies]);
+ const detail=x.phrase;
+ document.getElementById('playArea').innerHTML=`<div class="question-card"><div class="q-label">Quelle forme d’énergie est illustrée ?</div><div class="q-main">${x.label}</div><img class="q-img" src="${x.img}" alt="${x.label}"></div><div class="answers">${choices.map(e=>{
+   const ok=correctIds.includes(e.id);
+   return `<button class="answer" data-correct="${ok}" onclick="answerButton(${ok}, '${detail.replace(/'/g,'’')}')">${e.icon} ${e.nom}</button>`;
+ }).join('')}</div>`;
 }
 let selectedAssoc=null;
 let assocColorCounter=0;
