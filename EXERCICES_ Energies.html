@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faisons le plein d'énergies — 6ème</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap');
+:root{
+  --bleu:#1a73e8;--bleu-clair:#e8f0fe;--violet:#7c4dff;--violet-clair:#ede7f6;
+  --vert:#0f9d58;--vert-clair:#e6f4ea;--rouge:#ea4335;--rouge-clair:#fce8e6;
+  --jaune:#fbbc04;--jaune-clair:#fff8df;--orange:#f97316;--orange-clair:#fff2e8;
+  --rose:#ec4899;--rose-clair:#fce7f3;--cyan:#06b6d4;--cyan-clair:#e6fbff;
+  --bg:#f0f4ff;--carte:#fff;--texte:#1a1a2e;--gris:#657085;--bord:#dde1f0;
+  --ombre:0 4px 20px rgba(0,0,0,.10);--ombre-forte:0 8px 32px rgba(0,0,0,.16);--radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--texte);min-height:100vh;overflow-x:hidden}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}.bubble{position:absolute;border-radius:50%;background:linear-gradient(135deg,var(--bleu),var(--violet));opacity:.055;animation:float var(--d,7s) ease-in-out infinite alternate}@keyframes float{from{transform:translateY(18px) scale(.86)}to{transform:translateY(-18px) scale(1.05)}}
+header{position:relative;z-index:3;background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);padding:30px 18px 24px;text-align:center;box-shadow:0 4px 20px rgba(26,115,232,.30);overflow:hidden}header:after{content:"";position:absolute;inset:auto -10% -70px -10%;height:120px;background:rgba(255,255,255,.13);border-radius:50%;}
+.logo{font-size:2.8rem;display:inline-block;animation:pulse 2.2s ease-in-out infinite}@keyframes pulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.08) rotate(5deg)}}
+h1{font-family:'Fredoka One',cursive;color:#fff;font-size:clamp(1.75rem,5vw,3rem);letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.22)}header p{color:rgba(255,255,255,.9);font-weight:800;margin-top:6px}
+.tabs{position:sticky;top:0;z-index:20;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:14px 12px;background:rgba(240,244,255,.86);backdrop-filter:blur(8px)}
+.tab-btn,.mode-btn,.pill-btn{font-family:'Nunito',sans-serif;font-weight:900;border:2.5px solid transparent;border-radius:999px;background:#fff;color:var(--gris);box-shadow:var(--ombre);padding:10px 20px;cursor:pointer;transition:.22s}.tab-btn:hover,.mode-btn:hover,.pill-btn:hover{transform:translateY(-2px);box-shadow:var(--ombre-forte)}.tab-btn.active,.mode-btn.active{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.section{display:none;position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:18px 16px 64px}.section.active{display:block;animation:fade .32s ease}@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.section-title{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.72rem;margin:10px 0 8px;display:flex;align-items:center;gap:10px}.intro{color:var(--gris);font-weight:700;margin-bottom:18px;line-height:1.55}.card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:20px;border:1px solid rgba(221,225,240,.75)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch}.definition{border-left:8px solid var(--jaune);background:linear-gradient(180deg,#fff,#fffaf0)}.definition strong{color:var(--rouge)}.note{margin-top:12px;background:var(--bleu-clair);border:2px solid #cddffc;border-radius:18px;padding:14px;font-weight:800;line-height:1.55}.verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.verb{padding:13px;border-radius:17px;font-weight:900;text-align:center}.v1{background:var(--vert-clair);color:var(--vert)}.v2{background:var(--jaune-clair);color:#8a5c00}.v3{background:var(--violet-clair);color:var(--violet)}.v4{background:var(--rose-clair);color:var(--rose)}
+.energy-grid{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:12px;margin-top:14px}.energy-card{background:#fff;border-radius:18px;box-shadow:var(--ombre);border:3px solid transparent;padding:14px;cursor:pointer;min-height:170px;transition:.22s;display:flex;flex-direction:column;align-items:center;text-align:center}.energy-card:hover{transform:translateY(-5px);border-color:var(--bleu);box-shadow:var(--ombre-forte)}.energy-icon{font-size:2rem;margin-bottom:7px}.energy-card h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1rem;line-height:1.2}.energy-card p{font-size:.83rem;color:var(--gris);font-weight:750;line-height:1.3;margin-top:8px}.stock{margin-top:auto;font-size:.75rem;font-weight:900;padding:4px 10px;border-radius:99px}.yes{background:var(--vert-clair);color:var(--vert)}.no{background:var(--rouge-clair);color:var(--rouge)}
+.examples{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.ex-card{background:#fff;border:1px solid var(--bord);border-radius:18px;overflow:hidden;box-shadow:var(--ombre);min-height:210px}.ex-card img{width:100%;height:118px;object-fit:contain;background:linear-gradient(180deg,#fff,#f8f9ff);padding:12px}.ex-card .txt{padding:12px}.ex-card h4{color:var(--bleu);font-weight:900;font-size:.98rem}.ex-card p{font-size:.85rem;color:var(--gris);font-weight:700;margin-top:5px;line-height:1.35}
+.source-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}.source-card{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;box-shadow:var(--ombre);padding:12px;border:1px solid var(--bord)}.source-card img{width:66px;height:66px;object-fit:contain}.source-card b{color:var(--bleu)}.source-card span{display:block;color:var(--gris);font-weight:800;font-size:.86rem;margin-top:2px}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(26,26,46,.62);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px}.modal-overlay.open{display:flex}.modal{background:#fff;border-radius:26px;max-width:660px;width:100%;box-shadow:var(--ombre-forte);padding:26px;position:relative}.close{position:absolute;right:18px;top:14px;border:0;background:transparent;font-size:1.5rem;cursor:pointer;color:var(--gris)}.modal h2{font-family:'Fredoka One',cursive;color:var(--bleu);margin-bottom:10px}.modal p,.modal li{line-height:1.65;font-weight:700}.modal-img{width:150px;height:120px;object-fit:contain;float:right;margin:0 0 12px 18px;background:#f8f9ff;border-radius:18px;padding:10px;border:1px solid var(--bord)}
+.quiz-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:transparent;margin:8px 0 16px}.score{background:var(--jaune);padding:8px 17px;border-radius:99px;font-weight:900;box-shadow:var(--ombre)}.progress{flex:1;min-width:180px;height:14px;background:#dde2ee;border-radius:99px;overflow:hidden}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--bleu),var(--violet));transition:.45s}.question-card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:22px;text-align:center;min-height:190px;display:flex;flex-direction:column;justify-content:center;align-items:center}.q-label{font-weight:900;color:var(--gris);margin-bottom:9px}.q-main{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:clamp(1.35rem,4vw,2rem);line-height:1.25}.q-img{width:180px;height:130px;object-fit:contain;background:#f8f9ff;border:1px solid var(--bord);border-radius:18px;padding:10px;margin-top:10px}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.answer{font-family:'Nunito';font-weight:900;background:#fff;border:2.5px solid var(--bord);border-radius:16px;padding:14px;min-height:82px;cursor:pointer;transition:.18s;color:var(--texte);display:flex;align-items:center;justify-content:center;text-align:center;gap:10px}.answer img{width:70px;height:62px;object-fit:contain}.answer:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);transform:scale(1.02)}.answer.correct,.dropzone.correct{background:var(--vert-clair);border-color:var(--vert);color:var(--vert)}.answer.wrong,.dropzone.wrong{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge)}.answer:disabled{cursor:default}.feedback{opacity:0;min-height:55px;margin-top:14px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;padding:12px}.feedback.show{opacity:1}.feedback.ok{background:var(--vert-clair);border:1px solid var(--vert);color:var(--vert)}.feedback.ko{background:var(--rouge-clair);border:1px solid var(--rouge);color:var(--rouge)}.next-row{text-align:center;margin-top:12px}.next{display:none;background:var(--bleu);color:white;border:0;border-radius:999px;font-family:'Fredoka One';font-size:1rem;padding:12px 28px;cursor:pointer;box-shadow:0 4px 14px rgba(26,115,232,.35)}.next.show{display:inline-block}.next:hover{background:#1458b5;transform:translateY(-2px)}
+.exercise-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px 0 18px}.mode-btn{border-radius:18px;min-height:76px}.mode-btn small{display:block;font-weight:800;opacity:.85;margin-top:4px}.hidden{display:none!important}
+.assoc-board{margin-top:10px;background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:16px;border:1px solid var(--bord)}.assoc-instruction{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.18rem;text-align:center;margin:0 0 14px}.assoc-help{display:none}.assoc-step{display:none}.assoc-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:16px;align-items:start}.def-list,.energy-list{display:grid;gap:7px}.assoc-col-title{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.05rem;margin-bottom:6px;text-align:center}.def-card{background:#f8f9ff;border:2.5px solid var(--bord);border-radius:14px;padding:7px 10px;min-height:54px;cursor:pointer;transition:.18s;display:grid;grid-template-columns:28px 1fr;gap:7px;align-items:center}.def-card:hover{border-color:var(--bleu);transform:translateY(-2px)}.def-card .num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bleu);color:#fff;font-family:'Fredoka One';font-size:.84rem}.def-text{font-weight:850;line-height:1.16;font-size:.89rem}.pair-chip{margin-top:5px;display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-weight:900;font-size:.86rem;background:rgba(255,255,255,.68);border:2px solid currentColor}.def-card.assigned,.energy-choice.assigned{background:var(--pair-bg);border-color:var(--pair-border);color:var(--pair-text);box-shadow:0 4px 14px rgba(0,0,0,.10)}.def-card.selected,.energy-choice.selected{background:var(--pair-bg);border-color:var(--pair-border);color:var(--pair-text);box-shadow:0 0 0 5px rgba(26,115,232,.18),var(--ombre-forte);transform:translateY(-2px)}.def-card.correct{background:var(--vert-clair)!important;border-color:var(--vert)!important;color:var(--vert)!important}.def-card.wrong{background:var(--rouge-clair)!important;border-color:var(--rouge)!important;color:var(--rouge)!important}.energy-choice{background:#fff;border:2.5px solid var(--bord);border-radius:15px;padding:9px 12px;font-weight:900;cursor:pointer;box-shadow:var(--ombre);transition:.18s;text-align:center;color:var(--texte);min-height:44px;display:flex;align-items:center;justify-content:center}.energy-choice:hover{border-color:var(--bleu);background:var(--bleu-clair);transform:scale(1.02)}.pair-0{--pair-bg:#e8f0fe;--pair-border:#1a73e8;--pair-text:#0d47a1}.pair-1{--pair-bg:#fff8df;--pair-border:#fbbc04;--pair-text:#755100}.pair-2{--pair-bg:#e6f4ea;--pair-border:#0f9d58;--pair-text:#0b6b3d}.pair-3{--pair-bg:#fce7f3;--pair-border:#ec4899;--pair-text:#9d174d}.pair-4{--pair-bg:#e6fbff;--pair-border:#06b6d4;--pair-text:#0e7490}.pair-5{--pair-bg:#fff2e8;--pair-border:#f97316;--pair-text:#9a3412}.pair-6{--pair-bg:#ede7f6;--pair-border:#7c4dff;--pair-text:#5b21b6}.assoc-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}.reset-btn{margin-top:18px;background:#fff;color:var(--bleu);border:2.5px solid var(--bleu);border-radius:999px;padding:10px 18px;font-weight:900;cursor:pointer;box-shadow:var(--ombre)}.reset-btn:hover{background:var(--bleu-clair);transform:translateY(-2px)}.fill-card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:22px;margin-top:16px}.sentence{font-size:1.15rem;line-height:2;font-weight:850;text-align:center}.select-word{font-family:'Nunito';font-weight:900;border:2px solid var(--bord);border-radius:12px;padding:7px 10px;color:var(--bleu);background:#f8f9ff}.select-word.wrong{border-color:var(--rouge);background:var(--rouge-clair);color:var(--rouge)}.check-btn{margin-top:18px;background:var(--bleu);color:white;border:0;border-radius:999px;padding:12px 22px;font-weight:900;cursor:pointer;box-shadow:var(--ombre)}.check-btn:hover{transform:translateY(-2px)}
+.end{display:none;text-align:center;background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:28px}.end.show{display:block}.big-score{font-family:'Fredoka One';font-size:3rem;color:var(--bleu);margin:8px}.tiny{font-size:.82rem;color:var(--gris);font-weight:800}.mobile-only-note{display:none}
+@media(max-width:1020px){.energy-grid{grid-template-columns:repeat(3,1fr)}.examples,.source-grid,.exercise-menu{grid-template-columns:repeat(2,1fr)}.hero-grid{grid-template-columns:1fr}}
+@media(max-width:700px){header{padding:24px 12px 18px}.tabs{position:relative}.section{padding:14px 12px 54px}.energy-grid,.examples,.source-grid,.exercise-menu{grid-template-columns:1fr}.answers{grid-template-columns:1fr}.assoc-grid{grid-template-columns:1fr}.assoc-board{padding:12px}.def-card{grid-template-columns:30px 1fr;min-height:62px;padding:8px}.energy-choice{min-height:48px}.verbs{grid-template-columns:1fr}.modal-img{float:none;display:block;margin:0 auto 14px}.card{padding:16px}.mobile-only-note{display:block}}
+</style>
+<!-- Version vérifiée : texte à trous avec […] par défaut et validation bloquée si aucun verbe choisi. -->
+</head>
+<body>
+<div class="bubbles" id="bubbles"></div>
+<header><div class="logo">⚡</div><h1>Faisons le plein d'énergies</h1><p>Sciences · Classe de 6ème</p></header>
+<nav class="tabs" aria-label="Navigation"><button class="tab-btn active" onclick="showTab('cours')">📚 Cours</button><button class="tab-btn" onclick="showTab('exercices')">🎮 Exercices</button></nav>
+
+<section class="section active" id="cours-section">
+  <h2 class="section-title">📚 Partie 1 — Comprendre l'énergie</h2>
+  <p class="intro">Cette leçon reprend uniquement les idées du cours : définition de l'énergie, formes d'énergie, transformations, transferts et sources d'énergie.</p>
+  <div class="hero-grid">
+    <div class="card definition"><h3 class="section-title" style="font-size:1.35rem;margin-top:0">🌟 Définition essentielle</h3><p style="font-size:1.08rem;line-height:1.65;font-weight:800">En sciences, l'<strong>énergie</strong> est une grandeur physique qui permet de décrire la capacité d'un système à produire un effet : un <strong>mouvement</strong>, de la <strong>chaleur</strong> ou de la <strong>lumière</strong>.</p><div class="note">⚠️ On ne crée pas l'énergie à partir de rien : on peut seulement la <strong>transformer</strong> ou la <strong>transférer</strong>.</div></div>
+    <div class="card"><h3 class="section-title" style="font-size:1.35rem;margin-top:0">🧩 Les verbes à utiliser</h3><p class="intro" style="margin-bottom:12px">Pour construire une phrase correcte sur l'énergie, on peut utiliser :</p><div class="verbs"><div class="verb v1">Posséder ou stocker</div><div class="verb v2">Produire</div><div class="verb v3">Convertir</div><div class="verb v4">Transférer</div></div></div>
+  </div>
+
+  <h2 class="section-title" style="margin-top:28px">🔋 Les 7 formes d'énergie</h2>
+  <p class="intro">Clique sur une carte pour afficher davantage d'informations et un exemple concret.</p>
+  <div class="energy-grid" id="energyGrid"></div>
+
+  <h2 class="section-title" style="margin-top:30px">🖼️ Exemples visuels</h2>
+  <div class="examples" id="examplesGrid"></div>
+
+  <h2 class="section-title" style="margin-top:30px">🌍 Sources d'énergie et énergie primaire associée</h2>
+  <div class="card" style="margin-bottom:14px;border-left:8px solid var(--vert);background:linear-gradient(180deg,#fff,#f5fff8)">
+    <p style="font-size:1rem;line-height:1.65;font-weight:800;margin-bottom:10px">
+      Une <strong>source d’énergie</strong> est ce que l’on utilise dans la nature ou autour de nous pour obtenir de l’énergie : le Soleil, l’eau en mouvement, le bois, l’uranium…
+    </p>
+    <p style="font-size:1rem;line-height:1.65;font-weight:800">
+      L’<strong>énergie primaire associée</strong> correspond à l’énergie présente au départ dans cette source. Ce n’est pas exactement la même chose que les <strong>formes d’énergie</strong> vues juste avant : les formes décrivent comment l’énergie se manifeste (lumière, chaleur, mouvement, électricité…), alors que les sources indiquent d’où vient l’énergie utilisée.
+    </p>
+  </div>
+  <p class="intro">Le cours associe certaines sources d'énergie à une énergie primaire.</p>
+  <div class="source-grid" id="sourceGrid"></div>
+</section>
+
+<section class="section" id="exercices-section">
+  <h2 class="section-title">🎮 Partie 2 — Défis interactifs</h2>
+  <p class="intro">Choisis un défi. Les questions sont générées aléatoirement et peuvent être recommencées autant de fois que nécessaire.</p>
+  <div class="exercise-menu">
+    <button class="mode-btn active" onclick="setExercise('qcm')">⚡ QCM<small>Formes d'énergie</small></button>
+    <button class="mode-btn" onclick="setExercise('images')">🖼️ Image → énergie<small>Associer un exemple</small></button>
+    <button class="mode-btn" onclick="setExercise('assoc')">🧩 Appariement<small>Définition ↔ énergie</small></button>
+    <button class="mode-btn" onclick="setExercise('trous')">✍️ Texte à trous<small>Verbes d'action</small></button>
+  </div>
+  <div class="quiz-bar"><div class="score">⭐ Score : <span id="scoreVal">0</span></div><div class="score">🎯 Question : <span id="qCount">0</span></div><div class="progress"><div id="progressBar"></div></div></div>
+  <div id="playArea"></div>
+  <div class="feedback" id="feedback"></div>
+  <div class="next-row"><button class="next" id="nextBtn" onclick="nextQuestion()">Question suivante →</button></div>
+</section>
+
+<div class="modal-overlay" id="modal" onclick="closeModal(event)"><div class="modal"><button class="close" onclick="document.getElementById('modal').classList.remove('open')">✕</button><div id="modalContent"></div></div></div>
+
+<script>
+const IMG={
+  fraise:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Fraise.png',
+  ampoule:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Ampoule.png',
+  barrage:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Barrage.png',
+  bois:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Bois.png',
+  cafe:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Caf%C3%A9.png',
+  centrale:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Centrale%20nucl%C3%A9aire.png',
+  cycliste:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Cycliste.png',
+  feu:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Feu.png',
+  funambule:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Funambule.png',
+  grille:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Grille%20%25pain.png',
+  luciole:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Luciole.png',
+  noyau:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Noyau.png',
+  ordinateur:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Ordinateur.png',
+  panneau:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Panneau%20%25solaire.png',
+  parachutiste:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Parachutiste.png',
+  pile:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Pile.png',
+  glacons:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Gla%C3%A7ons.png',
+  ligne:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Ligne%20%C3%A9lectrique.png',
+  sandwich:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Sandwicj.png',
+  sauteur:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Sauteur.png',
+  soleil:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Soleil.png',
+  voiture:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Voiture.png',
+  wagon:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Wagon.png',
+  melange:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Le%20m%C3%A9lange.png'
+};
+const ENERGIES=[
+ {id:'lumineuse',nom:'Énergie lumineuse',icon:'💡',stock:false,def:'Énergie transportée par la lumière.',permet:'faire fonctionner : voir, donner de la chaleur ou produire de l’électricité',ex:'Une ampoule convertit l’énergie électrique reçue en énergie lumineuse et thermique.',img:IMG.ampoule},
+ {id:'thermique',nom:'Énergie thermique',icon:'🔥',stock:true,def:'Énergie liée à la chaleur et à l’agitation des particules.',permet:'transformer : chauffer ou modifier un état',ex:'Un grille-pain produit de l’énergie thermique.',img:IMG.feu},
+ {id:'chimique',nom:'Énergie chimique',icon:'🍎',stock:true,def:'Énergie stockée au niveau des liaisons entre les atomes.',permet:'transformer et faire fonctionner',ex:'Un sandwich stocke de l’énergie chimique.',img:IMG.sandwich},
+ {id:'nucleaire',nom:'Énergie nucléaire',icon:'☢️',stock:true,def:'Énergie stockée au cœur de la matière, au sein du noyau des atomes.',permet:'transformer : libérer beaucoup d’énergie à partir des noyaux d’atomes',ex:'Une étoile convertit l’énergie nucléaire en énergie thermique et lumineuse.',img:IMG.noyau},
+ {id:'cinetique',nom:'Énergie cinétique',icon:'⚽',stock:true,def:'Énergie que possède un objet du fait de son mouvement.',permet:'mettre en mouvement',ex:'Une voiture possède de l’énergie cinétique du fait de son mouvement.',img:IMG.voiture},
+ {id:'pesanteur',nom:'Énergie de pesanteur',icon:'🪂',stock:true,def:'Énergie que possède un objet du fait de sa position en hauteur.',permet:'se transformer, notamment en énergie cinétique',ex:'Un parachutiste possède de l’énergie de pesanteur.',img:IMG.parachutiste},
+ {id:'electrique',nom:'Énergie électrique',icon:'⚡',stock:false,def:'Énergie transportée par le courant électrique.',permet:'faire fonctionner : alimentation des appareils',ex:'Les câbles transfèrent l’énergie électrique de la centrale jusqu’au collège.',img:IMG.ligne}
+];
+const EXAMPLES=[
+ {label:'Ampoule',img:IMG.ampoule,energy:'lumineuse',phrase:'Une ampoule convertit l’énergie électrique reçue en énergie lumineuse et thermique.'},
+ {label:'Feu',img:IMG.feu,energy:'thermique',phrase:'Le feu produit de l’énergie thermique et lumineuse.'},
+ {label:'Sandwich',img:IMG.sandwich,energy:'chimique',phrase:'Un sandwich stocke de l’énergie chimique.'},
+ {label:'Noyau',img:IMG.noyau,energy:'nucleaire',phrase:'L’énergie nucléaire est stockée au cœur de la matière.'},
+ {label:'Voiture',img:IMG.voiture,energy:'cinetique',phrase:'Une voiture en mouvement possède de l’énergie cinétique.'},
+ {label:'Parachutiste',img:IMG.parachutiste,energy:'pesanteur',phrase:'Un parachutiste en hauteur possède de l’énergie de pesanteur.'},
+ {label:'Ligne électrique',img:IMG.ligne,energy:'electrique',phrase:'Les câbles transfèrent l’énergie électrique.'},
+ {label:'Barrage',img:IMG.barrage,energy:'pesanteur',phrase:'L’eau qui tombe d’un barrage possède de l’énergie de pesanteur qui peut se transformer.'},
+ {label:'Cycliste',img:IMG.cycliste,energy:'cinetique',phrase:'Un cycliste en mouvement possède de l’énergie cinétique.'},
+ {label:'Café chaud',img:IMG.cafe,energy:'thermique',phrase:'Un café chaud possède de l’énergie thermique.'},
+ {label:'Pile',img:IMG.pile,energy:'chimique',phrase:'Une pile stocke de l’énergie chimique.'},
+ {label:'Soleil',img:IMG.soleil,energy:'lumineuse',phrase:'Le Soleil émet de l’énergie lumineuse.'}
+];
+const SOURCES=[
+ {source:'Soleil',primary:'« Énergie solaire »',img:IMG.soleil},
+ {source:'Eau en mouvement',primary:'Énergie mécanique',img:IMG.barrage},
+ {source:'Biomasse : plantes, bois, déchets',primary:'Énergie chimique',img:IMG.bois},
+ {source:'Uranium',primary:'Énergie nucléaire',img:IMG.noyau},
+ {source:'Pétrole, charbon, gaz naturel',primary:'Énergie chimique',img:IMG.feu},
+ {source:'Chaleur interne de la Terre',primary:'« Énergie géothermique »',img:IMG.melange},
+ {source:'Aliments',primary:'Énergie chimique',img:IMG.fraise},
+ {source:'Centrale nucléaire',primary:'Énergie nucléaire',img:IMG.centrale}
+];
+let exercise='qcm',score=0,qCount=0,current=null,answered=false,dragAnswers=[];
+let qcmPool=[];
+let imagePool=[];
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function energyName(id){return ENERGIES.find(e=>e.id===id)?.nom||id}
+(function bubbles(){const c=document.getElementById('bubbles');for(let i=0;i<70;i++){const s=document.createElement('div');s.className='bubble';const size=30+Math.random()*70;s.style.width=size+'px';s.style.height=size+'px';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--d',(3+Math.random()*5)+'s');s.style.animationDelay=(Math.random()*4)+'s';c.appendChild(s)}})();
+function buildCourse(){
+ const eg=document.getElementById('energyGrid');eg.innerHTML='';ENERGIES.forEach(e=>{const b=document.createElement('button');b.className='energy-card';b.onclick=()=>openEnergy(e.id);b.innerHTML=`<div class="energy-icon">${e.icon}</div><h3>${e.nom}</h3><p>${e.def}</p><span class="stock ${e.stock?'yes':'no'}">${e.stock?'Stockable':'Non stockable'}</span>`;eg.appendChild(b)});
+ const exg=document.getElementById('examplesGrid');exg.innerHTML='';EXAMPLES.slice(0,12).forEach(x=>{const d=document.createElement('div');d.className='ex-card';d.innerHTML=`<img src="${x.img}" alt="${x.label}" loading="lazy"><div class="txt"><h4>${x.label}</h4><p>${x.phrase}</p></div>`;exg.appendChild(d)});
+ const sg=document.getElementById('sourceGrid');sg.innerHTML='';SOURCES.forEach(s=>{const d=document.createElement('div');d.className='source-card';d.innerHTML=`<img src="${s.img}" alt="${s.source}" loading="lazy"><div><b>${s.source}</b><span>${s.primary}</span></div>`;sg.appendChild(d)});
+}
+function openEnergy(id){const e=ENERGIES.find(x=>x.id===id);document.getElementById('modalContent').innerHTML=`<img class="modal-img" src="${e.img}" alt="${e.nom}"><h2>${e.icon} ${e.nom}</h2><p><strong>Définition :</strong> ${e.def}</p><ul><li><strong>Stockable :</strong> ${e.stock?'oui':'non'}</li><li><strong>Elle permet de :</strong> ${e.permet}.</li><li><strong>Exemple :</strong> ${e.ex}</li></ul>`;document.getElementById('modal').classList.add('open')}
+function closeModal(ev){if(ev.target.id==='modal')ev.currentTarget.classList.remove('open')}
+function showTab(tab){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(tab+'-section').classList.add('active');[...document.querySelectorAll('.tab-btn')].find(b=>b.getAttribute('onclick').includes(tab)).classList.add('active');if(tab==='exercices'&&qCount===0)newRun()}
+function setExercise(m){exercise=m;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));[...document.querySelectorAll('.mode-btn')].find(b=>b.getAttribute('onclick').includes(m)).classList.add('active');newRun()}
+function resetPools(){qcmPool=[];imagePool=[]}
+function newRun(){score=0;qCount=0;resetPools();updateBar();nextQuestion(true)}
+function updateBar(){document.getElementById('scoreVal').textContent=score;document.getElementById('qCount').textContent=qCount;document.getElementById('progressBar').style.width=Math.min(100,(qCount%10)*10)+'%'}
+function setFeedback(ok,msg){const f=document.getElementById('feedback');f.className='feedback show '+(ok?'ok':'ko');f.textContent=msg;document.getElementById('nextBtn').classList.add('show')}
+function clearFeedback(){const f=document.getElementById('feedback');f.className='feedback';f.textContent='';document.getElementById('nextBtn').classList.remove('show')}
+function nextQuestion(first=false){clearFeedback();answered=false;if(!first){}qCount++;updateBar();if(exercise==='qcm')renderQCM();if(exercise==='images')renderImages();if(exercise==='assoc')renderAssoc();if(exercise==='trous')renderTrous()}
+function answerButton(ok,detail){if(answered)return;answered=true;document.querySelectorAll('.answer').forEach(b=>b.disabled=true);if(ok){score++;event.currentTarget.classList.add('correct');setFeedback(true,'✅ Bravo ! '+detail)}else{event.currentTarget.classList.add('wrong');document.querySelectorAll('.answer').forEach(b=>{if(b.dataset.correct==='true')b.classList.add('correct')});setFeedback(false,'❌ Pas tout à fait… '+detail)}updateBar()}
+function makeQcmPool(){
+ const questions=[];
+ ENERGIES.forEach(e=>{
+   questions.push({
+     type:'findName',
+     label:'Quelle forme d’énergie correspond à cette définition ?',
+     main:e.def,
+     correctId:e.id,
+     detail:'Réponse : '+e.nom+'.'
+   });
+   questions.push({
+     type:'findDef',
+     label:'Quelle définition correspond à cette forme d’énergie ?',
+     main:e.icon+' '+e.nom,
+     correctId:e.id,
+     detail:'Définition : '+e.def
+   });
+ });
+ return shuffle(questions);
+}
+function takeFromPool(poolName, maker){
+ if(poolName==='qcm'){
+   if(qcmPool.length===0) qcmPool=maker();
+   return qcmPool.pop();
+ }
+ if(poolName==='images'){
+   if(imagePool.length===0) imagePool=maker();
+   return imagePool.pop();
+ }
+}
+function renderQCM(){
+ const q=takeFromPool('qcm', makeQcmPool);
+ const e=ENERGIES.find(x=>x.id===q.correctId);
+ let choicesHTML='';
+ if(q.type==='findName'){
+   const choices=shuffle([e,...shuffle(ENERGIES.filter(x=>x.id!==e.id)).slice(0,3)]);
+   choicesHTML=choices.map(c=>`<button class="answer" data-correct="${c.id===q.correctId}" onclick="answerButton(${c.id===q.correctId}, '${q.detail.replace(/'/g,'’')}')">${c.icon} ${c.nom}</button>`).join('');
+ }else{
+   const choices=shuffle([e,...shuffle(ENERGIES.filter(x=>x.id!==e.id)).slice(0,3)]);
+   choicesHTML=choices.map(c=>`<button class="answer" data-correct="${c.id===q.correctId}" onclick="answerButton(${c.id===q.correctId}, '${q.detail.replace(/'/g,'’')}')">${c.def}</button>`).join('');
+ }
+ document.getElementById('playArea').innerHTML=`<div class="question-card"><div class="q-label">${q.label}</div><div class="q-main">${q.main}</div></div><div class="answers">${choicesHTML}</div>`;
+}
+function makeImagePool(){return shuffle(EXAMPLES)}
+function renderImages(){
+ const x=takeFromPool('images', makeImagePool);
+ const choices=shuffle([ENERGIES.find(e=>e.id===x.energy),...shuffle(ENERGIES.filter(e=>e.id!==x.energy)).slice(0,3)]);
+ document.getElementById('playArea').innerHTML=`<div class="question-card"><div class="q-label">Quelle forme d’énergie est principalement illustrée ?</div><div class="q-main">${x.label}</div><img class="q-img" src="${x.img}" alt="${x.label}"></div><div class="answers">${choices.map(e=>`<button class="answer" data-correct="${e.id===x.energy}" onclick="answerButton(${e.id===x.energy}, '${x.phrase.replace(/'/g,'’')}')">${e.icon} ${e.nom}</button>`).join('')}</div>`;
+}
+let selectedAssoc=null;
+let assocColorCounter=0;
+let lastAssocLabelOrder=[];
+let lastAssocDefOrder=[];
+const ASSOC_COLOR_CLASSES=['pair-0','pair-1','pair-2','pair-3','pair-4','pair-5','pair-6'];
+function shuffleNewAssocOrder(items,lastOrder){
+ const key=arr=>arr.map(x=>x.id).join('|');
+ const oldKey=(lastOrder||[]).join('|');
+ let arr=shuffle(items);
+ let guard=0;
+ while(oldKey && key(arr)===oldKey && guard<12){arr=shuffle(items);guard++;}
+ if(oldKey && key(arr)===oldKey){arr=[...arr.slice(1),arr[0]];}
+ return arr;
+}
+function renderAssoc(){
+ const items=shuffle(ENERGIES);
+ dragAnswers=items.map(e=>({id:e.id,label:e.nom,icon:e.icon,def:e.def}));
+ selectedAssoc=null;
+ assocColorCounter=0;
+ const labels=shuffleNewAssocOrder(dragAnswers,lastAssocLabelOrder);
+ const defs=shuffleNewAssocOrder(dragAnswers,lastAssocDefOrder);
+ lastAssocLabelOrder=labels.map(x=>x.id);
+ lastAssocDefOrder=defs.map(x=>x.id);
+ document.getElementById('playArea').innerHTML=`
+ <div class="assoc-board">
+   <p class="assoc-instruction">Associe chaque définition à la bonne forme d’énergie.</p>
+   <div class="assoc-grid">
+     <div>
+       <div class="assoc-col-title">Définitions</div>
+       <div class="def-list">${defs.map((d,i)=>`<div class="def-card assoc-item" data-type="def" data-id="${d.id}" onclick="clickAssoc('def','${d.id}')"><div class="num">${i+1}</div><div><div class="def-text">${d.def}</div><div class="chosen-slot"></div></div></div>`).join('')}</div>
+     </div>
+     <div>
+       <div class="assoc-col-title">Les 7 formes d’énergie</div>
+       <div class="energy-list">${labels.map(d=>`<button class="energy-choice assoc-item" data-type="energy" data-id="${d.id}" onclick="clickAssoc('energy','${d.id}')">${d.icon} ${d.label}</button>`).join('')}</div>
+     </div>
+   </div>
+   <div class="assoc-actions"><button class="check-btn" onclick="checkAssoc()">Vérifier</button><button class="reset-btn" onclick="restartAssocChallenge()">Recommencer</button></div>
+ </div>`;
+}
+function getAssocEl(type,id){return document.querySelector(`.assoc-item[data-type="${type}"][data-id="${id}"]`)}
+function clearTempSelection(){
+ document.querySelectorAll('.assoc-item.selected:not(.assigned)').forEach(el=>{removePairClasses(el);el.classList.remove('selected');el.dataset.pair='';});
+ document.querySelectorAll('.assoc-item.selected.assigned').forEach(el=>el.classList.remove('selected'));
+}
+function removePairClasses(el){ASSOC_COLOR_CLASSES.forEach(c=>el.classList.remove(c));}
+function nextPairClass(){
+ const used=[...document.querySelectorAll('.assoc-item.assigned')].map(el=>el.dataset.pair).filter(Boolean);
+ const free=ASSOC_COLOR_CLASSES.find(c=>!used.includes(c));
+ if(free)return free;
+ const c=ASSOC_COLOR_CLASSES[assocColorCounter%ASSOC_COLOR_CLASSES.length];assocColorCounter++;return c;
+}
+function unassignElement(el){
+ if(!el)return;
+ const type=el.dataset.type;
+ const id=el.dataset.id;
+ if(type==='def'){
+   const energyId=el.dataset.choice;
+   if(energyId){
+     const energyEl=getAssocEl('energy',energyId);
+     if(energyEl){energyEl.dataset.choice='';energyEl.dataset.pair='';energyEl.classList.remove('assigned','selected','correct','wrong');removePairClasses(energyEl)}
+   }
+   el.dataset.choice='';
+   const slot=el.querySelector('.chosen-slot'); if(slot)slot.innerHTML='';
+ }else{
+   const defId=el.dataset.choice;
+   if(defId){
+     const defEl=getAssocEl('def',defId);
+     if(defEl){defEl.dataset.choice='';defEl.dataset.pair='';defEl.classList.remove('assigned','selected','correct','wrong');removePairClasses(defEl);const slot=defEl.querySelector('.chosen-slot'); if(slot)slot.innerHTML='';}
+   }
+   el.dataset.choice='';
+ }
+ el.dataset.pair='';
+ el.classList.remove('assigned','selected','correct','wrong');
+ removePairClasses(el);
+}
+function clearSelectionOn(el){
+ if(!el)return;
+ el.classList.remove('selected');
+ // Une sélection temporaire n'est pas une association : elle doit redevenir neutre.
+ if(!el.classList.contains('assigned')){
+   el.dataset.pair='';
+   removePairClasses(el);
+ }
+}
+function selectAssocElement(el, pair){
+ // Pour modifier une association existante, on repart d'un élément seul sélectionné.
+ if(el.classList.contains('assigned')) unassignElement(el);
+ el.dataset.pair=pair || nextPairClass();
+ el.classList.add(el.dataset.pair,'selected');
+ selectedAssoc={type:el.dataset.type,id:el.dataset.id,pair:el.dataset.pair};
+}
+function clickAssoc(type,id){
+ if(answered)return;
+ clearFeedback();
+ document.querySelectorAll('.def-card').forEach(c=>c.classList.remove('wrong','correct'));
+ const el=getAssocEl(type,id);
+ if(!el)return;
+
+ // Cas 1 : aucun élément n'est en attente d'association.
+ if(!selectedAssoc){
+   selectAssocElement(el, el.dataset.pair || nextPairClass());
+   return;
+ }
+
+ const first=getAssocEl(selectedAssoc.type,selectedAssoc.id);
+
+ // Cas 2 : on reclique sur le même élément -> on annule simplement la sélection.
+ if(first===el){
+   clearSelectionOn(el);
+   selectedAssoc=null;
+   return;
+ }
+
+ // Cas 3 : on clique sur un autre élément de la MÊME colonne.
+ // Le premier redevient neutre, le second devient le nouvel élément sélectionné.
+ if(selectedAssoc.type===type){
+   const pair=selectedAssoc.pair || nextPairClass();
+   clearSelectionOn(first);
+   selectAssocElement(el, pair);
+   return;
+ }
+
+ // Cas 4 : on clique sur un élément de l'AUTRE colonne -> on crée une paire.
+ const pair=selectedAssoc.pair || first?.dataset.pair || nextPairClass();
+ unassignElement(first);
+ unassignElement(el);
+ const defEl=selectedAssoc.type==='def'?first:el;
+ const energyEl=selectedAssoc.type==='energy'?first:el;
+ const energyData=dragAnswers.find(d=>d.id===energyEl.dataset.id);
+ defEl.dataset.choice=energyEl.dataset.id;
+ energyEl.dataset.choice=defEl.dataset.id;
+ [defEl,energyEl].forEach(node=>{
+   node.dataset.pair=pair;
+   node.classList.add(pair,'assigned');
+   node.classList.remove('selected','wrong','correct');
+ });
+ defEl.querySelector('.chosen-slot').innerHTML=`<span class="pair-chip">${energyData.icon} ${energyData.label}</span>`;
+ selectedAssoc=null;
+}
+function resetAssoc(){
+ if(answered)return;
+ selectedAssoc=null;
+ assocColorCounter=0;
+ document.querySelectorAll('.assoc-item').forEach(el=>{el.dataset.choice='';el.dataset.pair='';el.classList.remove('assigned','selected','wrong','correct');removePairClasses(el);});
+ document.querySelectorAll('.chosen-slot').forEach(slot=>slot.innerHTML='');
+ clearFeedback();
+}
+function restartAssocChallenge(){
+ answered=false;
+ clearFeedback();
+ renderAssoc();
+}
+function checkAssoc(){
+ if(answered)return;
+ let ok=0, filled=0;
+ document.querySelectorAll('.def-card').forEach(c=>{
+   c.classList.remove('wrong','correct');
+   if(c.dataset.choice){filled++;}
+   if(c.dataset.choice===c.dataset.id){ok++;c.classList.add('correct');}
+   else if(c.dataset.choice){c.classList.add('wrong');}
+ });
+ const total=dragAnswers.length;
+ if(filled<total){setFeedback(false,'ℹ️ Il reste une ou plusieurs associations à compléter.');return;}
+ if(ok===total){answered=true;score++;setFeedback(true,'✅ Tout est correctement associé !');updateBar();}
+ else{setFeedback(false,`❌ ${ok}/${total} association(s) correcte(s). Modifie les cartes rouges puis vérifie à nouveau.`);}
+}
+const SENTENCES=[
+ {text:['Une ampoule ',' l’énergie électrique reçue en énergie lumineuse et thermique.'],answer:'convertit',choices:['convertit','transfère','stocke','possède']},
+ {text:['Un sandwich ',' de l’énergie chimique.'],answer:'stocke',choices:['stocke','transfère','produit','convertit']},
+ {text:['Les câbles ',' l’énergie électrique de la centrale jusqu’au collège.'],answer:'transfèrent',choices:['transfèrent','stockent','produisent','convertissent']},
+ {text:['Un grille-pain ',' de l’énergie thermique.'],answer:'produit',choices:['produit','transfère','stocke','possède']},
+ {text:['Une voiture en mouvement ',' de l’énergie cinétique.'],answer:'possède',choices:['possède','convertit','transfère','produit']},
+ {text:['Une étoile ',' l’énergie nucléaire en énergie thermique et lumineuse.'],answer:'convertit',choices:['convertit','stocke','transfère','possède']}
+];
+function renderTrous(){
+ const s=shuffle(SENTENCES)[0];
+ const options=['<option value="" selected disabled></option>', ...shuffle(s.choices).map(c=>`<option value="${c}">${c}</option>`)].join('');
+ document.getElementById('playArea').innerHTML=`<div class="fill-card"><div class="q-label" style="text-align:center">Choisis le bon verbe d'action.</div><div class="sentence">${s.text[0]} <select id="wordSelect" class="select-word" onchange="this.classList.remove('wrong')">${options}</select> ${s.text[1]}</div><div style="text-align:center"><button class="check-btn" onclick="checkTrous('${s.answer}')">Vérifier</button></div></div>`
+}
+function checkTrous(ans){
+ if(answered)return;
+ const select=document.getElementById('wordSelect');
+ const val=select.value;
+ if(!val){
+   select.classList.add('wrong');
+   setFeedback(false,'ℹ️ Choisis d’abord un verbe à la place de […].');
+   return;
+ }
+ answered=true;
+ if(val===ans){score++;setFeedback(true,'✅ Très bien ! Le verbe est bien choisi.')}
+ else setFeedback(false,`❌ Le bon verbe était : ${ans}.`);
+ updateBar();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('modal').classList.remove('open')});
+buildCourse();
+</script>
+</body>
+</html>
