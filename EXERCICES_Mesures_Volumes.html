@@ -300,10 +300,14 @@
     background: white;
     border: 2px dashed #fbbf24;
     border-radius: 14px;
-    padding: 14px 16px;
+    padding: 12px 14px;
     font-weight: 800;
-    line-height: 1.6;
+    line-height: 1.5;
     color: #5b3b06;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
   }
 
   .graduation-example + .graduation-example {
@@ -312,6 +316,23 @@
 
   .graduation-example strong {
     color: var(--blue-deep);
+  }
+
+  .graduation-example-text {
+    min-width: 0;
+  }
+
+  .graduation-example-img {
+    display: block;
+    width: 190px;
+    max-width: 34vw;
+    max-height: 118px;
+    object-fit: contain;
+    padding: 7px;
+    background: #ffffff;
+    border: 1px solid rgba(251,191,36,0.55);
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
   }
 
   .lesson-actions {
@@ -744,9 +765,17 @@
     }
 
     .graduation-example {
+      grid-template-columns: 1fr;
       padding: 12px;
       font-size: 0.95rem;
       overflow-wrap: anywhere;
+    }
+
+    .graduation-example-img {
+      justify-self: center;
+      width: min(100%, 260px);
+      max-width: 100%;
+      max-height: 150px;
     }
 
     .eprouvette-container {
@@ -769,17 +798,300 @@
     .graduation-step { font-size: 0.9rem; line-height: 1.35; }
     .graduation-example { font-size: 0.9rem; line-height: 1.5; }
   }
+
+/* ===== Harmonisation avec les fichiers Énergie / Verrerie / États physiques / Mélanges ===== */
+:root{
+  --bleu:#1a73e8;
+  --bleu-clair:#e8f0fe;
+  --violet:#7c4dff;
+  --cyan:#06b6d4;
+  --bg:#f0f4ff;
+  --carte:#ffffff;
+  --texte:#1a1a2e;
+  --gris:#657085;
+  --bord:#dde1f0;
+  --jaune:#fbbc04;
+  --vert:#0f9d58;
+  --vert-clair:#e6f4ea;
+  --rouge:#ea4335;
+  --rouge-clair:#fce8e6;
+  --ombre:0 4px 20px rgba(0,0,0,.10);
+  --ombre-forte:0 8px 32px rgba(0,0,0,.16);
+  --radius:22px;
+  --blue-light:var(--bleu-clair);
+  --blue-mid:var(--cyan);
+  --blue-deep:var(--bleu);
+  --panel:var(--carte);
+  --text:var(--texte);
+  --shadow:var(--ombre);
+}
+body{
+  display:block;
+  align-items:initial;
+  padding:0;
+  background:var(--bg);
+  color:var(--texte);
+  background-image:none;
+}
+body::before, body::after{display:none;}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bubble{position:absolute;border-radius:50%;background:linear-gradient(135deg,var(--bleu),var(--violet));opacity:.055;animation:float 7s ease-in-out infinite alternate}
+@keyframes float{from{transform:translateY(18px) scale(.86)}to{transform:translateY(-18px) scale(1.05)}}
+header{
+  position:relative;
+  z-index:3;
+  width:100%;
+  margin:0;
+  border-radius:0;
+  background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);
+  padding:30px 18px 24px;
+  text-align:center;
+  box-shadow:0 4px 20px rgba(26,115,232,.30);
+  overflow:hidden;
+}
+header:after{content:"";position:absolute;inset:auto -10% -70px -10%;height:120px;background:rgba(255,255,255,.13);border-radius:50%;}
+.logo{font-size:2.8rem;display:inline-block;animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.08) rotate(5deg)}}
+header h1{
+  font-family:'Fredoka One',cursive;
+  color:#fff;
+  font-size:clamp(1.75rem,5vw,3rem);
+  letter-spacing:.5px;
+  text-shadow:0 2px 8px rgba(0,0,0,.22);
+  margin:0;
+}
+header p{color:rgba(255,255,255,.9);font-weight:800;margin-top:6px;opacity:1}
+.tabs{position:sticky;top:0;z-index:20;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;padding:12px 10px;background:rgba(240,244,255,.86);backdrop-filter:blur(8px)}
+.tab-btn{font-family:'Nunito',sans-serif;font-weight:900;border:2.5px solid #fff;border-radius:999px;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#fff;box-shadow:0 6px 22px rgba(6,182,212,.30);padding:9px 16px;cursor:pointer;transition:.22s;display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.15;min-height:46px;min-width:128px;max-width:180px;white-space:normal;overflow-wrap:anywhere;font-size:.98rem}.tab-btn:hover{transform:translateY(-1px);box-shadow:var(--ombre-forte);background:linear-gradient(135deg,#0891b2,#6d28d9)}.tab-btn.active{background:#fff;color:var(--bleu);border-color:var(--cyan);box-shadow:0 6px 22px rgba(6,182,212,.26)}.tab-btn.active:hover{background:#fff;color:var(--bleu);border-color:var(--violet)}
+#menu{display:none!important}
+#back-btn,.exercise-back-menu-btn{display:none!important}
+#lesson-area,#game-area{
+  position:relative;
+  z-index:2;
+  max-width:1180px;
+  width:100%;
+  margin:0 auto 40px;
+  padding:18px 16px 64px;
+}
+.lesson-card,.zoom-panel,.answer-panel,.score-panel{
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:0 3px 14px rgba(0,0,0,.08);
+  border:1px solid var(--bord);
+}
+.lesson-card{padding:22px;}
+.lesson-title{
+  font-family:'Fredoka One',cursive;
+  color:var(--bleu);
+  font-size:1.72rem;
+  margin:10px 0 10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.lesson-intro,.subtitle{
+  color:var(--gris);
+  font-weight:800;
+  line-height:1.55;
+  margin-bottom:18px;
+}
+.lesson-image-card{
+  background:#fff;
+  border:1px solid var(--bord);
+  border-radius:18px;
+  box-shadow:0 3px 14px rgba(0,0,0,.06);
+}
+.graduation-method{
+  background:linear-gradient(180deg,#fff,#fffaf0);
+  border:1px solid rgba(221,225,240,.75);
+  border-left:8px solid var(--jaune);
+  border-radius:var(--radius);
+  box-shadow:0 3px 14px rgba(0,0,0,.08);
+}
+.graduation-method h3{color:#8a5c00}
+.graduation-step,.graduation-example{
+  box-shadow:none;
+  border-radius:14px;
+}
+.btn,.check-btn{
+  border-radius:999px;
+  background:var(--bleu);
+  box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+.btn:hover,.check-btn:hover,.new-btn:hover{transform:translateY(-1px)}
+.btn.secondary,.new-btn{
+  background:#fff;
+  color:var(--bleu);
+  border:2.5px solid var(--bleu);
+  border-radius:999px;
+  box-shadow:var(--ombre);
+}
+.exercise-title{max-width:920px;margin-left:auto;margin-right:auto}
+.exercise-instruction{
+  background:#fff;
+  border-left:7px solid var(--cyan);
+  border-radius:18px;
+  box-shadow:0 3px 14px rgba(0,0,0,.08);
+  padding:13px 16px;
+  color:var(--texte);
+  font-weight:900;
+  max-width:920px;
+  margin:0 auto 18px;
+  line-height:1.45;
+}
+.main-layout{
+  max-width:1180px;
+  gap:22px;
+  align-items:flex-start;
+}
+.eprouvette-container{
+  background:#fff;
+  border-radius:22px;
+  box-shadow:0 3px 14px rgba(0,0,0,.08);
+}
+.panel-title{
+  color:var(--bleu);
+  font-family:'Fredoka One',cursive;
+  font-weight:900;
+  font-size:1.02rem;
+}
+.zoom-canvas-wrap{
+  border-color:var(--bord);
+  background:#f8f9ff;
+}
+.zoom-guide-line::before,.zoom-guide-line::after{
+  background:rgba(26,115,232,.70);
+  border-color:rgba(26,115,232,.70);
+}
+input[type=range]{
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+}
+input[type=range]::-webkit-slider-thumb{border-color:var(--bleu)}
+.slider-label,.answer-row label,.unit-label,.score-label{color:var(--gris);font-weight:900}
+#studentAnswer{
+  border-color:var(--bord);
+  border-radius:12px;
+}
+#studentAnswer:focus{border-color:var(--bleu)}
+.feedback{
+  border-radius:16px;
+  font-weight:900;
+  line-height:1.45;
+}
+.feedback.correct{background:var(--vert-clair);color:var(--vert);border:1px solid var(--vert)}
+.feedback.wrong{background:var(--rouge-clair);color:var(--rouge);border:1px solid var(--rouge)}
+.score-panel{
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.score-numbers{color:var(--bleu);font-weight:900}
+@media(max-width:900px){
+  .tab-btn{flex:1 1 150px;max-width:none}
+  .graduation-steps{grid-template-columns:1fr}
+  .main-layout{max-width:100%;padding:0 8px}
+  .right-panel{width:min(100%,420px)}
+}
+@media(max-width:700px){
+  header{padding:24px 12px 18px}
+  .tabs{position:relative;gap:8px;padding:12px 8px}
+  .tab-btn{flex:1 1 100%;max-width:none;width:100%;font-size:1rem}
+  #lesson-area,#game-area{padding:14px 12px 54px}
+  .lesson-card{padding:18px 14px}
+  .exercise-instruction{font-size:.95rem}
+  .eprouvette-container{width:315px;height:473px}
+  .ep-img{width:315px;height:473px}
+}
+
+
+
+/* Images des exemples : plus grandes, sans contour, cliquables */
+.graduation-example{
+  grid-template-columns:minmax(0,1fr) minmax(260px,360px);
+  gap:22px;
+  align-items:center;
+}
+.graduation-example-img{
+  width:100%;
+  max-width:360px;
+  max-height:220px;
+  padding:0;
+  background:transparent;
+  border:0;
+  border-radius:10px;
+  box-shadow:none;
+  cursor:zoom-in;
+  justify-self:end;
+}
+.graduation-example-img:hover{
+  transform:scale(1.02);
+}
+.image-zoom-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(26,26,46,.72);
+  backdrop-filter:blur(4px);
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.image-zoom-overlay.open{display:flex;}
+.image-zoom-box{
+  position:relative;
+  background:#fff;
+  border-radius:24px;
+  max-width:min(94vw,980px);
+  max-height:92vh;
+  padding:18px;
+  box-shadow:var(--ombre-forte);
+}
+.image-zoom-box img{
+  display:block;
+  max-width:100%;
+  max-height:78vh;
+  object-fit:contain;
+  border-radius:16px;
+}
+.image-zoom-close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  width:38px;
+  height:38px;
+  border:0;
+  border-radius:50%;
+  background:#fff;
+  color:var(--gris);
+  font-size:1.6rem;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:0 3px 14px rgba(0,0,0,.18);
+}
+.image-zoom-close:hover{color:var(--rouge);}
+@media(max-width:760px){
+  .graduation-example{grid-template-columns:1fr;}
+  .graduation-example-img{justify-self:center;width:min(100%,420px);max-width:100%;max-height:260px;}
+}
+
 </style>
 </head>
 <body>
+<div class="bubbles" id="bubbles"></div>
 <header>
-  <h1>📏 Mesures de volumes !</h1>
-  <p>Lire correctement le volume d'un liquide dans une éprouvette graduée.</p>
+  <div class="logo">📏</div>
+  <h1>Mesures de volumes</h1>
+  <p>Sciences · Classe de 6ème</p>
 </header>
 
-<button type="button" id="back-btn" onclick="showMenu()">← Revenir au menu</button>
+<nav class="tabs" aria-label="Navigation">
+  <button type="button" class="tab-btn active" id="btnCours" onclick="showLesson()">📚 Cours</button>
+  <button type="button" class="tab-btn" id="btnExercice" onclick="showExercise()">🔍 Exercice</button>
+</nav>
 
-<div id="menu">
+<button type="button" id="back-btn" onclick="showLesson()">← Revenir au cours</button>
+
+<div id="menu" aria-hidden="true">
   <div class="menu-card" onclick="showLesson()">
     <div class="icon">📖</div>
     <h3>Leçon</h3>
@@ -814,15 +1126,21 @@
         <div class="graduation-step"><span>3</span>Je compte les petits espaces, puis je partage l’écart.</div>
       </div>
       <div class="graduation-example">
-        <strong><u>Exemple 1 :</u></strong> <br>Entre <strong>20 mL</strong> et <strong>30 mL</strong>, il y a <strong>10 mL</strong> d’écart.<br>
-        S’il y a <strong>10 petits espaces</strong>, je fais : <strong>10 mL ÷ 10 = 1 mL</strong>.<br>
-        Donc une petite graduation vaut <strong>1 mL</strong>.
+        <div class="graduation-example-text">
+          <strong><u>Exemple 1 :</u></strong> <br>Entre <strong>20 mL</strong> et <strong>30 mL</strong>, il y a <strong>10 mL</strong> d’écart.<br>
+          S’il y a <strong>10 petits espaces</strong>, je fais : <strong>10 mL ÷ 10 = 1 mL</strong>.<br>
+          Donc une petite graduation vaut <strong>1 mL</strong>.
+        </div>
+        <img class="graduation-example-img" src="https://raw.githubusercontent.com/Nabo33/Images/6748af6ec09d1e01bef4dc37c490d89437187c3b/graduation.png" crossorigin="anonymous" alt="Exemple 1 : une petite graduation vaut 1 mL" onclick="openImageZoom(this.src, this.alt)">
       </div>
 
       <div class="graduation-example">
-        <strong><u>Exemple 1 :</u></strong> <br>Entre <strong>20 mL</strong> et <strong>21 mL</strong>, il y a <strong>1 mL</strong> d’écart.<br>
-        S’il y a <strong>5 petits espaces</strong>, je fais : <strong>1 mL ÷ 5 = 0,2 mL</strong>.<br>
-        Donc une petite graduation vaut <strong>0,2 mL</strong>.
+        <div class="graduation-example-text">
+          <strong><u>Exemple 2 :</u></strong> <br>Entre <strong>20 mL</strong> et <strong>21 mL</strong>, il y a <strong>1 mL</strong> d’écart.<br>
+          S’il y a <strong>5 petits espaces</strong>, je fais : <strong>1 mL ÷ 5 = 0,2 mL</strong>.<br>
+          Donc une petite graduation vaut <strong>0,2 mL</strong>.
+        </div>
+        <img class="graduation-example-img" src="https://raw.githubusercontent.com/Nabo33/Images/6748af6ec09d1e01bef4dc37c490d89437187c3b/graduation_2.png" crossorigin="anonymous" alt="Exemple 2 : une petite graduation vaut 0,2 mL" onclick="openImageZoom(this.src, this.alt)">
       </div>
     </div>
 
@@ -834,10 +1152,8 @@
 </div>
 
 <div id="game-area">
-<div class="exercise-menu-row">
-  <button type="button" class="exercise-back-menu-btn" onclick="showMenu()">← Revenir au menu</button>
-</div>
-<p class="subtitle">Analyse les graduations afin de déterminer le volume d'eau présent dans l'éprouvette graduée. Clique sur "Nouveau niveau" pour recommencer.</p>
+  <h2 class="lesson-title exercise-title"><span>🔍</span> Lire le volume</h2>
+  <p class="exercise-instruction">Analyse les graduations, repère le bas du ménisque, puis indique le volume d’eau dans l’éprouvette graduée.</p>
 
 <div class="main-layout">
   <div class="eprouvette-panel">
@@ -889,6 +1205,14 @@
 </div>
 </div>
 
+
+<div class="image-zoom-overlay" id="imageZoomOverlay" onclick="closeImageZoom(event)">
+  <div class="image-zoom-box">
+    <button type="button" class="image-zoom-close" onclick="document.getElementById('imageZoomOverlay').classList.remove('open')">×</button>
+    <img id="imageZoomImg" src="" alt="Image agrandie">
+  </div>
+</div>
+
 <img id="srcEp" src="https://raw.githubusercontent.com/Nabo33/Images/3ff2d118c280bc279f76300d6bb4fa9a02b61c52/Eprouvette%20gradu%C3%A9e%20nue.png" crossorigin="anonymous" style="display:none">
 <img id="srcMen" src="https://raw.githubusercontent.com/Nabo33/Images/1568bde5e4735db0a446fd54091c9e5042da1b16/menisque_seul%20%C3%A9troit.png" crossorigin="anonymous" style="display:none">
 
@@ -928,19 +1252,62 @@ const ctx = zoomCanvas.getContext('2d');
 const srcEp = document.getElementById('srcEp');
 const srcMen = document.getElementById('srcMen');
 
+function openImageZoom(src, alt) {
+  const overlay = document.getElementById('imageZoomOverlay');
+  const img = document.getElementById('imageZoomImg');
+  if (!overlay || !img) return;
+  img.src = src;
+  img.alt = alt || 'Image agrandie';
+  overlay.classList.add('open');
+}
+
+function closeImageZoom(event) {
+  if (event.target.id === 'imageZoomOverlay') {
+    event.currentTarget.classList.remove('open');
+  }
+}
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    const overlay = document.getElementById('imageZoomOverlay');
+    if (overlay) overlay.classList.remove('open');
+  }
+});
+
+(function buildBubbles(){
+  const c = document.getElementById('bubbles');
+  if (!c) return;
+  for (let i = 0; i < 70; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 30 + Math.random() * 70;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    b.style.top = Math.random() * 100 + '%';
+    b.style.animationDuration = (3 + Math.random() * 5) + 's';
+    b.style.animationDelay = (Math.random() * 4) + 's';
+    c.appendChild(b);
+  }
+})();
+
+
+function setActiveTab(activeId) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  const active = document.getElementById(activeId);
+  if (active) active.classList.add('active');
+}
 
 function showMenu() {
-  document.getElementById('menu').style.display = 'grid';
-  document.getElementById('lesson-area').style.display = 'none';
-  document.getElementById('game-area').style.display = 'none';
-  document.getElementById('back-btn').style.display = 'none';
+  showLesson();
 }
 
 function showLesson() {
   document.getElementById('menu').style.display = 'none';
   document.getElementById('lesson-area').style.display = 'block';
   document.getElementById('game-area').style.display = 'none';
-  document.getElementById('back-btn').style.display = 'block';
+  document.getElementById('back-btn').style.display = 'none';
+  setActiveTab('btnCours');
   document.getElementById('lesson-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -949,6 +1316,7 @@ function showExercise() {
   document.getElementById('lesson-area').style.display = 'none';
   document.getElementById('game-area').style.display = 'block';
   document.getElementById('back-btn').style.display = 'none';
+  setActiveTab('btnExercice');
   applyTubeCalibration();
   updateMeniscus(currentVolume);
   resetZoomGuideLine();
@@ -1331,7 +1699,7 @@ function init() {
   updateMeniscus(currentVolume);
   resetZoomGuideLine();
   updateScoreDisplay();
-  showMenu();
+  showLesson();
 }
 
 if (srcEp.complete && srcMen.complete) {
