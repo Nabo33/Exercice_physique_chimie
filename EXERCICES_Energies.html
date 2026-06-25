@@ -20,35 +20,52 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--texte);min
 header{position:relative;z-index:3;background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);padding:30px 18px 24px;text-align:center;box-shadow:0 4px 20px rgba(26,115,232,.30);overflow:hidden}header:after{content:"";position:absolute;inset:auto -10% -70px -10%;height:120px;background:rgba(255,255,255,.13);border-radius:50%;}
 .logo{font-size:2.8rem;display:inline-block;animation:pulse 2.2s ease-in-out infinite}@keyframes pulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.08) rotate(5deg)}}
 h1{font-family:'Fredoka One',cursive;color:#fff;font-size:clamp(1.75rem,5vw,3rem);letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.22)}header p{color:rgba(255,255,255,.9);font-weight:800;margin-top:6px}
-.tabs{position:sticky;top:0;z-index:20;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:14px 12px;background:rgba(240,244,255,.86);backdrop-filter:blur(8px)}
-.tab-btn,.mode-btn,.pill-btn{font-family:'Nunito',sans-serif;font-weight:900;border:2.5px solid transparent;border-radius:999px;background:#fff;color:var(--gris);box-shadow:var(--ombre);padding:10px 20px;cursor:pointer;transition:.22s}.tab-btn:hover,.mode-btn:hover,.pill-btn:hover{transform:translateY(-2px);box-shadow:var(--ombre-forte)}.tab-btn.active,.mode-btn.active{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.tabs{position:sticky;top:0;z-index:20;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;align-items:center;padding:14px 12px;background:rgba(240,244,255,.86);backdrop-filter:blur(8px)}
+.tab-btn,.mode-btn,.pill-btn{font-family:'Nunito',sans-serif;font-weight:900;border:2.5px solid transparent;border-radius:999px;background:#fff;color:var(--gris);box-shadow:var(--ombre);padding:10px 18px;cursor:pointer;transition:.22s}.tab-btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.15;min-height:46px;max-width:260px;white-space:normal;overflow-wrap:anywhere}.tab-btn:hover,.mode-btn:hover,.pill-btn:hover{transform:translateY(-2px);box-shadow:var(--ombre-forte)}.tab-btn.active,.mode-btn.active{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.tab-btn.exercise-entry,.tab-btn.course-entry{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#fff;border-color:#fff;box-shadow:0 6px 22px rgba(6,182,212,.30)}.tab-btn.exercise-entry:hover,.tab-btn.course-entry:hover{background:linear-gradient(135deg,#0891b2,#6d28d9)}.tab-btn.exercise-entry.active,.tab-btn.course-entry.active{background:#fff;color:var(--bleu);border-color:var(--cyan);box-shadow:0 6px 22px rgba(6,182,212,.26)}.tab-btn.exercise-entry.active:hover,.tab-btn.course-entry.active:hover{background:#fff;color:var(--bleu);border-color:var(--violet)}
 .section{display:none;position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:18px 16px 64px}.section.active{display:block;animation:fade .32s ease}@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .section-title{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.72rem;margin:10px 0 8px;display:flex;align-items:center;gap:10px}.intro{color:var(--gris);font-weight:700;margin-bottom:18px;line-height:1.55}.card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:20px;border:1px solid rgba(221,225,240,.75)}
-.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch}.definition{border-left:8px solid var(--jaune);background:linear-gradient(180deg,#fff,#fffaf0)}.definition strong{color:var(--rouge)}.note{margin-top:12px;background:var(--bleu-clair);border:2px solid #cddffc;border-radius:18px;padding:14px;font-weight:800;line-height:1.55}.verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.verb{padding:13px;border-radius:17px;font-weight:900;text-align:center}.v1{background:var(--vert-clair);color:var(--vert)}.v2{background:var(--jaune-clair);color:#8a5c00}.v3{background:var(--violet-clair);color:var(--violet)}.v4{background:var(--rose-clair);color:var(--rose)}
+.hero-grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:stretch}.definition{grid-column:1/-1;border-left:8px solid var(--jaune);background:linear-gradient(180deg,#fff,#fffaf0)}.definition strong{color:var(--rouge)}.note{margin-top:12px;background:var(--bleu-clair);border:2px solid #cddffc;border-radius:18px;padding:14px;font-weight:800;line-height:1.55}.verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.verb{padding:13px;border-radius:17px;font-weight:900;text-align:center}.v1{background:var(--vert-clair);color:var(--vert)}.v2{background:var(--jaune-clair);color:#8a5c00}.v3{background:var(--violet-clair);color:var(--violet)}.v4{background:var(--rose-clair);color:var(--rose)}
 .energy-grid{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:12px;margin-top:14px}.energy-card{background:#fff;border-radius:18px;box-shadow:var(--ombre);border:3px solid transparent;padding:14px;cursor:pointer;min-height:170px;transition:.22s;display:flex;flex-direction:column;align-items:center;text-align:center}.energy-card:hover{transform:translateY(-5px);border-color:var(--bleu);box-shadow:var(--ombre-forte)}.energy-icon{font-size:2rem;margin-bottom:7px}.energy-card h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1rem;line-height:1.2}.energy-card p{font-size:.83rem;color:var(--gris);font-weight:750;line-height:1.3;margin-top:8px}.stock{margin-top:auto;font-size:.75rem;font-weight:900;padding:4px 10px;border-radius:99px}.yes{background:var(--vert-clair);color:var(--vert)}.no{background:var(--rouge-clair);color:var(--rouge)}
 .examples{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.ex-card{background:#fff;border:1px solid var(--bord);border-radius:18px;overflow:hidden;box-shadow:var(--ombre);min-height:210px}.ex-card img{width:100%;height:118px;object-fit:contain;background:linear-gradient(180deg,#fff,#f8f9ff);padding:12px}.ex-card .txt{padding:12px}.ex-card h4{color:var(--bleu);font-weight:900;font-size:.98rem}.ex-card p{font-size:.85rem;color:var(--gris);font-weight:700;margin-top:5px;line-height:1.35}
 .source-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}.source-card{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;box-shadow:var(--ombre);padding:12px;border:1px solid var(--bord)}.source-card img{width:66px;height:66px;object-fit:contain}.source-card b{color:var(--bleu)}.source-card span{display:block;color:var(--gris);font-weight:800;font-size:.86rem;margin-top:2px}
+.confusion-card p{font-size:1rem;line-height:1.65;font-weight:400}.confusion-card strong{font-weight:900;color:var(--bleu)}
 .modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(26,26,46,.62);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px}.modal-overlay.open{display:flex}.modal{background:#fff;border-radius:26px;max-width:660px;width:100%;box-shadow:var(--ombre-forte);padding:26px;position:relative}.close{position:absolute;right:18px;top:14px;border:0;background:transparent;font-size:1.5rem;cursor:pointer;color:var(--gris)}.modal h2{font-family:'Fredoka One',cursive;color:var(--bleu);margin-bottom:10px}.modal p,.modal li{line-height:1.65;font-weight:700}.modal-img{width:150px;height:120px;object-fit:contain;float:right;margin:0 0 12px 18px;background:#f8f9ff;border-radius:18px;padding:10px;border:1px solid var(--bord)}
-.quiz-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:transparent;margin:8px 0 16px}.score{background:var(--jaune);padding:8px 17px;border-radius:99px;font-weight:900;box-shadow:var(--ombre)}.progress{flex:1;min-width:180px;height:14px;background:#dde2ee;border-radius:99px;overflow:hidden}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--bleu),var(--violet));transition:.45s}.question-card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:22px;text-align:center;min-height:190px;display:flex;flex-direction:column;justify-content:center;align-items:center}.q-label{font-weight:900;color:var(--gris);margin-bottom:9px}.q-main{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:clamp(1.35rem,4vw,2rem);line-height:1.25}.q-img{width:180px;height:130px;object-fit:contain;background:#f8f9ff;border:1px solid var(--bord);border-radius:18px;padding:10px;margin-top:10px}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.answer{font-family:'Nunito';font-weight:900;background:#fff;border:2.5px solid var(--bord);border-radius:16px;padding:14px;min-height:82px;cursor:pointer;transition:.18s;color:var(--texte);display:flex;align-items:center;justify-content:center;text-align:center;gap:10px}.answer img{width:70px;height:62px;object-fit:contain}.answer:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);transform:scale(1.02)}.answer.correct,.dropzone.correct{background:var(--vert-clair);border-color:var(--vert);color:var(--vert)}.answer.wrong,.dropzone.wrong{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge)}.answer:disabled{cursor:default}.feedback{opacity:0;min-height:55px;margin-top:14px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;padding:12px}.feedback.show{opacity:1}.feedback.ok{background:var(--vert-clair);border:1px solid var(--vert);color:var(--vert)}.feedback.ko{background:var(--rouge-clair);border:1px solid var(--rouge);color:var(--rouge)}.next-row{text-align:center;margin-top:12px}.next{display:none;background:var(--bleu);color:white;border:0;border-radius:999px;font-family:'Fredoka One';font-size:1rem;padding:12px 28px;cursor:pointer;box-shadow:0 4px 14px rgba(26,115,232,.35)}.next.show{display:inline-block}.next:hover{background:#1458b5;transform:translateY(-2px)}
-.exercise-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px 0 18px}.mode-btn{border-radius:18px;min-height:76px}.mode-btn small{display:block;font-weight:800;opacity:.85;margin-top:4px}.hidden{display:none!important}
+.quiz-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:8px 0 20px;padding:0}.quiz-question-count{font-weight:900;color:var(--texte);font-size:1rem;white-space:nowrap}.progress{flex:1;min-width:180px;background:#e0e0e0;border-radius:10px;height:12px;overflow:hidden}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--bleu),var(--violet));border-radius:10px;transition:width .5s ease}.score{background:var(--jaune);color:#333;font-weight:900;font-size:1rem;padding:6px 16px;border-radius:20px;box-shadow:none;white-space:nowrap}.question-card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:22px;text-align:center;min-height:190px;display:flex;flex-direction:column;justify-content:center;align-items:center}.q-label{font-weight:900;color:var(--gris);margin-bottom:9px}.q-main{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:clamp(1.35rem,4vw,2rem);line-height:1.25}.q-img{width:min(360px,90vw);height:260px;object-fit:contain;background:#f8f9ff;border:1px solid var(--bord);border-radius:22px;padding:12px;margin-top:14px}.image-question-card{gap:8px}.image-question-card .q-main{margin-bottom:2px}.image-caption{font-size:.9rem;color:var(--gris);font-weight:900;margin-top:2px}.qcm-question-card{gap:10px}.qcm-question-card .q-main{margin-bottom:2px}.qcm-content{font-size:1.08rem;line-height:1.45;font-weight:900;color:var(--texte);background:transparent;border:0;border-radius:0;padding:0;max-width:820px}.qcm-content.energy-name{font-family:'Fredoka One',cursive;color:var(--texte);font-size:1.18rem;background:transparent;border:0;padding:0}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}.answer{font-family:'Nunito';font-weight:900;font-size:1.12rem;line-height:1.25;background:#fff;border:2.5px solid var(--bord);border-radius:18px;padding:18px;min-height:96px;cursor:pointer;transition:.18s;color:var(--texte);display:flex;align-items:center;justify-content:center;text-align:center;gap:12px}.answer.energy-answer{color:var(--texte)}.answer img{width:70px;height:62px;object-fit:contain}.answer:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);transform:scale(1.02)}.answer.correct,.dropzone.correct{background:var(--vert-clair);border-color:var(--vert);color:var(--vert)}.answer.wrong,.dropzone.wrong{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge)}.answer:disabled{cursor:default}.feedback{opacity:0;min-height:55px;margin-top:14px;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;padding:12px}.feedback.show{opacity:1}.feedback.ok{background:var(--vert-clair);border:1px solid var(--vert);color:var(--vert)}.feedback.ko{background:var(--rouge-clair);border:1px solid var(--rouge);color:var(--rouge)}.next-row{text-align:center;margin-top:12px}.next{display:none;background:var(--bleu);color:white;border:0;border-radius:999px;font-family:'Fredoka One';font-size:1rem;padding:12px 28px;cursor:pointer;box-shadow:0 4px 14px rgba(26,115,232,.35)}.next.show{display:inline-block}.next:hover{background:#1458b5;transform:translateY(-2px)}
+.exercise-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:10px 0 18px}.mode-btn{border-radius:18px;min-height:76px}.mode-btn small{display:block;font-weight:800;opacity:.85;margin-top:4px}.simple-intro{margin-bottom:8px}.simple-menu{gap:10px}.simple-menu .mode-btn{min-height:64px;padding:10px 12px}.simple-menu .mode-btn small{font-size:.78rem}.hidden{display:none!important}
 .assoc-board{margin-top:10px;background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:16px;border:1px solid var(--bord)}.assoc-instruction{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.18rem;text-align:center;margin:0 0 14px}.assoc-help{display:none}.assoc-step{display:none}.assoc-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:16px;align-items:start}.def-list,.energy-list{display:grid;gap:7px}.assoc-col-title{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.05rem;margin-bottom:6px;text-align:center}.def-card{background:#f8f9ff;border:2.5px solid var(--bord);border-radius:14px;padding:7px 10px;min-height:54px;cursor:pointer;transition:.18s;display:grid;grid-template-columns:28px 1fr;gap:7px;align-items:center}.def-card:hover{border-color:var(--bleu);transform:translateY(-2px)}.def-card .num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bleu);color:#fff;font-family:'Fredoka One';font-size:.84rem}.def-text{font-weight:850;line-height:1.16;font-size:.89rem}.pair-chip{margin-top:5px;display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 8px;font-weight:900;font-size:.86rem;background:rgba(255,255,255,.68);border:2px solid currentColor}.def-card.assigned,.energy-choice.assigned{background:var(--pair-bg);border-color:var(--pair-border);color:var(--pair-text);box-shadow:0 4px 14px rgba(0,0,0,.10)}.def-card.selected,.energy-choice.selected{background:var(--pair-bg);border-color:var(--pair-border);color:var(--pair-text);box-shadow:0 0 0 5px rgba(26,115,232,.18),var(--ombre-forte);transform:translateY(-2px)}.def-card.correct{background:var(--vert-clair)!important;border-color:var(--vert)!important;color:var(--vert)!important}.def-card.wrong{background:var(--rouge-clair)!important;border-color:var(--rouge)!important;color:var(--rouge)!important}.energy-choice{background:#fff;border:2.5px solid var(--bord);border-radius:15px;padding:9px 12px;font-weight:900;cursor:pointer;box-shadow:var(--ombre);transition:.18s;text-align:center;color:var(--texte);min-height:44px;display:flex;align-items:center;justify-content:center}.energy-choice:hover{border-color:var(--bleu);background:var(--bleu-clair);transform:scale(1.02)}.pair-0{--pair-bg:#e8f0fe;--pair-border:#1a73e8;--pair-text:#0d47a1}.pair-1{--pair-bg:#fff8df;--pair-border:#fbbc04;--pair-text:#755100}.pair-2{--pair-bg:#e6f4ea;--pair-border:#0f9d58;--pair-text:#0b6b3d}.pair-3{--pair-bg:#fce7f3;--pair-border:#ec4899;--pair-text:#9d174d}.pair-4{--pair-bg:#e6fbff;--pair-border:#06b6d4;--pair-text:#0e7490}.pair-5{--pair-bg:#fff2e8;--pair-border:#f97316;--pair-text:#9a3412}.pair-6{--pair-bg:#ede7f6;--pair-border:#7c4dff;--pair-text:#5b21b6}.assoc-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}.reset-btn{margin-top:18px;background:#fff;color:var(--bleu);border:2.5px solid var(--bleu);border-radius:999px;padding:10px 18px;font-weight:900;cursor:pointer;box-shadow:var(--ombre)}.reset-btn:hover{background:var(--bleu-clair);transform:translateY(-2px)}.fill-card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:22px;margin-top:16px}.sentence{font-size:1.15rem;line-height:2;font-weight:850;text-align:center}.select-word{font-family:'Nunito';font-weight:900;border:2px solid var(--bord);border-radius:12px;padding:7px 10px;color:var(--bleu);background:#f8f9ff}.select-word.wrong{border-color:var(--rouge);background:var(--rouge-clair);color:var(--rouge)}.check-btn{margin-top:18px;background:var(--bleu);color:white;border:0;border-radius:999px;padding:12px 22px;font-weight:900;cursor:pointer;box-shadow:var(--ombre)}.check-btn:hover{transform:translateY(-2px)}
 .end{display:none;text-align:center;background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:28px}.end.show{display:block}.big-score{font-family:'Fredoka One';font-size:3rem;color:var(--bleu);margin:8px}.tiny{font-size:.82rem;color:var(--gris);font-weight:800}.mobile-only-note{display:none}
 @media(max-width:1020px){.energy-grid{grid-template-columns:repeat(3,1fr)}.examples,.source-grid,.exercise-menu{grid-template-columns:repeat(2,1fr)}.hero-grid{grid-template-columns:1fr}}
-@media(max-width:700px){header{padding:24px 12px 18px}.tabs{position:relative}.section{padding:14px 12px 54px}.energy-grid,.examples,.source-grid,.exercise-menu{grid-template-columns:1fr}.answers{grid-template-columns:1fr}.assoc-grid{grid-template-columns:1fr}.assoc-board{padding:12px}.def-card{grid-template-columns:30px 1fr;min-height:62px;padding:8px}.energy-choice{min-height:48px}.verbs{grid-template-columns:1fr}.modal-img{float:none;display:block;margin:0 auto 14px}.card{padding:16px}.mobile-only-note{display:block}}
+@media(max-width:700px){header{padding:24px 12px 18px}.tabs{position:relative;gap:8px;padding:12px 8px}.tab-btn{flex:1 1 100%;max-width:none;width:100%;padding:10px 12px}.section{padding:14px 12px 54px}.energy-grid,.examples,.source-grid,.exercise-menu{grid-template-columns:1fr}.answers{grid-template-columns:1fr}.q-img{width:100%;height:220px}.answer{font-size:1.05rem;min-height:82px;padding:14px}.assoc-grid{grid-template-columns:1fr}.assoc-board{padding:12px}.def-card{grid-template-columns:30px 1fr;min-height:62px;padding:8px}.energy-choice{min-height:48px}.verbs{grid-template-columns:1fr}.modal-img{float:none;display:block;margin:0 auto 14px}.card{padding:16px}.mobile-only-note{display:block}}
+
+/* ===== Ajustements ergonomiques 6e : consignes plus visibles, boutons plus courts, moins de surcharge ===== */
+.tabs{gap:10px;padding:12px 10px}.tab-btn{min-width:128px;max-width:180px;padding:9px 16px;font-size:.98rem}.tab-btn:hover,.mode-btn:hover,.pill-btn:hover{transform:translateY(-1px)}
+.exercise-title{margin-bottom:10px}.exercise-instruction{background:#fff;border-left:7px solid var(--cyan);border-radius:18px;box-shadow:0 3px 14px rgba(0,0,0,.08);padding:13px 16px;color:var(--texte);font-weight:900;max-width:920px}.quiz-bar{background:#fff;border:1px solid var(--bord);border-radius:18px;padding:12px 14px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.question-card{box-shadow:0 3px 14px rgba(0,0,0,.08);border:1px solid var(--bord);min-height:165px}.q-main{font-size:clamp(1.25rem,3.4vw,1.75rem)}.qcm-content{font-size:1.05rem}.answers.long-answers{grid-template-columns:1fr}.answers.long-answers .answer{min-height:74px;justify-content:flex-start;text-align:left}.answer{box-shadow:0 2px 10px rgba(0,0,0,.06)}.answer:hover:not(:disabled){transform:translateY(-1px)}
+.assoc-board{box-shadow:0 3px 14px rgba(0,0,0,.08)}.assoc-col-title{background:var(--bleu-clair);border-radius:14px;padding:8px 10px}.def-card,.energy-choice{box-shadow:none}.assoc-actions{padding-top:2px}.fill-card{box-shadow:0 3px 14px rgba(0,0,0,.08);border:1px solid var(--bord)}.sentence{font-size:1.2rem;line-height:2.2}.check-btn,.reset-btn,.next{box-shadow:0 3px 12px rgba(0,0,0,.12)}
+@media(max-width:900px){.tab-btn{flex:1 1 150px;max-width:none}.quiz-bar{align-items:center}.progress{order:3;flex-basis:100%}}
+@media(max-width:700px){.tab-btn{font-size:1rem}.exercise-instruction{font-size:.95rem}.quiz-bar{gap:8px}.question-card{padding:18px 14px}.answers.long-answers .answer{text-align:center;justify-content:center}.sentence{font-size:1.05rem;line-height:1.9}}
+
 </style>
 <!-- Version vérifiée : texte à trous avec […] par défaut et validation bloquée si aucun verbe choisi. -->
 </head>
 <body>
 <div class="bubbles" id="bubbles"></div>
 <header><div class="logo">⚡</div><h1>Faisons le plein d'énergies</h1><p>Sciences · Classe de 6ème</p></header>
-<nav class="tabs" aria-label="Navigation"><button class="tab-btn active" onclick="showTab('cours')">📚 Cours</button><button class="tab-btn" onclick="showTab('exercices')">🎮 Exercices</button></nav>
+<nav class="tabs" aria-label="Navigation">
+  <button class="tab-btn course-entry active" data-tab="cours" onclick="showTab('cours', this)">📚 Cours</button>
+  <button class="tab-btn exercise-entry" data-exercise="qcm" onclick="showExercise('qcm', this)">🤓 Définitions</button>
+  <button class="tab-btn exercise-entry" data-exercise="assoc" onclick="showExercise('assoc', this)">🎓 Associer</button>
+  <button class="tab-btn exercise-entry" data-exercise="images" onclick="showExercise('images', this)">🖼️ Images</button>
+  <button class="tab-btn exercise-entry" data-exercise="trous" onclick="showExercise('trous', this)">✍️ Phrase</button>
+</nav>
 
 <section class="section active" id="cours-section">
-  <h2 class="section-title">📚 Partie 1 — Comprendre l'énergie</h2>
-  <p class="intro">Cette leçon reprend uniquement les idées du cours : définition de l'énergie, formes d'énergie, transformations, transferts et sources d'énergie.</p>
+  <h2 class="section-title">📚 Définition</h2>
+  
   <div class="hero-grid">
-    <div class="card definition"><h3 class="section-title" style="font-size:1.35rem;margin-top:0">🌟 Définition essentielle</h3><p style="font-size:1.08rem;line-height:1.65;font-weight:800">En sciences, l'<strong>énergie</strong> est une grandeur physique qui permet de décrire la capacité d'un système à produire un effet : un <strong>mouvement</strong>, de la <strong>chaleur</strong> ou de la <strong>lumière</strong>.</p><div class="note">⚠️ On ne crée pas l'énergie à partir de rien : on peut seulement la <strong>transformer</strong> ou la <strong>transférer</strong>.</div></div>
-    <div class="card"><h3 class="section-title" style="font-size:1.35rem;margin-top:0">🧩 Les verbes à utiliser</h3><p class="intro" style="margin-bottom:12px">Pour construire une phrase correcte sur l'énergie, on peut utiliser :</p><div class="verbs"><div class="verb v1">Posséder ou stocker</div><div class="verb v2">Produire</div><div class="verb v3">Convertir</div><div class="verb v4">Transférer</div></div></div>
+    <div class="card definition">En sciences, l'<strong>énergie</strong> est une grandeur physique qui permet de décrire la capacité d'un système à produire un effet comme par exemple un <strong>mouvement</strong>, de la <strong>chaleur</strong> ou de la <strong>lumière</strong>.</p> ⚠️ On ne crée pas l'énergie à partir de rien : on peut seulement la <strong>transformer</strong> ou la <strong>transférer</strong>.</div></div>
+    
   </div>
 
   <h2 class="section-title" style="margin-top:28px">🔋 Les 7 formes d'énergie</h2>
@@ -58,29 +75,22 @@ h1{font-family:'Fredoka One',cursive;color:#fff;font-size:clamp(1.75rem,5vw,3rem
   <h2 class="section-title" style="margin-top:30px">🖼️ Exemples visuels</h2>
   <div class="examples" id="examplesGrid"></div>
 
-  <h2 class="section-title" style="margin-top:30px">🌍 Sources d'énergie et énergie primaire associée</h2>
-  <div class="card" style="margin-bottom:14px;border-left:8px solid var(--vert);background:linear-gradient(180deg,#fff,#f5fff8)">
-    <p style="font-size:1rem;line-height:1.65;font-weight:800;margin-bottom:10px">
-      Une <strong>source d’énergie</strong> est ce que l’on utilise dans la nature ou autour de nous pour obtenir de l’énergie : le Soleil, l’eau en mouvement, le bois, l’uranium…
+  <h2 class="section-title" style="margin-top:30px">🌍 Ne pas confondre</h2>
+  <div class="card confusion-card" style="margin-bottom:14px;border-left:8px solid var(--vert);background:linear-gradient(180deg,#fff,#f5fff8)">
+    <p style="margin-bottom:10px">
+      Ne pas confondre <strong>Energie</strong> et <strong>source d’énergie</strong>. La source d'énergie désigne uniquement ce qu'on utilise dans la nature ou autour de nous pour obtenir de l’énergie comme par exmple le Soleil, l’eau en mouvement, le bois, l’uranium…
     </p>
-    <p style="font-size:1rem;line-height:1.65;font-weight:800">
-      L’<strong>énergie primaire associée</strong> correspond à l’énergie présente au départ dans cette source. Ce n’est pas exactement la même chose que les <strong>formes d’énergie</strong> vues juste avant : les formes décrivent comment l’énergie se manifeste (lumière, chaleur, mouvement, électricité…), alors que les sources indiquent d’où vient l’énergie utilisée.
+    <p>
+      Ne pas confondre l’<strong>énergie primaire</strong> et l'<strong>énergie secondaire</strong>. L'énergie primaire correspond à l’énergie présente au départ dan sune source d'énergie. L'énergie secondaire est celle qui peut être créé par cette source à partide l'énergie primaire.
     </p>
   </div>
-  <p class="intro">Le cours associe certaines sources d'énergie à une énergie primaire.</p>
   <div class="source-grid" id="sourceGrid"></div>
 </section>
 
 <section class="section" id="exercices-section">
-  <h2 class="section-title">🎮 Partie 2 — Défis interactifs</h2>
-  <p class="intro">Choisis un défi. Les questions sont générées aléatoirement et peuvent être recommencées autant de fois que nécessaire.</p>
-  <div class="exercise-menu">
-    <button class="mode-btn active" onclick="setExercise('qcm')">⚡ QCM<small>Formes d'énergie</small></button>
-    <button class="mode-btn" onclick="setExercise('images')">🖼️ Image → énergie<small>Associer un exemple</small></button>
-    <button class="mode-btn" onclick="setExercise('assoc')">🧩 Appariement<small>Définition ↔ énergie</small></button>
-    <button class="mode-btn" onclick="setExercise('trous')">✍️ Texte à trous<small>Verbes d'action</small></button>
-  </div>
-  <div class="quiz-bar"><div class="score">⭐ Score : <span id="scoreVal">0</span></div><div class="score">🎯 Question : <span id="qCount">0</span></div><div class="progress"><div id="progressBar"></div></div></div>
+  <h2 class="section-title exercise-title" id="exerciseTitle">🤓 As-tu appris les définitions ?</h2>
+  <p class="intro exercise-instruction" id="exerciseIntro">Réponds aux questions pour vérifier que les définitions des formes d'énergie sont bien maîtrisées.</p>
+  <div class="quiz-bar"><div class="quiz-question-count">Question <span id="qCount">0 / 0</span></div><div class="progress"><div id="progressBar"></div></div><div class="score">⭐ <span id="scoreVal">0 / 0</span></div></div>
   <div id="playArea"></div>
   <div class="feedback" id="feedback"></div>
   <div class="next-row"><button class="next" id="nextBtn" onclick="nextQuestion()">Question suivante →</button></div>
@@ -151,6 +161,10 @@ const SOURCES=[
 let exercise='qcm',score=0,qCount=0,current=null,answered=false,dragAnswers=[];
 let qcmPool=[];
 let imagePool=[];
+let trousPool=[];
+const EXERCISE_LIMITS={qcm:20, images:10, trous:10};
+function isLimitedExercise(){return Object.prototype.hasOwnProperty.call(EXERCISE_LIMITS, exercise)}
+function currentLimit(){return EXERCISE_LIMITS[exercise] || null}
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
 function energyName(id){return ENERGIES.find(e=>e.id===id)?.nom||id}
 (function bubbles(){const c=document.getElementById('bubbles');for(let i=0;i<70;i++){const s=document.createElement('div');s.className='bubble';const size=30+Math.random()*70;s.style.width=size+'px';s.style.height=size+'px';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--d',(3+Math.random()*5)+'s');s.style.animationDelay=(Math.random()*4)+'s';c.appendChild(s)}})();
@@ -159,17 +173,105 @@ function buildCourse(){
  const exg=document.getElementById('examplesGrid');exg.innerHTML='';EXAMPLES.slice(0,12).forEach(x=>{const d=document.createElement('div');d.className='ex-card';d.innerHTML=`<img src="${x.img}" alt="${x.label}" loading="lazy"><div class="txt"><h4>${x.label}</h4><p>${x.phrase}</p></div>`;exg.appendChild(d)});
  const sg=document.getElementById('sourceGrid');sg.innerHTML='';SOURCES.forEach(s=>{const d=document.createElement('div');d.className='source-card';d.innerHTML=`<img src="${s.img}" alt="${s.source}" loading="lazy"><div><b>${s.source}</b><span>${s.primary}</span></div>`;sg.appendChild(d)});
 }
-function openEnergy(id){const e=ENERGIES.find(x=>x.id===id);document.getElementById('modalContent').innerHTML=`<img class="modal-img" src="${e.img}" alt="${e.nom}"><h2>${e.icon} ${e.nom}</h2><p><strong>Définition :</strong> ${e.def}</p><ul><li><strong>Stockable :</strong> ${e.stock?'oui':'non'}</li><li><strong>Elle permet de :</strong> ${e.permet}.</li><li><strong>Exemple :</strong> ${e.ex}</li></ul>`;document.getElementById('modal').classList.add('open')}
+function openEnergy(id){const e=ENERGIES.find(x=>x.id===id);document.getElementById('modalContent').innerHTML=`<img class="modal-img" src="${e.img}" alt="${e.nom}"><h2>${e.icon} ${e.nom}</h2><p><strong>Définition :</strong> ${e.def}</p><ul><li><strong>Stockable :</strong> ${e.stock?'Oui':'Non'}</li><li><strong>Exemple :</strong> ${e.ex}</li></ul>`;document.getElementById('modal').classList.add('open')}
 function closeModal(ev){if(ev.target.id==='modal')ev.currentTarget.classList.remove('open')}
-function showTab(tab){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById(tab+'-section').classList.add('active');[...document.querySelectorAll('.tab-btn')].find(b=>b.getAttribute('onclick').includes(tab)).classList.add('active');if(tab==='exercices'&&qCount===0)newRun()}
-function setExercise(m){exercise=m;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));[...document.querySelectorAll('.mode-btn')].find(b=>b.getAttribute('onclick').includes(m)).classList.add('active');newRun()}
-function resetPools(){qcmPool=[];imagePool=[]}
+const EXERCISE_TITLES={
+ qcm:'🤓 As-tu appris les définitions ?',
+ assoc:'🎓 Réviser les définitions',
+ images:'🖼️ Reconnaître les formes d’énergies',
+ trous:'✍️ Construire une phrase'
+};
+const EXERCISE_INTROS={
+ qcm:'Lis la question, puis choisis la bonne réponse. Objectif : 20 questions.',
+ assoc:'Clique sur une définition, puis clique sur la forme d’énergie qui correspond. Il n’y a pas de score : tu peux t’entraîner librement.',
+ images:'Observe l’image, puis choisis la forme d’énergie représentée. Objectif : 10 questions.',
+ trous:'Choisis le bon verbe pour compléter la phrase. Objectif : 10 questions.'
+};
+function activateNavButton(btn){
+ document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+ if(btn) btn.classList.add('active');
+}
+function showTab(tab,btn){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(tab+'-section').classList.add('active');
+ activateNavButton(btn || document.querySelector(`.tab-btn[data-tab="${tab}"]`));
+}
+function showExercise(m,btn){
+ showTab('exercices', btn || document.querySelector(`.tab-btn[data-exercise="${m}"]`));
+ setExercise(m, false);
+}
+function setExercise(m,updateNav=true){
+ exercise=(m||'qcm').toLowerCase();
+ const title=document.getElementById('exerciseTitle');
+ const intro=document.getElementById('exerciseIntro');
+ if(title) title.textContent=EXERCISE_TITLES[exercise] || '🎮 Exercices';
+ if(intro) intro.textContent=EXERCISE_INTROS[exercise] || '';
+ if(updateNav) activateNavButton(document.querySelector(`.tab-btn[data-exercise="${exercise}"]`));
+ newRun();
+}
+function resetPools(){qcmPool=[];imagePool=[];trousPool=[]}
 function newRun(){score=0;qCount=0;resetPools();updateBar();nextQuestion(true)}
-function updateBar(){document.getElementById('scoreVal').textContent=score;document.getElementById('qCount').textContent=qCount;document.getElementById('progressBar').style.width=Math.min(100,(qCount%10)*10)+'%'}
-function setFeedback(ok,msg){const f=document.getElementById('feedback');f.className='feedback show '+(ok?'ok':'ko');f.textContent=msg;document.getElementById('nextBtn').classList.add('show')}
+function updateBar(){
+ const quizBar=document.querySelector('.quiz-bar');
+ const nextBtn=document.getElementById('nextBtn');
+ if(!isLimitedExercise()){
+   quizBar.classList.add('hidden');
+   document.getElementById('progressBar').style.width='0%';
+   if(nextBtn)nextBtn.classList.remove('show');
+   return;
+ }
+ const limit=currentLimit();
+ quizBar.classList.remove('hidden');
+ document.getElementById('scoreVal').textContent=score+' / '+qCount;
+ document.getElementById('qCount').textContent=Math.min(qCount+1,limit)+' / '+limit;
+ document.getElementById('progressBar').style.width=Math.min(100,(qCount/limit)*100)+'%';
+}
+function setFeedback(ok,msg){
+ const f=document.getElementById('feedback');
+ f.className='feedback show '+(ok?'ok':'ko');
+ f.textContent=msg;
+ if(isLimitedExercise())document.getElementById('nextBtn').classList.add('show');
+}
 function clearFeedback(){const f=document.getElementById('feedback');f.className='feedback';f.textContent='';document.getElementById('nextBtn').classList.remove('show')}
-function nextQuestion(first=false){clearFeedback();answered=false;if(!first){}qCount++;updateBar();if(exercise==='qcm')renderQCM();if(exercise==='images')renderImages();if(exercise==='assoc')renderAssoc();if(exercise==='trous')renderTrous()}
-function answerButton(ok,detail){if(answered)return;answered=true;document.querySelectorAll('.answer').forEach(b=>b.disabled=true);if(ok){score++;event.currentTarget.classList.add('correct');setFeedback(true,'✅ Bravo ! '+detail)}else{event.currentTarget.classList.add('wrong');document.querySelectorAll('.answer').forEach(b=>{if(b.dataset.correct==='true')b.classList.add('correct')});setFeedback(false,'❌ Pas tout à fait… '+detail)}updateBar()}
+function nextQuestion(first=false){
+ clearFeedback();answered=false;
+ if(!isLimitedExercise()){updateBar();if(exercise==='assoc')renderAssoc();return;}
+ const limit=currentLimit();
+ if(qCount>=limit){renderEndScreen();return;}
+ updateBar();
+ if(exercise==='qcm')renderQCM();
+ if(exercise==='images')renderImages();
+ if(exercise==='trous')renderTrous();
+}
+function finishQuestion(){
+ if(!isLimitedExercise())return;
+ qCount++;
+ const limit=currentLimit();
+ document.getElementById('qCount').textContent=Math.min(qCount,limit)+' / '+limit;
+ document.getElementById('scoreVal').textContent=score+' / '+qCount;
+ document.getElementById('progressBar').style.width=Math.min(100,(qCount/limit)*100)+'%';
+ if(qCount>=limit)document.getElementById('nextBtn').textContent='Voir le résultat →';
+ else document.getElementById('nextBtn').textContent='Question suivante →';
+}
+function renderEndScreen(){
+ clearFeedback();
+ const limit=currentLimit();
+ document.getElementById('nextBtn').textContent='Question suivante →';
+ document.getElementById('qCount').textContent=limit+' / '+limit;
+ document.getElementById('scoreVal').textContent=score+' / '+limit;
+ document.getElementById('progressBar').style.width='100%';
+ document.getElementById('playArea').innerHTML=`<div class="end show"><div style="font-size:3rem">🏁</div><h2 class="section-title" style="justify-content:center">Exercice terminé !</h2><div class="big-score">${score} / ${limit}</div><p class="intro" style="margin-bottom:14px">Tu as obtenu ${score} bonne(s) réponse(s) sur ${limit} question(s).</p><button class="reset-btn" onclick="newRun()">🔄 Recommencer</button></div>`;
+}
+function takeNextFromPool(poolName, maker){
+ let pool = poolName==='qcm' ? qcmPool : poolName==='images' ? imagePool : trousPool;
+ if(pool.length===0) pool=maker();
+ const item=pool.pop();
+ if(poolName==='qcm')qcmPool=pool;
+ else if(poolName==='images')imagePool=pool;
+ else trousPool=pool;
+ return item;
+}
+function answerButton(ok,detail){if(answered)return;answered=true;document.querySelectorAll('.answer').forEach(b=>b.disabled=true);if(ok){score++;event.currentTarget.classList.add('correct');setFeedback(true,'✅ Bravo ! '+detail)}else{event.currentTarget.classList.add('wrong');document.querySelectorAll('.answer').forEach(b=>{if(b.dataset.correct==='true')b.classList.add('correct')});setFeedback(false,'❌ Pas tout à fait… '+detail)}finishQuestion()}
 function makeQcmPool(){
  const questions=[];
  ENERGIES.forEach(e=>{
@@ -190,40 +292,31 @@ function makeQcmPool(){
  });
  return shuffle(questions);
 }
-function takeFromPool(poolName, maker){
- if(poolName==='qcm'){
-   if(qcmPool.length===0) qcmPool=maker();
-   return qcmPool.pop();
- }
- if(poolName==='images'){
-   if(imagePool.length===0) imagePool=maker();
-   return imagePool.pop();
- }
-}
 function renderQCM(){
- const q=takeFromPool('qcm', makeQcmPool);
+ const q=takeNextFromPool('qcm', makeQcmPool);
  const e=ENERGIES.find(x=>x.id===q.correctId);
  let choicesHTML='';
  if(q.type==='findName'){
    const choices=shuffle([e,...shuffle(ENERGIES.filter(x=>x.id!==e.id)).slice(0,3)]);
-   choicesHTML=choices.map(c=>`<button class="answer" data-correct="${c.id===q.correctId}" onclick="answerButton(${c.id===q.correctId}, '${q.detail.replace(/'/g,'’')}')">${c.icon} ${c.nom}</button>`).join('');
+   choicesHTML=choices.map(c=>`<button class="answer energy-answer" data-correct="${c.id===q.correctId}" onclick="answerButton(${c.id===q.correctId}, '${q.detail.replace(/'/g,'’')}')">${c.icon} ${c.nom}</button>`).join('');
  }else{
    const choices=shuffle([e,...shuffle(ENERGIES.filter(x=>x.id!==e.id)).slice(0,3)]);
    choicesHTML=choices.map(c=>`<button class="answer" data-correct="${c.id===q.correctId}" onclick="answerButton(${c.id===q.correctId}, '${q.detail.replace(/'/g,'’')}')">${c.def}</button>`).join('');
  }
- document.getElementById('playArea').innerHTML=`<div class="question-card"><div class="q-label">${q.label}</div><div class="q-main">${q.main}</div></div><div class="answers">${choicesHTML}</div>`;
+ const contentClass = q.type==='findDef' ? 'qcm-content energy-name' : 'qcm-content';
+ document.getElementById('playArea').innerHTML=`<div class="question-card qcm-question-card"><div class="q-main">${q.label}</div><div class="${contentClass}">${q.main}</div></div><div class="answers ${q.type==='findDef'?'long-answers':''}">${choicesHTML}</div>`;
 }
 function makeImagePool(){return shuffle(EXAMPLES)}
 function renderImages(){
- const x=takeFromPool('images', makeImagePool);
+ const x=takeNextFromPool('images', makeImagePool);
  const correctIds=x.energies || [x.energy];
  const correctEnergies=ENERGIES.filter(e=>correctIds.includes(e.id));
  const wrongEnergies=shuffle(ENERGIES.filter(e=>!correctIds.includes(e.id))).slice(0, Math.max(0,4-correctEnergies.length));
  const choices=shuffle([...correctEnergies,...wrongEnergies]);
  const detail=x.phrase;
- document.getElementById('playArea').innerHTML=`<div class="question-card"><div class="q-label">Quelle forme d’énergie est illustrée ?</div><div class="q-main">${x.label}</div><img class="q-img" src="${x.img}" alt="${x.label}"></div><div class="answers">${choices.map(e=>{
+ document.getElementById('playArea').innerHTML=`<div class="question-card image-question-card"><div class="q-main">Quelle forme d’énergie est représentée ?</div><img class="q-img" src="${x.img}" alt="${x.label}"><div class="image-caption">${x.label}</div></div><div class="answers">${choices.map(e=>{
    const ok=correctIds.includes(e.id);
-   return `<button class="answer" data-correct="${ok}" onclick="answerButton(${ok}, '${detail.replace(/'/g,'’')}')">${e.icon} ${e.nom}</button>`;
+   return `<button class="answer energy-answer" data-correct="${ok}" onclick="answerButton(${ok}, '${detail.replace(/'/g,'’')}')">${e.icon} ${e.nom}</button>`;
  }).join('')}</div>`;
 }
 let selectedAssoc=null;
@@ -251,7 +344,6 @@ function renderAssoc(){
  lastAssocDefOrder=defs.map(x=>x.id);
  document.getElementById('playArea').innerHTML=`
  <div class="assoc-board">
-   <p class="assoc-instruction">Associe chaque définition à la bonne forme d’énergie.</p>
    <div class="assoc-grid">
      <div>
        <div class="assoc-col-title">Définitions</div>
@@ -389,7 +481,7 @@ function checkAssoc(){
  });
  const total=dragAnswers.length;
  if(filled<total){setFeedback(false,'ℹ️ Il reste une ou plusieurs associations à compléter.');return;}
- if(ok===total){answered=true;score++;setFeedback(true,'✅ Tout est correctement associé !');updateBar();}
+ if(ok===total){answered=true;setFeedback(true,'✅ Tout est correctement associé !');}
  else{setFeedback(false,`❌ ${ok}/${total} association(s) correcte(s). Modifie les cartes rouges puis vérifie à nouveau.`);}
 }
 const SENTENCES=[
@@ -400,10 +492,11 @@ const SENTENCES=[
  {text:['Une voiture en mouvement ',' de l’énergie cinétique.'],answer:'possède',choices:['possède','convertit','transfère','produit']},
  {text:['Une étoile ',' l’énergie nucléaire en énergie thermique et lumineuse.'],answer:'convertit',choices:['convertit','stocke','transfère','possède']}
 ];
+function makeTrousPool(){return shuffle(SENTENCES)}
 function renderTrous(){
- const s=shuffle(SENTENCES)[0];
+ const s=takeNextFromPool('trous', makeTrousPool);
  const options=['<option value="" selected disabled></option>', ...shuffle(s.choices).map(c=>`<option value="${c}">${c}</option>`)].join('');
- document.getElementById('playArea').innerHTML=`<div class="fill-card"><div class="q-label" style="text-align:center">Choisis le bon verbe d'action.</div><div class="sentence">${s.text[0]} <select id="wordSelect" class="select-word" onchange="this.classList.remove('wrong')">${options}</select> ${s.text[1]}</div><div style="text-align:center"><button class="check-btn" onclick="checkTrous('${s.answer}')">Vérifier</button></div></div>`
+ document.getElementById('playArea').innerHTML=`<div class="fill-card"><div class="q-label" style="text-align:center">Choisis le bon verbe.</div><div class="sentence">${s.text[0]} <select id="wordSelect" class="select-word" onchange="this.classList.remove('wrong')">${options}</select> ${s.text[1]}</div><div style="text-align:center"><button class="check-btn" onclick="checkTrous('${s.answer}')">Vérifier</button></div></div>`
 }
 function checkTrous(ans){
  if(answered)return;
@@ -417,7 +510,7 @@ function checkTrous(ans){
  answered=true;
  if(val===ans){score++;setFeedback(true,'✅ Très bien ! Le verbe est bien choisi.')}
  else setFeedback(false,`❌ Le bon verbe était : ${ans}.`);
- updateBar();
+ finishQuestion();
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('modal').classList.remove('open')});
 buildCourse();
