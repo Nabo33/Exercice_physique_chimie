@@ -17,10 +17,13 @@
     --jaune-clair: #fef9e3;
     --violet: #7c4dff;
     --violet-clair: #ede7f6;
+    --cyan: #06b6d4;
+    --cyan-clair: #e6fbff;
     --bg: #f0f4ff;
     --carte: #ffffff;
     --texte: #1a1a2e;
-    --gris: #6c757d;
+    --gris: #657085;
+    --bord: #dde1f0;
     --ombre: 0 4px 20px rgba(0,0,0,0.10);
     --ombre-forte: 0 8px 32px rgba(0,0,0,0.15);
     --radius: 20px;
@@ -62,76 +65,125 @@
 
   header {
     position: relative;
-    z-index: 10;
+    z-index: 3;
     background: linear-gradient(135deg, #1a73e8 0%, #7c4dff 100%);
-    padding: 28px 20px 22px;
+    padding: 30px 18px 24px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(26,115,232,0.3);
+    box-shadow: 0 4px 20px rgba(26,115,232,0.30);
+    overflow: hidden;
+  }
+
+  header::after {
+    content: "";
+    position: absolute;
+    left: -10%;
+    right: -10%;
+    bottom: -70px;
+    height: 120px;
+    background: rgba(255,255,255,0.13);
+    border-radius: 50%;
+  }
+
+  .logo {
+    position: relative;
+    z-index: 1;
+    font-size: 2.8rem;
+    display: inline-block;
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { transform: scale(1) rotate(-5deg); }
+    50% { transform: scale(1.08) rotate(5deg); }
   }
 
   header h1 {
+    position: relative;
+    z-index: 1;
     font-family: 'Fredoka One', cursive;
-    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-size: clamp(1.75rem, 5vw, 3rem);
     color: #fff;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.22);
   }
 
   header p {
-    color: rgba(255,255,255,0.88);
+    position: relative;
+    z-index: 1;
+    color: rgba(255,255,255,0.90);
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 800;
     margin-top: 6px;
   }
 
   .score-global {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 30px;
-    padding: 6px 18px;
-    color: #fff;
-    font-weight: 800;
-    font-size: 1.1rem;
-    margin-top: 12px;
-    backdrop-filter: blur(6px);
+    display: none;
   }
 
-  nav {
-    position: relative;
-    z-index: 10;
+  nav.tabs {
+    position: sticky;
+    top: 0;
+    z-index: 20;
     display: flex;
-    gap: 8px;
+    gap: 12px;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 16px 16px 0;
+    align-items: center;
+    padding: 14px 12px;
+    background: rgba(240,244,255,0.86);
+    backdrop-filter: blur(8px);
   }
 
   .tab-btn {
     font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    padding: 10px 20px;
-    border-radius: 50px;
+    font-weight: 900;
+    font-size: 0.95rem;
+    padding: 10px 18px;
+    border-radius: 999px;
     border: 2.5px solid transparent;
     cursor: pointer;
-    transition: all 0.25s;
-    background: var(--carte);
-    color: var(--gris);
+    transition: all 0.22s;
     box-shadow: var(--ombre);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.15;
+    min-height: 46px;
+    max-width: 230px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
-  .tab-btn:hover {
+  .tab-btn.course-entry,
+  .tab-btn.exercise-entry {
+    background: linear-gradient(135deg, var(--cyan), var(--violet));
+    color: #fff;
+    border-color: #fff;
+    box-shadow: 0 6px 22px rgba(6,182,212,0.30);
+  }
+
+  .tab-btn.course-entry:hover,
+  .tab-btn.exercise-entry:hover {
+    background: linear-gradient(135deg, #0891b2, #6d28d9);
     transform: translateY(-2px);
     box-shadow: var(--ombre-forte);
   }
 
-  .tab-btn.active {
-    background: var(--bleu);
-    color: #fff;
-    border-color: var(--bleu);
-    transform: translateY(-2px);
+  .tab-btn.course-entry.active,
+  .tab-btn.exercise-entry.active {
+    background: #fff;
+    color: var(--bleu);
+    border-color: var(--cyan);
+    box-shadow: 0 6px 22px rgba(6,182,212,0.26);
+    transform: none;
+  }
+
+  .tab-btn.course-entry.active:hover,
+  .tab-btn.exercise-entry.active:hover {
+    background: #fff;
+    color: var(--bleu);
+    border-color: var(--violet);
   }
 
   .section { display: none; }
@@ -149,16 +201,16 @@
   main {
     position: relative;
     z-index: 5;
-    max-width: 1100px;
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 20px 16px 60px;
+    padding: 18px 16px 64px;
   }
 
   .section-title {
     font-family: 'Fredoka One', cursive;
-    font-size: 1.7rem;
+    font-size: 1.72rem;
     color: var(--bleu);
-    margin-bottom: 16px;
+    margin: 10px 0 8px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -166,26 +218,36 @@
 
   .section-title span { font-size: 1.5rem; }
 
+  .intro {
+    color: var(--gris);
+    font-weight: 700;
+    margin-bottom: 18px;
+    line-height: 1.55;
+  }
+
   /* ===== CARTES / IMAGES ===== */
   .instruments-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 18px;
-    margin-top: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
   }
 
   .instrument-card {
-    background: var(--carte);
-    border-radius: var(--radius);
+    background: #fff;
+    border: 1px solid var(--bord);
+    border-radius: 18px;
     box-shadow: var(--ombre);
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s;
-    border: 3px solid transparent;
+    transition: all 0.22s;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
   }
 
   .instrument-card:hover {
-    transform: translateY(-6px) scale(1.02);
+    transform: translateY(-5px);
     box-shadow: var(--ombre-forte);
     border-color: var(--bleu);
   }
@@ -204,8 +266,10 @@
 
   .card-img {
     width: 100%;
-    height: 200px;
-    padding: 16px;
+    height: 126px;
+    padding: 12px;
+    background: linear-gradient(180deg,#fff,#f8f9ff);
+    margin-bottom: 0;
   }
 
   .modal-img {
@@ -216,16 +280,16 @@
   }
 
   .img-frame {
-    width: 150px;
-    height: 150px;
+    width: 104px;
+    height: 104px;
     background: #ffffff;
     border: 1px solid var(--cadre-bord);
     border-radius: 18px;
-    box-shadow: var(--cadre-ombre);
+    box-shadow: 0 5px 14px rgba(0,0,0,0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 10px;
     overflow: hidden;
   }
 
@@ -263,26 +327,30 @@
   }
 
   .card-body {
-    padding: 14px 14px 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .card-body h3 {
     font-family: 'Fredoka One', cursive;
-    font-size: 1.08rem;
+    font-size: 1rem;
     color: var(--bleu);
     margin-bottom: 6px;
-    line-height: 1.3;
+    line-height: 1.2;
   }
 
   .card-body p {
-    font-size: 0.85rem;
+    font-size: 0.83rem;
     color: var(--gris);
-    line-height: 1.5;
-    min-height: 64px;
+    font-weight: 700;
+    line-height: 1.35;
+    min-height: 70px;
   }
 
   .card-body .utilise {
-    margin-top: 10px;
+    margin-top: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
@@ -292,9 +360,9 @@
     background: var(--bleu-clair);
     color: var(--bleu);
     font-size: 0.75rem;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 20px;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 99px;
   }
 
   /* ===== MODAL ===== */
@@ -536,29 +604,138 @@
     margin-bottom: 20px;
   }
 
-  /* ===== DRAG ===== */
-  .drag-instructions {
-    background: var(--jaune-clair);
-    border-left: 4px solid var(--jaune);
-    border-radius: 12px;
-    padding: 12px 16px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #5c4200;
+
+  /* ===== ERGONOMIE HARMONISÉE ===== */
+  .exercise-instruction {
+    background: #fff;
+    border-left: 7px solid var(--cyan);
+    border-radius: 18px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+    padding: 13px 16px;
+    color: var(--texte);
+    font-weight: 900;
+    max-width: 920px;
+    margin: 0 0 16px;
+    line-height: 1.45;
   }
 
+  .quiz-header {
+    background: #fff;
+    border: 1px solid var(--cadre-bord);
+    border-radius: 18px;
+    padding: 12px 14px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
+    font-weight: 900;
+  }
+
+  .progress-bar-wrap {
+    background: #dde2ee;
+    height: 14px;
+    border-radius: 999px;
+  }
+
+  .progress-bar-fill {
+    background: linear-gradient(90deg, var(--bleu), var(--violet));
+    border-radius: 999px;
+  }
+
+  .quiz-score-badge {
+    background: var(--jaune);
+    color: #333;
+    font-weight: 900;
+    border-radius: 999px;
+    padding: 8px 17px;
+    box-shadow: var(--ombre);
+  }
+
+  .quiz-card,
+  .images-pool,
+  .labels-list,
+  .words-to-find,
+  .grid-container {
+    box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+    border: 1px solid var(--cadre-bord);
+  }
+
+  .quiz-question {
+    color: var(--bleu);
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.15rem, 3vw, 1.55rem);
+    margin-bottom: 14px;
+  }
+
+  .choice-btn {
+    font-weight: 900;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+
+  .choice-btn:hover:not(:disabled),
+  .instrument-card:hover,
+  .drag-item:hover,
+  .next-btn:hover,
+  .restart-btn:hover,
+  .check-btn:hover,
+  .reset-drag-btn:hover,
+  .restart-word-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .drag-instructions {
+    background: #fff;
+    border-left: 7px solid var(--cyan);
+    border-radius: 18px;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+    padding: 13px 16px;
+    color: var(--texte);
+    font-weight: 900;
+    margin-bottom: 16px;
+    line-height: 1.45;
+  }
+
+  .images-pool h3,
+  .labels-list h3,
+  .words-to-find h3 {
+    background: var(--bleu-clair);
+    border-radius: 14px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+
+  .drag-item,
+  .drop-target,
+  .choice-btn {
+    border-radius: 16px;
+  }
+
+  @media (max-width: 900px) {
+    .tab-btn { flex: 1 1 140px; max-width: none; }
+    .quiz-header { align-items: center; }
+    .progress-bar-wrap { order: 3; flex-basis: 100%; }
+  }
+
+  @media (max-width: 700px) {
+    nav.tabs { position: relative; }
+    .tab-btn { font-size: 1rem; }
+    .exercise-instruction,
+    .drag-instructions { font-size: 0.95rem; }
+    .quiz-card { padding: 16px 14px; }
+  }
+
+  /* ===== ASSOCIATION AU CLIC - VERSION MOBILE ===== */
   .drag-zone {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    align-items: start;
   }
 
-  @media (max-width: 700px) {
-    .drag-zone,
-    .quiz-choices {
-      grid-template-columns: 1fr;
-    }
+  .click-assoc-grid,
+  .click-assoc-labels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
 
   .images-pool,
@@ -580,21 +757,74 @@
   .images-pool h3 { color: var(--violet); }
   .labels-list h3 { color: var(--vert); }
 
-
-
-  .drop-target.drag-over {
-    background: var(--vert-clair);
-    border-color: var(--vert);
+  .drag-item.assoc-card,
+  .drop-target.assoc-card {
+    height: auto;
+    min-height: 86px;
+    cursor: pointer;
+    border: 2.5px solid var(--cadre-bord);
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    transition: all 0.18s ease;
   }
 
-  .drop-target.correct-drop {
-    border-color: var(--vert);
-    background: var(--vert-clair);
+  .drag-item.assoc-card {
+    background: #fff;
+    padding: 10px;
+    text-align: center;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
   }
 
-  .drop-target.wrong-drop {
-    border-color: var(--rouge);
-    background: var(--rouge-clair);
+  .drag-item.assoc-card .img-frame {
+    width: 76px;
+    height: 76px;
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+  }
+
+  .drop-target.assoc-card {
+    background: #fff;
+    border-style: solid;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .assoc-card:hover {
+    border-color: var(--bleu);
+    background: var(--bleu-clair);
+  }
+
+  .assoc-card.selected {
+    border-color: var(--bleu);
+    box-shadow: 0 0 0 5px rgba(26,115,232,0.16), 0 3px 14px rgba(0,0,0,0.10);
+  }
+
+  .assoc-card.assigned {
+    background: var(--pair-bg);
+    border-color: var(--pair-border);
+    color: var(--pair-text);
+  }
+
+  .assoc-card.correct-drop {
+    background: var(--vert-clair) !important;
+    border-color: var(--vert) !important;
+    color: var(--vert) !important;
+  }
+
+  .assoc-card.wrong-drop {
+    background: var(--rouge-clair) !important;
+    border-color: var(--rouge) !important;
+    color: var(--rouge) !important;
     animation: shake 0.4s;
   }
 
@@ -604,17 +834,23 @@
     75% { transform:translateX(6px); }
   }
 
-  .drop-slot .img-frame {
-    width: 68px;
-    height: 68px;
-    border-radius: 12px;
-    padding: 6px;
+  .assoc-choice-chip {
+    min-height: 22px;
+    font-size: 0.78rem;
+    font-weight: 900;
+    line-height: 1.15;
+    text-align: center;
   }
 
+  .assoc-label-name {
+    font-weight: 900;
+    font-size: 0.9rem;
+    line-height: 1.25;
+  }
 
   .drop-result-icon {
-    font-size: 1.4rem;
-    margin-left: 4px;
+    font-size: 1.1rem;
+    margin-left: 2px;
   }
 
   .drag-actions {
@@ -641,139 +877,12 @@
     box-shadow: 0 4px 14px rgba(15,157,88,0.3);
   }
 
-  .check-btn:hover {
-    background: #0a7a43;
-    transform: translateY(-2px);
-  }
-
   .reset-drag-btn {
     background: #f0f0f0;
     color: var(--gris);
   }
 
-  .reset-drag-btn:hover {
-    background: #e0e0e0;
-  }
-
-.drag-items-grid,
-#dropTargets {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.drag-item,
-.drop-target {
-  height: 88px;
-  border-radius: 12px;
-  transition: all 0.2s;
-}
-
-.drag-item {
-  background: var(--violet-clair);
-  padding: 8px;
-  text-align: center;
-  cursor: grab;
-  border: 2px solid transparent;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.drag-item:hover {
-  border-color: var(--violet);
-  transform: scale(1.03);
-}
-
-.drag-item.dragging {
-  opacity: 0.4;
-}
-
-.drag-item .img-frame {
-  width: 68px;
-  height: 68px;
-  border-radius: 12px;
-  padding: 6px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
-}
-
-.drag-item img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-}
-
-.drag-item .emoji-fallback {
-  font-size: 1.8rem;
-  pointer-events: none;
-}
-
-.drag-item.placed {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.drop-target {
-  background: #f8fffe;
-  border: 2.5px dashed #a8d5c2;
-  padding: 8px 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-  margin-bottom: 0;
-}
-
-.drop-label-name {
-  font-weight: 700;
-  font-size: 0.78rem;
-  line-height: 1.2;
-  color: var(--texte);
-  flex: 1;
-}
-
-.drop-slot {
-  width: 68px;
-  height: 68px;
-  background: rgba(255,255,255,0.95);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.drop-slot .img-frame {
-  width: 68px;
-  height: 68px;
-  border-radius: 12px;
-  padding: 6px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
-}
-
-.drop-slot img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.drop-slot .emoji-fallback {
-  font-size: 1.8rem;
-}
-
-.drop-result-icon {
-  font-size: 1rem;
-  margin-left: 2px;
-}
-
-@media (max-width: 700px) {
-  .drag-items-grid,
-  #dropTargets {
-    grid-template-columns: 1fr;
-  }
-}
+  .reset-drag-btn:hover { background: #e0e0e0; }
 
   .drag-score {
     font-weight: 800;
@@ -784,7 +893,50 @@
     align-items: center;
   }
 
-  /* ===== MOTS MÊLÉS ===== */
+  .pair-0{--pair-bg:#e8f0fe;--pair-border:#1a73e8;--pair-text:#0d47a1}
+  .pair-1{--pair-bg:#fff8df;--pair-border:#fbbc04;--pair-text:#755100}
+  .pair-2{--pair-bg:#e6f4ea;--pair-border:#0f9d58;--pair-text:#0b6b3d}
+  .pair-3{--pair-bg:#fce7f3;--pair-border:#ec4899;--pair-text:#9d174d}
+  .pair-4{--pair-bg:#e6fbff;--pair-border:#06b6d4;--pair-text:#0e7490}
+  .pair-5{--pair-bg:#fff2e8;--pair-border:#f97316;--pair-text:#9a3412}
+  .pair-6{--pair-bg:#ede7f6;--pair-border:#7c4dff;--pair-text:#5b21b6}
+  .pair-7{--pair-bg:#f0fdf4;--pair-border:#22c55e;--pair-text:#166534}
+
+  @media (max-width: 700px) {
+    .drag-zone,
+    .quiz-choices {
+      grid-template-columns: 1fr;
+    }
+    .click-assoc-grid,
+    .click-assoc-labels {
+      grid-template-columns: 1fr;
+    }
+    .drag-zone {
+      gap: 14px;
+    }
+    .drag-item.assoc-card {
+      min-height: 78px;
+      flex-direction: row;
+      justify-content: flex-start;
+      text-align: left;
+    }
+    .drag-item.assoc-card .img-frame {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+    }
+    .assoc-choice-chip {
+      text-align: left;
+      font-size: 0.86rem;
+    }
+    .drag-score {
+      width: 100%;
+      margin-left: 0;
+      justify-content: center;
+    }
+  }
+
+/* ===== MOTS MÊLÉS ===== */
 .word-search-wrap {
   display: grid;
   grid-template-columns: max-content max-content;
@@ -908,6 +1060,21 @@
     0% { transform: translateY(0) scale(0); opacity: 1; }
     100% { transform: translateY(-80px) scale(1.5); opacity: 0; }
   }
+
+
+  /* Harmonisation avec le fichier Énergies */
+  @media (max-width: 1020px) {
+    .instruments-grid { grid-template-columns: repeat(3, minmax(160px, 1fr)); }
+  }
+
+  @media (max-width: 700px) {
+    main { padding: 14px 12px 54px; }
+    .instruments-grid { grid-template-columns: 1fr; }
+    .instrument-card { min-height: auto; }
+    .card-img { height: 132px; }
+    .card-body p { min-height: auto; }
+  }
+
 </style>
 </head>
 <body>
@@ -915,31 +1082,27 @@
 <div class="bg-bubbles" id="bubbles"></div>
 <div class="floating-stars" id="floatingStars"></div>
 
-<header>
-  <h1>🔬 Le matériel de laboratoire 🧪</h1>
-  <p>Cours interactif — Sciences 6ème</p>
-  <div class="score-global">⭐ Score total : <span id="totalScore">0</span> pts / <span id="totalMax">0</span> pts</div>
-</header>
+<header><div class="logo">🔬</div><h1>Le matériel de laboratoire</h1><p>Sciences · Classe de 6ème</p></header>
+<div class="score-global" aria-hidden="true">⭐ Score total : <span id="totalScore">0</span> pts / <span id="totalMax">0</span> pts</div>
 
-<nav>
-  <button class="tab-btn active" onclick="showTab('cours', this)">📚 Cours</button>
-  <button class="tab-btn" onclick="showTab('quiz', this)">❓ Quiz</button>
-  <button class="tab-btn" onclick="showTab('drag', this)">🖱️ Associer</button>
-  <button class="tab-btn" onclick="showTab('mots', this)">🔤 Jeu - Mots mêlés</button>
+<nav class="tabs" aria-label="Navigation">
+  <button class="tab-btn course-entry active" onclick="showTab('cours', this)">📚 Cours</button>
+  <button class="tab-btn exercise-entry" onclick="showTab('quiz', this)">❓ Quiz</button>
+  <button class="tab-btn exercise-entry" onclick="showTab('drag', this)">🖱️ Associer</button>
+  <button class="tab-btn exercise-entry" onclick="showTab('mots', this)">🔤 Mots</button>
 </nav>
 
 <main>
 
   <div class="section active" id="tab-cours">
     <div class="section-title"><span>📖</span> Les instruments de verrerie</div>
-    <p style="margin-bottom:18px; color:var(--gris); font-size:0.95rem;">
-      Clique sur un instrument pour en savoir plus !
-    </p>
+    <p class="intro">Clique sur une carte pour afficher davantage d'informations et les utilisations de chaque instrument.</p>
     <div class="instruments-grid" id="cours-grid"></div>
   </div>
 
   <div class="section" id="tab-quiz">
     <div class="section-title"><span>🧪</span> Quiz — Reconnais l'instrument !</div>
+    <div class="exercise-instruction">Observe l’image, puis choisis le bon nom d’instrument.</div>
     <div class="quiz-header">
       <div>Question <span id="qNum">1</span> / <span id="qTotal">10</span></div>
       <div class="progress-bar-wrap">
@@ -969,18 +1132,18 @@
   <div class="section" id="tab-drag">
     <div class="section-title"><span>🎯</span> Associe l'image au nom</div>
     <div class="drag-instructions">
-      💡 <strong>Comment jouer :</strong> Fais glisser chaque image vers le bon nom d'instrument dans la liste à droite. Clique sur <em>Vérifier</em> quand tu as terminé !
+      Clique sur une image, puis clique sur le nom d’instrument qui correspond. Tu peux modifier une association en recliquant sur une carte.
     </div>
 
     <div class="drag-zone">
       <div class="images-pool">
         <h3>🖼️ Images</h3>
-        <div class="drag-items-grid" id="dragItemsGrid"></div>
+        <div class="drag-items-grid click-assoc-grid" id="dragItemsGrid"></div>
       </div>
 
       <div class="labels-list">
         <h3>🏷️ Noms</h3>
-        <div id="dropTargets"></div>
+        <div id="dropTargets" class="click-assoc-labels"></div>
       </div>
     </div>
 
@@ -993,9 +1156,7 @@
 
   <div class="section" id="tab-mots">
     <div class="section-title"><span>🔤</span> Mots mêlés — Trouve les instruments !</div>
-    <p style="margin-bottom:16px; color:var(--gris); font-size:0.9rem;">
-      Clique sur la première lettre, puis sur la dernière lettre du mot à trouver.
-    </p>
+    <div class="exercise-instruction">Clique sur la première lettre du mot, puis sur sa dernière lettre.</div>
 
     <div class="word-search-wrap">
       <div class="grid-container">
@@ -1240,8 +1401,10 @@ function addGlobalScore(pts, x, y) {
 }
 
 function updateGlobalDisplay() {
-  document.getElementById('totalScore').textContent = globalScore;
-  document.getElementById('totalMax').textContent = globalMaxReached;
+  const totalScoreEl = document.getElementById('totalScore');
+  const totalMaxEl = document.getElementById('totalMax');
+  if (totalScoreEl) totalScoreEl.textContent = globalScore;
+  if (totalMaxEl) totalMaxEl.textContent = globalMaxReached;
 }
 
 function addGlobalMax(pts) {
@@ -1472,12 +1635,18 @@ function showResult() {
   document.getElementById('quizResult').style.display = 'block';
 }
 
-/* ===== DRAG ===== */
-let dragSrc = null;
+/* ===== ASSOCIATION AU CLIC ===== */
 let dragPairs = [];
+let assocSelected = null;
+let assocColorCounter = 0;
+let dragMaxAdded = false;
+const ASSOC_COLOR_CLASSES = ['pair-0','pair-1','pair-2','pair-3','pair-4','pair-5','pair-6','pair-7'];
 
 function buildDrag() {
   dragPairs = [...instruments].sort(() => Math.random() - 0.5).slice(0, Math.min(8, instruments.length));
+  assocSelected = null;
+  assocColorCounter = 0;
+  dragMaxAdded = false;
 
   const shuffledImages = [...dragPairs].sort(() => Math.random() - 0.5);
   const shuffledLabels = [...dragPairs].sort(() => Math.random() - 0.5);
@@ -1486,25 +1655,15 @@ function buildDrag() {
   grid.innerHTML = '';
 
   shuffledImages.forEach(inst => {
-    const item = document.createElement('div');
-    item.className = 'drag-item';
-    item.draggable = true;
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'drag-item assoc-card assoc-click-item';
+    item.dataset.type = 'image';
     item.dataset.id = inst.id;
-    item.innerHTML = imageHTML(inst);
-
-    item.addEventListener('dragstart', () => {
-      dragSrc = item;
-      item.classList.add('dragging');
-    });
-
-    item.addEventListener('dragend', () => {
-      item.classList.remove('dragging');
-    });
-
-    item.addEventListener('touchstart', touchStart, { passive: true });
-    item.addEventListener('touchmove', touchMove, { passive: false });
-    item.addEventListener('touchend', touchEnd);
-
+    item.dataset.choice = '';
+    item.dataset.pair = '';
+    item.onclick = () => clickAssocCard('image', inst.id);
+    item.innerHTML = `${imageHTML(inst)}<div class="assoc-choice-chip" id="chip-img-${inst.id}">Choisis un nom</div>`;
     grid.appendChild(item);
   });
 
@@ -1512,123 +1671,187 @@ function buildDrag() {
   targets.innerHTML = '';
 
   shuffledLabels.forEach(inst => {
-    const target = document.createElement('div');
-    target.className = 'drop-target';
+    const target = document.createElement('button');
+    target.type = 'button';
+    target.className = 'drop-target assoc-card assoc-click-item';
+    target.dataset.type = 'label';
     target.dataset.id = inst.id;
-    target.innerHTML = `
-      <div class="drop-slot" id="slot-${inst.id}">
-        <span style="color:#ccc;font-size:0.65rem">ici</span>
-      </div>
-      <div class="drop-label-name">${inst.nom}</div>
-      <span class="drop-result-icon" id="icon-${inst.id}"></span>
-    `;
-
-    target.addEventListener('dragover', e => {
-      e.preventDefault();
-      target.classList.add('drag-over');
-    });
-
-    target.addEventListener('dragleave', () => target.classList.remove('drag-over'));
-
-    target.addEventListener('drop', e => {
-      e.preventDefault();
-      target.classList.remove('drag-over');
-
-      if (dragSrc && !target.dataset.filled) {
-        const slot = document.getElementById('slot-' + inst.id);
-        slot.innerHTML = imageHTML(dragPairs.find(i => i.id === dragSrc.dataset.id));
-        target.dataset.dropped = dragSrc.dataset.id;
-        target.dataset.filled = '1';
-        dragSrc.classList.add('placed');
-        dragSrc.draggable = false;
-        dragSrc = null;
-      }
-    });
-
+    target.dataset.choice = '';
+    target.dataset.pair = '';
+    target.onclick = () => clickAssocCard('label', inst.id);
+    target.innerHTML = `<span class="assoc-label-name">${inst.nom}</span><span class="drop-result-icon" id="icon-${inst.id}"></span>`;
     targets.appendChild(target);
   });
 
-  document.getElementById('dragScore').style.display = 'none';
+  const sd = document.getElementById('dragScore');
+  sd.style.display = 'none';
+  sd.innerHTML = '✅ <span id="dragScoreVal">0</span>/8 corrects !';
 }
 
-let touchDragItem = null;
-let touchClone = null;
-
-function touchStart(e) {
-  touchDragItem = e.currentTarget;
-  touchClone = touchDragItem.cloneNode(true);
-  touchClone.style.cssText = 'position:fixed; opacity:0.7; pointer-events:none; z-index:9999; width:90px;';
-  document.body.appendChild(touchClone);
+function getAssocCard(type, id) {
+  return document.querySelector(`.assoc-click-item[data-type="${type}"][data-id="${id}"]`);
 }
 
-function touchMove(e) {
-  if (!touchClone) return;
-  e.preventDefault();
+function removeAssocPairClasses(el) {
+  ASSOC_COLOR_CLASSES.forEach(c => el.classList.remove(c));
+}
 
-  const t = e.touches[0];
-  touchClone.style.left = (t.clientX - 45) + 'px';
-  touchClone.style.top = (t.clientY - 45) + 'px';
+function nextAssocColor() {
+  const used = [...document.querySelectorAll('.assoc-click-item.assigned')]
+    .map(el => el.dataset.pair)
+    .filter(Boolean);
+  const available = ASSOC_COLOR_CLASSES.find(c => !used.includes(c));
+  if (available) return available;
+  const c = ASSOC_COLOR_CLASSES[assocColorCounter % ASSOC_COLOR_CLASSES.length];
+  assocColorCounter++;
+  return c;
+}
 
-  document.querySelectorAll('.drop-target').forEach(dt => {
-    const r = dt.getBoundingClientRect();
-    if (t.clientX > r.left && t.clientX < r.right && t.clientY > r.top && t.clientY < r.bottom) {
-      dt.classList.add('drag-over');
-    } else {
-      dt.classList.remove('drag-over');
+function clearSelection() {
+  document.querySelectorAll('.assoc-click-item.selected').forEach(el => el.classList.remove('selected'));
+  assocSelected = null;
+}
+
+function clearPairFromElement(el) {
+  if (!el) return;
+  const type = el.dataset.type;
+  const id = el.dataset.id;
+  const linkedId = el.dataset.choice;
+
+  if (linkedId) {
+    const other = getAssocCard(type === 'image' ? 'label' : 'image', linkedId);
+    if (other) {
+      other.dataset.choice = '';
+      other.dataset.pair = '';
+      other.classList.remove('assigned','selected','correct-drop','wrong-drop');
+      removeAssocPairClasses(other);
+      const otherIcon = document.getElementById('icon-' + other.dataset.id);
+      if (otherIcon) otherIcon.textContent = '';
+      if (other.dataset.type === 'image') {
+        const chip = document.getElementById('chip-img-' + other.dataset.id);
+        if (chip) chip.textContent = 'Choisis un nom';
+      }
+    }
+  }
+
+  el.dataset.choice = '';
+  el.dataset.pair = '';
+  el.classList.remove('assigned','selected','correct-drop','wrong-drop');
+  removeAssocPairClasses(el);
+  const icon = document.getElementById('icon-' + id);
+  if (icon) icon.textContent = '';
+  if (type === 'image') {
+    const chip = document.getElementById('chip-img-' + id);
+    if (chip) chip.textContent = 'Choisis un nom';
+  }
+}
+
+function assignPair(imageId, labelId) {
+  const imageEl = getAssocCard('image', imageId);
+  const labelEl = getAssocCard('label', labelId);
+  if (!imageEl || !labelEl) return;
+
+  clearPairFromElement(imageEl);
+  clearPairFromElement(labelEl);
+
+  const colorClass = nextAssocColor();
+  [imageEl, labelEl].forEach(el => {
+    el.dataset.pair = colorClass;
+    el.classList.add('assigned', colorClass);
+    el.classList.remove('selected','correct-drop','wrong-drop');
+  });
+
+  imageEl.dataset.choice = labelId;
+  labelEl.dataset.choice = imageId;
+
+  const inst = dragPairs.find(i => i.id === labelId);
+  const chip = document.getElementById('chip-img-' + imageId);
+  if (chip) chip.textContent = inst ? inst.nom : 'Nom choisi';
+
+  const icon = document.getElementById('icon-' + labelId);
+  if (icon) icon.textContent = '🔗';
+}
+
+function clickAssocCard(type, id) {
+  const clicked = getAssocCard(type, id);
+  if (!clicked) return;
+
+  document.querySelectorAll('.assoc-click-item.correct-drop, .assoc-click-item.wrong-drop').forEach(el => {
+    el.classList.remove('correct-drop','wrong-drop');
+  });
+  document.querySelectorAll('.drop-result-icon').forEach(icon => {
+    if (icon.textContent === '✅' || icon.textContent === '❌') {
+      const card = icon.closest('.assoc-card');
+      icon.textContent = card && card.dataset.choice ? '🔗' : '';
     }
   });
-}
 
-function touchEnd(e) {
-  if (!touchClone) return;
+  if (!assocSelected) {
+    clearSelection();
+    assocSelected = {type, id};
+    clicked.classList.add('selected');
+    return;
+  }
 
-  const t = e.changedTouches[0];
-  document.querySelectorAll('.drop-target').forEach(dt => {
-    const r = dt.getBoundingClientRect();
-    if (t.clientX > r.left && t.clientX < r.right && t.clientY > r.top && t.clientY < r.bottom && !dt.dataset.filled) {
-      const slot = document.getElementById('slot-' + dt.dataset.id);
-      slot.innerHTML = imageHTML(dragPairs.find(i => i.id === touchDragItem.dataset.id));
-      dt.dataset.dropped = touchDragItem.dataset.id;
-      dt.dataset.filled = '1';
-      touchDragItem.classList.add('placed');
-      touchDragItem.draggable = false;
-    }
-    dt.classList.remove('drag-over');
-  });
+  if (assocSelected.type === type && assocSelected.id === id) {
+    clearSelection();
+    return;
+  }
 
-  touchClone.remove();
-  touchClone = null;
-  touchDragItem = null;
+  if (assocSelected.type === type) {
+    clearSelection();
+    assocSelected = {type, id};
+    clicked.classList.add('selected');
+    return;
+  }
+
+  const imageId = type === 'image' ? id : assocSelected.id;
+  const labelId = type === 'label' ? id : assocSelected.id;
+  assignPair(imageId, labelId);
+  clearSelection();
 }
 
 function checkDrag() {
   let correct = 0;
+  const total = dragPairs.length;
+  let filled = 0;
 
-  addGlobalMax(dragPairs.length * 5);
+  if (!dragMaxAdded) {
+    addGlobalMax(total * 5);
+    dragMaxAdded = true;
+  }
 
-  document.querySelectorAll('.drop-target').forEach(dt => {
-    const icon = document.getElementById('icon-' + dt.dataset.id);
-    dt.classList.remove('correct-drop', 'wrong-drop');
+  document.querySelectorAll('.assoc-click-item').forEach(el => el.classList.remove('correct-drop','wrong-drop'));
 
-    if (!dt.dataset.dropped) {
-      icon.textContent = '';
-      return;
-    }
+  dragPairs.forEach(inst => {
+    const imageEl = getAssocCard('image', inst.id);
+    const chosenLabel = imageEl ? imageEl.dataset.choice : '';
+    if (!chosenLabel) return;
+    filled++;
+    const labelEl = getAssocCard('label', chosenLabel);
+    const icon = document.getElementById('icon-' + chosenLabel);
 
-    if (dt.dataset.dropped === dt.dataset.id) {
-      dt.classList.add('correct-drop');
-      icon.textContent = '✅';
+    if (chosenLabel === inst.id) {
+      imageEl.classList.add('correct-drop');
+      if (labelEl) labelEl.classList.add('correct-drop');
+      if (icon) icon.textContent = '✅';
       correct++;
     } else {
-      dt.classList.add('wrong-drop');
-      icon.textContent = '❌';
+      imageEl.classList.add('wrong-drop');
+      if (labelEl) labelEl.classList.add('wrong-drop');
+      if (icon) icon.textContent = '❌';
     }
   });
 
   const sd = document.getElementById('dragScore');
   sd.style.display = 'flex';
-  document.getElementById('dragScoreVal').textContent = correct;
 
+  if (filled < total) {
+    sd.innerHTML = `ℹ️ ${filled}/${total} association(s) complétée(s).`;
+    return;
+  }
+
+  sd.innerHTML = `✅ <span id="dragScoreVal">${correct}</span>/${total} corrects !`;
   if (correct > 0) addGlobalScore(correct * 5, 400, 400);
 }
 
