@@ -546,6 +546,1112 @@
     .lesson-grid { grid-template-columns:1fr; }
     .modal-box { padding:26px 22px; }
   }
+/* =========================================================
+   THÈME ÉLECTRICITÉ — Nuit / bleu / vert électrique
+   Harmonisation ergonomie : bandeau, boutons, quiz, progression
+   ========================================================= */
+:root{
+  --nuit:#0f172a;
+  --bleu-elec:#2563eb;
+  --vert-elec:#22c55e;
+  --cyan-elec:#06b6d4;
+  --degrade-elec:linear-gradient(135deg,#0f172a 0%,#2563eb 52%,#22c55e 100%);
+  --degrade-elec-hover:linear-gradient(135deg,#020617 0%,#1d4ed8 52%,#16a34a 100%);
+  --degrade-progress:linear-gradient(90deg,#0f172a 0%,#2563eb 55%,#22c55e 100%);
+}
+
+/* Fond général */
+body{
+  background:#f0f4ff !important;
+  font-family:'Nunito',sans-serif !important;
+}
+
+/* Bulles/fond animé adaptés au thème électrique */
+.star{
+  background:var(--degrade-elec) !important;
+  opacity:.06 !important;
+}
+
+/* Bandeau */
+header{
+  position:relative !important;
+  z-index:10 !important;
+  background:var(--degrade-elec) !important;
+  padding:30px 18px 24px !important;
+  text-align:center !important;
+  box-shadow:0 4px 22px rgba(15,23,42,.30),0 0 24px rgba(34,197,94,.12) !important;
+  overflow:hidden !important;
+}
+header::after{
+  content:"" !important;
+  position:absolute !important;
+  left:-10% !important;
+  right:-10% !important;
+  bottom:-70px !important;
+  height:120px !important;
+  background:rgba(255,255,255,.13) !important;
+  border-radius:50% !important;
+  pointer-events:none !important;
+}
+header h1,
+header p,
+.lightning-icon{
+  position:relative !important;
+  z-index:2 !important;
+}
+.lightning-icon{
+  background:transparent !important;
+  box-shadow:none !important;
+  border:none !important;
+  width:auto !important;
+  height:auto !important;
+  padding:0 !important;
+  display:inline-block !important;
+  line-height:1 !important;
+  font-size:2.8rem !important;
+  text-shadow:0 0 16px rgba(34,197,94,.75),0 0 28px rgba(37,99,235,.58) !important;
+}
+header h1{
+  font-family:'Fredoka One',cursive !important;
+  color:#fff !important;
+  text-shadow:0 2px 8px rgba(0,0,0,.28) !important;
+}
+header p{
+  color:rgba(255,255,255,.90) !important;
+  font-weight:800 !important;
+}
+
+/* Barre d'onglets */
+.tabs{
+  position:sticky !important;
+  top:0 !important;
+  z-index:20 !important;
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+  gap:10px !important;
+  flex-wrap:wrap !important;
+  padding:12px 10px !important;
+  background:rgba(240,244,255,.88) !important;
+  backdrop-filter:blur(8px) !important;
+  box-shadow:none !important;
+  border:none !important;
+}
+.tab-btn,
+.mode-btn{
+  font-family:'Nunito',sans-serif !important;
+  font-weight:900 !important;
+  font-size:.98rem !important;
+  padding:9px 16px !important;
+  min-height:46px !important;
+  min-width:128px !important;
+  max-width:230px !important;
+  border-radius:999px !important;
+  border:2.5px solid #fff !important;
+  cursor:pointer !important;
+  transition:all .22s ease !important;
+  background:var(--degrade-elec) !important;
+  color:#fff !important;
+  box-shadow:0 6px 22px rgba(37,99,235,.25),0 0 16px rgba(34,197,94,.16) !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  line-height:1.15 !important;
+}
+.tab-btn:hover,
+.mode-btn:hover{
+  background:var(--degrade-elec-hover) !important;
+  transform:translateY(-1px) !important;
+  box-shadow:0 8px 26px rgba(37,99,235,.32),0 0 20px rgba(34,197,94,.22) !important;
+}
+.tab-btn.active,
+.mode-btn.active{
+  background:#fff !important;
+  color:var(--nuit) !important;
+  border-color:var(--vert-elec) !important;
+  box-shadow:0 6px 22px rgba(34,197,94,.25) !important;
+  transform:none !important;
+}
+
+/* Layout et cartes */
+.section{
+  max-width:1180px !important;
+  padding:18px 16px 64px !important;
+}
+.section-title{
+  color:var(--bleu-elec) !important;
+}
+.dipole-card,
+.question-card,
+.end-screen,
+.modal-box{
+  background:#fff !important;
+  border-radius:22px !important;
+  border:1px solid #e2e8f0 !important;
+  box-shadow:0 4px 24px rgba(37,99,235,.10) !important;
+}
+.dipole-card:hover{
+  border-color:var(--vert-elec) !important;
+  box-shadow:0 8px 32px rgba(37,99,235,.15),0 0 18px rgba(34,197,94,.12) !important;
+}
+.card-info h3,
+.question-name,
+.modal-box h2{
+  color:var(--bleu-elec) !important;
+}
+.card-symbol::before,
+.question-symbol-display{
+  border-color:#e7ebf3 !important;
+  box-shadow:0 8px 22px rgba(0,0,0,.10) !important;
+}
+
+/* Badges */
+.badge-source{
+  background:#dcfce7 !important;
+  color:#14532d !important;
+}
+.badge-recepteur{
+  background:#dbeafe !important;
+  color:#1d4ed8 !important;
+}
+.badge-controle{
+  background:#ecfdf5 !important;
+  color:#15803d !important;
+}
+.badge-liaison{
+  background:#e0f2fe !important;
+  color:#075985 !important;
+}
+.hint-tag{
+  background:#ecfdf5 !important;
+  color:#15803d !important;
+}
+
+/* Barre de progression / score : style commun aux autres fichiers */
+.quiz-header{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  flex-wrap:wrap !important;
+  gap:10px !important;
+  margin-bottom:16px !important;
+  background:#fff !important;
+  border:1px solid #e7ebf3 !important;
+  border-radius:18px !important;
+  padding:12px 14px !important;
+  box-shadow:0 3px 14px rgba(0,0,0,.08) !important;
+  font-weight:900 !important;
+}
+.quiz-progress-wrap{
+  flex:1 !important;
+  min-width:180px !important;
+  height:14px !important;
+  border-radius:999px !important;
+  background:#dde2ee !important;
+  overflow:hidden !important;
+  border:none !important;
+  box-shadow:inset 0 2px 4px rgba(15,23,42,.08) !important;
+}
+.quiz-progress-bar{
+  height:100% !important;
+  border-radius:999px !important;
+  background:var(--degrade-progress) !important;
+  transition:width .5s ease !important;
+}
+.quiz-score{
+  background:#dcfce7 !important;
+  color:#14532d !important;
+  border:1px solid #86efac !important;
+  border-radius:999px !important;
+  padding:8px 17px !important;
+  font-weight:900 !important;
+  font-size:1rem !important;
+  box-shadow:none !important;
+  white-space:nowrap !important;
+}
+.quiz-lives{
+  color:var(--nuit) !important;
+}
+
+/* Questions et réponses */
+.question-card,
+.end-screen{
+  padding:22px 20px !important;
+  text-align:center !important;
+}
+.question-label{
+  color:#657085 !important;
+  font-weight:900 !important;
+}
+.answer-btn{
+  border-radius:16px !important;
+  font-weight:900 !important;
+  border:2.5px solid #dde1f0 !important;
+  background:#f8f9ff !important;
+  color:#1a1a2e !important;
+  transition:all .18s ease !important;
+}
+.answer-btn:hover:not(:disabled){
+  border-color:var(--bleu-elec) !important;
+  background:#eff6ff !important;
+  color:var(--bleu-elec) !important;
+  transform:translateY(-1px) scale(1.02) !important;
+}
+.answer-btn.correct,
+.answer-btn.reveal-correct{
+  border-color:#22c55e !important;
+  background:#d1fae5 !important;
+  color:#065f46 !important;
+}
+.answer-btn.wrong{
+  border-color:#ef4444 !important;
+  background:#fee2e2 !important;
+  color:#991b1b !important;
+}
+
+/* Feedback */
+.feedback-bar.correct{
+  background:#d1fae5 !important;
+  color:#065f46 !important;
+  border:2px solid #6ee7b7 !important;
+  border-radius:14px !important;
+}
+.feedback-bar.wrong{
+  background:#fee2e2 !important;
+  color:#991b1b !important;
+  border:2px solid #fca5a5 !important;
+  border-radius:14px !important;
+}
+
+/* Boutons d'action */
+.next-btn,
+.restart-btn{
+  font-family:'Nunito',sans-serif !important;
+  font-weight:900 !important;
+  border-radius:999px !important;
+  min-height:46px !important;
+  padding:11px 28px !important;
+  transition:all .20s ease !important;
+  background:var(--degrade-elec) !important;
+  color:#fff !important;
+  border:2.5px solid #fff !important;
+  box-shadow:0 6px 22px rgba(37,99,235,.25),0 0 16px rgba(34,197,94,.16) !important;
+}
+.next-btn:hover,
+.restart-btn:hover{
+  background:var(--degrade-elec-hover) !important;
+  transform:translateY(-2px) !important;
+  box-shadow:0 9px 28px rgba(37,99,235,.34),0 0 22px rgba(34,197,94,.24) !important;
+}
+
+/* Résultat */
+.big-score{
+  color:var(--bleu-elec) !important;
+  font-family:'Fredoka One',cursive !important;
+}
+
+/* Responsive */
+@media(max-width:700px){
+  .tabs{
+    position:relative !important;
+  }
+  .quiz-header{
+    align-items:flex-start !important;
+  }
+  .quiz-score{
+    width:100% !important;
+    text-align:center !important;
+  }
+}
+
+/* Navigation directe : Leçon + 3 exercices */
+.tabs .tab-btn{
+  min-width:150px !important;
+  max-width:240px !important;
+}
+@media(max-width:760px){
+  .tabs .tab-btn{
+    flex:1 1 100% !important;
+    max-width:none !important;
+  }
+}
+
+/* =========================================================
+   ERGONOMIE DES EXERCICES — inspirée du fichier États physiques
+   Thème électrique conservé pour bandeau et boutons
+   ========================================================= */
+#quiz-section .section-title{
+  font-family:'Fredoka One',cursive !important;
+  font-size:1.72rem !important;
+  color:var(--bleu-elec) !important;
+  margin:10px 0 16px !important;
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  line-height:1.25 !important;
+}
+
+.exercise-instruction{
+  margin:0 0 14px !important;
+  padding:13px 16px !important;
+  border-left:6px solid var(--vert-elec) !important;
+  border-radius:18px !important;
+  color:var(--texte) !important;
+  font-weight:900 !important;
+  line-height:1.45 !important;
+  background:linear-gradient(180deg,#fff,#f8fdff) !important;
+  box-shadow:0 4px 20px rgba(0,0,0,.10) !important;
+}
+
+.quiz-header{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  flex-wrap:wrap !important;
+  gap:10px !important;
+  margin:8px 0 20px !important;
+  padding:0 !important;
+  background:transparent !important;
+  border:none !important;
+  box-shadow:none !important;
+}
+
+.quiz-question-count{
+  font-weight:900 !important;
+  color:var(--texte) !important;
+  font-size:1rem !important;
+  white-space:nowrap !important;
+}
+
+.quiz-progress-wrap{
+  flex:1 !important;
+  min-width:180px !important;
+  height:12px !important;
+  border-radius:10px !important;
+  background:#e0e0e0 !important;
+  overflow:hidden !important;
+  box-shadow:none !important;
+}
+
+.quiz-progress-bar{
+  height:100% !important;
+  border-radius:10px !important;
+  background:var(--degrade-progress) !important;
+  transition:width .5s ease !important;
+}
+
+.quiz-score{
+  background:#dcfce7 !important;
+  color:#14532d !important;
+  border:1px solid #86efac !important;
+  border-radius:20px !important;
+  padding:6px 16px !important;
+  font-weight:900 !important;
+  font-size:1rem !important;
+  box-shadow:none !important;
+  white-space:nowrap !important;
+}
+
+#quiz-play{
+  max-width:980px !important;
+  margin:0 auto !important;
+}
+
+.question-card{
+  background:var(--carte) !important;
+  border-radius:var(--radius) !important;
+  box-shadow:var(--ombre) !important;
+  border:none !important;
+  padding:18px !important;
+  text-align:center !important;
+  margin-bottom:18px !important;
+  min-height:0 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+
+.question-label{
+  font-size:.95rem !important;
+  font-weight:900 !important;
+  color:var(--gris) !important;
+  text-transform:none !important;
+  letter-spacing:0 !important;
+  margin-bottom:10px !important;
+}
+
+.question-name{
+  font-family:'Fredoka One',cursive !important;
+  font-size:clamp(1.25rem,4vw,1.55rem) !important;
+  color:var(--bleu-elec) !important;
+  margin-bottom:14px !important;
+  line-height:1.25 !important;
+}
+
+.question-symbol-display{
+  width:min(100%,420px) !important;
+  min-height:150px !important;
+  border-radius:24px !important;
+  background:#fff !important;
+  border:2px solid #e7ebf3 !important;
+  box-shadow:0 8px 22px rgba(0,0,0,.10) !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:18px 26px !important;
+  margin:0 auto !important;
+}
+
+.question-symbol-display svg,
+.question-symbol-display img{
+  max-width:220px !important;
+  max-height:120px !important;
+}
+
+.answers-grid{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:12px !important;
+  margin:0 auto 18px !important;
+  max-width:760px !important;
+}
+
+.answer-btn{
+  font-family:'Nunito',sans-serif !important;
+  font-weight:900 !important;
+  font-size:1.02rem !important;
+  padding:16px 12px !important;
+  min-height:78px !important;
+  border-radius:18px !important;
+  border:2.5px solid var(--bord) !important;
+  background:#fff !important;
+  cursor:pointer !important;
+  transition:all .18s !important;
+  color:var(--texte) !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+}
+
+.answer-btn:hover:not(:disabled){
+  border-color:var(--bleu-elec) !important;
+  background:#eff6ff !important;
+  color:var(--bleu-elec) !important;
+  transform:scale(1.02) !important;
+  box-shadow:none !important;
+}
+
+.answer-btn.correct,
+.answer-btn.reveal-correct{
+  background:#d1fae5 !important;
+  border-color:#22c55e !important;
+  color:#065f46 !important;
+}
+
+.answer-btn.wrong{
+  background:#fee2e2 !important;
+  border-color:#ef4444 !important;
+  color:#991b1b !important;
+}
+
+.feedback-bar{
+  min-height:0 !important;
+  max-width:820px !important;
+  margin:18px auto 1rem !important;
+  padding:14px 16px !important;
+  border-radius:16px !important;
+  font-weight:900 !important;
+  font-size:1rem !important;
+  line-height:1.45 !important;
+  text-align:center !important;
+}
+
+.next-btn,
+.restart-btn{
+  margin-top:16px !important;
+  font-family:'Nunito',sans-serif !important;
+  font-size:1.05rem !important;
+  font-weight:900 !important;
+  padding:12px 28px !important;
+  border-radius:999px !important;
+}
+
+.end-screen{
+  max-width:760px !important;
+  margin:0 auto !important;
+  padding:30px 18px !important;
+}
+
+.end-score-big{
+  font-family:'Fredoka One',cursive !important;
+  font-size:4rem !important;
+  color:var(--bleu-elec) !important;
+}
+
+@media(max-width:900px){
+  .quiz-progress-wrap{
+    order:3 !important;
+    flex-basis:100% !important;
+  }
+}
+
+@media(max-width:760px){
+  .answers-grid{
+    grid-template-columns:1fr !important;
+  }
+  .question-card{
+    padding:16px !important;
+  }
+  .question-symbol-display{
+    min-height:130px !important;
+  }
+}
+
+/* Corrections de bugs après harmonisation */
+.question-symbol-display[style*="display: none"],
+.question-symbol-display[style*="display:none"]{
+  display:none !important;
+}
+
+#q-name[style*="display: none"],
+#q-name[style*="display:none"]{
+  display:none !important;
+}
+
+#quiz-section .answers-grid .answer-btn img.symbol-img{
+  max-width:180px !important;
+  max-height:100px !important;
+  object-fit:contain !important;
+}
+
+#quiz-section .answers-grid .answer-btn svg{
+  max-width:180px !important;
+  max-height:100px !important;
+}
+
+/* Harmonisation de la police des questions */
+.question-card{
+  gap:0 !important;
+}
+
+.question-label,
+.question-name{
+  font-family:'Fredoka One',cursive !important;
+  font-size:clamp(1.25rem,4vw,1.55rem) !important;
+  color:var(--bleu-elec) !important;
+  line-height:1.25 !important;
+  text-transform:none !important;
+  letter-spacing:0 !important;
+  font-weight:400 !important;
+}
+
+.question-label{
+  margin-bottom:6px !important;
+}
+
+.question-name{
+  margin-bottom:14px !important;
+}
+
+/* =========================================================
+   LEÇON — ergonomie simplifiée
+   ========================================================= */
+.lesson-intro{
+  display:none !important;
+}
+.lesson-intro-card{
+  background:linear-gradient(180deg,#fff,#f8fbff) !important;
+  border-left:7px solid var(--vert-elec) !important;
+  border-radius:18px !important;
+  box-shadow:0 4px 20px rgba(0,0,0,.10) !important;
+  padding:16px 18px !important;
+  margin:0 0 12px !important;
+  max-width:980px !important;
+}
+.lesson-intro-card p{
+  margin:0 0 6px !important;
+  font-size:1.02rem !important;
+  line-height:1.5 !important;
+  font-weight:800 !important;
+  color:var(--texte) !important;
+}
+.lesson-intro-card p:last-child{
+  margin-bottom:0 !important;
+}
+.lesson-help{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:8px !important;
+  background:#ecfdf5 !important;
+  border:1px solid #86efac !important;
+  color:#14532d !important;
+  border-radius:999px !important;
+  padding:8px 14px !important;
+  font-weight:900 !important;
+  margin:0 0 18px !important;
+}
+.lesson-help::before{
+  content:"💡";
+}
+
+.lesson-grid{
+  display:block !important;
+  margin-top:10px !important;
+}
+
+.lesson-family{
+  margin:0 0 22px !important;
+}
+
+.lesson-family-title{
+  font-family:'Fredoka One',cursive !important;
+  font-size:1.15rem !important;
+  color:var(--bleu-elec) !important;
+  margin:0 0 10px !important;
+  padding-left:4px !important;
+}
+
+.lesson-family-grid{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr)) !important;
+  gap:14px !important;
+}
+
+.simple-lesson-card{
+  min-height:0 !important;
+  padding:0 !important;
+  overflow:hidden !important;
+  text-align:left !important;
+}
+
+.simple-lesson-card .card-symbol{
+  height:118px !important;
+  padding:14px !important;
+  background:linear-gradient(180deg,#fff,#f8f9ff) !important;
+}
+
+.simple-lesson-card .card-symbol::before{
+  width:128px !important;
+  height:82px !important;
+  border-radius:16px !important;
+}
+
+.simple-lesson-card .card-symbol svg,
+.simple-lesson-card .card-symbol img{
+  max-width:108px !important;
+  max-height:68px !important;
+}
+
+.simple-lesson-card .card-info{
+  padding:12px 14px 14px !important;
+}
+
+.simple-lesson-card .card-info h3{
+  font-family:'Fredoka One',cursive !important;
+  font-size:1rem !important;
+  color:var(--bleu-elec) !important;
+  margin:0 0 7px !important;
+  line-height:1.25 !important;
+}
+
+.simple-lesson-card .card-info p{
+  font-size:.9rem !important;
+  color:var(--texte) !important;
+  line-height:1.35 !important;
+  font-weight:800 !important;
+  min-height:44px !important;
+  margin:0 0 10px !important;
+}
+
+.simple-lesson-card .badge{
+  margin-top:0 !important;
+}
+
+.simple-lesson-card:hover{
+  transform:translateY(-4px) !important;
+}
+
+@media(max-width:760px){
+  .lesson-family-grid{
+    grid-template-columns:1fr !important;
+  }
+  .lesson-help{
+    border-radius:18px !important;
+    align-items:flex-start !important;
+  }
+}
+
+/* Leçon : une seule grille, capsules de même taille */
+.lesson-grid{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr)) !important;
+  gap:14px !important;
+  align-items:stretch !important;
+  margin-top:12px !important;
+}
+
+.lesson-family,
+.lesson-family-title,
+.lesson-family-grid{
+  display:contents !important;
+}
+
+.simple-lesson-card{
+  height:245px !important;
+  min-height:245px !important;
+  max-height:245px !important;
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+.simple-lesson-card .card-symbol{
+  height:118px !important;
+  min-height:118px !important;
+  max-height:118px !important;
+  flex:0 0 118px !important;
+}
+
+.simple-lesson-card .card-info{
+  flex:1 1 auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+.simple-lesson-card .card-info h3{
+  min-height:42px !important;
+  display:flex !important;
+  align-items:center !important;
+}
+
+.simple-lesson-card .card-info p{
+  min-height:54px !important;
+  max-height:54px !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:flex-start !important;
+}
+
+.simple-lesson-card .badge{
+  margin-top:auto !important;
+  align-self:flex-start !important;
+}
+
+@media(max-width:760px){
+  .lesson-grid{
+    grid-template-columns:1fr !important;
+  }
+  .simple-lesson-card{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  .simple-lesson-card .card-info h3,
+  .simple-lesson-card .card-info p{
+    min-height:0 !important;
+    max-height:none !important;
+  }
+}
+
+/* Leçon : retour des informations complètes sous les symboles */
+.simple-lesson-card{
+  height:330px !important;
+  min-height:330px !important;
+  max-height:330px !important;
+}
+
+.simple-lesson-card .card-symbol{
+  height:118px !important;
+  min-height:118px !important;
+  max-height:118px !important;
+  flex:0 0 118px !important;
+}
+
+.simple-lesson-card .card-info{
+  flex:1 1 auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  padding:12px 14px 14px !important;
+}
+
+.simple-lesson-card .card-info h3{
+  min-height:42px !important;
+  display:flex !important;
+  align-items:center !important;
+  margin-bottom:6px !important;
+}
+
+.simple-lesson-card .card-info p{
+  min-height:112px !important;
+  max-height:112px !important;
+  overflow:auto !important;
+  display:block !important;
+  font-size:.84rem !important;
+  line-height:1.35 !important;
+  font-weight:800 !important;
+  color:var(--gris) !important;
+  margin:0 0 10px !important;
+  padding-right:4px !important;
+}
+
+.simple-lesson-card .badge{
+  margin-top:auto !important;
+  align-self:flex-start !important;
+  font-size:.74rem !important;
+  font-weight:900 !important;
+  padding:4px 10px !important;
+  border-radius:999px !important;
+}
+
+.simple-lesson-card .hint-tag{
+  display:none !important;
+}
+
+@media(max-width:760px){
+  .simple-lesson-card{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  .simple-lesson-card .card-info p{
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+}
+
+/* Centrage des écritures dans les capsules de la leçon */
+.simple-lesson-card,
+.simple-lesson-card .card-info,
+.simple-lesson-card .card-info h3,
+.simple-lesson-card .card-info p{
+  text-align:center !important;
+}
+
+.simple-lesson-card .card-info h3{
+  justify-content:center !important;
+}
+
+.simple-lesson-card .card-info p{
+  font-weight:400 !important;
+  color:var(--texte) !important;
+  padding-right:0 !important;
+}
+
+.simple-lesson-card .badge{
+  align-self:center !important;
+}
+
+/* Leçon : capsules simplifiées — symbole, nom, catégorie */
+.simple-lesson-card{
+  height:220px !important;
+  min-height:220px !important;
+  max-height:220px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:flex-start !important;
+}
+
+.simple-lesson-card .card-symbol{
+  height:126px !important;
+  min-height:126px !important;
+  max-height:126px !important;
+  flex:0 0 126px !important;
+}
+
+.simple-lesson-card .card-info{
+  flex:1 1 auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  padding:12px 12px 14px !important;
+}
+
+.simple-lesson-card .card-info h3{
+  min-height:0 !important;
+  height:auto !important;
+  display:block !important;
+  text-align:center !important;
+  font-family:'Fredoka One',cursive !important;
+  font-size:1.02rem !important;
+  line-height:1.2 !important;
+  margin:0 0 10px !important;
+  color:var(--bleu-elec) !important;
+}
+
+.simple-lesson-card .card-info p{
+  display:none !important;
+}
+
+.simple-lesson-card .badge{
+  align-self:center !important;
+  margin-top:0 !important;
+  font-size:.78rem !important;
+  font-weight:900 !important;
+  padding:5px 11px !important;
+  border-radius:999px !important;
+  text-align:center !important;
+}
+
+.lesson-help{
+  margin-bottom:18px !important;
+}
+.lesson-help::after{
+  content:" Clique sur une capsule pour lire les informations détaillées.";
+}
+
+/* Capsules de catégorie : style neutre sans vert ni bleu */
+.simple-lesson-card .badge,
+.badge-source,
+.badge-recepteur,
+.badge-controle,
+.badge-liaison{
+  background:#f3f4f6 !important;
+  color:#374151 !important;
+  border:1px solid #d1d5db !important;
+  box-shadow:none !important;
+}
+
+/* Capsules de catégorie : couleurs distinctes */
+.badge-source{
+  background:#fef3c7 !important;   /* jaune doux */
+  color:#92400e !important;
+  border:1px solid #fcd34d !important;
+  box-shadow:none !important;
+}
+.badge-recepteur{
+  background:#fce7f3 !important;   /* rose doux */
+  color:#9d174d !important;
+  border:1px solid #f9a8d4 !important;
+  box-shadow:none !important;
+}
+.badge-controle{
+  background:#ede9fe !important;   /* violet doux */
+  color:#5b21b6 !important;
+  border:1px solid #c4b5fd !important;
+  box-shadow:none !important;
+}
+.badge-liaison{
+  background:#ffedd5 !important;   /* orange doux */
+  color:#9a3412 !important;
+  border:1px solid #fdba74 !important;
+  box-shadow:none !important;
+}
+
+/* Correction définitive : couleurs visibles des catégories dans les capsules */
+.simple-lesson-card .badge.badge-source,
+.badge.badge-source{
+  background:#fef3c7 !important;
+  color:#92400e !important;
+  border:1px solid #fcd34d !important;
+}
+
+.simple-lesson-card .badge.badge-recepteur,
+.badge.badge-recepteur{
+  background:#fce7f3 !important;
+  color:#9d174d !important;
+  border:1px solid #f9a8d4 !important;
+}
+
+.simple-lesson-card .badge.badge-controle,
+.badge.badge-controle{
+  background:#ede9fe !important;
+  color:#5b21b6 !important;
+  border:1px solid #c4b5fd !important;
+}
+
+.simple-lesson-card .badge.badge-liaison,
+.badge.badge-liaison{
+  background:#ffedd5 !important;
+  color:#9a3412 !important;
+  border:1px solid #fdba74 !important;
+}
+
+/* Ajustement spécifique : carte de la DEL */
+.simple-lesson-card.del-card .card-info{
+  justify-content:flex-start !important;
+  padding-top:6px !important;
+}
+
+.simple-lesson-card.del-card .card-info h3{
+  margin-bottom:7px !important;
+  line-height:1.1 !important;
+}
+
+.simple-lesson-card.del-card .badge{
+  margin-top:0 !important;
+}
+
+/* Bilan de fin : éléments à retravailler */
+.review-box{
+  width:100%;
+  max-width:820px;
+  margin:18px auto 4px;
+}
+
+.review-success{
+  background:#d1fae5;
+  color:#065f46;
+  border:2px solid #6ee7b7;
+  border-radius:16px;
+  padding:14px 16px;
+  font-weight:900;
+  line-height:1.45;
+}
+
+.review-title{
+  font-family:'Fredoka One',cursive;
+  color:var(--bleu-elec);
+  font-size:1.25rem;
+  margin-bottom:6px;
+}
+
+.review-subtitle{
+  color:var(--gris);
+  font-weight:800;
+  margin-bottom:14px;
+}
+
+.review-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+}
+
+.review-item{
+  background:#fff;
+  border:2px solid #e7ebf3;
+  border-radius:18px;
+  box-shadow:0 4px 16px rgba(15,23,42,.08);
+  padding:12px;
+  text-align:center;
+}
+
+.review-symbol{
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:8px;
+}
+
+.review-symbol svg,
+.review-symbol img{
+  max-width:120px;
+  max-height:72px;
+  object-fit:contain;
+}
+
+.review-name{
+  font-weight:900;
+  color:var(--texte);
+  line-height:1.2;
+}
+
 </style>
 </head>
 <body>
@@ -559,32 +1665,33 @@
 </header>
 
 <div class="tabs">
-  <button class="tab-btn active" onclick="showTab('lecon')">📖 Leçon</button>
-  <button class="tab-btn" onclick="showTab('quiz')">🎯 Quiz</button>
+  <button class="tab-btn active" id="tab-lecon" onclick="showLessonTab()">📖 Leçon</button>
+  <button class="tab-btn" id="tab-ex1" onclick="openExercise('nom-vers-symbole','tab-ex1')">🔌 Nom → symbole</button>
+  <button class="tab-btn" id="tab-ex2" onclick="openExercise('symbole-vers-nom','tab-ex2')">⚡ Symbole → nom</button>
+  <button class="tab-btn" id="tab-ex3" onclick="openExercise('trouver-bon','tab-ex3')">✅ Choisir le bon symbole</button>
 </div>
 
 <!-- ====== LEÇON ====== -->
 <div class="section active" id="lecon-section">
   <div class="section-title"><span>📖</span> Les symboles à connaître</div>
-  <p class="lesson-intro">Clique sur une vignette pour afficher davantage de renseignements sur le symbole du dipôle.</p>
+  <div class="lesson-intro-card">
+    <p><strong>Un symbole électrique</strong> est un dessin simplifié utilisé dans les schémas de circuits.</p>
+    <p>Il permet de représenter rapidement les dipôles sans dessiner les objets réels.</p>
+  </div>
+  <div class="lesson-help">Observe surtout la forme du symbole et retiens le nom du dipôle associé.</div>
   <div class="lesson-grid" id="lesson-grid"></div>
 </div>
 
 <!-- ====== QUIZ ====== -->
 <div class="section" id="quiz-section">
-  <div class="section-title"><span>🎯</span> Quiz — Reconnais les symboles !</div>
-  <div class="mode-toggle">
-    <button class="mode-btn active" onclick="setMode('nom-vers-symbole')" id="mode-btn-1">Nom → Symbole</button>
-    <button class="mode-btn" onclick="setMode('symbole-vers-nom')" id="mode-btn-2">Symbole → Nom</button>
-    <button class="mode-btn" onclick="setMode('trouver-bon')" id="mode-btn-3">Trouve l'erreur</button>
-  </div>
-
+  <div class="section-title" id="quiz-title"><span>🎯</span> Exercice — Reconnais les symboles !</div>
+  <div class="exercise-instruction" id="exercise-instruction">Observe la question, puis choisis la bonne réponse.</div>
   <div class="quiz-header">
-    <div class="quiz-score">⭐ <span id="score-val">0</span></div>
+    <div class="quiz-question-count">Question <span id="q-count">0 / 0</span></div>
     <div class="quiz-progress-wrap">
       <div class="quiz-progress-bar" id="progress-bar" style="width:0%"></div>
     </div>
-    <div class="quiz-lives" id="lives-display">❤️❤️❤️</div>
+    <div class="quiz-score">⭐ <span id="score-val">0</span> / <span id="score-total">0</span></div>
   </div>
 
   <div id="quiz-play">
@@ -606,6 +1713,7 @@
     <h2 id="end-title">Bravo !</h2>
     <div class="end-score-big" id="end-score-big">0/10</div>
     <p id="end-msg" style="color:var(--text-dim)"></p>
+    <div class="review-box" id="review-box"></div>
     <button class="restart-btn" onclick="startQuiz()">🔄 Recommencer</button>
   </div>
 </div>
@@ -670,7 +1778,7 @@ const DIPOLES = [
     id: 'interrupteur_ouvert',
     nom: 'Interrupteur ouvert',
     description: 'Contrôle la circulation du courant électrique.<br>L\'interrupteur est ouvert (interrompu), il n\'y a plus de courant nulle part ! Rien ne fonctionne.',
-    categorie: 'controle', badgeLabel: 'Contrôle',
+    categorie: 'controle', badgeLabel: 'Outil de contrôle',
     image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/Int%20ouvert.png',
     svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="5" y1="25" x2="25" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
@@ -684,7 +1792,7 @@ const DIPOLES = [
     id: 'interrupteur_ferme',
     nom: 'Interrupteur fermé',
     description: 'Contrôle la circulation du courant électrique.<br>L\'interrupteur est fermé. Le courant peut circuler et apporter l\'énergie électrique jusqu\'au récepteur.',
-    categorie: 'controle', badgeLabel: 'Contrôle',
+    categorie: 'controle', badgeLabel: 'Outil de contrôle',
     image: 'https://raw.githubusercontent.com/Nabo33/Images/c80a7442d1b660d3569cca8badacad4df559a1e0/Int%20ferm%C3%A9.png',
     svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="5" y1="25" x2="25" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
@@ -698,7 +1806,7 @@ const DIPOLES = [
     id: 'fils',
     nom: 'Fils de connexion',
     description: 'Relie les composants entre eux. Représenté par une simple ligne droite ou un angle droit.',
-    categorie: 'liaison', badgeLabel: 'Liaison',
+    categorie: 'liaison', badgeLabel: 'Élément de liaison',
     image: 'https://raw.githubusercontent.com/Nabo33/Images/bcd689323466d74a77e643f7afd94aa224d82df9/Fil.png',
     svg: `<svg viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="5" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
@@ -761,6 +1869,15 @@ const DIPOLES = [
       <rect x="22" y="14" width="56" height="22" stroke="#1a73e8" stroke-width="2.5" fill="rgba(26,115,232,0.1)"/>
       <line x1="78" y1="25" x2="95" y2="25" stroke="#1a73e8" stroke-width="2.5"/>
     </svg>`
+  },
+  {
+    id: 'generateur',
+    nom: 'Générateur',
+    description: 'Dipôle qui fournit l’énergie électrique au circuit.<br>Il est souvent utilisé en classe pour alimenter les circuits électriques.',
+    categorie: 'source',
+    badgeLabel: 'Source d’énergie',
+    image: 'https://raw.githubusercontent.com/Nabo33/Images/599c4239ff3999eb04616e6fff32e6fc71ededd7/Generateur.png',
+    svg: `<img class="symbol-img" src="https://raw.githubusercontent.com/Nabo33/Images/599c4239ff3999eb04616e6fff32e6fc71ededd7/Generateur.png" alt="Symbole du générateur" loading="lazy">`
   }
 ];
 
@@ -788,25 +1905,45 @@ const DIPOLE_DETAILS = {
   moteur: ["C'est un récepteur : il utilise et consomme de l'énergie électrique.", "Il transforme l'énergie électrique en énergie mécanique (mouvement).", "La lettre M permet de le distinguer facilement."],
   diode: ["La diode ne laisse passer le courant que dans un seul sens.", "La barre verticale indique le côté bloquant dans le symbole.", "Son sens de branchement est donc important."],
   del: ["DEL signifie diode électro-luminescente.", "Elle ne laisse passer le courant que dans un seul sens, comme une diode.", "Les deux flèches sortantes au-dessus indiquent qu'elle émet de la lumière."],
-  resistance: ["C'est un récepteur qui limite le passage du courant.", "Elle peut servir à protéger certains dipôles, comme une DEL.", "Elle convertit l'énergie électrique reçue en énergie thermique", "On la représente par un rectangle allongé."]
+  resistance: ["C'est un récepteur qui limite le passage du courant.", "Elle peut servir à protéger certains dipôles, comme une DEL.", "Elle convertit l'énergie électrique reçue en énergie thermique", "On la représente par un rectangle allongé."],
+  generateur: [
+    "Le générateur est une source d’énergie électrique.",
+    "Il permet de faire fonctionner les récepteurs d’un circuit.",
+    "Il possède deux bornes."
+  ]
 };
 
 // ===== LEÇON =====
+function getLessonShortText(d) {
+  const textes = {
+    pile: "Générateur : elle fournit l’énergie électrique.",
+    ampoule: "Récepteur : elle produit de la lumière.",
+    interrupteur_ouvert: "Ouvert : le courant ne circule pas.",
+    interrupteur_ferme: "Fermé : le courant circule.",
+    fils: "Ils relient les dipôles entre eux.",
+    moteur: "Récepteur : il produit un mouvement.",
+    diode: "Elle laisse passer le courant dans un seul sens.",
+    del: "Diode qui peut produire de la lumière.",
+    resistance: "Elle limite le passage du courant.",
+    generateur: "Source : il fournit l’énergie électrique."
+  };
+  return textes[d.id] || d.description;
+}
+
 function buildLesson() {
   const grid = document.getElementById('lesson-grid');
   grid.innerHTML = '';
+
   DIPOLES.forEach(d => {
     const card = document.createElement('button');
     card.type = 'button';
-    card.className = 'dipole-card';
+    card.className = 'dipole-card simple-lesson-card' + (d.id === 'del' ? ' del-card' : '');
     card.setAttribute('aria-label', 'Afficher les informations sur ' + d.nom);
     card.innerHTML = `
       <div class="card-symbol">${getDipoleVisual(d)}</div>
       <div class="card-info">
         <h3>${d.nom}</h3>
-        <p>${d.description}</p>
-        <span class="badge ${BADGE_CLASSES[d.categorie]}">${d.badgeLabel}</span><br>
-        <span class="hint-tag">Cliquer pour en savoir +</span>
+        <span class="badge ${BADGE_CLASSES[d.categorie]}">${d.badgeLabel}</span>
       </div>
     `;
     card.addEventListener('click', () => openDipoleModal(d.id));
@@ -906,9 +2043,6 @@ function getVariants(dipole) {
 
 function setMode(mode) {
   quizMode = mode;
-  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
-  const map = {'nom-vers-symbole':'mode-btn-1','symbole-vers-nom':'mode-btn-2','trouver-bon':'mode-btn-3'};
-  document.getElementById(map[mode]).classList.add('active');
   startQuiz();
 }
 
@@ -919,6 +2053,7 @@ function shuffle(arr) {
 }
 
 let questions = [];
+let mistakes = [];
 
 function generateQuestions() {
   questions = [];
@@ -929,17 +2064,54 @@ function generateQuestions() {
   }
 }
 
+
+function getNomAvecArticle(d) {
+  const articles = {
+    pile: "la pile",
+    ampoule: "l’ampoule",
+    interrupteur_ouvert: "l’interrupteur ouvert",
+    interrupteur_ferme: "l’interrupteur fermé",
+    fils: "les fils de connexion",
+    moteur: "le moteur",
+    diode: "la diode",
+    del: "la DEL",
+    resistance: "la résistance",
+    generateur: "le générateur"
+  };
+  return articles[d.id] || d.nom.toLowerCase();
+}
+
+
+function getNomPourQuestionSymbole(d) {
+  const noms = {
+    pile: "de la pile",
+    ampoule: "de l’ampoule",
+    interrupteur_ouvert: "de l’interrupteur ouvert",
+    interrupteur_ferme: "de l’interrupteur fermé",
+    fils: "du fil de connexion",
+    moteur: "du moteur",
+    diode: "de la diode",
+    del: "de la DEL",
+    resistance: "de la résistance",
+    generateur: "du générateur"
+  };
+  return noms[d.id] || ("de " + d.nom.toLowerCase());
+}
+
 function startQuiz() {
   currentQ = 0; 
   score = 0; 
   lives = 3; 
   answered = false;
+  mistakes = [];
 
   const nextBtn = document.getElementById('next-btn');
   nextBtn.textContent = 'Question suivante →';
   nextBtn.classList.remove('show');
 
   generateQuestions();
+  document.getElementById('score-total').textContent = TOTAL_Q;
+  document.getElementById('q-count').textContent = `0 / ${TOTAL_Q}`;
   document.getElementById('end-screen').classList.remove('show');
   document.getElementById('quiz-play').style.display='block';
   updateStatus();
@@ -952,12 +2124,13 @@ function updateStatus() {
   const progress = answered ? currentQ + 1 : currentQ;
   document.getElementById('progress-bar').style.width = (progress / TOTAL_Q * 100) + '%';
 
-  const hearts = ['','❤️','❤️❤️','❤️❤️❤️'];
-  document.getElementById('lives-display').textContent = hearts[Math.max(0,lives)] || '💔';
+  const currentDisplay = Math.min(currentQ + 1, TOTAL_Q);
+  document.getElementById('q-count').textContent = `${currentDisplay} / ${TOTAL_Q}`;
 }
 
 function renderQuestion() {
   answered = false;
+  document.getElementById('q-count').textContent = `${currentQ + 1} / ${TOTAL_Q}`;
   const fb = document.getElementById('feedback-bar');
   fb.className='feedback-bar'; 
   fb.textContent='';
@@ -972,8 +2145,8 @@ function renderQuestion() {
   const qSym = document.getElementById('q-symbol');
 
   if(quizMode === 'nom-vers-symbole') {
-    qLabel.textContent = '🔍 Quel est le symbole de…';
-    qName.textContent = d.nom;
+    qLabel.textContent = '🔍 Quel est le symbole…';
+    qName.textContent = getNomPourQuestionSymbole(d);
     qName.style.display='block';
     qSym.style.display='none';
     renderAnswersSymbols(d);
@@ -984,9 +2157,9 @@ function renderQuestion() {
     qSym.innerHTML = getDipoleVisual(d);
     renderAnswersNames(d);
   } else {
-    // Mode "Trouve le bon symbole"
-    qLabel.textContent = '✅ Quel est le VRAI symbole normalisé de…';
-    qName.textContent = d.nom;
+    // Mode "Choisir le bon symbole"
+    qLabel.textContent = '✅ Quel est le VRAI symbole normalisé…';
+    qName.textContent = getNomPourQuestionSymbole(d);
     qName.style.display='block';
     qSym.style.display='none';
     renderAnswersFindCorrect(d);
@@ -1071,8 +2244,10 @@ function checkAnswer(btn, isCorrect, correct) {
     btn.classList.add('wrong');
     fb.className = 'feedback-bar wrong show';
     fb.textContent = '❌ Pas tout à fait… Regarde la bonne réponse en vert !';
-    lives--;
 
+    if (!mistakes.some(item => item.id === correct.id)) {
+      mistakes.push(correct);
+    }
     // Montrer la bonne réponse
     if(quizMode === 'nom-vers-symbole') {
       allBtns.forEach(b => {
@@ -1103,11 +2278,6 @@ function checkAnswer(btn, isCorrect, correct) {
   allBtns.forEach(b => b.disabled = true);
   updateStatus();
 
-  if(lives <= 0) {
-    setTimeout(() => endQuiz(), 1200);
-    return;
-  }
-
   const nextBtn = document.getElementById('next-btn');
   nextBtn.classList.add('show');
 
@@ -1127,6 +2297,38 @@ function nextQuestion() {
   }
 }
 
+
+function getReviewSymbol(d) {
+  return `<div class="review-symbol">${getDipoleVisual(d)}</div>`;
+}
+
+function renderReviewBox() {
+  const box = document.getElementById('review-box');
+  if (!box) return;
+
+  if (mistakes.length === 0) {
+    box.innerHTML = `
+      <div class="review-success">
+        ✅ Aucun symbole à retravailler : tu as tout réussi dans cet exercice !
+      </div>
+    `;
+    return;
+  }
+
+  const cards = mistakes.map(d => `
+    <div class="review-item">
+      ${getReviewSymbol(d)}
+      <div class="review-name">${d.nom}</div>
+    </div>
+  `).join('');
+
+  box.innerHTML = `
+    <div class="review-title">À retravailler</div>
+    <div class="review-subtitle">Revois le nom et le symbole des éléments suivants :</div>
+    <div class="review-grid">${cards}</div>
+  `;
+}
+
 function endQuiz() {
   document.getElementById('quiz-play').style.display='none';
   const es = document.getElementById('end-screen');
@@ -1140,19 +2342,56 @@ function endQuiz() {
   else if(pct>=0.4){ trophy='📚'; title='Continue !'; msg='Revois la leçon, tu vas y arriver !'; }
   else{ trophy='💪'; title='Courage !'; msg='Commence par bien apprendre la leçon, puis retente !'; }
 
+  document.getElementById('progress-bar').style.width = '100%';
+  document.getElementById('q-count').textContent = `${TOTAL_Q} / ${TOTAL_Q}`;
   document.getElementById('end-trophy').textContent=trophy;
   document.getElementById('end-title').textContent=title;
   document.getElementById('end-score-big').textContent=score+'/'+TOTAL_Q;
   document.getElementById('end-msg').textContent=msg;
+  renderReviewBox();
+}
+
+function setActiveMainTab(buttonId) {
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  const btn = document.getElementById(buttonId);
+  if (btn) btn.classList.add('active');
+}
+
+function showLessonTab() {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('lecon-section').classList.add('active');
+  setActiveMainTab('tab-lecon');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function openExercise(mode, buttonId) {
+  quizMode = mode;
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('quiz-section').classList.add('active');
+  setActiveMainTab(buttonId);
+
+  const titles = {
+    'nom-vers-symbole': '<span>🔌</span> Exercice 1 — Retrouver le symbole',
+    'symbole-vers-nom': '<span>⚡</span> Exercice 2 — Retrouver le nom',
+    'trouver-bon': '<span>✅</span> Exercice 3 — Choisir le bon symbole'
+  };
+  const instructions = {
+    'nom-vers-symbole': 'Lis le nom du dipôle, puis choisis le symbole correspondant.',
+    'symbole-vers-nom': 'Observe le symbole, puis choisis le nom du dipôle correspondant.',
+    'trouver-bon': 'Lis le nom du dipôle, puis choisis le symbole correct parmi les propositions.'
+  };
+  const title = document.getElementById('quiz-title');
+  if (title) title.innerHTML = titles[mode] || '<span>🎯</span> Exercice';
+  const instruction = document.getElementById('exercise-instruction');
+  if (instruction) instruction.textContent = instructions[mode] || 'Observe la question, puis choisis la bonne réponse.';
+
+  startQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showTab(tab) {
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById(tab+'-section').classList.add('active');
-  const clickedBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + tab + "'"));
-  if(clickedBtn) clickedBtn.classList.add('active');
-  if(tab==='quiz') startQuiz();
+  if (tab === 'lecon') showLessonTab();
+  else openExercise('nom-vers-symbole','tab-ex1');
 }
 
 // Init
