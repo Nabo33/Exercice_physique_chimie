@@ -67,7 +67,6 @@
 
   .logo {
     font-size: 2.8rem;
-    line-height: 1;
     display: inline-block;
     animation: pulse 2.2s ease-in-out infinite;
   }
@@ -796,7 +795,9 @@ function renderQuestion() {
   const q = quiz[index];
 
   document.getElementById("qCount").textContent = `${index + 1} / ${quiz.length}`;
-  document.getElementById("progressFill").style.width = `${((index + 1) / quiz.length) * 100}%`;
+  // La barre indique uniquement les questions déjà répondues.
+  // Elle reste donc vide au départ et n'avance qu'après un clic sur une réponse.
+  document.getElementById("progressFill").style.width = `${(index / quiz.length) * 100}%`;
 
   document.getElementById("questionText").textContent =
     `${q.nom}  —  Image ${index + 1}/${quiz.length}`;
@@ -851,6 +852,7 @@ function answer(choice, btn) {
     fb.textContent = `❌ Pas tout à fait. La bonne réponse était : ${labels[q.etat]}. ${q.explication}`;
   }
 
+  document.getElementById("progressFill").style.width = `${((index + 1) / quiz.length) * 100}%`;
   document.getElementById("nextBtn").style.display = "inline-block";
 }
 
