@@ -316,23 +316,131 @@ body:after{content:'';position:fixed;right:-80px;bottom:-80px;width:350px;height
   background-color:#fee2e2;
 }
 
+
+
+/* ===== Harmonisation avec les fichiers Énergie / Verrerie / États physiques / Mélanges ===== */
+:root{
+  --bleu:#1a73e8;--bleu-clair:#e8f0fe;--violet:#7c4dff;--violet-clair:#ede7f6;
+  --vert:#0f9d58;--vert-clair:#e6f4ea;--rouge:#ea4335;--rouge-clair:#fce8e6;
+  --jaune:#fbbc04;--cyan:#06b6d4;--cyan-clair:#e6fbff;
+  --bg:#f0f4ff;--primary:#1a73e8;--primary-light:#e8f0fe;--secondary:#7c4dff;
+  --success:#0f9d58;--danger:#ea4335;--card:#fff;--text:#1a1a2e;--text-muted:#657085;
+  --border:#dde1f0;--shadow:0 4px 20px rgba(0,0,0,.10);--shadow-strong:0 8px 32px rgba(0,0,0,.16);--radius:22px;
+}
+body{background:var(--bg);color:var(--text)}
+body:before,body:after{display:none}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}.bubble{position:absolute;border-radius:50%;background:linear-gradient(135deg,var(--bleu),var(--violet));opacity:.055;animation:float 7s ease-in-out infinite alternate}@keyframes float{from{transform:translateY(18px) scale(.86)}to{transform:translateY(-18px) scale(1.05)}}
+.hero{position:relative;z-index:3;background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);padding:30px 18px 24px;text-align:center;box-shadow:0 4px 20px rgba(26,115,232,.30);overflow:hidden}.hero:after{content:"";position:absolute;inset:auto -10% -70px -10%;height:120px;background:rgba(255,255,255,.13);border-radius:50%;}.logo{font-size:2.8rem;display:inline-block;animation:pulse 2.2s ease-in-out infinite}@keyframes pulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.08) rotate(5deg)}}
+.hero h1{font-family:'Fredoka One',cursive;color:#fff;font-size:clamp(1.75rem,5vw,3rem);letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.22);margin:0}.hero p{color:rgba(255,255,255,.9);font-weight:800;margin-top:6px}.hero .tag{display:none}
+.tabs{position:sticky;top:0;z-index:20;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;padding:12px 10px;background:rgba(240,244,255,.86);backdrop-filter:blur(8px);border:0;border-radius:0;margin:0;box-shadow:none}.main-nav{position:sticky;top:0;z-index:20;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;padding:12px 10px;background:rgba(240,244,255,.86);backdrop-filter:blur(8px);border:0;border-radius:0;margin:0;box-shadow:none}
+.main-btn,.challenge-btn,.tab-btn{font-family:'Nunito',sans-serif;font-weight:900;border:2.5px solid #fff;border-radius:999px;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#fff;box-shadow:0 6px 22px rgba(6,182,212,.30);padding:9px 16px;cursor:pointer;transition:.22s;display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.15;min-height:46px;min-width:128px;max-width:180px;white-space:normal;overflow-wrap:anywhere;font-size:.98rem}.main-btn:hover,.challenge-btn:hover,.tab-btn:hover{background:linear-gradient(135deg,#0891b2,#6d28d9);transform:translateY(-1px);box-shadow:var(--shadow-strong);color:#fff}.main-btn.active,.challenge-btn.active,.tab-btn.active{background:#fff;color:var(--bleu);border-color:var(--cyan);box-shadow:0 6px 22px rgba(6,182,212,.26)}
+.wrap,.container{position:relative;z-index:5;max-width:1180px;margin:0 auto;padding:18px 16px 64px}.panel{background:transparent;border:0;box-shadow:none;padding:0;margin:0}.view.active,.challenge-page.active{animation:fade .32s ease}@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.section-title,h2{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.72rem;margin:10px 0 12px;display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:0}.course-intro,.defis-intro{background:#fff;border-left:7px solid var(--cyan);border-radius:18px;box-shadow:0 3px 14px rgba(0,0,0,.08);padding:13px 16px;color:var(--text);font-weight:900;max-width:920px;line-height:1.55;margin-bottom:18px}.callout{background:#fff;border-left:7px solid var(--cyan);border-radius:18px;box-shadow:0 3px 14px rgba(0,0,0,.08);padding:16px;color:var(--text)}
+#courseGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:18px}#courseGrid .card{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 3px 14px rgba(0,0,0,.08);padding:16px;transition:.18s}#courseGrid .card:hover{transform:translateY(-2px);border-color:var(--bleu);box-shadow:var(--shadow)}#courseGrid .card img{width:104px;height:104px}#courseGrid .card h3{color:var(--bleu);font-weight:900}.tip{background:#f8f9ff;border-left:5px solid var(--cyan);border-radius:14px;padding:10px;margin-top:10px}
+#defis>.section-title,#defis>.defis-intro,.challenge-nav{display:none!important}.challenge-page{max-width:980px;margin:0 auto}.exercise-box,.challenge-card,.scorebar,.top-score,.score-box,.cours-card{background:#fff;border-radius:var(--radius);box-shadow:0 3px 14px rgba(0,0,0,.08);border:1px solid var(--border);padding:22px;margin-bottom:16px}.question{font-size:1.08rem;font-weight:900;line-height:1.55;margin-bottom:16px;color:var(--text)}.options button,.bank button,.choice-btn,.option,.chip,.cw-input{font-family:'Nunito',sans-serif}.options button,.choice-btn,#photoOptions .option{background:#fff;border:2.5px solid var(--border);border-radius:18px;padding:16px;font-weight:900;transition:.18s;color:var(--text)}.options button:hover:not(:disabled),.choice-btn:hover:not(:disabled),#photoOptions .option:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);color:var(--bleu);transform:translateY(-1px)}.btn{border-radius:999px;background:var(--bleu);box-shadow:0 3px 12px rgba(0,0,0,.12);font-weight:900}.btn.primary{background:var(--bleu);color:#fff;border:0}.btn.secondary{background:#fff;color:var(--bleu);border:2.5px solid var(--bleu)}.feedback{border-radius:16px;font-weight:900}.scorepill,.score-box{background:var(--jaune);color:#333;border:0;border-radius:20px;box-shadow:none}.top-score{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.top-score .score-box{background:#fff;border:1px solid var(--border);border-radius:18px;text-align:center}.top-score .big{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.5rem}
+#page-match .bank{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:14px 0 18px}#page-match .chip{display:flex;align-items:center;justify-content:center;min-height:54px;border:2.5px solid var(--border);border-radius:16px;background:#fff;color:var(--text);font-weight:900;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.06);transition:.18s;text-align:center;padding:10px}#page-match .chip.selected,#page-match .dropzone.selected{background:var(--bleu-clair);border-color:var(--bleu);color:var(--bleu);box-shadow:0 0 0 4px rgba(26,115,232,.14)}#page-match .chip.assigned{opacity:.35;cursor:pointer}.dropgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:14px}.dropcard{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;box-shadow:0 3px 14px rgba(0,0,0,.08)}.dropzone{min-height:54px;background:#f8f9ff;border:2.5px dashed #a8b5cc;border-radius:16px;padding:9px;display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--text);cursor:pointer}.dropzone.filled{border-style:solid}.chip-in-drop{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-weight:900}.sort-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.crossword-wrap{display:grid;grid-template-columns:auto minmax(240px,1fr);gap:18px;align-items:start}.crossword-grid{display:grid;grid-template-columns:repeat(15,32px);gap:3px;background:#eef2ff;border-radius:18px;padding:12px;overflow:auto}.cw-cell{width:32px;height:32px;position:relative}.cw-cell.empty{background:transparent}.cw-cell input{width:32px;height:32px;text-align:center;text-transform:uppercase;border:2px solid var(--border);border-radius:8px;background:#fff;font-family:'Nunito';font-weight:900;font-size:1rem;color:var(--text);outline:none}.cw-cell input:focus{border-color:var(--bleu);box-shadow:0 0 0 3px rgba(26,115,232,.18)}.cw-cell .num{position:absolute;top:1px;left:3px;font-size:.55rem;font-weight:900;color:var(--bleu)}.cw-cell.good input{border-color:var(--vert);background:var(--vert-clair);color:var(--vert)}.cw-cell.bad input{border-color:var(--rouge);background:var(--rouge-clair);color:var(--rouge)}.crossword-clues{background:#fff;border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:0 3px 14px rgba(0,0,0,.08)}.crossword-clues h3{font-family:'Fredoka One';color:var(--bleu);font-size:1.05rem;text-transform:none;letter-spacing:0;margin:0 0 10px}.crossword-clues li{margin:8px 0 8px 20px;font-weight:800;line-height:1.35}
+.crossword-clues li.active-clue{background:#fff8df;border:2px solid var(--jaune);border-radius:14px;padding:8px 10px;margin-left:0;list-style-position:inside;box-shadow:0 3px 12px rgba(251,188,4,.20);color:var(--text)}.exercise-instruction{background:#fff;border-left:7px solid var(--cyan);border-radius:18px;box-shadow:0 3px 14px rgba(0,0,0,.08);padding:13px 16px;color:var(--text);font-weight:900;max-width:920px;margin-bottom:16px}.hidden{display:none!important}
+@media(max-width:900px){.main-btn{flex:1 1 150px;max-width:none}.crossword-wrap{grid-template-columns:1fr}.crossword-grid{grid-template-columns:repeat(15,28px);justify-content:start}.cw-cell,.cw-cell input{width:28px;height:28px;font-size:.9rem}}
+@media(max-width:700px){.hero{padding:24px 12px 18px}.main-nav{position:relative;gap:8px;padding:12px 8px}.main-btn{flex:1 1 100%;width:100%;max-width:none;font-size:1rem}.wrap,.container{padding:14px 12px 54px}.exercise-box,.challenge-card,.scorebar,.top-score,.score-box,.callout{padding:18px 14px}.crossword-grid{grid-template-columns:repeat(15,24px);gap:2px;padding:8px}.cw-cell,.cw-cell input{width:24px;height:24px;font-size:.82rem}.section-title,h2{font-size:1.45rem}}
+
+
+
+/* ===== Amélioration score / progression et ergonomie association + mots croisés ===== */
+.exercise-status{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:0 0 18px;background:#fff;border:1px solid var(--border);border-radius:18px;padding:12px 14px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.exercise-status .status-label{font-weight:900;color:var(--text);font-size:1rem;white-space:nowrap}.exercise-status .status-score{background:var(--jaune);color:#333;font-weight:900;font-size:1rem;padding:6px 16px;border-radius:20px;white-space:nowrap}.exercise-status .status-progress{flex:1;min-width:180px;background:#e0e0e0;border-radius:10px;height:12px;overflow:hidden}.exercise-status .status-progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--bleu),var(--violet));border-radius:10px;transition:width .5s ease}.scorepill.inline-old{display:none!important}
+#page-match .match-title{margin-bottom:12px}.match-hint{font-size:.94rem;color:var(--text-muted);font-weight:850;margin:-4px 0 14px;line-height:1.45}.match-layout{display:grid;grid-template-columns:1fr;gap:14px}#page-match .bank{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0 0 6px}#page-match .chip{min-height:48px;border-radius:999px;padding:9px 12px}.dropgrid{grid-template-columns:repeat(3,minmax(190px,1fr));gap:14px;align-items:stretch}.dropcard{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:10px;min-height:205px;padding:16px}.dropcard .picto-img,#page-match .dropcard .picto-img{width:92px!important;height:92px!important;margin:0 auto 2px}.dropzone{width:100%;max-width:220px;min-height:64px;margin:0 auto;background:#fff;border:2.5px solid var(--border);border-radius:18px;padding:10px 12px;display:flex;align-items:center;justify-content:center;text-align:center}.dropzone .drop-placeholder{color:var(--text-muted);font-size:.92rem}.dropzone.filled{border-color:var(--cyan);background:var(--cyan-clair)}.dropzone.good{border-color:var(--vert)!important;background:var(--vert-clair)!important;color:var(--vert)!important}.dropzone.bad{border-color:var(--rouge)!important;background:var(--rouge-clair)!important;color:var(--rouge)!important}.chip-in-drop{line-height:1.15;min-height:40px}.assoc-actions-center{justify-content:center;margin-top:16px}
+.crossword-wrap{grid-template-columns:minmax(280px,auto) minmax(260px,1fr);align-items:start}.crossword-grid{grid-template-columns:repeat(11,36px);gap:4px;background:#f4f7ff;border:1px solid var(--border);box-shadow:inset 0 0 0 1px rgba(255,255,255,.75);justify-content:center;max-width:100%;overflow:auto}.cw-cell,.cw-cell input{width:36px;height:36px}.cw-cell input{border-radius:10px;font-size:1.05rem}.cw-cell .num{font-size:.62rem;top:2px;left:4px}.crossword-clues{padding:18px}.crossword-clues li{margin:10px 0 10px 22px}.crossword-actions{justify-content:center}.cw-cell.empty{visibility:hidden}.crossword-keyboard-help{font-size:.86rem;color:var(--text-muted);font-weight:800;margin-top:10px;line-height:1.35}.word-complete{color:var(--vert);font-weight:900}
+@media(max-width:900px){.exercise-status .status-progress{order:3;flex-basis:100%}.dropgrid{grid-template-columns:repeat(2,minmax(150px,1fr))}.crossword-grid{grid-template-columns:repeat(11,32px)}.cw-cell,.cw-cell input{width:32px;height:32px}}
+@media(max-width:700px){.dropgrid{grid-template-columns:1fr}.dropcard{min-height:0}.dropzone{max-width:100%;min-height:58px}.crossword-grid{grid-template-columns:repeat(11,26px);gap:2px;padding:8px}.cw-cell,.cw-cell input{width:26px;height:26px;font-size:.85rem}.crossword-clues li{font-size:.93rem}.exercise-status{gap:8px}.exercise-status .status-label,.exercise-status .status-score{font-size:.92rem}}
+
+
+/* ===== Corrections finales : score intégré, images agrandissables, mots croisés aérés ===== */
+.top-score{display:none!important}
+.exercise-status{max-width:980px;margin:0 0 18px}
+.exercise-status .status-label{min-width:150px}
+.exercise-status .status-score{min-width:96px;text-align:center}
+#photoWrap .real-photo{cursor:zoom-in;transition:transform .18s, box-shadow .18s}
+#photoWrap .real-photo:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(0,0,0,.14)}
+.image-modal{display:none;position:fixed;inset:0;z-index:2000;background:rgba(26,26,46,.72);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:18px}
+.image-modal.open{display:flex}
+.image-modal img{max-width:min(96vw,980px);max-height:88vh;object-fit:contain;background:#fff;border-radius:22px;padding:10px;box-shadow:var(--shadow-strong)}
+.image-modal-close{position:fixed;top:18px;right:22px;border:0;background:#fff;color:var(--text);border-radius:999px;width:42px;height:42px;font-size:1.3rem;font-weight:900;cursor:pointer;box-shadow:var(--shadow)}
+.crossword-tools{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid var(--border);border-radius:18px;padding:12px 14px;margin:0 0 14px;box-shadow:0 3px 14px rgba(0,0,0,.08);font-weight:900}
+.crossword-tools-label{color:var(--text-muted)}
+.crossword-switch{display:inline-flex;gap:6px;background:#f4f7ff;border:1px solid var(--border);border-radius:999px;padding:5px}
+.crossword-switch label{cursor:pointer}
+.crossword-switch input{position:absolute;opacity:0;pointer-events:none}
+.crossword-switch span{display:inline-flex;align-items:center;justify-content:center;min-width:110px;padding:8px 12px;border-radius:999px;color:var(--text-muted);font-weight:900}
+.crossword-switch input:checked + span{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#fff;box-shadow:0 4px 12px rgba(6,182,212,.22)}
+.crossword-switch label.disabled-dir{opacity:.42;cursor:not-allowed}
+.crossword-switch label.disabled-dir span{background:#eef2f7!important;color:#94a3b8!important;box-shadow:none!important}
+
+.crossword-grid{grid-template-columns:repeat(18,32px)!important;gap:4px!important;justify-content:start!important;max-width:100%;overflow:auto}
+.cw-cell.empty{visibility:hidden!important}
+.crossword-keyboard-help{background:var(--bleu-clair);border-radius:14px;padding:10px 12px;color:var(--bleu);margin-top:12px}
+@media(max-width:900px){.crossword-grid{grid-template-columns:repeat(18,28px)!important}.cw-cell,.cw-cell input{width:28px!important;height:28px!important}}
+@media(max-width:700px){.crossword-grid{grid-template-columns:repeat(18,24px)!important}.cw-cell,.cw-cell input{width:24px!important;height:24px!important}.crossword-switch span{min-width:94px;padding:7px 9px;font-size:.9rem}.image-modal-close{top:10px;right:10px}}
+
+
+/* === Ajustements séries limitées et mots croisés aérés === */
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+.session-end{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:26px 22px;text-align:center}
+.session-end-icon{font-size:3rem;margin-bottom:8px}.session-end h3{font-family:'Fredoka One';font-size:1.35rem;color:var(--bleu);text-transform:none;letter-spacing:0;margin:0 0 10px}.revision-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0}.revision-chip{background:var(--bleu-clair);color:var(--bleu);border:1px solid #cddffc;border-radius:999px;padding:7px 12px;font-weight:900}.photo-wrap .real-photo{cursor:zoom-in}.crossword-grid{grid-template-columns:repeat(17,34px)!important;gap:5px!important;background:#f4f7ff!important}.cw-cell,.cw-cell input{width:34px!important;height:34px!important}.cw-cell.empty{visibility:hidden!important}.crossword-clues li{margin-bottom:12px!important}
+@media(max-width:900px){.crossword-grid{grid-template-columns:repeat(17,30px)!important}.cw-cell,.cw-cell input{width:30px!important;height:30px!important}}
+@media(max-width:700px){.crossword-grid{grid-template-columns:repeat(17,25px)!important;gap:3px!important}.cw-cell,.cw-cell input{width:25px!important;height:25px!important}}
+
+
+/* Correction curseur section Associer : clic simple, pas de glisser-déposer */
+#defis #page-match #labelBank .chip,
+#defis #page-match .bank .chip,
+#page-match #labelBank .chip {
+  cursor: pointer !important;
+}
+#defis #page-match #labelBank .chip:active,
+#defis #page-match .bank .chip:active,
+#page-match #labelBank .chip:active {
+  cursor: pointer !important;
+  transform: translateY(-1px);
+}
+/* Ajustements familles doubles et mots croisés */
+#courseGrid .tag + .tag{margin-top:6px;}
+.crossword-grid{grid-template-columns:repeat(23,34px)!important;}
+.cw-cell.black{visibility:visible!important;background:#1f2937;border-radius:8px;}
+.cw-cell.black::after{content:"";display:block;width:100%;height:100%;background:#1f2937;border-radius:8px;}
+@media(max-width:900px){.crossword-grid{grid-template-columns:repeat(23,30px)!important}}
+@media(max-width:700px){.crossword-grid{grid-template-columns:repeat(23,25px)!important}}
+
+/* ===== Encadré protections en chimie ===== */
+.protection-card{background:#fff;border-left:7px solid var(--vert);border-radius:18px;box-shadow:0 3px 14px rgba(0,0,0,.08);padding:18px 18px;margin:18px 0;color:var(--text)}
+.protection-card h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.2rem;text-transform:none;letter-spacing:0;margin:0 0 10px}
+.protection-card p{font-size:1rem;line-height:1.55;font-weight:850;margin:0 0 14px}
+.protection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.protection-item{background:#f8f9ff;border:1px solid var(--border);border-radius:18px;padding:14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.protection-item img{width:110px;height:110px;object-fit:contain;display:block;margin:0 auto 8px}
+.protection-item strong{display:block;color:var(--bleu);font-weight:900;font-size:1rem;margin-bottom:4px}
+.protection-item span{display:block;color:var(--text-muted);font-weight:800;font-size:.9rem;line-height:1.35}
+@media(max-width:700px){.protection-grid{grid-template-columns:1fr}.protection-item{display:grid;grid-template-columns:90px 1fr;gap:12px;align-items:center;text-align:left}.protection-item img{width:84px;height:84px;margin:0}.protection-item strong{margin-bottom:3px}}
+
 </style>
 </head>
 <body>
-<header class="hero">
-  <h1>⚠️ Pictogrammes de danger</h1>
-  <p>Sciences · Classe de 6ème</p>
-</header>
+<div class="bubbles" id="bubbles"></div>
+<header class="hero"><div class="logo">⚠️</div><h1>Pictogrammes de danger</h1><p>Sciences · Classe de 6ème</p></header>
 
-<nav class="main-nav cours-active">
-  <button class="main-btn active" data-view="cours">📖 Leçon</button>
-  <button class="main-btn" data-view="defis">🎮 Défis interactifs</button>
+<nav class="main-nav tabs" aria-label="Navigation">
+  <button class="main-btn active" data-view="cours">📚 Cours</button>
+  <button class="main-btn" data-page="page-qcm">🧩 Reconnaître</button>
+  <button class="main-btn" data-page="page-match">🎓 Associer</button>
+  <button class="main-btn" data-page="page-photo">🧴 Produits</button>
+  <button class="main-btn" data-page="page-sort">🗂️ Familles</button>
+  <button class="main-btn" data-page="page-crossword">🔤 Mots croisés</button>
 </nav>
 
 <div class="wrap">
   <section class="panel" id="main-panel">
     <div id="cours" class="view active">
-      <h2 class="section-title">Leçon sur les pictogrammes de danger</h2>
+      <h2 class="section-title">📚 Les pictogrammes de danger</h2>
       <br>
       <p class="course-intro">
         Un pictogramme permet d'identifier rapidement quel est le danger et les précautions qu'il est nécessaire de prendre lors du stockage ou lors de l'utilisation de produits chimiques.
@@ -341,9 +449,33 @@ body:after{content:'';position:fixed;right:-80px;bottom:-80px;width:350px;height
       <div class="callout">
         <div class="danger-classes-title">Il existe plusieurs classes de dangers :</div>
         <div class="danger-classes-list">
-          <div class="mini-item">⚡ <u>Dangers physiques</u> : explosif, inflammable, comburant, gaz sous pression</div>
-          <div class="mini-item">🩺 <u>Dangers pour la santé</u> : corrosif, toxique, fort danger pour la santé, nocif / irritant</div>
-          <div class="mini-item">🌿 <u>Danger pour l'environnement</u> : polluant</div>
+          <div class="mini-item">⚡ <u>Dangers physiques</u> : explosif, inflammable, comburant, gaz sous pression, corrosif</div>
+          <div class="mini-item">🩺 <u>Dangers pour la santé</u> : corrosif, toxique / mortel, fort danger pour la santé, nocif / irritant</div>
+          <div class="mini-item">🌿 <u>Danger pour l'environnement</u> : polluant, nocif / irritant</div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        ⚠️ Certains pictogrammes peuvent appartenir à plusieurs familles : <strong>Corrosif</strong> peut être classé comme danger physique ou danger pour la santé ; <strong>Nocif / irritant</strong> peut être classé comme danger pour la santé ou danger pour l’environnement.
+      </div>
+
+
+      <div class="protection-card">
+        <h3>🛡️ Se protéger pendant une expérience de chimie</h3>
+        <p>Quand on manipule des produits chimiques, il faut adopter les bons gestes de sécurité : porter une blouse, des lunettes et des gants lorsque c’est nécessaire, écouter les consignes et ne jamais toucher, sentir ou goûter un produit.</p>
+        <div class="protection-grid">
+          <div class="protection-item">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/ec380400ce46ca1e015850ce877db8c34732e88b/BLOUSE%202.gif" alt="Blouse de protection" loading="lazy">
+            <div><strong>Blouse</strong><span>Elle protège les vêtements et la peau.</span></div>
+          </div>
+          <div class="protection-item">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/ec380400ce46ca1e015850ce877db8c34732e88b/LUNETTES.gif" alt="Lunettes de protection" loading="lazy">
+            <div><strong>Lunettes</strong><span>Elles protègent les yeux des projections.</span></div>
+          </div>
+          <div class="protection-item">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/ec380400ce46ca1e015850ce877db8c34732e88b/GANTS.gif" alt="Gants de protection" loading="lazy">
+            <div><strong>Gants</strong><span>Ils protègent les mains quand le produit est dangereux.</span></div>
+          </div>
         </div>
       </div>
 
@@ -355,7 +487,7 @@ body:after{content:'';position:fixed;right:-80px;bottom:-80px;width:350px;height
       <div class="callout defis-intro">Tu peux changer de défi quand tu le souhaites. Les questions reviennent en boucle seulement après avoir parcouru toute la banque.</div>
 
       <div class="challenge-nav">
-        <button class="challenge-btn active" data-page="page-qcm">Défi 1<br>Reconnaître les <br> pictogrammes</button>
+        <button class="challenge-btn active" data-page="page-qcm">Reconnaître</button>
         <button class="challenge-btn" data-page="page-match">Défi 2<br>Faire les <br>bonnes associations</button>
         <button class="challenge-btn" data-page="page-photo">Défi 3<br>Dangers de <br>produits chimiques</button>
         <button class="challenge-btn" data-page="page-sort">Défi 4<br>Classes de <br>dangers</button>
@@ -364,10 +496,11 @@ body:after{content:'';position:fixed;right:-80px;bottom:-80px;width:350px;height
       <div id="page-qcm" class="challenge-page active">
         <div class="exercise-box">
           <div class="question" id="qcmQuestion"></div>
+          <div class="exercise-status"><div class="status-label">Question <span id="qcmProgressText">1 / 9</span></div><div class="status-progress"><div id="qcmProgressFill"></div></div><div class="status-score">⭐ <span id="qcmScore">0 / 0</span></div></div>
           <div class="options" id="qcmOptions"></div>
           <div class="action-row">
             <button class="btn" id="qcmNext">Question suivante</button>
-            <div class="scorepill" id="qcmScore">0 / 0</div>
+            <button class="btn secondary" id="qcmRestart" type="button">🔄 Recommencer</button>
           </div>
         </div>
         <div class="feedback" id="qcmFeedback"></div>
@@ -375,13 +508,14 @@ body:after{content:'';position:fixed;right:-80px;bottom:-80px;width:350px;height
 
       <div id="page-match" class="challenge-page">
         <div class="exercise-box">
-          <p class="question match-title">Associe le nom au bon pictogramme</p>
-          <div class="bank" id="labelBank"></div>
-          <div class="dropgrid" id="matchGrid"></div>
-          <div class="action-row">
+          <p class="question match-title">Associe chaque nom au bon pictogramme.</p>
+          <p class="match-hint">Clique sur un nom, puis clique dans la case située sous l’image correspondante.</p>
+          <div class="exercise-status"><div class="status-label">Associations <span id="matchProgressText">0 / 9</span></div><div class="status-progress"><div id="matchProgressFill"></div></div><div class="status-score">⭐ <span id="matchScore">0 / 0</span></div></div>
+          <div class="match-layout"><div class="bank" id="labelBank"></div><div class="dropgrid" id="matchGrid"></div></div>
+          <div class="action-row assoc-actions-center">
             <button class="btn primary" id="checkMatch">Vérifier</button>
-            <button class="btn" id="newMatchRound">Nouvelle série</button>
-            <div class="scorepill" id="matchScore">0 / 0</div>
+            <button class="btn secondary" id="newMatchRound">🔄 Recommencer</button>
+            
           </div>
         </div>
         <div class="feedback" id="matchFeedback"></div>
@@ -391,11 +525,12 @@ body:after{content:'';position:fixed;right:-80px;bottom:-80px;width:350px;height
         <div class="exercise-box">
           <div class="photo-wrap" id="photoWrap"></div>
           <div class="question" id="photoQuestion"></div>
+          <div class="exercise-status"><div class="status-label">Question <span id="photoProgressText">1 / 10</span></div><div class="status-progress"><div id="photoProgressFill"></div></div><div class="status-score">⭐ <span id="photoScore">0 / 0</span></div></div>
           <div class="options" id="photoOptions"></div>
           <div class="action-row">
             <button class="btn primary" id="checkPhoto">Vérifier</button>
             <button class="btn" id="photoNext">Question suivante</button>
-            <div class="scorepill" id="photoScore">0 / 0</div>
+            <button class="btn secondary" id="photoRestart" type="button">🔄 Recommencer</button>
           </div>
         </div>
         <div class="feedback" id="photoFeedback"></div>
@@ -404,30 +539,71 @@ body:after{content:'';position:fixed;right:-80px;bottom:-80px;width:350px;height
       <div id="page-sort" class="challenge-page">
         <div class="exercise-box">
           <p class="question sort-question">Pour chaque pictogramme, choisis la bonne famille :<span class="sort-help-list">• Danger physique<br>• Danger pour la santé<br>• Danger pour l'environnement</span></p>
+          <div class="exercise-status"><div class="status-label">Classement <span id="sortProgressText">0 / 9</span></div><div class="status-progress"><div id="sortProgressFill"></div></div><div class="status-score">⭐ <span id="sortScore">0 / 0</span></div></div>
           <div class="sort-grid" id="sortGrid"></div>
           <div class="action-row">
             <button class="btn primary" id="checkSort">Vérifier</button>
-            <button class="btn" id="newSortRound">Nouvelle série</button>
-            <div class="scorepill" id="sortScore">0 / 0</div>
+            <button class="btn secondary" id="newSortRound">🔄 Recommencer</button>
+            
           </div>
         </div>
         <div class="feedback" id="sortFeedback"></div>
       </div>
 
-      <div class="top-score">
-        <div class="score-box"><div class="big" id="globalGood">0</div><div class="small">bonnes réponses</div></div>
-        <div class="score-box"><div class="big" id="globalTotal">0</div><div class="small">questions jouées</div></div>
-        <div class="score-box"><div class="big" id="globalPercent">0%</div><div class="small">réussite globale</div></div>
-        <div class="score-box"><div class="big" id="globalStars">☆ ☆ ☆</div><div class="small">niveau</div></div>
+
+
+      <div id="page-crossword" class="challenge-page">
+        <h2 class="section-title">🔤 Mots croisés</h2>
+        <p class="exercise-instruction">Complète les mots croisés avec les noms des pictogrammes. Écris sans accent : les lettres se mettent automatiquement en majuscules.</p>
+        <div class="crossword-tools">
+          <span class="crossword-tools-label">Sens d’écriture :</span>
+          <div class="crossword-switch" role="group" aria-label="Sens d’écriture">
+            <label><input type="radio" name="crosswordDirection" value="H" checked><span>Horizontal →</span></label>
+            <label><input type="radio" name="crosswordDirection" value="V"><span>Vertical ↓</span></label>
+          </div>
+        </div>
+        <div class="exercise-box">
+          <div class="crossword-wrap">
+            <div class="crossword-grid" id="crosswordGrid" aria-label="Grille de mots croisés"></div>
+            <div class="crossword-clues">
+              <h3>Indices</h3>
+              <ol id="crosswordClues"></ol>
+              <div class="action-row crossword-actions">
+                <button class="btn primary" id="checkCrossword">Vérifier</button>
+                <button class="btn" id="resetCrossword">Recommencer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feedback" id="crosswordFeedback"></div>
       </div>
+
     </div>
   </section>
+</div>
+
+
+<div class="image-modal" id="imageModal" aria-hidden="true" onclick="closeProductImageModal(event)">
+  <button type="button" class="image-modal-close" onclick="closeProductImageModal()">✕</button>
+  <img id="imageModalImg" src="" alt="Image agrandie">
 </div>
 
 <script>
 const pictos = [{"id": "inflammable", "name": "Inflammable", "category": "physique", "categoryLabel": "Danger physique", "short": "Peut s'enflammer au contact d'une flamme, d'une étincelle ou sous l'effet de la chaleur.", "tip": "On éloigne ce produit des flammes et des sources de chaleur.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-inflammable.jpg"}, {"id": "explosif", "name": "Explosif", "category": "physique", "categoryLabel": "Danger physique", "short": "Peut exploser sous l'effet d'une flamme, d'un choc, de frottements, d'une étincelle ou de la chaleur.", "tip": "On évite les chocs, les frottements et la chaleur.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-explosion.jpg"}, {"id": "comburant", "name": "Comburant", "category": "physique", "categoryLabel": "Danger physique", "short": "Peut provoquer ou aggraver un incendie.", "tip": "Un produit comburant aide un feu à se développer.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-comburant.jpg"}, {"id": "gaz", "name": "Gaz sous pression", "category": "physique", "categoryLabel": "Danger physique", "short": "Gaz comprimé, liquéfié ou dissous sous pression.", "tip": "On évite les chocs et la chaleur.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-gaz-sous-pression.jpg"}, {"id": "corrosif", "name": "Corrosif", "category": "sante", "categoryLabel": "Danger pour la santé", "short": "Attaque et ronge les métaux ainsi que les matières organiques : la peau, les yeux...", "tip": "Gants, lunettes et même blouses sont indispensables.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-corrosif.jpg"}, {"id": "toxique", "name": "Toxique / mortel", "category": "sante", "categoryLabel": "Danger pour la santé", "short": "Empoisonne rapidement, même à faible dose. Peut entraîner la mort.", "tip": "On ne sent pas, on ne goûte pas, on ne touche absolument pas !", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-toxique.jpg"}, {"id": "danger_sante", "name": "Fort danger pour la santé", "category": "sante", "categoryLabel": "Danger pour la santé", "short": "Peut être cancérigène, mutagène, toxique pour la reproduction ou provoquer de graves effets sur les poumons à long terme.", "tip": "Le danger peut être grave même s'il n'est pas immédiat.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-CMR.jpg"}, {"id": "nocif", "name": "Nocif / irritant", "category": "sante", "categoryLabel": "Danger pour la santé", "short": "Peut être irritant, provoquer des allergies cutanées ou être nocif à forte dose.", "tip": "On lit l'étiquette avant d'utiliser le produit.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-point-dexclamation.jpg"}, {"id": "polluant", "name": "Polluant pour l'environnement", "category": "environnement", "categoryLabel": "Danger pour l'environnement", "short": "Provoque des effets néfastes sur les organismes du milieu aquatique.", "tip": "On ne jette jamais ce produit dans l'évier ou dans la nature.", "img": "https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-environnement.jpg"}];
 
 const productQuestions = [{"product": "Nettoyant déboucheur", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/D%C3%A9boucheur%20%C3%A9vier.jpg", "hazard": ["corrosif","polluant"], "credit": "Perso"}, {"product": "Adoucissant pour lave-vaisselle", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Adoucissant%20-%20Lave%20vaisselle.png", "hazard": ["nocif"], "credit": "Perso"}, {"product": "Acide formique", "image": "https://raw.githubusercontent.com/Nabo33/Images/48999dc7448cc71d93649bd396ba7c18cd46ebaa/Acide%20formique.png", "hazard": ["corrosif", "inflammable", "toxique"], "credit": "Perso"}, {"product": "Bouteille de dioxygène", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Bouteille%20de%20dioxyg%C3%A8ne.jpg", "hazard": ["inflammable", "gaz"], "credit": "Perso"}, {"product": "Mélange de métaux", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Cobalt%2C%20Carbure%2C%20Tungstene.jpg", "hazard": ["toxique", "danger_sante", "polluant"], "credit": "Perso"}, {"product": "Produit inconnu", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Liquide%20inconnu.jpg", "hazard": ["inflammable", "toxique", "danger_sante"], "credit": "Perso"}, {"product": "Anti-calcaire", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Pictogramme%20-%20Anti-calcaire.jpg", "hazard": ["corrosif"], "credit": "Perso"}, {"product": "Javel", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Pictogramme%20-%20Javel.jpg", "hazard": ["corrosif", "polluant"], "credit": "Perso"}, {"product": "Liquide vaisselle", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Pictogramme%20-%20Liquide%20vaisselle.jpg", "hazard": ["nocif"], "credit": "Perso"}, {"product": "Produit japonais", "image": "https://raw.githubusercontent.com/Nabo33/Images/74778c762dcc49ae29e1a6c768099f2cf3a114c4/Produit%20inconnu%20japonais.jpg", "hazard": ["corrosif", "inflammable"], "credit": "Perso"}];
+
+const CATEGORY_LABELS = {
+  physique: 'Danger physique',
+  sante: 'Danger pour la santé',
+  environnement: 'Danger pour l’environnement'
+};
+pictos.forEach(p => {
+  if (p.id === 'corrosif') p.categories = ['physique', 'sante'];
+  else if (p.id === 'nocif') p.categories = ['sante', 'environnement'];
+  else p.categories = [p.category];
+  p.categoryLabels = p.categories.map(cat => CATEGORY_LABELS[cat]);
+});
 
 function shuffle(arr) {
   const a = [...arr];
@@ -457,45 +633,307 @@ function makeQueue(items) {
   };
 }
 
-const scores = {globalGood:0, globalTotal:0, qcmGood:0, qcmTotal:0, photoGood:0, photoTotal:0, matchGood:0, matchTotal:0, sortGood:0, sortTotal:0};
+const scores = {qcmGood:0, qcmTotal:0, photoGood:0, photoTotal:0, matchGood:0, matchTotal:0, sortGood:0, sortTotal:0, crosswordGood:0, crosswordTotal:0};
+function setText(id, value){const el=document.getElementById(id); if(el) el.textContent=value;}
+function setProgress(id, current, total){const el=document.getElementById(id); if(el) el.style.width = (total ? Math.min(100, Math.round(current/total*100)) : 0) + '%';}
+function updateExerciseStatus(kind, current, total, good, played){
+  setText(kind+'ProgressText', current + ' / ' + total);
+  setProgress(kind+'ProgressFill', current, total);
+  setText(kind+'Score', good + ' / ' + played);
+}
 function addResult(key, ok) {
-  scores.globalTotal++;
-  if (ok) scores.globalGood++;
   scores[key + 'Total']++;
   if (ok) scores[key + 'Good']++;
   renderScores();
 }
+
+// Mots croisés — banque demandée, avec vrais croisements et cases noires pour « gaz sous pression »
+const baseCrosswordWords = [
+  {num:1, word:'COMBURANT', row:5, col:4, dir:'V', clue:'Peut provoquer ou aggraver un incendie.'},
+  {num:2, word:'INFLAMMABLE', row:10, col:19, dir:'V', clue:'Peut s’enflammer facilement.'},
+  {num:3, word:'POLLUANT', row:10, col:8, dir:'V', clue:'Dangereux pour l’environnement.'},
+  {num:4, word:'TOXIQUE', row:0, col:0, dir:'H', clue:'Peut empoisonner rapidement, même à faible dose.'},
+  {num:5, word:'MORTEL', row:9, col:13, dir:'V', clue:'Peut entraîner la mort.'},
+  {num:6, word:'CORROSIF', row:4, col:5, dir:'H', clue:'Attaque les métaux, la peau ou les yeux.'},
+  {num:7, word:'EXPLOSIF', row:0, col:6, dir:'V', clue:'Peut exploser sous l’effet d’un choc, d’une flamme ou de la chaleur.'},
+  {num:8, word:'NOCIF', row:6, col:3, dir:'H', clue:'Peut être dangereux à forte dose.'},
+  {num:9, word:'IRRITANT', row:8, col:17, dir:'V', clue:'Peut irriter la peau, les yeux ou les voies respiratoires.'},
+  {num:10, word:'BLOUSE', row:17, col:14, dir:'V', clue:'Équipement qui protège les vêtements et la peau.'},
+  {num:11, word:'LUNETTES', row:20, col:13, dir:'H', clue:'Équipement qui protège les yeux.'},
+  {num:12, word:'GANTS', row:7, col:15, dir:'V', clue:'Équipement qui protège les mains.'},
+  {num:13, word:'GAZ#SOUS#PRESSION', row:11, col:3, dir:'H', clue:'Pictogramme représenté par une bouteille.'}
+];
+const crosswordRows = 25;
+const crosswordCols = 23;
+let crosswordWords = [];
+let lastCrosswordVariantKey = '';
+function chooseCrosswordVariant(){
+  const variants = [];
+  for(let rowOffset=0; rowOffset<=2; rowOffset++){
+    for(let colOffset=0; colOffset<=3; colOffset++){
+      variants.push({rowOffset, colOffset});
+    }
+  }
+  let choices = variants.filter(v => `${v.rowOffset}-${v.colOffset}` !== lastCrosswordVariantKey);
+  if(!choices.length) choices = variants;
+  const picked = choices[Math.floor(Math.random() * choices.length)];
+  lastCrosswordVariantKey = `${picked.rowOffset}-${picked.colOffset}`;
+  crosswordWords = baseCrosswordWords.map(w => ({...w, row:w.row + picked.rowOffset, col:w.col + picked.colOffset}));
+}
+function getCrosswordDirection(){
+  const checked = document.querySelector('input[name="crosswordDirection"]:checked');
+  return checked ? checked.value : 'H';
+}
+function setCrosswordDirection(dir){
+  const radio = document.querySelector(`input[name="crosswordDirection"][value="${dir}"]`);
+  if(radio) radio.checked = true;
+}
+function setCrosswordDirectionChoice(input){
+  if(!input) return;
+  const nums = (input.dataset.words || '').split(',').filter(Boolean);
+  const words = crosswordWords.filter(w => nums.includes(String(w.num)));
+  const dirs = [...new Set(words.map(w => w.dir))];
+  const radios = [...document.querySelectorAll('input[name="crosswordDirection"]')];
+
+  radios.forEach(radio => {
+    const allowed = dirs.length > 1 || dirs.includes(radio.value);
+    radio.disabled = !allowed;
+    const label = radio.closest('label');
+    if(label) label.classList.toggle('disabled-dir', !allowed);
+  });
+
+  // Une case appartenant à un seul mot impose automatiquement le sens d'écriture.
+  if(dirs.length === 1){
+    setCrosswordDirection(dirs[0]);
+  }else if(dirs.length > 1 && !dirs.includes(getCrosswordDirection())){
+    setCrosswordDirection(dirs[0]);
+  }
+}
+function handleCrosswordCellActivation(input){
+  setCrosswordDirectionChoice(input);
+  highlightCrosswordClue(input);
+}
+function crosswordLetters(){
+  const letters = {};
+  const nums = {};
+  const cellWords = {};
+  crosswordWords.forEach(w => {
+    nums[`${w.row},${w.col}`] = nums[`${w.row},${w.col}`] ? nums[`${w.row},${w.col}`] + '/' + w.num : w.num;
+    [...w.word].forEach((ch,i) => {
+      const r = w.row + (w.dir === 'V' ? i : 0);
+      const c = w.col + (w.dir === 'H' ? i : 0);
+      const key = `${r},${c}`;
+      if(ch === '#'){
+        letters[key] = '#';
+        return;
+      }
+      letters[key] = ch;
+      if(!cellWords[key]) cellWords[key] = [];
+      cellWords[key].push(String(w.num));
+    });
+  });
+  return {letters, nums, cellWords};
+}
+function highlightCrosswordClue(input){
+  if(!input) return;
+  const clueList = document.getElementById('crosswordClues');
+  if(!clueList) return;
+  clueList.querySelectorAll('li').forEach(li => li.classList.remove('active-clue'));
+  const nums = (input.dataset.words || '').split(',').filter(Boolean);
+  if(!nums.length) return;
+  const direction = getCrosswordDirection();
+  let selectedNum = nums[0];
+  const matchingWord = crosswordWords.find(w => nums.includes(String(w.num)) && w.dir === direction);
+  if(matchingWord) selectedNum = String(matchingWord.num);
+  const active = clueList.querySelector(`li[data-num="${selectedNum}"]`);
+  if(active) active.classList.add('active-clue');
+}
+function getActiveCrosswordWord(input, direction){
+  const r = Number(input.dataset.row);
+  const c = Number(input.dataset.col);
+  const nums = (input.dataset.words || '').split(',').filter(Boolean);
+
+  // On privilégie le mot qui correspond au sens choisi.
+  let word = crosswordWords.find(w =>
+    nums.includes(String(w.num)) &&
+    w.dir === direction &&
+    isCellInCrosswordWord(w, r, c)
+  );
+
+  // Si la case n'appartient pas à un mot dans ce sens, on garde simplement le premier mot de la case.
+  if(!word){
+    word = crosswordWords.find(w => nums.includes(String(w.num)) && isCellInCrosswordWord(w, r, c));
+  }
+  return word || null;
+}
+function isCellInCrosswordWord(word, r, c){
+  const index = word.dir === 'H' ? c - word.col : r - word.row;
+  if(index < 0 || index >= word.word.length) return false;
+  return word.dir === 'H' ? r === word.row : c === word.col;
+}
+function crosswordCellPosition(word, index){
+  return {
+    r: word.row + (word.dir === 'V' ? index : 0),
+    c: word.col + (word.dir === 'H' ? index : 0)
+  };
+}
+function focusCrosswordFrom(input, direction, backwards=false){
+  const r = Number(input.dataset.row);
+  const c = Number(input.dataset.col);
+  const word = getActiveCrosswordWord(input, direction);
+  if(!word) return;
+
+  const currentIndex = word.dir === 'H' ? c - word.col : r - word.row;
+  const step = backwards ? -1 : 1;
+
+  for(let i = currentIndex + step; i >= 0 && i < word.word.length; i += step){
+    const pos = crosswordCellPosition(word, i);
+    const next = document.querySelector(`#crosswordGrid input[data-row="${pos.r}"][data-col="${pos.c}"]`);
+    if(!next) continue;
+
+    // En écriture normale, on saute les cases déjà remplies, mais seulement à l'intérieur du mot actif.
+    if(!backwards && next.value) continue;
+
+    next.focus();
+    return;
+  }
+  // Fin du mot : on ne sort pas vers une autre case de la grille.
+}
+function buildCrossword(){
+  chooseCrosswordVariant();
+  const grid = document.getElementById('crosswordGrid');
+  const clues = document.getElementById('crosswordClues');
+  if(!grid || !clues) return;
+  const {letters, nums, cellWords} = crosswordLetters();
+  grid.style.gridTemplateColumns = `repeat(${crosswordCols}, 34px)`;
+  grid.innerHTML = '';
+  for(let r=0;r<crosswordRows;r++){
+    for(let c=0;c<crosswordCols;c++){
+      const key = `${r},${c}`;
+      const cell = document.createElement('div');
+      cell.className = 'cw-cell' + (letters[key] ? (letters[key] === '#' ? ' black' : '') : ' empty');
+      if(letters[key] === '#'){
+        cell.innerHTML = '';
+      }else if(letters[key]){
+        cell.innerHTML = `${nums[key] ? `<span class="num">${nums[key]}</span>` : ''}<input maxlength="1" data-row="${r}" data-col="${c}" data-answer="${letters[key]}" data-words="${(cellWords[key] || []).join(',')}" aria-label="case ${r+1}-${c+1}">`;
+        const input = cell.querySelector('input');
+        input.addEventListener('focus', () => handleCrosswordCellActivation(input));
+        input.addEventListener('click', () => handleCrosswordCellActivation(input));
+        input.addEventListener('input', () => {
+          input.value = input.value.toUpperCase().replace(/[^A-Z]/g,'').slice(0,1);
+          updateCrosswordProgress();
+          if(input.value) focusCrosswordFrom(input, getCrosswordDirection(), false);
+        });
+        input.addEventListener('keydown', e => {
+          if(e.key === 'Backspace' && !input.value){focusCrosswordFrom(input, getCrosswordDirection(), true);}
+        });
+      }
+      grid.appendChild(cell);
+    }
+  }
+  clues.innerHTML = crosswordWords.map(w => `<li data-num="${w.num}">${w.clue}</li>`).join('') + '<div class="crossword-keyboard-help">Choisis le sens d’écriture puis tape les lettres. Le curseur avance automatiquement vers la droite ou vers le bas. Les mots se croisent, mais ils sont espacés pour rester lisibles. Le bouton Recommencer propose une nouvelle disposition.</div>';
+  document.getElementById('crosswordFeedback').className = 'feedback';
+  document.getElementById('crosswordFeedback').textContent = '';
+  updateCrosswordProgress();
+}
+function updateCrosswordProgress(){
+  const cells = [...document.querySelectorAll('#crosswordGrid input')];
+  const filled = cells.filter(i => i.value).length;
+  const good = cells.filter(i => i.value && i.value.toUpperCase() === i.dataset.answer).length;
+  updateExerciseStatus('crossword', filled, cells.length, good, cells.length);
+}
+function checkCrossword(){
+  const cells = [...document.querySelectorAll('#crosswordGrid input')];
+  let good = 0;
+  let filled = 0;
+  cells.forEach(input => {
+    const cell = input.closest('.cw-cell');
+    cell.classList.remove('good','bad');
+    const val = input.value.toUpperCase();
+    if(val) filled++;
+    if(val === input.dataset.answer){cell.classList.add('good');good++;}
+    else if(val){cell.classList.add('bad');}
+  });
+  const fb = document.getElementById('crosswordFeedback');
+  updateExerciseStatus('crossword', filled, cells.length, good, cells.length);
+  if(filled < cells.length){
+    fb.textContent = `Il reste ${cells.length - filled} case(s) à compléter.`;
+    fb.className = 'feedback show ko';
+  }else if(good === cells.length){
+    fb.textContent = 'Bravo ! Tous les mots croisés sont correctement complétés.';
+    fb.className = 'feedback show ok';
+  }else{
+    fb.textContent = `Il y a ${good} case(s) correcte(s) sur ${cells.length}. Corrige les cases rouges.`;
+    fb.className = 'feedback show ko';
+  }
+}
+const checkCrosswordBtn = document.getElementById('checkCrossword');
+const resetCrosswordBtn = document.getElementById('resetCrossword');
+if(checkCrosswordBtn) checkCrosswordBtn.addEventListener('click', checkCrossword);
+if(resetCrosswordBtn) resetCrosswordBtn.addEventListener('click', buildCrossword);
+document.querySelectorAll('input[name="crosswordDirection"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const active = document.activeElement;
+    if(active && active.matches && active.matches('#crosswordGrid input')){ handleCrosswordCellActivation(active); }
+  });
+});
+
+// Bulles décoratives discrètes
+(function bubbles(){const c=document.getElementById('bubbles');if(!c)return;for(let i=0;i<70;i++){const s=document.createElement('div');s.className='bubble';const size=30+Math.random()*70;s.style.width=size+'px';s.style.height=size+'px';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDuration=(3+Math.random()*5)+'s';s.style.animationDelay=(Math.random()*4)+'s';c.appendChild(s)}})();
+
+function openProductImageModal(src, alt){
+  const modal = document.getElementById('imageModal');
+  const img = document.getElementById('imageModalImg');
+  if(!modal || !img) return;
+  img.src = src;
+  img.alt = alt || 'Image agrandie';
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden','false');
+}
+function closeProductImageModal(event){
+  const modal = document.getElementById('imageModal');
+  if(!modal) return;
+  if(event && event.target && event.target.id !== 'imageModal') return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden','true');
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') closeProductImageModal();
+});
+
 function pct(a,b) { return b ? Math.round((a/b)*100) : 0; }
 function renderScores() {
-  document.getElementById('globalGood').textContent = scores.globalGood;
-  document.getElementById('globalTotal').textContent = scores.globalTotal;
-  document.getElementById('globalPercent').textContent = pct(scores.globalGood, scores.globalTotal) + '%';
-  const rate = pct(scores.globalGood, scores.globalTotal);
-  document.getElementById('globalStars').textContent = rate >= 85 ? '★ ★ ★' : rate >= 60 ? '★ ★ ☆' : rate > 0 ? '★ ☆ ☆' : '☆ ☆ ☆';
-  document.getElementById('qcmScore').textContent = `${scores.qcmGood} / ${scores.qcmTotal}`;
-  document.getElementById('photoScore').textContent = `${scores.photoGood} / ${scores.photoTotal}`;
-  document.getElementById('matchScore').textContent = `${scores.matchGood} / ${scores.matchTotal}`;
-  document.getElementById('sortScore').textContent = `${scores.sortGood} / ${scores.sortTotal}`;
+  setText('qcmScore', `${scores.qcmGood} / ${scores.qcmTotal}`);
+  setText('photoScore', `${scores.photoGood} / ${scores.photoTotal}`);
+  setText('matchScore', `${scores.matchGood} / ${scores.matchTotal}`);
+  setText('sortScore', `${scores.sortGood} / ${scores.sortTotal}`);
 }
 
 const mainNav = document.querySelector(".main-nav");
 const mainPanel = document.getElementById("main-panel");
 
-document.querySelectorAll(".main-btn").forEach(btn => btn.addEventListener("click", () => {
+function showCourseView(){
   document.querySelectorAll(".main-btn").forEach(b => b.classList.remove("active"));
+  document.querySelector('.main-btn[data-view="cours"]').classList.add("active");
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("cours").classList.add("active");
+  document.querySelectorAll(".challenge-page").forEach(p => p.classList.remove("active"));
+  if (mainPanel) mainPanel.classList.remove("defis-mode");
+}
+function showChallengePage(pageId, btn){
+  document.querySelectorAll(".main-btn").forEach(b => b.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("defis").classList.add("active");
+  document.querySelectorAll(".challenge-page").forEach(p => p.classList.remove("active"));
+  const page=document.getElementById(pageId);
+  if(page) page.classList.add("active");
+  if (mainPanel) mainPanel.classList.add("defis-mode");
+}
 
-  btn.classList.add("active");
-  if (mainPanel) mainPanel.classList.toggle("defis-mode", btn.dataset.view === "defis");
-  document.getElementById(btn.dataset.view).classList.add("active");
-
-  if (btn.dataset.view === "cours") {
-    mainNav.classList.remove("defis-active");
-    mainNav.classList.add("cours-active");
-  } else {
-    mainNav.classList.remove("cours-active");
-    mainNav.classList.add("defis-active");
-  }
+document.querySelectorAll(".main-btn").forEach(btn => btn.addEventListener("click", () => {
+  if(btn.dataset.view === "cours") showCourseView();
+  else if(btn.dataset.page) showChallengePage(btn.dataset.page, btn);
 }));
 
 document.querySelectorAll('.challenge-btn').forEach(btn => btn.addEventListener('click', () => {
@@ -509,279 +947,321 @@ const courseGrid = document.getElementById('courseGrid');
 pictos.forEach(p => {
   const el = document.createElement('article');
   el.className = 'card';
+  const tagHtml = (p.categories || [p.category])
+    .map(cat => `<div class="tag ${cat}">${CATEGORY_LABELS[cat]}</div>`)
+    .join('');
   el.innerHTML = `
     <img class="picto-img" src="${p.img}" alt="${p.name}">
     <h3 class="picto-title">${p.name}</h3>
-    <div class="tag ${p.category}">${p.categoryLabel}</div>
+    ${tagHtml}
     <p>${p.short}</p>
     <div class="tip">💡 ${p.tip}</div>
   `;
   courseGrid.appendChild(el);
 });
 
-// Défi 1
-const qcmQueue = makeQueue(pictos.map(p => p.id));
+// Défi 1 — série de 10 questions avec bilan de révision
+const QCM_LIMIT = 10;
+let qcmSession = [];
+let qcmIndex = 0;
 let currentQcm = null;
-let previousQcmId = null;
 let qcmAnswered = false;
-
-function nextQcm() {
-  let nextId = qcmQueue.next();
-  while (nextId === previousQcmId && pictos.length > 1) {
-    nextId = qcmQueue.next();
+let qcmWrong = {};
+function makeQcmSession(){
+  const ids = shuffle(pictos.map(p => p.id));
+  while(ids.length < QCM_LIMIT){
+    ids.push(...shuffle(pictos.map(p => p.id)));
   }
-
-  currentQcm = pictos.find(p => p.id === nextId);
-  previousQcmId = nextId;
+  return ids.slice(0, QCM_LIMIT);
+}
+function startQcmSession(){
+  scores.qcmGood = 0;
+  scores.qcmTotal = 0;
+  qcmIndex = 0;
+  qcmWrong = {};
+  qcmSession = makeQcmSession();
+  document.getElementById('qcmNext').textContent = 'Question suivante';
+  document.getElementById('qcmNext').onclick = nextQcm;
+  nextQcm();
+}
+function updateQcmSessionStatus(){
+  const displayedQuestion = Math.min(qcmIndex + 1, QCM_LIMIT);
+  setText('qcmProgressText', displayedQuestion + ' / ' + QCM_LIMIT);
+  // La barre mesure les questions réellement répondues : elle reste donc vide au début de l'exercice.
+  setProgress('qcmProgressFill', scores.qcmTotal, QCM_LIMIT);
+  setText('qcmScore', scores.qcmGood + ' / ' + scores.qcmTotal);
+}
+function showQcmEnd(){
+  const question = document.getElementById('qcmQuestion');
+  const box = document.getElementById('qcmOptions');
+  const fb = document.getElementById('qcmFeedback');
+  const wrongNames = Object.keys(qcmWrong);
+  question.textContent = '';
+  box.innerHTML = `<div class="session-end"><div class="session-end-icon">🏁</div><h3>Exercice terminé !</h3><p class="course-intro">Tu as obtenu <strong>${scores.qcmGood} bonne(s) réponse(s)</strong> sur <strong>${QCM_LIMIT}</strong>.</p>${wrongNames.length ? `<p class="course-intro">Pictogrammes à réviser :</p><div class="revision-list">${wrongNames.map(n=>`<span class="revision-chip">${n}</span>`).join('')}</div>` : `<p class="course-intro">Excellent : aucun pictogramme n’est à revoir en priorité.</p>`}<button type="button" class="btn" onclick="startQcmSession()">🔄 Recommencer</button></div>`;
+  fb.className = 'feedback';
+  fb.textContent = '';
+  updateExerciseStatus('qcm', QCM_LIMIT, QCM_LIMIT, scores.qcmGood, QCM_LIMIT);
+  document.getElementById('qcmNext').disabled = true;
+}
+function nextQcm() {
+  if(qcmIndex >= QCM_LIMIT){showQcmEnd();return;}
+  currentQcm = pictos.find(p => p.id === qcmSession[qcmIndex]);
   qcmAnswered = false;
-
-  const options = shuffle([
-    currentQcm,
-    ...shuffle(pictos.filter(p => p.id !== currentQcm.id)).slice(0, 3)
-  ]);
-
+  const nextBtn = document.getElementById('qcmNext');
+  nextBtn.disabled = true;
+  nextBtn.textContent = qcmIndex === QCM_LIMIT - 1 ? 'Voir le bilan' : 'Question suivante';
+  const options = shuffle([currentQcm, ...shuffle(pictos.filter(p => p.id !== currentQcm.id)).slice(0, 3)]);
   const question = document.getElementById("qcmQuestion");
   const box = document.getElementById("qcmOptions");
   const fb = document.getElementById("qcmFeedback");
-
   question.textContent = `Quel pictogramme correspond à : "${currentQcm.name}" ?`;
   box.innerHTML = "";
   fb.textContent = "";
   fb.className = "feedback";
-
+  updateQcmSessionStatus();
   options.forEach(opt => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "option";
     btn.innerHTML = `<img src="${opt.img}" alt="${opt.name}">`;
-
     btn.addEventListener("click", () => {
       if (qcmAnswered) return;
       qcmAnswered = true;
-
       const ok = opt.id === currentQcm.id;
-
       [...box.children].forEach(child => {
         const childImg = child.querySelector("img");
-        if (childImg && childImg.alt === currentQcm.name) {
-          child.classList.add("good");
-        }
+        if (childImg && childImg.alt === currentQcm.name) child.classList.add("good");
+        child.disabled = true;
       });
-
-      if (!ok) btn.classList.add("bad");
-
-      if (ok) {
-        fb.innerHTML = "Bravo ! Bonne réponse.";
-        fb.className = "feedback show ok";
-      } else {
-        fb.innerHTML = `
-          <div>Ce n'est pas correct. La bonne réponse pour <strong>${currentQcm.name}</strong> est :</div>
-          <div style="margin-top:10px; text-align:center;">
-            <img src="${currentQcm.img}" alt="${currentQcm.name}" style="width:70px; height:70px; object-fit:contain;">
-          </div>
-        `;
-        fb.className = "feedback show ko";
+      if (!ok) {
+        btn.classList.add("bad");
+        qcmWrong[currentQcm.name] = true;
       }
-
+      fb.innerHTML = ok ? "Bravo ! Bonne réponse." : `<div>Ce n'est pas correct. La bonne réponse pour <strong>${currentQcm.name}</strong> est :</div><div style="margin-top:10px; text-align:center;"><img src="${currentQcm.img}" alt="${currentQcm.name}" style="width:70px; height:70px; object-fit:contain;"></div>`;
+      fb.className = "feedback show " + (ok ? "ok" : "ko");
       addResult("qcm", ok);
+      updateQcmSessionStatus();
+      qcmIndex++;
+      nextBtn.disabled = false;
     });
-
     box.appendChild(btn);
   });
 }
-document.getElementById("qcmNext").onclick = nextQcm;
+const qcmNextBtn = document.getElementById("qcmNext");
+if(qcmNextBtn) qcmNextBtn.onclick = nextQcm;
+const qcmRestartBtn = document.getElementById("qcmRestart");
+if(qcmRestartBtn) qcmRestartBtn.addEventListener("click", startQcmSession);
 
-// Défi 3
-const photoQueue = makeQueue(productQuestions.map((_, i) => i));
+// Défi 3 — série de 10 produits, impossible de passer sans répondre
+const PHOTO_LIMIT = 10;
+let photoSession = [];
+let photoIndex = 0;
 let currentPhoto = null;
 let photoAnswered = false;
 let selectedPhotoAnswers = [];
 let currentPhotoCorrectNames = [];
-
-function nextPhoto() {
-  currentPhoto = productQuestions[photoQueue.next()];
-  photoAnswered = false;
-  selectedPhotoAnswers = [];
-
-  const correctPictos = pictos.filter(p => currentPhoto.hazard.includes(p.id));
-  if (!correctPictos.length) {
-    console.error("Aucun pictogramme trouvé pour hazard =", currentPhoto.hazard);
-    return;
-  }
-
-  currentPhotoCorrectNames = correctPictos.map(p => p.name);
-
-  const wrongAnswers = shuffle(
-    pictos.filter(p => !currentPhoto.hazard.includes(p.id)).map(p => p.name)
-  ).slice(0, Math.max(3, 5 - currentPhotoCorrectNames.length));
-
-  const options = shuffle([...currentPhotoCorrectNames, ...wrongAnswers]);
-
+function makePhotoSession(){
+  const indexes = shuffle(productQuestions.map((_, i) => i));
+  while(indexes.length < PHOTO_LIMIT){indexes.push(...shuffle(productQuestions.map((_, i) => i)));}
+  return indexes.slice(0, PHOTO_LIMIT);
+}
+function startPhotoSession(){
+  scores.photoGood = 0;
+  scores.photoTotal = 0;
+  photoIndex = 0;
+  photoSession = makePhotoSession();
+  document.getElementById('photoNext').textContent = 'Question suivante';
+  document.getElementById('photoNext').onclick = nextPhoto;
+  nextPhoto();
+}
+function updatePhotoSessionStatus(){
+  const displayedQuestion = Math.min(photoIndex + 1, PHOTO_LIMIT);
+  setText('photoProgressText', displayedQuestion + ' / ' + PHOTO_LIMIT);
+  // La barre mesure les questions réellement corrigées : elle reste vide au début de l'exercice.
+  setProgress('photoProgressFill', scores.photoTotal, PHOTO_LIMIT);
+  setText('photoScore', scores.photoGood + ' / ' + scores.photoTotal);
+}
+function showPhotoEnd(){
   const wrap = document.getElementById("photoWrap");
   const question = document.getElementById("photoQuestion");
   const box = document.getElementById("photoOptions");
   const fb = document.getElementById("photoFeedback");
-
-  wrap.innerHTML = `
-    <img class="real-photo" src="${currentPhoto.image}" alt="${currentPhoto.product}"
-         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-    <div class="photo-fallback" style="display:none;">
-      L'image internet n'a pas pu être chargée sur cet appareil.
-    </div>
-  `;
-
-  question.textContent =
-    currentPhotoCorrectNames.length === 1
-      ? `Quel est le nom du pictogramme visible sur ce produit : "${currentPhoto.product}" ?`
-      : `Quels sont les noms des pictogrammes visibles sur ce produit : "${currentPhoto.product}" ?`;
-
+  wrap.innerHTML = '';
+  question.innerHTML = `<div class="session-end"><div class="session-end-icon">🏁</div><h3>Exercice terminé !</h3><p class="course-intro">Tu as obtenu <strong>${scores.photoGood} bonne(s) réponse(s)</strong> sur <strong>${PHOTO_LIMIT}</strong>.</p><button type="button" class="btn" onclick="startPhotoSession()">🔄 Recommencer avec une nouvelle série</button></div>`;
+  box.innerHTML = '';
+  fb.className = 'feedback';
+  fb.textContent = '';
+  updateExerciseStatus('photo', PHOTO_LIMIT, PHOTO_LIMIT, scores.photoGood, PHOTO_LIMIT);
+  document.getElementById('photoNext').disabled = true;
+  document.getElementById('checkPhoto').disabled = true;
+}
+function nextPhoto() {
+  if(photoIndex >= PHOTO_LIMIT){showPhotoEnd();return;}
+  currentPhoto = productQuestions[photoSession[photoIndex]];
+  photoAnswered = false;
+  selectedPhotoAnswers = [];
+  document.getElementById('photoNext').disabled = true;
+  document.getElementById('checkPhoto').disabled = false;
+  document.getElementById('photoNext').textContent = photoIndex === PHOTO_LIMIT - 1 ? 'Voir le résultat' : 'Question suivante';
+  const correctPictos = pictos.filter(p => currentPhoto.hazard.includes(p.id));
+  if (!correctPictos.length) {console.error("Aucun pictogramme trouvé pour hazard =", currentPhoto.hazard);return;}
+  currentPhotoCorrectNames = correctPictos.map(p => p.name);
+  const wrongAnswers = shuffle(pictos.filter(p => !currentPhoto.hazard.includes(p.id)).map(p => p.name)).slice(0, Math.max(3, 5 - currentPhotoCorrectNames.length));
+  const options = shuffle([...currentPhotoCorrectNames, ...wrongAnswers]);
+  const wrap = document.getElementById("photoWrap");
+  const question = document.getElementById("photoQuestion");
+  const box = document.getElementById("photoOptions");
+  const fb = document.getElementById("photoFeedback");
+  wrap.innerHTML = `<img class="real-photo" src="${currentPhoto.image}" alt="${currentPhoto.product}" title="Clique pour agrandir l’image" onclick="openProductImageModal(this.src, this.alt)" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"><div class="photo-fallback" style="display:none;">L'image internet n'a pas pu être chargée sur cet appareil.</div>`;
+  question.textContent = currentPhotoCorrectNames.length === 1 ? `Quel est le nom du pictogramme visible sur ce produit : "${currentPhoto.product}" ?` : `Quels sont les noms des pictogrammes visibles sur ce produit : "${currentPhoto.product}" ?`;
   box.innerHTML = "";
   fb.textContent = "";
   fb.className = "feedback";
-
+  updatePhotoSessionStatus();
   options.forEach(name => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "option";
     btn.textContent = name;
-
     btn.addEventListener("click", () => {
       if (photoAnswered) return;
-
       btn.classList.toggle("selected");
-
-      if (selectedPhotoAnswers.includes(name)) {
-        selectedPhotoAnswers = selectedPhotoAnswers.filter(n => n !== name);
-      } else {
-        selectedPhotoAnswers.push(name);
-      }
-
-      const fb = document.getElementById("photoFeedback");
+      if (selectedPhotoAnswers.includes(name)) selectedPhotoAnswers = selectedPhotoAnswers.filter(n => n !== name);
+      else selectedPhotoAnswers.push(name);
       fb.className = selectedPhotoAnswers.length ? "feedback show" : "feedback";
-      fb.textContent = selectedPhotoAnswers.length ? `${selectedPhotoAnswers.length} réponse(s) sélectionnée(s). Clique sur Valider quand tu as terminé.` : "";
+      fb.textContent = selectedPhotoAnswers.length ? `${selectedPhotoAnswers.length} réponse(s) sélectionnée(s). Clique sur Vérifier quand tu as terminé.` : "";
     });
-
     box.appendChild(btn);
   });
 }
-
 function checkPhotoAnswer() {
   if (photoAnswered || !currentPhoto) return;
-
   const fb = document.getElementById("photoFeedback");
   const box = document.getElementById("photoOptions");
   const optionButtons = [...box.children];
   const expectedCount = currentPhotoCorrectNames.length;
-
-  if (selectedPhotoAnswers.length < expectedCount) {
-    fb.textContent = `Il y a ${expectedCount} pictogramme(s), donc ${expectedCount} réponse(s) à donner.`;
+  if (selectedPhotoAnswers.length !== expectedCount) {
+    const selectedCount = selectedPhotoAnswers.length;
+    if (selectedCount < expectedCount) {
+      fb.textContent = selectedCount === 0
+        ? `Observe bien l'image : il y a ${expectedCount} pictogramme(s) à sélectionner avant de vérifier.`
+        : `Tu n'as sélectionné que ${selectedCount} pictogramme(s), mais il y en a ${expectedCount} sur l'image. Ajoute ${expectedCount - selectedCount} réponse(s).`;
+    } else {
+      fb.textContent = `Tu as sélectionné ${selectedCount} pictogramme(s), mais il n'y en a que ${expectedCount} sur l'image. Enlève ${selectedCount - expectedCount} réponse(s).`;
+    }
     fb.className = "feedback show ko";
     return;
   }
-
   photoAnswered = true;
-
   const selectedSorted = [...selectedPhotoAnswers].sort();
   const correctSorted = [...currentPhotoCorrectNames].sort();
-
-  const ok =
-    selectedSorted.length === correctSorted.length &&
-    selectedSorted.every((val, i) => val === correctSorted[i]);
-
+  const ok = selectedSorted.length === correctSorted.length && selectedSorted.every((val, i) => val === correctSorted[i]);
   optionButtons.forEach(btn => {
     const name = btn.textContent;
-
-    if (currentPhotoCorrectNames.includes(name)) {
-      btn.classList.add("good");
-    } else if (selectedPhotoAnswers.includes(name)) {
-      btn.classList.add("bad");
-    }
-
+    if (currentPhotoCorrectNames.includes(name)) btn.classList.add("good");
+    else if (selectedPhotoAnswers.includes(name)) btn.classList.add("bad");
     btn.disabled = true;
   });
-
-  if (ok) {
-    fb.textContent = "Bravo ! Tu as trouvé tous les bons noms de pictogrammes.";
-    fb.className = "feedback show ok";
-  } else {
-    fb.textContent = `Ce n'est pas correct. Les bonnes réponses étaient : ${currentPhotoCorrectNames.join(", ")}.`;
-    fb.className = "feedback show ko";
-  }
-
+  fb.textContent = ok ? "Bravo ! Tu as trouvé tous les bons noms de pictogrammes." : `Ce n'est pas correct. Les bonnes réponses étaient : ${currentPhotoCorrectNames.join(", ")}.`;
+  fb.className = "feedback show " + (ok ? "ok" : "ko");
   addResult("photo", ok);
+  updatePhotoSessionStatus();
+  photoIndex++;
+  document.getElementById('photoNext').disabled = false;
+  document.getElementById('checkPhoto').disabled = true;
 }
 document.getElementById("checkPhoto").onclick = checkPhotoAnswer;
 document.getElementById("photoNext").onclick = nextPhoto;
+const photoRestartBtn = document.getElementById("photoRestart");
+if(photoRestartBtn) photoRestartBtn.addEventListener("click", startPhotoSession);
 
 // Défi 2
+// Défi 2 — association au clic, utilisable sur téléphone
 const matchQueue = makeQueue(pictos.map(p => p.id));
+let matchSubset = [];
+let selectedMatchLabel = null;
 function initMatchRound() {
-  const subset = [];
-  while (subset.length < 6) {
+  matchSubset = [];
+  while (matchSubset.length < pictos.length) {
     const id = matchQueue.next();
     const p = pictos.find(x => x.id === id);
-    if (!subset.find(x => x.id === p.id)) subset.push(p);
+    if (!matchSubset.find(x => x.id === p.id)) matchSubset.push(p);
   }
 
   const bank = document.getElementById('labelBank');
   const grid = document.getElementById('matchGrid');
   bank.innerHTML = '';
   grid.innerHTML = '';
+  selectedMatchLabel = null;
   document.getElementById('matchFeedback').className = 'feedback';
   document.getElementById('matchFeedback').textContent = '';
 
-  shuffle(subset).forEach(p => {
-    const chip = document.createElement('div');
+  shuffle(matchSubset).forEach(p => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
     chip.className = 'chip';
-    chip.draggable = true;
     chip.dataset.value = p.name;
     chip.textContent = p.name;
-    chip.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', p.name));
+    chip.addEventListener('click', () => selectMatchLabel(chip));
     bank.appendChild(chip);
   });
 
-  subset.forEach(p => {
+  matchSubset.forEach(p => {
     const card = document.createElement('div');
     card.className = 'dropcard';
-    card.innerHTML = `<img class="picto-img" src="${p.img}" alt="${p.name}" style="width:90px;height:90px;"><div class="dropzone" data-answer="${p.name}"><span class="drop-placeholder">Dépose ici le bon nom</span></div>`;
+    card.innerHTML = `<img class="picto-img" src="${p.img}" alt="${p.name}" style="width:90px;height:90px;"><button type="button" class="dropzone" data-answer="${p.name}"><span class="drop-placeholder">Choisir ce nom</span></button>`;
     const zone = card.querySelector('.dropzone');
-    zone.addEventListener('dragover', e => e.preventDefault());
-    zone.addEventListener('drop', e => {
-      e.preventDefault();
-      const value = e.dataTransfer.getData('text/plain');
-      const chip = document.querySelector(`#labelBank .chip[data-value="${value}"]`);
-      if (!chip) return;
-
-      // Si cette zone contenait déjà une étiquette, elle redevient disponible en haut.
-      if (zone.dataset.value && zone.dataset.value !== value) {
-        const previousChip = document.querySelector(`#labelBank .chip[data-value="${zone.dataset.value}"]`);
-        if (previousChip) previousChip.classList.remove('drag-used');
-      }
-
-      // La même étiquette ne doit pas apparaître deux fois.
-      document.querySelectorAll('#matchGrid .dropzone').forEach(otherZone => {
-        if (otherZone !== zone && otherZone.dataset.value === value) {
-          delete otherZone.dataset.value;
-          otherZone.innerHTML = '<span class="drop-placeholder">Dépose ici le bon nom</span>';
-          otherZone.classList.remove('filled','good','bad');
-        }
-      });
-
-      zone.innerHTML = `<span class="chip-in-drop">${value}</span>`;
-      zone.dataset.value = value;
-      zone.classList.add('filled');
-      zone.classList.remove('good','bad');
-      chip.classList.add('drag-used');
-    });
+    zone.addEventListener('click', () => placeMatchLabel(zone));
     grid.appendChild(card);
   });
+  updateMatchProgress();
+}
+function selectMatchLabel(chip){
+  document.querySelectorAll('#labelBank .chip').forEach(c => c.classList.remove('selected'));
+  selectedMatchLabel = chip.dataset.value;
+  chip.classList.add('selected');
+  document.getElementById('matchFeedback').className = 'feedback';
+  document.getElementById('matchFeedback').textContent = '';
+}
+function placeMatchLabel(zone){
+  if(!selectedMatchLabel){
+    const fb=document.getElementById('matchFeedback');
+    fb.textContent = 'Choisis d’abord un nom de pictogramme, puis clique sous l’image correspondante.';
+    fb.className = 'feedback show ko';
+    return;
+  }
+  document.querySelectorAll('#matchGrid .dropzone').forEach(z => {
+    if(z !== zone && z.dataset.value === selectedMatchLabel){
+      delete z.dataset.value;
+      z.classList.remove('filled','good','bad','selected');
+      z.innerHTML = '<span class="drop-placeholder">Choisir ce nom</span>';
+    }
+  });
+  zone.dataset.value = selectedMatchLabel;
+  zone.innerHTML = `<span class="chip-in-drop">${selectedMatchLabel}</span>`;
+  zone.classList.add('filled');
+  zone.classList.remove('good','bad');
+  document.querySelectorAll('#labelBank .chip').forEach(c => c.classList.toggle('assigned', isLabelUsed(c.dataset.value)));
+  document.querySelectorAll('#labelBank .chip').forEach(c => c.classList.remove('selected'));
+  selectedMatchLabel = null;
+  updateMatchProgress();
+}
+function isLabelUsed(value){
+  return [...document.querySelectorAll('#matchGrid .dropzone')].some(z => z.dataset.value === value);
+}
+function updateMatchProgress(){
+  const zones = [...document.querySelectorAll('#matchGrid .dropzone')];
+  const filled = zones.filter(z => z.dataset.value).length;
+  updateExerciseStatus('match', filled, zones.length || pictos.length, scores.matchGood, scores.matchTotal);
 }
 document.getElementById('newMatchRound').addEventListener('click', initMatchRound);
 document.getElementById('checkMatch').addEventListener('click', () => {
   const zones = [...document.querySelectorAll('#matchGrid .dropzone')];
   let good = 0;
+  let filled = 0;
   zones.forEach(z => {
     z.classList.remove('good','bad');
+    if(z.dataset.value) filled++;
     if (z.dataset.value === z.dataset.answer) {
       z.classList.add('good');
       good++;
@@ -791,67 +1271,71 @@ document.getElementById('checkMatch').addEventListener('click', () => {
   });
   const ok = good === zones.length;
   const fb = document.getElementById('matchFeedback');
+  if(filled < zones.length){
+    fb.textContent = `Il reste ${zones.length - filled} association(s) à compléter.`;
+    fb.className = 'feedback show ko';
+    return;
+  }
   fb.textContent = ok ? "Parfait ! Toute la série est correcte." : `Tu as trouvé ${good} bonne(s) réponse(s) sur ${zones.length}.`;
   fb.className = 'feedback show ' + (ok ? 'ok' : 'ko');
   addResult('match', ok);
+  updateMatchProgress();
 });
 
-// Défi 4
-const sortQueue = makeQueue(pictos.map(p => p.id));
+// Défi 4 — classer les 9 pictogrammes
 function initSortRound() {
-  const subset = [];
-  while (subset.length < 6) {
-    const id = sortQueue.next();
-    const p = pictos.find(x => x.id === id);
-    if (!subset.find(x => x.id === p.id)) subset.push(p);
-  }
-
+  const subset = pictos.slice();
   const grid = document.getElementById('sortGrid');
   grid.innerHTML = '';
   document.getElementById('sortFeedback').className = 'feedback';
   document.getElementById('sortFeedback').textContent = '';
-
-  subset.forEach(p => {
+  shuffle(subset).forEach(p => {
     const card = document.createElement('div');
     card.className = 'sort-card';
-    card.innerHTML = `
-      <img src="${p.img}" alt="${p.name}">
-      <div class="sort-card-name">${p.name}</div>
-      <select data-answer="${p.category}">
-        <option value="">Choisir une catégorie</option>
-        <option value="physique">Danger physique</option>
-        <option value="sante">Danger pour la santé</option>
-        <option value="environnement">Danger pour l'environnement</option>
-      </select>
-    `;
+    card.innerHTML = `<img src="${p.img}" alt="${p.name}"><div class="sort-card-name">${p.name}</div><select data-answer="${(p.categories || [p.category]).join('|')}"><option value="">Choisir une catégorie</option><option value="physique">Danger physique</option><option value="sante">Danger pour la santé</option><option value="environnement">Danger pour l'environnement</option></select>`;
+    const select = card.querySelector('select');
+    select.addEventListener('change', updateSortProgress);
     grid.appendChild(card);
   });
+  updateSortProgress();
+}
+function updateSortProgress(){
+  const selects = [...document.querySelectorAll('#sortGrid select')];
+  const chosen = selects.filter(sel => sel.value).length;
+  updateExerciseStatus('sort', chosen, selects.length || pictos.length, scores.sortGood, scores.sortTotal);
 }
 document.getElementById('newSortRound').addEventListener('click', initSortRound);
 document.getElementById('checkSort').addEventListener('click', () => {
   const selects = [...document.querySelectorAll('#sortGrid select')];
   let good = 0;
+  let chosen = 0;
   selects.forEach(sel => {
     sel.style.borderColor = '#d7e1ed';
-    if (sel.value === sel.dataset.answer) {
-      sel.style.borderColor = '#22c55e';
-      good++;
-    } else {
-      sel.style.borderColor = '#ef4444';
-    }
+    if(sel.value) chosen++;
+    const accepted = (sel.dataset.answer || '').split('|');
+    if (accepted.includes(sel.value)) {sel.style.borderColor = '#22c55e';good++;}
+    else {sel.style.borderColor = '#ef4444';}
   });
-  const ok = good === selects.length;
   const fb = document.getElementById('sortFeedback');
+  if(chosen < selects.length){
+    fb.textContent = `Il reste ${selects.length - chosen} pictogramme(s) à classer.`;
+    fb.className = 'feedback show ko';
+    return;
+  }
+  const ok = good === selects.length;
   fb.textContent = ok ? "Excellent ! Toute la série est bien classée." : `Tu as correctement classé ${good} pictogramme(s) sur ${selects.length}.`;
   fb.className = 'feedback show ' + (ok ? 'ok' : 'ko');
   addResult('sort', ok);
+  updateSortProgress();
 });
 
+
 renderScores();
-nextQcm();
-nextPhoto();
+startQcmSession();
+startPhotoSession();
 initMatchRound();
 initSortRound();
+buildCrossword();
 </script>
 </body>
 </html>
