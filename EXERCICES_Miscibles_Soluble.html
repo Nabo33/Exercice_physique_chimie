@@ -495,64 +495,223 @@
     .card { padding: 22px 16px; }
     .question-text { font-size: 1rem; }
   }
+
+
+/* ===== Harmonisation avec les autres fichiers HTML de 6e ===== */
+:root{
+  --bleu:#1a73e8;--bleu-clair:#e8f0fe;--violet:#7c4dff;--violet-clair:#ede7f6;
+  --vert:#0f9d58;--vert-clair:#e6f4ea;--rouge:#ea4335;--rouge-clair:#fce8e6;
+  --jaune:#fbbc04;--jaune-clair:#fff8df;--cyan:#06b6d4;--cyan-clair:#e6fbff;
+  --bg:#f0f4ff;--card:#fff;--text:#1a1a2e;--text-muted:#657085;--border:#dde1f0;
+  --shadow:0 4px 20px rgba(0,0,0,.10);--shadow-soft:0 3px 14px rgba(0,0,0,.08);--shadow-strong:0 8px 32px rgba(0,0,0,.16);--radius:22px;
+  --primary:#1a73e8;--primary-light:#e8f0fe;--secondary:#7c4dff;--success:#0f9d58;--danger:#ea4335;--accent:#fbbc04;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text)}
+body:before,body:after{display:none}
+.bubbles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bubble{position:absolute;border-radius:50%;background:linear-gradient(135deg,var(--bleu),var(--violet));opacity:.055;animation:floatBubble var(--d,7s) ease-in-out infinite alternate}
+@keyframes floatBubble{from{transform:translateY(18px) scale(.86)}to{transform:translateY(-18px) scale(1.05)}}
+header{position:relative;z-index:3;background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);padding:30px 18px 24px;text-align:center;box-shadow:0 4px 20px rgba(26,115,232,.30);overflow:hidden;color:#fff}
+header:after{content:"";position:absolute;inset:auto -10% -70px -10%;height:120px;background:rgba(255,255,255,.13);border-radius:50%}
+.logo{font-size:2.8rem;line-height:1;display:inline-block;position:relative;z-index:2;animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.08) rotate(5deg)}}
+header h1{font-family:'Fredoka One',cursive;font-size:clamp(1.75rem,5vw,3rem);letter-spacing:.5px;text-shadow:0 2px 8px rgba(0,0,0,.22);margin:0;color:#fff;position:relative;z-index:2}
+header p{color:rgba(255,255,255,.9);font-weight:800;margin-top:6px;position:relative;z-index:2}
+#scorebar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:12px 10px;background:rgba(240,244,255,.86);backdrop-filter:blur(8px);border:0;box-shadow:none}
+.score-pill{background:#fff;color:var(--text);border:2px solid var(--border);border-radius:999px;padding:7px 16px;font-weight:900;box-shadow:var(--shadow-soft)}
+.score-pill .emoji{font-size:1.15rem}
+#progress-bar-wrap{flex:1;min-width:180px;max-width:420px;height:12px;background:#e0e0e0;border-radius:10px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.08)}
+#progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--bleu),var(--cyan),var(--violet));border-radius:10px;transition:width .5s ease}
+#menu{position:relative;z-index:2;max-width:1180px;margin:18px auto 30px;padding:0 16px;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px}
+.menu-card{background:#fff;border-radius:22px;box-shadow:var(--shadow-soft);border:2.5px solid var(--border);padding:22px 18px;transition:.18s;min-height:188px}
+.menu-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-strong);border-color:var(--cyan)}
+.menu-card .icon{font-size:2.8rem;line-height:1}
+.menu-card h3{font-family:'Fredoka One',cursive;font-size:1.15rem;color:var(--bleu);line-height:1.25}
+.menu-card p{font-size:.95rem;line-height:1.45;color:var(--text-muted);font-weight:800}
+.menu-card .badge{background:var(--bleu-clair);color:var(--bleu);border-radius:999px;font-size:.78rem;font-weight:900;padding:4px 12px}
+#game-area{position:relative;z-index:2;max-width:980px;margin:0 auto 44px;padding:0 16px}
+.card{background:#fff;border-radius:22px;box-shadow:var(--shadow);border:1px solid var(--border);padding:24px;margin-bottom:18px}
+.question-header{gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.q-type-badge{background:linear-gradient(135deg,var(--bleu),var(--violet));border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:900;letter-spacing:.03em}
+.q-counter{font-weight:900;color:var(--text-muted)}
+.question-text{font-size:clamp(1.08rem,2.3vw,1.28rem);font-weight:900;line-height:1.5;margin-bottom:18px;color:var(--text)}
+.highlight{background:var(--jaune-clair);border-radius:10px;padding:3px 8px;color:#8a6200;font-weight:900}
+.choices{gap:12px}
+.choice-btn{background:#fff;border:2.5px solid var(--border);border-radius:16px;padding:14px 16px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;line-height:1.35;box-shadow:0 2px 10px rgba(0,0,0,.05);transition:.18s;color:var(--text)}
+.choice-btn:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);color:var(--bleu);transform:translateY(-1px)}
+.choice-btn.correct{border-color:var(--vert);background:var(--vert-clair);color:var(--vert)}
+.choice-btn.wrong{border-color:var(--rouge);background:var(--rouge-clair);color:var(--rouge)}
+.feedback{margin-top:14px;border-radius:16px;padding:14px 18px;font-weight:900;line-height:1.5}
+.feedback.ok{background:var(--vert-clair);color:var(--vert);border:2px solid var(--vert)}
+.feedback.ko{background:var(--rouge-clair);color:var(--rouge);border:2px solid var(--rouge)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--bleu),var(--violet));color:#fff;border:none;border-radius:999px;padding:12px 24px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;margin-top:14px;transition:.15s;box-shadow:0 4px 14px rgba(26,115,232,.30)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,115,232,.35)}
+.btn.secondary{background:#fff;color:var(--bleu);border:2.5px solid var(--bleu);box-shadow:var(--shadow-soft)}
+#back-btn{position:relative;z-index:2;background:#fff;border:2.5px solid var(--cyan);border-radius:999px;padding:10px 18px;font-family:'Nunito',sans-serif;font-weight:900;color:var(--bleu);box-shadow:var(--shadow-soft);margin:14px auto 18px;transition:.18s}
+#back-btn:hover{background:var(--bleu-clair);transform:translateY(-1px)}
+.word-bank,.sentence-build{background:#f8f9ff;border:2px dashed var(--border);border-radius:18px;padding:14px}
+.word-chip,.draggable-word,.sent-chip{border-radius:999px;font-weight:900;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.word-chip{border:2.5px solid var(--cyan);color:var(--bleu);background:#fff;padding:7px 14px}
+.word-chip:hover{background:var(--bleu-clair);color:var(--bleu);transform:translateY(-1px)}
+.fill-blank{border-bottom:3px solid var(--bleu);color:var(--bleu);font-weight:900;min-width:132px}
+.beaker-scene{background:#f8f9ff;border:1px solid var(--border);border-radius:22px;padding:18px;margin:16px 0 18px;align-items:flex-end}
+.beaker{width:82px;height:106px;border-width:3px;border-radius:0 0 20px 20px;background:#fff}
+.beaker-label{font-weight:900;color:var(--text-muted);line-height:1.25;text-align:center}
+#results{position:relative;z-index:2;max-width:760px;margin:0 auto 44px;padding:0 16px}
+.result-card{background:#fff;border-radius:22px;box-shadow:var(--shadow);border:1px solid var(--border);padding:34px 24px}
+.result-score{font-family:'Fredoka One',cursive;color:var(--bleu)}
+@media(max-width:900px){#progress-bar-wrap{order:3;flex-basis:100%;max-width:none}.menu-card{min-height:auto}}
+@media(max-width:700px){header{padding:24px 12px 18px}#scorebar{position:relative;gap:8px;padding:12px 8px}.score-pill{flex:1 1 160px;justify-content:center}.card{padding:18px 14px}.btn{width:100%;margin-left:0}.question-header{align-items:flex-start}.choice-btn{text-align:left}}
+
+
+/* ===== Structure commune : cours + onglets d'exercices ===== */
+.nav{position:sticky;top:0;z-index:20;display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 10px;background:rgba(240,244,255,.86);backdrop-filter:blur(8px);border:0;margin:0}
+.nav-btn{font-family:'Nunito',sans-serif;font-weight:900;border:2.5px solid #fff;border-radius:999px;background:linear-gradient(135deg,var(--cyan),var(--violet));color:#fff;box-shadow:0 6px 22px rgba(6,182,212,.30);padding:9px 16px;min-height:46px;min-width:128px;max-width:190px;display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.15;white-space:normal;overflow-wrap:anywhere;cursor:pointer;transition:.22s;font-size:.98rem}
+.nav-btn:hover{background:linear-gradient(135deg,#0891b2,#6d28d9);transform:translateY(-1px);box-shadow:0 8px 26px rgba(6,182,212,.34);color:#fff}
+.nav-btn.active{background:#fff;color:var(--bleu);border-color:var(--cyan);box-shadow:0 6px 22px rgba(6,182,212,.26);transform:none}
+.section{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:18px 16px 64px;display:none}
+.section.active{display:block;animation:slideIn .35s cubic-bezier(.4,2,.6,1)}
+.course-card h2{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.72rem;margin:4px 0 16px;display:flex;align-items:center;gap:10px;line-height:1.25}
+.intro-card{background:#fff;border-left:7px solid var(--cyan);border-radius:18px;box-shadow:var(--shadow-soft);padding:14px 16px;color:var(--text);font-weight:900;line-height:1.55;margin-bottom:18px}
+.course-grid{display:grid;grid-template-columns:repeat(2,minmax(240px,1fr));gap:16px}
+.lesson-card,.vocab-card{background:#fff;border:2.5px solid var(--border);border-radius:20px;box-shadow:var(--shadow-soft);padding:18px;transition:.18s}
+.lesson-card:hover,.vocab-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.lesson-card h3,.vocab-card h3{font-family:'Fredoka One',cursive;text-transform:none;letter-spacing:0;font-size:1.12rem;color:var(--bleu);margin-bottom:10px}
+.vocab-card h3{text-align:center}
+.lesson-card p,.vocab-card p{font-weight:800;line-height:1.5;color:var(--text);margin:.25rem 0}
+.vocab-card p{text-align:center}
+.lesson-icon{font-size:2.7rem;margin-bottom:8px}
+.homogeneous-card{border-color:#1a73e8;background:linear-gradient(180deg,#fff,#f3f8ff)}
+.heterogeneous-card{border-color:#ea4335;background:linear-gradient(180deg,#fff,#fff5f5)}
+.vocab-grid{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:14px}
+.vocab-card{border-color:#dde1f0;background:linear-gradient(180deg,#fff,#f8fbff)}
+.vocab-card .example{color:var(--text-muted);font-size:.94rem}
+.vocab-card .image-wrap{
+  width:100%;
+  height:230px;
+  border-radius:16px;
+  overflow:hidden;
+  border:2px solid var(--border);
+  box-shadow:var(--shadow-soft);
+  margin:10px 0 12px;
+  background:linear-gradient(180deg,#ffffff,#f8fbff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+}
+.vocab-card .image-wrap img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+}
+.vocab-card.miscible-card{border-color:#1a73e8;background:linear-gradient(180deg,#fff,#f3f8ff)}
+.vocab-card.nonmiscible-card{border-color:#ea4335;background:linear-gradient(180deg,#fff,#fff5f5)}
+.vocab-card.soluble-card{border-color:#0f9d58;background:linear-gradient(180deg,#fff,#f4fff8)}
+.vocab-card.insoluble-card{border-color:#fbbc04;background:linear-gradient(180deg,#fff,#fffaf0)}
+#scorebar{position:relative;top:auto;z-index:2;margin:12px auto 16px;max-width:980px;border-radius:22px;background:#fff;box-shadow:var(--shadow-soft);border:1px solid var(--border)}
+#back-btn{display:none!important}
+#game-area{display:none}
+#results{display:none}
+@media(max-width:900px){.nav-btn{flex:1 1 150px;max-width:none}.vocab-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.nav{position:relative;gap:8px;padding:12px 8px}.nav-btn{flex:1 1 100%;max-width:none;width:100%;padding:10px 12px;font-size:1rem}.section{padding:14px 12px 54px}.course-grid,.vocab-grid{grid-template-columns:1fr}.course-card h2{font-size:1.42rem}}
+
 </style>
 </head>
 <body>
 
+<div class="bubbles" id="bubbles"></div>
 <canvas id="confetti-canvas"></canvas>
 
 <header>
-  <h1>🧪 Les Mélanges</h1>
+  <div class="logo">🧪</div>
+  <h1>Les Mélanges</h1>
   <p>Exercices interactifs · Sciences 6ème</p>
 </header>
 
-<div id="scorebar">
+<nav class="nav" aria-label="Navigation">
+  <button class="nav-btn active" type="button" data-section="cours" onclick="showCourse(this)">📚 Cours</button>
+  <button class="nav-btn" type="button" data-game="classify" onclick="startGame('classify', this)">🔬 Homogène / hétérogène</button>
+  <button class="nav-btn" type="button" data-game="vocab" onclick="startGame('vocab', this)">📝 Vocabulaire</button>
+  <button class="nav-btn" type="button" data-game="fillin" onclick="startGame('fillin', this)">✏️ Phrases</button>
+  <button class="nav-btn" type="button" data-game="beaker" onclick="startGame('beaker', this)">⚗️ QCM</button>
+  <button class="nav-btn" type="button" data-game="sentence" onclick="startGame('sentence', this)">🧩 Construire</button>
+  <button class="nav-btn" type="button" data-game="truefalse" onclick="startGame('truefalse', this)">💡 Vrai / Faux</button>
+</nav>
+
+<section id="cours-section" class="section active">
+  <div class="card course-card">
+    <h2>📖 Ce qu’il faut retenir</h2>
+    <div class="intro-card">
+      Un <strong>mélange</strong> est obtenu quand on réunit plusieurs substances. En sciences, on observe le résultat et on utilise un vocabulaire précis pour le décrire.
+    </div>
+
+    <div class="course-grid two-cols">
+      <article class="lesson-card homogeneous-card">
+        <div class="lesson-icon">🔵</div>
+        <h3>Mélange homogène</h3>
+        <p>On ne distingue pas les constituants à l’œil nu.</p>
+        <p><strong>Exemples :</strong> eau salée, eau sucrée, sirop mélangé à l’eau.</p>
+      </article>
+
+      <article class="lesson-card heterogeneous-card">
+        <div class="lesson-icon">🔴</div>
+        <h3>Mélange hétérogène</h3>
+        <p>On distingue au moins deux constituants à l’œil nu.</p>
+        <p><strong>Exemples :</strong> eau et huile, eau boueuse, sable dans l’eau.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="card course-card">
+    <h2>🧪 Les mots scientifiques importants</h2>
+    <div class="vocab-grid">
+      <article class="vocab-card miscible-card">
+        <h3>Miscibles</h3>
+        <div class="image-wrap">
+          <img src="https://raw.githubusercontent.com/Nabo33/Images/57fe55e695ff8ae8acab17862080f6697a8adc8f/M%C3%A9lange_homogene.png" alt="Liquides miscibles formant un mélange homogène">
+        </div>
+        <p>Deux liquides qui se mélangent et forment un mélange homogène.</p>
+        <p class="example">Exemple : eau + sirop.</p>
+      </article>
+      <article class="vocab-card nonmiscible-card">
+        <h3>Non-miscibles</h3>
+        <div class="image-wrap">
+          <img src="https://raw.githubusercontent.com/Nabo33/Images/57fe55e695ff8ae8acab17862080f6697a8adc8f/M%C3%A9lange_nonmisicibles.png" alt="Deux liquides non miscibles : huile et eau séparées">
+        </div>
+        <p>Deux liquides qui ne se mélangent pas et restent séparés.</p>
+        <p class="example">Exemple : eau + huile.</p>
+      </article>
+      <article class="vocab-card soluble-card">
+        <h3>Soluble</h3>
+        <div class="image-wrap">
+          <img src="https://raw.githubusercontent.com/Nabo33/Images/57fe55e695ff8ae8acab17862080f6697a8adc8f/M%C3%A9lange_homogene_bis.png" alt="Solide soluble dissous dans l’eau">
+        </div>
+        <p>Un solide qui se dissout dans un liquide.</p>
+        <p class="example">Exemple : sucre dans l’eau.</p>
+      </article>
+      <article class="vocab-card insoluble-card">
+        <h3>Insoluble</h3>
+        <div class="image-wrap">
+          <img src="https://raw.githubusercontent.com/Nabo33/Images/57fe55e695ff8ae8acab17862080f6697a8adc8f/M%C3%A9lange_heterogene.png" alt="Eau avec farine au fond : mélange hétérogène">
+        </div>
+        <p>Un solide qui ne se dissout pas dans un liquide.</p>
+        <p class="example">Exemple : farine ou sable dans l’eau.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div id="scorebar" style="display:none;">
   <div class="score-pill"><span class="emoji">✅</span> <span id="score-correct">0</span> correctes</div>
   <div id="progress-bar-wrap"><div id="progress-bar-fill"></div></div>
   <div class="score-pill"><span class="emoji">🔢</span> <span id="score-total">0</span> réponses</div>
 </div>
 
-<button id="back-btn" onclick="showMenu()">← Choisir un autre exercice</button>
-
-<!-- MENU -->
-<div id="menu">
-  <div class="menu-card" onclick="startGame('classify')">
-    <div class="icon">🔬</div>
-    <h3>Classer les mélanges</h3>
-    <p>Homogène ou hétérogène ? Identifie le bon type.</p>
-    <span class="badge">QCM • Infini</span>
-  </div>
-  <div class="menu-card" onclick="startGame('vocab')">
-    <div class="icon">📝</div>
-    <h3>Vocabulaire scientifique</h3>
-    <p>Miscible, soluble, insoluble… Les bons mots !</p>
-    <span class="badge">QCM • Infini</span>
-  </div>
-  <div class="menu-card" onclick="startGame('fillin')">
-    <div class="icon">✏️</div>
-    <h3>Compléter les phrases</h3>
-    <p>Choisis le bon mot pour compléter la phrase scientifique.</p>
-    <span class="badge">Lacunes • Infini</span>
-  </div>
-  <div class="menu-card" onclick="startGame('sentence')">
-    <div class="icon">🧩</div>
-    <h3>Construire une phrase</h3>
-    <p>Remets les mots dans l'ordre pour former une phrase correcte.</p>
-    <span class="badge">Ordre • Infini</span>
-  </div>
-  <div class="menu-card" onclick="startGame('beaker')">
-    <div class="icon">⚗️</div>
-    <h3>Identifier le résultat</h3>
-    <p>Observe le bécher et dis ce qui s'est passé.</p>
-    <span class="badge">Visuel • Infini</span>
-  </div>
-  <div class="menu-card" onclick="startGame('truefalse')">
-    <div class="icon">💡</div>
-    <h3>Vrai ou Faux ?</h3>
-    <p>Évalue des affirmations scientifiques.</p>
-    <span class="badge">V/F • Infini</span>
-  </div>
-</div>
+<button id="back-btn" onclick="showCourse()">← Retour au cours</button>
 
 <!-- GAME AREA -->
 <div id="game-area">
@@ -576,12 +735,31 @@
     <div class="result-score" id="res-score"></div>
     <div class="result-msg" id="res-msg"></div>
     <div class="result-detail" id="res-detail"></div>
-    <button class="btn" onclick="showMenu()">🏠 Menu principal</button>
+    <button class="btn" onclick="showMenu()">📚 Retour au cours</button>
     <button class="btn secondary" onclick="restartGame()" style="margin-left:8px">🔄 Rejouer</button>
   </div>
 </div>
 
 <script>
+
+(function buildBubbles(){
+  const c=document.getElementById('bubbles');
+  if(!c) return;
+  c.innerHTML='';
+  for(let i=0;i<22;i++){
+    const b=document.createElement('div');
+    b.className='bubble';
+    const size=28+Math.random()*96;
+    b.style.width=size+'px';
+    b.style.height=size+'px';
+    b.style.left=Math.random()*100+'%';
+    b.style.top=Math.random()*100+'%';
+    b.style.setProperty('--d',(5+Math.random()*5)+'s');
+    b.style.animationDelay=(Math.random()*4)+'s';
+    c.appendChild(b);
+  }
+})();
+
 // ========================
 //  DATA
 // ========================
@@ -1061,22 +1239,45 @@ let beakerOrder = [];
 // ========================
 //  UI HELPERS
 // ========================
-function showMenu() {
+function setActiveNav(btnOrGame) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  let btn = null;
+  if (typeof btnOrGame === 'string') {
+    btn = document.querySelector(`.nav-btn[data-game="${btnOrGame}"]`);
+  } else if (btnOrGame && btnOrGame.classList) {
+    btn = btnOrGame;
+  }
+  if (btn) btn.classList.add('active');
+}
+
+function showCourse(btn) {
   correctCount = 0;
   totalAnswered = 0;
   updateScoreBar();
+  currentGame = null;
 
-  document.getElementById('menu').style.display = 'grid';
+  document.getElementById('cours-section').classList.add('active');
+  document.getElementById('scorebar').style.display = 'none';
   document.getElementById('game-area').style.display = 'none';
   document.getElementById('results').style.display = 'none';
   document.getElementById('back-btn').style.display = 'none';
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const courseBtn = btn || document.querySelector('.nav-btn[data-section="cours"]');
+  if (courseBtn) courseBtn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function showGame() {
-  document.getElementById('menu').style.display = 'none';
+function showMenu() {
+  showCourse();
+}
+
+function showGame(btnOrGame) {
+  document.getElementById('cours-section').classList.remove('active');
+  document.getElementById('scorebar').style.display = 'flex';
   document.getElementById('game-area').style.display = 'block';
   document.getElementById('results').style.display = 'none';
-  document.getElementById('back-btn').style.display = 'block';
+  document.getElementById('back-btn').style.display = 'none';
+  setActiveNav(btnOrGame || currentGame);
 }
 
 function updateScoreBar() {
@@ -1102,7 +1303,7 @@ function hideFeedback() {
 // ========================
 //  GAME START
 // ========================
-function startGame(type) {
+function startGame(type, btn) {
   currentGame = type;
   questionIndex = 0;
   answered = false;
@@ -1131,7 +1332,7 @@ function startGame(type) {
   }
 
   updateScoreBar();
-  showGame();
+  showGame(btn || type);
   renderQuestion();
 }
 function restartGame() {
@@ -1440,6 +1641,8 @@ function answerTF(btn, chosen, correct, expl) {
 //  RESULTS
 // ========================
 function showResults() {
+  document.getElementById('cours-section').classList.remove('active');
+  document.getElementById('scorebar').style.display = 'none';
   document.getElementById('game-area').style.display = 'none';
   document.getElementById('results').style.display = 'block';
 
@@ -1518,6 +1721,14 @@ function escHtml(str) {
 
 // Init
 showMenu();
+
+// Affichage initial : cours
+document.addEventListener('DOMContentLoaded', () => {
+  const course = document.getElementById('cours-section');
+  if (course) course.classList.add('active');
+  const score = document.getElementById('scorebar');
+  if (score) score.style.display = 'none';
+});
 </script>
 </body>
 </html>
