@@ -678,6 +678,171 @@ header p,
   }
 }
 
+
+/* =========================================================
+   BARRE DE PROGRESSION SANS CAPSULE — harmonisation
+   Même logique que le fichier États physiques
+   ========================================================= */
+#scorebar {
+  position: relative !important;
+  top: auto !important;
+  z-index: 2 !important;
+  max-width: 980px !important;
+  margin: 8px auto 20px !important;
+  padding: 0 16px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+#progress-bar-wrap {
+  background: #e0e0e0 !important;
+  box-shadow: none !important;
+}
+
+.score-pill {
+  box-shadow: none !important;
+}
+
+@media (max-width: 700px) {
+  #scorebar {
+    padding: 0 12px !important;
+    gap: 8px !important;
+  }
+}
+
+
+
+/* =========================================================
+   STRUCTURE BARRE DE PROGRESSION — questions / barre / score
+   ========================================================= */
+#scorebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#scorebar .score-pill {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  min-width: 145px;
+  color: var(--text) !important;
+  font-size: 1rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+#scorebar .progress-left {
+  justify-content: flex-start;
+}
+
+#scorebar .progress-right {
+  justify-content: flex-end;
+}
+
+#progress-bar-wrap {
+  flex: 1;
+  min-width: 180px;
+  max-width: none !important;
+  height: 12px;
+}
+
+@media (max-width: 700px) {
+  #scorebar .score-pill {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: .95rem;
+  }
+
+  #scorebar .progress-right {
+    justify-content: flex-end;
+  }
+
+  #progress-bar-wrap {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+
+
+/* =========================================================
+   LARGEUR ESPACE DE TRAVAIL — alignée sur le fichier Mélanges
+   ========================================================= */
+#scorebar,
+#game-area,
+#results {
+  max-width: 1180px !important;
+}
+
+
+
+/* =========================================================
+   BILAN ESSENTIEL DES ERREURS
+   ========================================================= */
+.result-detail:empty { display:none; }
+.result-review {
+  margin: 18px auto 6px;
+  max-width: 920px;
+  text-align: left;
+}
+.result-review-title {
+  font-family: 'Fredoka One', cursive;
+  color: var(--bleu);
+  font-size: 1.16rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.mistake-list {
+  display: grid;
+  gap: 10px;
+}
+.mistake-card {
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  padding: 13px 15px;
+  box-shadow: var(--shadow-soft);
+  font-weight: 900;
+  line-height: 1.55;
+}
+.answer-wrong {
+  display: inline-block;
+  background: var(--rouge-clair);
+  color: var(--rouge);
+  border: 2px solid var(--rouge);
+  border-radius: 999px;
+  padding: 2px 10px;
+  margin: 0 4px;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  font-weight: 950;
+}
+.answer-correct {
+  display: inline-block;
+  background: var(--vert-clair);
+  color: var(--vert);
+  border: 2px solid var(--vert);
+  border-radius: 999px;
+  padding: 2px 10px;
+  margin: 0 4px;
+  font-weight: 950;
+}
+.result-review.success-review {
+  text-align: center;
+  background: var(--vert-clair);
+  border: 2px solid var(--vert);
+  color: var(--vert);
+  border-radius: 18px;
+  padding: 14px 16px;
+  font-weight: 950;
+}
+
 </style>
 </head>
 <body>
@@ -764,10 +929,10 @@ header p,
   </div>
 </section>
 
-<div id="scorebar" style="display:none;">
-  <div class="score-pill"><span class="emoji">✅</span> <span id="score-correct">0</span> correctes</div>
-  <div id="progress-bar-wrap"><div id="progress-bar-fill"></div></div>
-  <div class="score-pill"><span class="emoji">🔢</span> <span id="score-total">0</span> réponses</div>
+<div id="scorebar" style="display:none;" aria-label="Progression de l'exercice">
+  <div class="score-pill progress-left">Questions <span id="questions-done">0 / 10</span></div>
+  <div id="progress-bar-wrap" aria-hidden="true"><div id="progress-bar-fill"></div></div>
+  <div class="score-pill progress-right"><span class="emoji">⭐</span> Score <span id="score-correct">0 / 10</span></div>
 </div>
 
 <button id="back-btn" onclick="showCourse()">← Retour au cours</button>
@@ -794,8 +959,10 @@ header p,
     <div class="result-score" id="res-score"></div>
     <div class="result-msg" id="res-msg"></div>
     <div class="result-detail" id="res-detail"></div>
-    <button class="btn" onclick="showMenu()">📚 Retour au cours</button>
+    <div class="result-review" id="res-review"></div>
+    <button class="btn" onclick="startNextExercise()">➡️ Exercice suivant</button>
     <button class="btn secondary" onclick="restartGame()" style="margin-left:8px">🔄 Rejouer</button>
+    <button class="btn secondary" onclick="showMenu()" style="margin-left:8px">📚 Retour au cours</button>
   </div>
 </div>
 
@@ -1279,6 +1446,8 @@ const BEAKER_QUESTIONS = [
 // ========================
 //  STATE
 // ========================
+const GAME_ORDER = ['classify', 'vocab', 'fillin', 'beaker', 'sentence', 'truefalse'];
+
 let currentGame = null;
 let questionIndex = 0;
 let correctCount = 0;
@@ -1294,6 +1463,7 @@ let fillinOrder = [];
 let classifyOrder = [];
 let vocabOrder = [];
 let beakerOrder = [];
+let sessionMistakes = [];
 
 // ========================
 //  UI HELPERS
@@ -1340,9 +1510,14 @@ function showGame(btnOrGame) {
 }
 
 function updateScoreBar() {
-  document.getElementById('score-correct').textContent = correctCount;
-  document.getElementById('score-total').textContent = totalAnswered;
-  const pct = totalAnswered === 0 ? 0 : Math.round(correctCount / totalAnswered * 100);
+  const done = Math.min(totalAnswered, sessionTotal);
+  const total = sessionTotal;
+
+  document.getElementById('questions-done').textContent = `${done} / ${total}`;
+  document.getElementById('score-correct').textContent = `${correctCount} / ${total}`;
+
+  // La barre indique l'avancement dans la série de questions, pas le pourcentage de réussite.
+  const pct = total === 0 ? 0 : Math.round((done / total) * 100);
   document.getElementById('progress-bar-fill').style.width = pct + '%';
 }
 
@@ -1359,6 +1534,66 @@ function hideFeedback() {
   document.getElementById('next-btn').style.display = 'none';
 }
 
+function cleanText(str) {
+  const div = document.createElement('div');
+  div.innerHTML = String(str || '');
+  return div.textContent || div.innerText || '';
+}
+
+function answerPairHtml(userAnswer, correctAnswer) {
+  return `<span class="answer-wrong">${escapeForHtml(userAnswer || 'Aucune réponse')}</span><span class="answer-correct">${escapeForHtml(correctAnswer)}</span>`;
+}
+
+function makeCorrectionHtml(question, userAnswer, correctAnswer) {
+  const safeQuestion = escapeForHtml(question).trim();
+  const pair = answerPairHtml(userAnswer, correctAnswer);
+
+  // Pour les phrases à trous : on remplace directement le blanc par la réponse fausse puis la bonne réponse.
+  if (/_{3,}/.test(safeQuestion)) {
+    return safeQuestion.replace(/_{3,}/, pair);
+  }
+
+  // Pour les QCM, Vrai/Faux, classements ou phrases construites : on garde l'énoncé, puis seulement l'erreur utile.
+  return `${safeQuestion}<br>${pair}`;
+}
+
+function recordMistake(question, userAnswer, correctAnswer, explanation, correctionHtml) {
+  sessionMistakes.push({
+    question: cleanText(question).trim(),
+    userAnswer: cleanText(userAnswer).trim(),
+    correctAnswer: cleanText(correctAnswer).trim(),
+    explanation: String(explanation || '').trim(),
+    correctionHtml: correctionHtml || ''
+  });
+}
+
+function buildMistakesReview() {
+  if (!sessionMistakes.length) {
+    return `<div class="result-review success-review">✅ Aucune erreur : tu peux passer sereinement à l’exercice suivant.</div>`;
+  }
+
+  const items = sessionMistakes.map(m => `
+    <article class="mistake-card">
+      ${m.correctionHtml || makeCorrectionHtml(m.question, m.userAnswer, m.correctAnswer)}
+    </article>
+  `).join('');
+
+  return `
+    <div class="result-review-title">🔎 Ce qu’il faut retravailler</div>
+    <div class="mistake-list">${items}</div>
+  `;
+}
+
+function escapeForHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+
 // ========================
 //  GAME START
 // ========================
@@ -1368,6 +1603,7 @@ function startGame(type, btn) {
   answered = false;
   correctCount = 0;
   totalAnswered = 0;
+  sessionMistakes = [];
 
   if (type === 'beaker') {
     beakerOrder = shuffle([...Array(BEAKER_QUESTIONS.length).keys()]);
@@ -1473,6 +1709,14 @@ function answerClassify(btn, chosen, correct, name) {
   const expl = ok
     ? `<strong>${name}</strong> est bien un mélange <strong>${correct}</strong>.` + (correct === 'homogène' ? " On ne distingue pas les constituants à l'œil nu." : " On peut distinguer les constituants à l'œil nu.")
     : `Non ! <strong>${name}</strong> est un mélange <strong>${correct}</strong>.` + (correct === 'homogène' ? " On ne distingue pas les constituants à l'œil nu." : " On peut distinguer les constituants à l'œil nu.");
+  if (!ok) {
+    recordMistake(
+      document.getElementById('q-text').innerHTML,
+      `Mélange ${chosen}`,
+      `Mélange ${correct}`,
+      expl
+    );
+  }
   showFeedback(ok, expl);
   document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
 }
@@ -1502,6 +1746,10 @@ function answerVocab(btn, idx, correct, expl) {
   if (ok) correctCount++;
   updateScoreBar();
   btn.classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) {
+    const q = VOCAB_QCM[vocabOrder[questionIndex % vocabOrder.length]];
+    recordMistake(q.q, btn.textContent, q.choices[correct], expl);
+  }
   showFeedback(ok, expl);
   document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
 }
@@ -1544,6 +1792,9 @@ function selectFill(btn, word) {
   document.getElementById('fill-blank').textContent = word;
   document.getElementById('fill-blank').classList.add('answered', ok ? 'fill-correct' : 'fill-wrong');
   document.querySelectorAll('.word-chip').forEach(c => c.disabled = true);
+  if (!ok) {
+    recordMistake(`${q.before} _____ ${q.after}`, word, q.blank, q.expl);
+  }
   showFeedback(ok, q.expl);
 }
 
@@ -1608,6 +1859,9 @@ function checkSentence(correctStr, expl) {
   if (ok) correctCount++;
   updateScoreBar();
   const msg = ok ? expl : `La bonne phrase était : <em>${correctStr}</em><br>${expl}`;
+  if (!ok) {
+    recordMistake(document.getElementById('q-text').textContent, built || 'Phrase incomplète', correctStr, msg);
+  }
   showFeedback(ok, msg);
   document.querySelectorAll('.word-chip').forEach(c => c.disabled = true);
 }
@@ -1664,6 +1918,10 @@ function answerBeaker(btn, idx, correct, expl) {
   if (ok) correctCount++;
   updateScoreBar();
   btn.classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) {
+    const q = BEAKER_QUESTIONS[beakerOrder[questionIndex % beakerOrder.length]];
+    recordMistake(q.q, btn.textContent, q.choices[correct], expl);
+  }
   showFeedback(ok, expl);
   document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
 }
@@ -1692,31 +1950,68 @@ function answerTF(btn, chosen, correct, expl) {
   updateScoreBar();
   btn.classList.add(ok ? 'correct' : 'wrong');
   const extra = ok ? '' : ` La bonne réponse était <strong>${correct ? 'VRAI' : 'FAUX'}</strong>.`;
-  showFeedback(ok, extra + ' ' + expl);
+  const fullExpl = extra + ' ' + expl;
+  if (!ok) {
+    recordMistake(document.getElementById('q-text').innerHTML, chosen ? 'Vrai' : 'Faux', correct ? 'Vrai' : 'Faux', fullExpl);
+  }
+  showFeedback(ok, fullExpl);
   document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
 }
 
 // ========================
 //  RESULTS
 // ========================
+function getGameLabel(type) {
+  const labels = {
+    classify: 'homogène / hétérogène',
+    vocab: 'vocabulaire scientifique',
+    fillin: 'phrases à compléter',
+    sentence: 'construction de phrases',
+    beaker: 'observation du bécher',
+    truefalse: 'vrai / faux'
+  };
+  return labels[type] || 'exercice';
+}
+
+function startNextExercise() {
+  const currentIndex = GAME_ORDER.indexOf(currentGame);
+  const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % GAME_ORDER.length;
+  const nextGame = GAME_ORDER[nextIndex];
+  const nextBtn = document.querySelector(`.nav-btn[data-game="${nextGame}"]`);
+  startGame(nextGame, nextBtn);
+}
+
+function buildGlobalFeedback(pct) {
+  if (pct >= 90) {
+    return "Excellent : les notions sont maîtrisées. Tu peux passer à un autre type d'exercice.";
+  }
+  if (pct >= 70) {
+    return "Très bon travail : les bases sont solides. Relis seulement les corrections des questions ratées.";
+  }
+  if (pct >= 50) {
+    return "C'est encourageant, mais certaines confusions restent possibles. Revois les définitions, puis recommence une série.";
+  }
+  return "Il faut retravailler la leçon avant de recommencer : homogène / hétérogène, miscible / non-miscible, soluble / insoluble.";
+}
+
 function showResults() {
   document.getElementById('cours-section').classList.remove('active');
   document.getElementById('scorebar').style.display = 'none';
   document.getElementById('game-area').style.display = 'none';
   document.getElementById('results').style.display = 'block';
 
-  const pct = Math.round(correctCount / totalAnswered * 100);
-  let stars = pct >= 90 ? '⭐⭐⭐' : pct >= 60 ? '⭐⭐' : '⭐';
-  let emoji = pct >= 90 ? '🎉' : pct >= 60 ? '😊' : '💪';
-  let msg = pct >= 90 ? 'Excellent travail ! Tu maîtrises les mélanges !'
-          : pct >= 60 ? 'Bien joué ! Encore un peu de pratique !'
-          : 'Continue à t\'entraîner, tu vas y arriver !';
+  const total = sessionTotal;
+  const pct = total === 0 ? 0 : Math.round((correctCount / total) * 100);
+  let stars = pct >= 90 ? '⭐⭐⭐' : pct >= 70 ? '⭐⭐' : pct >= 50 ? '⭐' : '💡';
+  let emoji = pct >= 90 ? '🏆' : pct >= 70 ? '😊' : pct >= 50 ? '💪' : '📚';
+  let msg = buildGlobalFeedback(pct);
 
   document.getElementById('res-emoji').textContent = emoji;
   document.getElementById('res-stars').textContent = stars;
-  document.getElementById('res-score').textContent = `${correctCount} / ${totalAnswered}`;
+  document.getElementById('res-score').textContent = `${correctCount} / ${total}`;
   document.getElementById('res-msg').textContent = msg;
-  document.getElementById('res-detail').textContent = `Score : ${pct}% de bonnes réponses sur cette session.`;
+  document.getElementById('res-detail').textContent = '';
+  document.getElementById('res-review').innerHTML = buildMistakesReview();
 
   if (pct >= 80) launchConfetti();
 }
