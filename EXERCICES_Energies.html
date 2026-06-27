@@ -27,7 +27,7 @@ h1{font-family:'Fredoka One',cursive;color:#fff;font-size:clamp(1.75rem,5vw,3rem
 .section-title{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.72rem;margin:10px 0 8px;display:flex;align-items:center;gap:10px}.intro{color:var(--gris);font-weight:700;margin-bottom:18px;line-height:1.55}.card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:20px;border:1px solid rgba(221,225,240,.75)}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:stretch}.definition{grid-column:1/-1;border-left:8px solid var(--jaune);background:linear-gradient(180deg,#fff,#fffaf0)}.definition strong{color:var(--rouge)}.note{margin-top:12px;background:var(--bleu-clair);border:2px solid #cddffc;border-radius:18px;padding:14px;font-weight:800;line-height:1.55}.verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.verb{padding:13px;border-radius:17px;font-weight:900;text-align:center}.v1{background:var(--vert-clair);color:var(--vert)}.v2{background:var(--jaune-clair);color:#8a5c00}.v3{background:var(--violet-clair);color:var(--violet)}.v4{background:var(--rose-clair);color:var(--rose)}
 .energy-grid{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:12px;margin-top:14px}.energy-card{background:#fff;border-radius:18px;box-shadow:var(--ombre);border:3px solid transparent;padding:14px;cursor:pointer;min-height:170px;transition:.22s;display:flex;flex-direction:column;align-items:center;text-align:center}.energy-card:hover{transform:translateY(-5px);border-color:var(--bleu);box-shadow:var(--ombre-forte)}.energy-icon{font-size:2rem;margin-bottom:7px}.energy-card h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1rem;line-height:1.2}.energy-card p{font-size:.83rem;color:var(--gris);font-weight:750;line-height:1.3;margin-top:8px}.stock{margin-top:auto;font-size:.75rem;font-weight:900;padding:4px 10px;border-radius:99px}.yes{background:var(--vert-clair);color:var(--vert)}.no{background:var(--rouge-clair);color:var(--rouge)}
-.examples{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.ex-card{background:#fff;border:1px solid var(--bord);border-radius:18px;overflow:hidden;box-shadow:var(--ombre);min-height:210px}.ex-card img{width:100%;height:118px;object-fit:contain;background:linear-gradient(180deg,#fff,#f8f9ff);padding:12px}.ex-card .txt{padding:12px}.ex-card h4{color:var(--bleu);font-weight:900;font-size:.98rem}.ex-card p{font-size:.85rem;color:var(--gris);font-weight:700;margin-top:5px;line-height:1.35}
+.examples{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.ex-card{background:#fff;border:1px solid var(--bord);border-radius:18px;overflow:hidden;box-shadow:var(--ombre);min-height:210px}.ex-card img{width:100%;height:118px;object-fit:contain;background:linear-gradient(180deg,#fff,#f8f9ff);padding:12px}.ex-card .txt{padding:12px;text-align:center}.ex-card h4{color:var(--bleu);font-weight:900;font-size:.98rem}.ex-card p{font-size:.85rem;color:var(--gris);font-weight:700;margin-top:5px;line-height:1.35}
 .source-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}.source-card{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;box-shadow:var(--ombre);padding:12px;border:1px solid var(--bord)}.source-card img{width:66px;height:66px;object-fit:contain}.source-card b{color:var(--bleu)}.source-card span{display:block;color:var(--gris);font-weight:800;font-size:.86rem;margin-top:2px}
 .confusion-card p{font-size:1rem;line-height:1.65;font-weight:400}.confusion-card strong{font-weight:900;color:var(--bleu)}
 .modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(26,26,46,.62);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:16px}.modal-overlay.open{display:flex}.modal{background:#fff;border-radius:26px;max-width:660px;width:100%;box-shadow:var(--ombre-forte);padding:26px;position:relative}.close{position:absolute;right:18px;top:14px;border:0;background:transparent;font-size:1.5rem;cursor:pointer;color:var(--gris)}.modal h2{font-family:'Fredoka One',cursive;color:var(--bleu);margin-bottom:10px}.modal p,.modal li{line-height:1.65;font-weight:700}.modal-img{width:150px;height:120px;object-fit:contain;float:right;margin:0 0 12px 18px;background:#f8f9ff;border-radius:18px;padding:10px;border:1px solid var(--bord)}
@@ -45,6 +45,24 @@ h1{font-family:'Fredoka One',cursive;color:#fff;font-size:clamp(1.75rem,5vw,3rem
 .assoc-board{box-shadow:0 3px 14px rgba(0,0,0,.08)}.assoc-col-title{background:var(--bleu-clair);border-radius:14px;padding:8px 10px}.def-card,.energy-choice{box-shadow:none}.assoc-actions{padding-top:2px}.fill-card{box-shadow:0 3px 14px rgba(0,0,0,.08);border:1px solid var(--bord)}.sentence{font-size:1.2rem;line-height:2.2}.check-btn,.reset-btn,.next{box-shadow:0 3px 12px rgba(0,0,0,.12)}
 @media(max-width:900px){.tab-btn{flex:1 1 150px;max-width:none}.quiz-bar{align-items:center}.progress{order:3;flex-basis:100%}}
 @media(max-width:700px){.tab-btn{font-size:1rem}.exercise-instruction{font-size:.95rem}.quiz-bar{gap:8px}.question-card{padding:18px 14px}.answers.long-answers .answer{text-align:center;justify-content:center}.sentence{font-size:1.05rem;line-height:1.9}}
+
+/* Ajustement : les deux types de questions QCM ont la même taille que les définitions proposées */
+.qcm-question-card .q-main,
+.qcm-question-card .qcm-content,
+.qcm-question-card .qcm-content.energy-name{
+  font-size:1.12rem;
+}
+.qcm-question-card .qcm-content.energy-name{
+  font-family:'Nunito',sans-serif;
+  font-weight:900;
+}
+@media(max-width:700px){
+  .qcm-question-card .q-main,
+  .qcm-question-card .qcm-content,
+  .qcm-question-card .qcm-content.energy-name{
+    font-size:1.05rem;
+  }
+}
 
 </style>
 <!-- Version vérifiée : texte à trous avec […] par défaut et validation bloquée si aucun verbe choisi. -->
@@ -142,9 +160,9 @@ const EXAMPLES=[
  {label:'Voiture',img:IMG.voiture,energies:['cinetique'],phrase:'Une voiture en mouvement possède de l’énergie cinétique.'},
  {label:'Parachutiste',img:IMG.parachutiste,energies:['cinetique','pesanteur'],phrase:'Un parachutiste en hauteur et en mouvement possède de l’énergie de pesanteur et de l’énergie cinétique.'},
  {label:'Ligne électrique',img:IMG.ligne,energies:['electrique'],phrase:'Les câbles transfèrent l’énergie électrique.'},
- {label:'Barrage',img:IMG.barrage,energies:['pesanteur'],phrase:'L’eau située en hauteur dans un barrage possède de l’énergie de pesanteur qui peut se transformer.'},
+ {label:'Barrage',img:IMG.barrage,energies:['pesanteur','electrique'],phrase:'L’eau située en hauteur dans un barrage possède de l’énergie de pesanteur. Le barrage produit de l’énergie électrique'},
  {label:'Cycliste',img:IMG.cycliste,energies:['cinetique','pesanteur'],phrase:'Un cycliste en mouvement possède de l’énergie cinétique ; s’il est en hauteur, il possède aussi de l’énergie de pesanteur.'},
- {label:'Café chaud',img:IMG.cafe,energies:['thermique'],phrase:'Un café chaud possède de l’énergie thermique.'},
+ {label:'Café chaud',img:IMG.cafe,energies:['thermique','chimique'],phrase:'Un café chaud possède de l’énergie thermique.'},
  {label:'Pile',img:IMG.pile,energies:['chimique','electrique'],phrase:'Une pile stocke de l’énergie chimique et peut fournir de l’énergie électrique.'},
  {label:'Soleil',img:IMG.soleil,energies:['nucleaire','thermique','lumineuse'],phrase:'Le Soleil stocke de l’énergie nucléaire et produit de l’énergie lumineuse et thermique.'}
 ];
@@ -496,7 +514,7 @@ function makeTrousPool(){return shuffle(SENTENCES)}
 function renderTrous(){
  const s=takeNextFromPool('trous', makeTrousPool);
  const options=['<option value="" selected disabled></option>', ...shuffle(s.choices).map(c=>`<option value="${c}">${c}</option>`)].join('');
- document.getElementById('playArea').innerHTML=`<div class="fill-card"><div class="q-label" style="text-align:center">Choisis le bon verbe.</div><div class="sentence">${s.text[0]} <select id="wordSelect" class="select-word" onchange="this.classList.remove('wrong')">${options}</select> ${s.text[1]}</div><div style="text-align:center"><button class="check-btn" onclick="checkTrous('${s.answer}')">Vérifier</button></div></div>`
+ document.getElementById('playArea').innerHTML=`<div class="fill-card"><div class="sentence">${s.text[0]} <select id="wordSelect" class="select-word" onchange="this.classList.remove('wrong')">${options}</select> ${s.text[1]}</div><div style="text-align:center"><button class="check-btn" onclick="checkTrous('${s.answer}')">Vérifier</button></div></div>`
 }
 function checkTrous(ans){
  if(answered)return;
