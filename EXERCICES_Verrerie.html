@@ -241,7 +241,7 @@
     overflow: hidden;
     cursor: pointer;
     transition: all 0.22s;
-    min-height: 260px;
+    min-height: 230px;
     display: flex;
     flex-direction: column;
   }
@@ -346,7 +346,7 @@
     color: var(--gris);
     font-weight: 700;
     line-height: 1.35;
-    min-height: 70px;
+    min-height: auto;
   }
 
   .card-body .utilise {
@@ -1134,6 +1134,2019 @@ header p,
   }
 }
 
+
+
+
+  /* Cartes du cours : affichage minimal au départ */
+  .instrument-card {
+    min-height: 190px;
+  }
+
+  .instrument-card .card-body {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 10px 16px;
+  }
+
+  .instrument-card .card-body h3 {
+    margin-bottom: 0;
+  }
+
+  .instrument-card .card-body p,
+  .instrument-card .utilise {
+    display: none !important;
+  }
+
+  .assoc-choice-chip {
+    min-height: 22px;
+    visibility: hidden;
+  }
+
+  .assoc-card.assigned .assoc-choice-chip {
+    visibility: visible;
+  }
+
+
+/* ===== Ajustement Associer : images plus grandes à encombrement quasi identique ===== */
+#tab-drag .drag-zone {
+  gap: 14px;
+}
+
+#tab-drag .images-pool,
+#tab-drag .labels-list {
+  padding: 12px;
+}
+
+#tab-drag .images-pool h3,
+#tab-drag .labels-list h3 {
+  margin-bottom: 10px;
+}
+
+#tab-drag .click-assoc-grid,
+#tab-drag .click-assoc-labels {
+  gap: 8px;
+}
+
+#tab-drag .drag-item.assoc-card {
+  min-height: 96px;
+  padding: 6px 8px;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 8px;
+}
+
+#tab-drag .drag-item.assoc-card .img-frame {
+  width: 92px;
+  height: 92px;
+  flex: 0 0 92px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+#tab-drag .drag-item.assoc-card .img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#tab-drag .assoc-choice-chip {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.82rem;
+  line-height: 1.15;
+  padding: 4px 6px;
+  border-radius: 12px;
+}
+
+#tab-drag .assoc-card.assigned .assoc-choice-chip {
+  background: rgba(255,255,255,0.55);
+}
+
+#tab-drag .drop-target.assoc-card {
+  min-height: 78px;
+  padding: 8px 10px;
+}
+
+#tab-drag .assoc-label-name {
+  font-size: 0.88rem;
+}
+
+@media (max-width: 700px) {
+  #tab-drag .drag-item.assoc-card .img-frame {
+    width: 86px;
+    height: 86px;
+    flex-basis: 86px;
+  }
+}
+
+
+
+/* ===== Cours : image + schéma dans chaque capsule ===== */
+#tab-cours .instrument-card {
+  min-height: 230px;
+}
+
+#tab-cours .course-card-img {
+  height: auto;
+  min-height: 148px;
+  padding: 14px 12px 8px;
+  align-items: stretch;
+}
+
+#tab-cours .course-visuals {
+  gap: 12px;
+}
+
+#tab-cours .course-card-body {
+  padding: 10px 12px 14px;
+  justify-content: flex-start;
+}
+
+#tab-cours .course-card-body h3 {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+#tab-cours .course-visuals .img-frame,
+#tab-cours .course-visuals .symbol-frame,
+#tab-cours .course-visuals .symbol-placeholder {
+  width: 92px;
+  height: 92px;
+}
+
+#tab-cours .symbol-placeholder {
+  display: flex;
+}
+
+@media (max-width: 700px) {
+  #tab-cours .course-visuals .img-frame,
+  #tab-cours .course-visuals .symbol-frame,
+  #tab-cours .course-visuals .symbol-placeholder {
+    width: 82px;
+    height: 82px;
+  }
+}
+
+/* ===== Quiz : barre de progression et score sans capsule ===== */
+#tab-quiz .quiz-header {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 8px 0 20px !important;
+}
+
+#tab-quiz .quiz-score-badge {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: var(--texte) !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+
+#tab-quiz .progress-bar-wrap {
+  box-shadow: none !important;
+}
+
+
+
+/* ===== Cours : image + schéma côte à côte ===== */
+#tab-cours .intro {
+  max-width: 960px;
+}
+
+#tab-cours .instrument-card {
+  min-height: 250px;
+}
+
+#tab-cours .card-body {
+  padding-top: 10px;
+}
+
+.course-visuals {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 132px;
+}
+
+.course-visuals .img-frame {
+  width: 88px;
+  height: 88px;
+  margin: 0;
+}
+
+.course-visuals .symbol-frame {
+  background: #fff;
+  border: 1px solid var(--cadre-bord);
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 8px;
+}
+
+.course-visuals .symbol-frame img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.course-visuals .symbol-placeholder {
+  width: 88px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--gris);
+  line-height: 1.2;
+  background: #f8f9ff;
+  border: 1px dashed var(--bord);
+  border-radius: 14px;
+}
+
+.visual-separator {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--violet);
+  opacity: 0.85;
+  flex: 0 0 auto;
+}
+
+.visual-caption-row {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 6px;
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: var(--gris);
+}
+
+.visual-caption-row span {
+  min-width: 84px;
+  text-align: center;
+}
+
+/* ===== Quiz schémas ===== */
+#tab-schema .quiz-header {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 8px 0 20px !important;
+}
+
+#tab-schema .quiz-score-badge {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: var(--texte) !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+
+#tab-schema .progress-bar-wrap {
+  box-shadow: none !important;
+}
+
+#tab-utilite .quiz-header {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 8px 0 20px !important;
+}
+
+#tab-utilite .quiz-score-badge {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  color: var(--texte) !important;
+  font-weight: 900 !important;
+  white-space: nowrap !important;
+}
+
+#tab-utilite .progress-bar-wrap {
+  box-shadow: none !important;
+}
+
+#tab-schema .quiz-image .img-frame {
+  width: 170px;
+  height: 170px;
+  background: #fff;
+}
+
+@media (max-width: 700px) {
+  .course-visuals {
+    gap: 8px;
+  }
+
+  .course-visuals .img-frame,
+  .course-visuals .symbol-placeholder {
+    width: 78px;
+    height: 78px;
+  }
+
+  .visual-caption-row {
+    gap: 10px;
+  }
+
+  .visual-caption-row span {
+    min-width: 72px;
+  }
+}
+
+
+
+/* ===== Ajustement cours : visuels agrandis sans capsule interne ===== */
+#tab-cours .instrument-card {
+  min-height: 206px !important;
+}
+
+#tab-cours .course-card-img {
+  min-height: 140px !important;
+  height: auto !important;
+  padding: 12px 10px 4px !important;
+  background: linear-gradient(180deg,#fff,#f8f9ff) !important;
+  margin-bottom: 0 !important;
+}
+
+#tab-cours .course-visuals {
+  gap: 14px !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#tab-cours .course-visuals .img-frame,
+#tab-cours .course-visuals .symbol-frame {
+  width: 118px !important;
+  height: 118px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+#tab-cours .course-visuals .img-frame img,
+#tab-cours .course-visuals .symbol-frame img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+}
+
+#tab-cours .course-visuals .symbol-placeholder {
+  width: 118px !important;
+  height: 118px !important;
+  border: 1px dashed var(--bord) !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+#tab-cours .course-card-body {
+  padding: 4px 10px 10px !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+#tab-cours .course-card-body h3 {
+  margin: 0 !important;
+  line-height: 1.18 !important;
+}
+
+@media (max-width: 700px) {
+  #tab-cours .course-visuals .img-frame,
+  #tab-cours .course-visuals .symbol-frame,
+  #tab-cours .course-visuals .symbol-placeholder {
+    width: 102px !important;
+    height: 102px !important;
+  }
+
+  #tab-cours .course-card-img {
+    min-height: 124px !important;
+  }
+}
+
+
+
+
+/* ===== Rendu final : les 2 éléments restent dans la capsule et sont centrés ===== */
+#tab-cours .instrument-card {
+  min-height: 222px !important;
+  overflow: hidden !important;
+}
+
+#tab-cours .course-card-img {
+  width: 100% !important;
+  min-height: 154px !important;
+  height: 154px !important;
+  padding: 8px 10px 4px !important;
+  margin: 0 !important;
+  background: linear-gradient(180deg,#fff,#f8f9ff) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#tab-cours .course-visuals {
+  width: 100% !important;
+  max-width: 300px !important;
+  height: 138px !important;
+  margin: 0 auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: center !important;
+  justify-items: center !important;
+  column-gap: 12px !important;
+  overflow: hidden !important;
+}
+
+#tab-cours .visual-frame {
+  width: 100% !important;
+  max-width: 132px !important;
+  height: 132px !important;
+  max-height: 132px !important;
+  min-width: 0 !important;
+  flex: none !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+#tab-cours .visual-frame img,
+#tab-cours .visual-frame .emoji-fallback,
+#tab-cours .visual-frame .symbol-placeholder {
+  display: block;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  margin: auto !important;
+}
+
+#tab-cours .course-card-body {
+  padding: 4px 8px 8px !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+}
+
+#tab-cours .course-card-body h3 {
+  margin: 0 !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+}
+
+/* Même principe pour les exercices : aucun débordement, centrage strict. */
+#tab-quiz .quiz-image,
+#tab-schema .quiz-image,
+#tab-utilite .quiz-image {
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#tab-quiz .quiz-image .visual-frame,
+#tab-schema .quiz-image .visual-frame,
+#tab-utilite .quiz-image .visual-frame {
+  width: 210px !important;
+  height: 210px !important;
+  max-width: 100% !important;
+  max-height: 210px !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#tab-quiz .quiz-image .visual-frame img,
+#tab-schema .quiz-image .visual-frame img,
+#tab-utilite .quiz-image .visual-frame img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  margin: auto !important;
+}
+
+@media (max-width: 900px) {
+  #tab-cours .course-visuals {
+    max-width: 276px !important;
+    column-gap: 10px !important;
+  }
+
+  #tab-cours .visual-frame {
+    max-width: 122px !important;
+    height: 122px !important;
+    max-height: 122px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #tab-cours .course-card-img {
+    height: 138px !important;
+    min-height: 138px !important;
+    padding: 7px 8px 4px !important;
+  }
+
+  #tab-cours .course-visuals {
+    max-width: 244px !important;
+    height: 120px !important;
+    column-gap: 8px !important;
+  }
+
+  #tab-cours .visual-frame {
+    max-width: 108px !important;
+    height: 108px !important;
+    max-height: 108px !important;
+  }
+
+  #tab-quiz .quiz-image .visual-frame,
+  #tab-schema .quiz-image .visual-frame,
+  #tab-utilite .quiz-image .visual-frame {
+    width: 170px !important;
+    height: 170px !important;
+    max-height: 170px !important;
+  }
+}
+
+
+
+/* ===== Ajustement prudent : éléments réduits pour rentrer dans chaque capsule ===== */
+#tab-cours .instrument-card {
+  min-height: 206px !important;
+  overflow: hidden !important;
+}
+
+#tab-cours .course-card-img {
+  height: 138px !important;
+  min-height: 138px !important;
+  max-height: 138px !important;
+  padding: 7px 10px 2px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+#tab-cours .course-visuals {
+  width: 100% !important;
+  max-width: 250px !important;
+  height: 126px !important;
+  max-height: 126px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  column-gap: 8px !important;
+  align-items: center !important;
+  justify-items: center !important;
+  overflow: hidden !important;
+  margin: 0 auto !important;
+}
+
+#tab-cours .visual-frame,
+#tab-cours .object-frame,
+#tab-cours .symbol-frame {
+  width: 112px !important;
+  height: 112px !important;
+  max-width: 112px !important;
+  max-height: 112px !important;
+  flex: none !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+#tab-cours .visual-frame img,
+#tab-cours .object-frame img,
+#tab-cours .symbol-frame img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  margin: auto !important;
+}
+
+#tab-cours .course-card-body {
+  padding: 2px 8px 7px !important;
+  min-height: 0 !important;
+}
+
+#tab-cours .course-card-body h3 {
+  margin: 0 !important;
+  line-height: 1.12 !important;
+}
+
+/* Sur petits écrans, on réduit encore pour éviter tout débordement. */
+@media (max-width: 900px) {
+  #tab-cours .course-card-img {
+    height: 130px !important;
+    min-height: 130px !important;
+    max-height: 130px !important;
+  }
+
+  #tab-cours .course-visuals {
+    max-width: 230px !important;
+    height: 118px !important;
+    max-height: 118px !important;
+    column-gap: 7px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 104px !important;
+    height: 104px !important;
+    max-width: 104px !important;
+    max-height: 104px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  #tab-cours .course-card-img {
+    height: 120px !important;
+    min-height: 120px !important;
+    max-height: 120px !important;
+    padding: 6px 8px 2px !important;
+  }
+
+  #tab-cours .course-visuals {
+    max-width: 208px !important;
+    height: 108px !important;
+    max-height: 108px !important;
+    column-gap: 6px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 96px !important;
+    height: 96px !important;
+    max-width: 96px !important;
+    max-height: 96px !important;
+  }
+}
+
+
+
+/* ===== CORRECTION DE FOND : capsules adaptées à 2 visuels côte à côte ===== */
+/* Ancien problème : la grille gardait des cartes trop étroites pour deux éléments.
+   On élargit donc les capsules du cours, puis on centre deux cadres identiques. */
+
+#tab-cours .instruments-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 16px !important;
+  align-items: stretch !important;
+}
+
+#tab-cours .instrument-card {
+  min-height: 218px !important;
+  overflow: hidden !important;
+}
+
+/* Zone supérieure de la capsule : elle contient uniquement objet + schéma. */
+#tab-cours .course-card-img {
+  width: 100% !important;
+  height: 152px !important;
+  min-height: 152px !important;
+  max-height: 152px !important;
+  padding: 10px 14px 4px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(180deg,#fff,#f8f9ff) !important;
+}
+
+/* Deux colonnes stables : une pour l'objet, une pour le schéma. */
+#tab-cours .course-visuals {
+  width: 100% !important;
+  max-width: 282px !important;
+  height: 132px !important;
+  max-height: 132px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns: 126px 126px !important;
+  justify-content: center !important;
+  align-content: center !important;
+  align-items: center !important;
+  justify-items: center !important;
+  column-gap: 14px !important;
+  overflow: hidden !important;
+}
+
+/* Deux cadres strictement identiques pour comparer objet visible et schéma visible. */
+#tab-cours .visual-frame,
+#tab-cours .object-frame,
+#tab-cours .symbol-frame {
+  width: 126px !important;
+  height: 126px !important;
+  max-width: 126px !important;
+  max-height: 126px !important;
+  min-width: 0 !important;
+  flex: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* L'image recadrée doit rentrer intégralement dans son cadre. */
+#tab-cours .visual-frame img,
+#tab-cours .object-frame img,
+#tab-cours .symbol-frame img {
+  display: block !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  margin: auto !important;
+}
+
+/* On neutralise le zoom au survol qui faussait l'équilibrage objet/schéma. */
+#tab-cours .instrument-card:hover .img-frame img,
+#tab-cours .instrument-card:hover .visual-frame img,
+#tab-cours .instrument-card:hover .object-frame img,
+#tab-cours .instrument-card:hover .symbol-frame img {
+  transform: none !important;
+}
+
+/* Nom de l'objet rapproché, sans prendre trop de hauteur. */
+#tab-cours .course-card-body {
+  padding: 4px 10px 9px !important;
+  min-height: 0 !important;
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#tab-cours .course-card-body h3 {
+  margin: 0 !important;
+  line-height: 1.12 !important;
+  text-align: center !important;
+}
+
+/* Écrans intermédiaires : les cartes restent assez larges, les visuels restent lisibles. */
+@media (max-width: 1020px) {
+  #tab-cours .instruments-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  }
+
+  #tab-cours .course-visuals {
+    max-width: 264px !important;
+    grid-template-columns: 118px 118px !important;
+    column-gap: 12px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 118px !important;
+    height: 118px !important;
+    max-width: 118px !important;
+    max-height: 118px !important;
+  }
+}
+
+/* Mobile : une seule capsule par ligne, donc on garde deux visuels côte à côte mais un peu réduits. */
+@media (max-width: 700px) {
+  #tab-cours .instruments-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #tab-cours .course-card-img {
+    height: 136px !important;
+    min-height: 136px !important;
+    max-height: 136px !important;
+    padding: 8px 10px 3px !important;
+  }
+
+  #tab-cours .course-visuals {
+    max-width: 244px !important;
+    height: 116px !important;
+    max-height: 116px !important;
+    grid-template-columns: 108px 108px !important;
+    column-gap: 10px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 108px !important;
+    height: 108px !important;
+    max-width: 108px !important;
+    max-height: 108px !important;
+  }
+}
+
+
+
+/* ===== RENDU CIBLE : grandes capsules larges, comme l'exemple fourni ===== */
+/* Objectif : grande capsule, deux grands visuels côte à côte, nom en dessous. */
+
+#tab-cours .instruments-grid {
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)) !important;
+  gap: 28px 30px !important;
+  align-items: stretch !important;
+}
+
+/* Capsule plus large et plus haute : elle est pensée pour contenir 2 visuels. */
+#tab-cours .instrument-card {
+  min-height: 405px !important;
+  height: 405px !important;
+  border-radius: 30px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Grande zone supérieure réservée à l'objet + au schéma. */
+#tab-cours .course-card-img {
+  width: 100% !important;
+  height: 292px !important;
+  min-height: 292px !important;
+  max-height: 292px !important;
+  padding: 34px 26px 16px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(180deg,#fff,#f8f9ff) !important;
+}
+
+/* Deux emplacements identiques et centrés. */
+#tab-cours .course-visuals {
+  width: 100% !important;
+  max-width: 372px !important;
+  height: 242px !important;
+  max-height: 242px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns: 172px 172px !important;
+  column-gap: 28px !important;
+  justify-content: center !important;
+  align-content: center !important;
+  align-items: center !important;
+  justify-items: center !important;
+  overflow: hidden !important;
+}
+
+/* Cadres identiques : c'est l'objet recadré et le schéma recadré qui doivent occuper cet espace. */
+#tab-cours .visual-frame,
+#tab-cours .object-frame,
+#tab-cours .symbol-frame {
+  width: 172px !important;
+  height: 242px !important;
+  max-width: 172px !important;
+  max-height: 242px !important;
+  min-width: 0 !important;
+  flex: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Aucun zoom CSS : l'image recadrée est simplement contenue au maximum dans son cadre. */
+#tab-cours .visual-frame img,
+#tab-cours .object-frame img,
+#tab-cours .symbol-frame img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  margin: auto !important;
+}
+
+/* On interdit le zoom au survol dans la partie cours. */
+#tab-cours .instrument-card:hover .img-frame img,
+#tab-cours .instrument-card:hover .visual-frame img,
+#tab-cours .instrument-card:hover .object-frame img,
+#tab-cours .instrument-card:hover .symbol-frame img {
+  transform: none !important;
+}
+
+/* Nom placé sous les deux visuels, bien visible. */
+#tab-cours .course-card-body {
+  flex: 1 1 auto !important;
+  min-height: 88px !important;
+  padding: 8px 16px 18px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+#tab-cours .course-card-body h3 {
+  margin: 0 !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
+  font-size: clamp(1.55rem, 1.9vw, 2.05rem) !important;
+}
+
+/* Écrans moyens : cartes encore larges, visuels légèrement réduits. */
+@media (max-width: 1200px) {
+  #tab-cours .instruments-grid {
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)) !important;
+    gap: 24px !important;
+  }
+
+  #tab-cours .instrument-card {
+    min-height: 370px !important;
+    height: 370px !important;
+  }
+
+  #tab-cours .course-card-img {
+    height: 260px !important;
+    min-height: 260px !important;
+    max-height: 260px !important;
+    padding: 28px 22px 12px !important;
+  }
+
+  #tab-cours .course-visuals {
+    max-width: 320px !important;
+    height: 220px !important;
+    max-height: 220px !important;
+    grid-template-columns: 148px 148px !important;
+    column-gap: 24px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 148px !important;
+    height: 220px !important;
+    max-width: 148px !important;
+    max-height: 220px !important;
+  }
+}
+
+/* Mobile : une capsule par ligne, deux visuels toujours côte à côte. */
+@media (max-width: 700px) {
+  #tab-cours .instruments-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  #tab-cours .instrument-card {
+    min-height: 315px !important;
+    height: 315px !important;
+    border-radius: 24px !important;
+  }
+
+  #tab-cours .course-card-img {
+    height: 218px !important;
+    min-height: 218px !important;
+    max-height: 218px !important;
+    padding: 22px 16px 10px !important;
+  }
+
+  #tab-cours .course-visuals {
+    max-width: 278px !important;
+    height: 186px !important;
+    max-height: 186px !important;
+    grid-template-columns: 128px 128px !important;
+    column-gap: 20px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 128px !important;
+    height: 186px !important;
+    max-width: 128px !important;
+    max-height: 186px !important;
+  }
+
+  #tab-cours .course-card-body {
+    min-height: 74px !important;
+    padding: 8px 12px 14px !important;
+  }
+
+  #tab-cours .course-card-body h3 {
+    font-size: 1.55rem !important;
+  }
+}
+
+
+
+/* ===== RENDU 5 INSTRUMENTS PAR LIGNE ===== */
+/* Grand écran : 5 capsules par ligne, chacune contenant objet + schéma. */
+
+#tab-cours .instruments-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  align-items: stretch !important;
+}
+
+/* Capsule plus compacte pour permettre 5 colonnes. */
+#tab-cours .instrument-card {
+  min-height: 300px !important;
+  height: 300px !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Zone visuelle : objet + schéma. */
+#tab-cours .course-card-img {
+  width: 100% !important;
+  height: 218px !important;
+  min-height: 218px !important;
+  max-height: 218px !important;
+  padding: 18px 12px 8px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: linear-gradient(180deg,#fff,#f8f9ff) !important;
+}
+
+/* Deux cadres identiques côte à côte. */
+#tab-cours .course-visuals {
+  width: 100% !important;
+  max-width: 264px !important;
+  height: 188px !important;
+  max-height: 188px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  display: grid !important;
+  grid-template-columns: 122px 122px !important;
+  column-gap: 20px !important;
+  justify-content: center !important;
+  align-content: center !important;
+  align-items: center !important;
+  justify-items: center !important;
+  overflow: hidden !important;
+}
+
+/* Même taille de cadre pour l'objet et pour le schéma. */
+#tab-cours .visual-frame,
+#tab-cours .object-frame,
+#tab-cours .symbol-frame {
+  width: 122px !important;
+  height: 188px !important;
+  max-width: 122px !important;
+  max-height: 188px !important;
+  min-width: 0 !important;
+  flex: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#tab-cours .visual-frame img,
+#tab-cours .object-frame img,
+#tab-cours .symbol-frame img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  margin: auto !important;
+}
+
+/* Pas de zoom au survol dans le cours. */
+#tab-cours .instrument-card:hover .img-frame img,
+#tab-cours .instrument-card:hover .visual-frame img,
+#tab-cours .instrument-card:hover .object-frame img,
+#tab-cours .instrument-card:hover .symbol-frame img {
+  transform: none !important;
+}
+
+/* Nom sous les visuels. */
+#tab-cours .course-card-body {
+  flex: 1 1 auto !important;
+  min-height: 72px !important;
+  padding: 6px 10px 12px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+#tab-cours .course-card-body h3 {
+  margin: 0 !important;
+  line-height: 1.08 !important;
+  text-align: center !important;
+  font-size: clamp(1.28rem, 1.35vw, 1.65rem) !important;
+}
+
+/* Si l'écran est trop étroit pour 5 colonnes propres, on descend progressivement. */
+@media (max-width: 1500px) {
+  #tab-cours .instruments-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 1180px) {
+  #tab-cours .instruments-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 850px) {
+  #tab-cours .instruments-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  #tab-cours .instrument-card {
+    min-height: 280px !important;
+    height: 280px !important;
+  }
+
+  #tab-cours .course-card-img {
+    height: 202px !important;
+    min-height: 202px !important;
+    max-height: 202px !important;
+  }
+
+  #tab-cours .course-visuals {
+    max-width: 238px !important;
+    height: 174px !important;
+    max-height: 174px !important;
+    grid-template-columns: 110px 110px !important;
+    column-gap: 18px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 110px !important;
+    height: 174px !important;
+    max-width: 110px !important;
+    max-height: 174px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #tab-cours .instruments-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+
+/* ===== Correction : moins d'espace entre objet et schéma + aucun débordement ===== */
+/* On resserre les deux cadres et on impose une taille vraiment contenue aux images. */
+
+#tab-cours .course-card-img {
+  overflow: hidden !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+/* Réduction nette de l'espace central : 122 + 122 + 8 = 252 px. */
+#tab-cours .course-visuals {
+  max-width: 252px !important;
+  grid-template-columns: 122px 122px !important;
+  column-gap: 8px !important;
+  overflow: hidden !important;
+  justify-content: center !important;
+  justify-items: center !important;
+  align-items: center !important;
+}
+
+/* Cadres stricts : rien ne doit sortir. */
+#tab-cours .visual-frame,
+#tab-cours .object-frame,
+#tab-cours .symbol-frame {
+  width: 122px !important;
+  height: 180px !important;
+  max-width: 122px !important;
+  max-height: 180px !important;
+  overflow: hidden !important;
+  contain: layout paint !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* L'image ne remplit plus artificiellement 100% : elle reste dans le cadre. */
+#tab-cours .visual-frame img,
+#tab-cours .object-frame img,
+#tab-cours .symbol-frame img {
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: calc(100% - 2px) !important;
+  max-height: calc(100% - 2px) !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  margin: auto !important;
+}
+
+/* Objets/schémas très verticaux : on leur laisse la hauteur mais pas de débordement horizontal. */
+#tab-cours .object-eprouvette img,
+#tab-cours .schema-eprouvette img,
+#tab-cours .object-tube_a_essai img,
+#tab-cours .schema-tube_a_essai img,
+#tab-cours .object-pipette img,
+#tab-cours .schema-pipette img,
+#tab-cours .object-agitateur img,
+#tab-cours .schema-agitateur img,
+#tab-cours .object-spatule img,
+#tab-cours .schema-spatule img,
+#tab-cours .object-tube_refrigerant img,
+#tab-cours .schema-tube_refrigerant img {
+  max-height: calc(100% - 4px) !important;
+  max-width: calc(100% - 8px) !important;
+}
+
+/* On neutralise absolument tous les anciens zooms ciblés dans le cours. */
+#tab-cours .course-visuals img,
+#tab-cours .course-visuals .object-frame img,
+#tab-cours .course-visuals .symbol-frame img,
+#tab-cours .instrument-card:hover .course-visuals img {
+  transform: none !important;
+}
+
+/* Écrans plus étroits : on garde le rapprochement. */
+@media (max-width: 1500px) {
+  #tab-cours .course-visuals {
+    max-width: 238px !important;
+    grid-template-columns: 116px 116px !important;
+    column-gap: 6px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 116px !important;
+    height: 176px !important;
+    max-width: 116px !important;
+    max-height: 176px !important;
+  }
+}
+
+@media (max-width: 850px) {
+  #tab-cours .course-visuals {
+    max-width: 224px !important;
+    grid-template-columns: 109px 109px !important;
+    column-gap: 6px !important;
+  }
+
+  #tab-cours .visual-frame,
+  #tab-cours .object-frame,
+  #tab-cours .symbol-frame {
+    width: 109px !important;
+    height: 168px !important;
+    max-width: 109px !important;
+    max-height: 168px !important;
+  }
+}
+
+
+
+/* ===== Centrage du nom des instruments ===== */
+#tab-cours .course-card-body {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+#tab-cours .course-card-body h3 {
+  width: 100% !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  justify-content: center !important;
+}
+
+
+
+/* ===== Feedback final pour progresser ===== */
+.review-box {
+  display: none;
+  margin: 18px auto 8px;
+  padding: 16px;
+  border-radius: 20px;
+  background: #f8fbff;
+  border: 2px solid var(--cadre-bord);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+.review-title {
+  font-family: 'Fredoka One', cursive;
+  color: var(--bleu);
+  font-size: 1.2rem;
+  margin-bottom: 6px;
+}
+
+.review-text {
+  margin: 0 0 12px;
+  font-weight: 800;
+  color: var(--texte);
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  gap: 12px;
+  align-items: stretch;
+}
+
+.review-item {
+  background: #fff;
+  border: 2px solid var(--cadre-bord);
+  border-radius: 16px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 142px;
+}
+
+.review-visual {
+  width: 92px;
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.review-visual .img-frame,
+.review-visual .visual-frame,
+.review-visual .object-frame,
+.review-visual .symbol-frame {
+  width: 92px !important;
+  height: 82px !important;
+  max-width: 92px !important;
+  max-height: 82px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+.review-visual img {
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+.review-name {
+  margin-top: 8px;
+  font-weight: 900;
+  color: var(--bleu);
+  line-height: 1.12;
+  font-size: 0.95rem;
+}
+
+
+
+/* ===== Bouton exercice suivant ===== */
+.next-exercise-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--bleu), var(--violet));
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(67, 97, 238, 0.24);
+  margin: 8px 6px 0;
+}
+
+.next-exercise-btn:hover {
+  transform: translateY(-1px);
+}
+
+.result-box .restart-btn,
+.result-box .next-exercise-btn,
+.words-to-find .restart-word-btn,
+.words-to-find .next-exercise-btn,
+.drag-actions .reset-drag-btn,
+.drag-actions .next-exercise-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+
+
+/* ===== Feedback Utilité : afficher l'utilisation à retravailler ===== */
+.util-review-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+}
+
+.util-review-item {
+  min-height: 210px !important;
+  justify-content: flex-start !important;
+}
+
+.review-use {
+  margin-top: 8px;
+  padding: 8px 9px;
+  border-radius: 12px;
+  background: #eef6ff;
+  color: var(--texte);
+  font-weight: 800;
+  line-height: 1.22;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+
+
+/* ===== Bouton sous le cours vers le premier exercice ===== */
+.course-start-exercise-wrap {
+  margin: 28px auto 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.course-start-exercise-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 15px 26px;
+  font-weight: 900;
+  font-size: 1.08rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--bleu), var(--violet));
+  color: #fff;
+  box-shadow: 0 5px 18px rgba(67, 97, 238, 0.24);
+}
+
+.course-start-exercise-btn:hover {
+  transform: translateY(-1px);
+}
+
+
+
+/* ===== Amélioration visuelle des mots mêlés ===== */
+#tab-mots .word-search-wrap {
+  display: grid;
+  grid-template-columns: minmax(360px, 1fr) minmax(250px, 340px);
+  gap: 24px;
+  align-items: start;
+}
+
+#tab-mots .grid-container {
+  background: linear-gradient(180deg, #ffffff, #f8f9ff);
+  border-radius: 28px;
+  padding: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+
+#word-grid {
+  display: grid !important;
+  gap: 5px !important;
+  background: #dfe7ff;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 2px rgba(67, 97, 238, 0.08);
+}
+
+#word-grid .cell,
+#word-grid button,
+#word-grid div {
+  user-select: none;
+}
+
+#word-grid .cell {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 10px !important;
+  border: 2px solid #cbd6ff !important;
+  background: #fff !important;
+  color: var(--bleu) !important;
+  font-weight: 900 !important;
+  font-size: 1.05rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05) !important;
+  transition: transform 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+
+#word-grid .cell:hover {
+  transform: translateY(-1px);
+  background: #eef3ff !important;
+}
+
+#word-grid .cell.selected {
+  background: #ffe8a3 !important;
+  color: #6b4b00 !important;
+  border-color: #ffd166 !important;
+}
+
+#word-grid .cell.found {
+  background: #d9f8e8 !important;
+  color: #087f5b !important;
+  border-color: #6ee7b7 !important;
+}
+
+#tab-mots .words-to-find {
+  background: #fff;
+  border-radius: 28px;
+  padding: 20px;
+  border: 2px solid var(--cadre-bord);
+  box-shadow: var(--ombre);
+  position: sticky;
+  top: 94px;
+}
+
+#tab-mots .words-to-find h3 {
+  margin: 0 0 6px;
+  background: var(--bleu-clair);
+  color: var(--bleu);
+  border-radius: 18px;
+  padding: 10px 12px;
+  text-align: center;
+  font-family: 'Fredoka One', cursive;
+}
+
+.word-help-text {
+  margin: 8px 0 14px;
+  font-weight: 800;
+  color: var(--texte);
+  text-align: center;
+  line-height: 1.25;
+  font-size: 0.92rem;
+}
+
+#wordList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+#wordList .word-item,
+#wordList span,
+#wordList div {
+  border-radius: 999px;
+}
+
+#wordList .word-item {
+  background: #f6f8ff;
+  border: 2px solid #dfe7ff;
+  padding: 8px 12px;
+  font-weight: 900;
+  color: var(--texte);
+  text-align: center;
+}
+
+#wordList .word-item.found {
+  background: #d9f8e8;
+  border-color: #6ee7b7;
+  color: #087f5b;
+  text-decoration: line-through;
+}
+
+#tab-mots #wsScore {
+  margin-top: 16px !important;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #d9f8e8;
+  color: #087f5b !important;
+  text-align: center;
+  font-weight: 900 !important;
+}
+
+#tab-mots .restart-word-btn,
+#tab-mots .next-exercise-btn {
+  width: 100%;
+  margin-top: 12px;
+}
+
+@media (max-width: 950px) {
+  #tab-mots .word-search-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  #tab-mots .words-to-find {
+    position: static;
+  }
+}
+
+@media (max-width: 620px) {
+  #tab-mots .grid-container {
+    padding: 12px;
+  }
+
+  #word-grid {
+    gap: 3px !important;
+    padding: 7px;
+  }
+
+  #word-grid .cell {
+    width: 26px !important;
+    height: 26px !important;
+    border-radius: 8px !important;
+    font-size: 0.82rem !important;
+  }
+}
+
+
+
+/* ===== Correction mobile : la grille des mots mêlés ne dépasse plus ===== */
+#tab-mots .grid-container {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+#word-grid {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* Sur téléphone, la taille des cases est calculée pour que 15 colonnes rentrent dans l'écran. */
+@media (max-width: 620px) {
+  #tab-mots .word-search-wrap,
+  #tab-mots .grid-container,
+  #tab-mots .words-to-find {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #tab-mots .grid-container {
+    padding: 8px !important;
+    overflow-x: hidden !important;
+  }
+
+  #word-grid {
+    gap: 2px !important;
+    padding: 5px !important;
+    width: fit-content !important;
+    max-width: calc(100vw - 34px) !important;
+    margin: 0 auto !important;
+  }
+
+  #word-grid .cell {
+    width: min(22px, calc((100vw - 74px) / 12)) !important;
+    height: min(22px, calc((100vw - 74px) / 12)) !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    border-radius: 6px !important;
+    border-width: 1.5px !important;
+    font-size: min(0.78rem, calc((100vw - 74px) / 23)) !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 390px) {
+  #word-grid {
+    gap: 1.5px !important;
+    padding: 4px !important;
+    max-width: calc(100vw - 26px) !important;
+  }
+
+  #word-grid .cell {
+    width: calc((100vw - 62px) / 12) !important;
+    height: calc((100vw - 62px) / 12) !important;
+    font-size: 0.68rem !important;
+    border-radius: 5px !important;
+  }
+}
+
+
+
+/* ===== Correction robuste : grille mots mêlés entièrement visible sur téléphone ===== */
+/* La grille fait 15 colonnes. On calcule donc une taille de case qui garantit que les 15 colonnes rentrent. */
+
+#tab-mots .grid-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+#word-grid {
+  --ws-cell-size: 34px;
+  --ws-gap: 5px;
+  --ws-pad: 10px;
+  display: grid !important;
+  grid-template-columns: repeat(12, var(--ws-cell-size)) !important;
+  gap: var(--ws-gap) !important;
+  padding: var(--ws-pad) !important;
+  width: calc(12 * var(--ws-cell-size) + 11 * var(--ws-gap) + 2 * var(--ws-pad)) !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
+  overflow: visible !important;
+}
+
+#word-grid .cell {
+  width: var(--ws-cell-size) !important;
+  height: var(--ws-cell-size) !important;
+  min-width: var(--ws-cell-size) !important;
+  min-height: var(--ws-cell-size) !important;
+  box-sizing: border-box !important;
+}
+
+/* Téléphone : on réduit vraiment les cases pour que les 15 colonnes soient visibles. */
+@media (max-width: 620px) {
+  #tab-mots .grid-container {
+    padding: 6px !important;
+    overflow: visible !important;
+  }
+
+  #word-grid {
+    --ws-cell-size: clamp(17px, calc((100vw - 70px) / 12), 24px);
+    --ws-gap: 2px;
+    --ws-pad: 5px;
+    grid-template-columns: repeat(12, var(--ws-cell-size)) !important;
+    width: calc(12 * var(--ws-cell-size) + 11 * var(--ws-gap) + 2 * var(--ws-pad)) !important;
+    max-width: calc(100vw - 22px) !important;
+    margin: 0 auto !important;
+  }
+
+  #word-grid .cell {
+    width: var(--ws-cell-size) !important;
+    height: var(--ws-cell-size) !important;
+    min-width: var(--ws-cell-size) !important;
+    min-height: var(--ws-cell-size) !important;
+    max-width: var(--ws-cell-size) !important;
+    max-height: var(--ws-cell-size) !important;
+    padding: 0 !important;
+    border-width: 1px !important;
+    border-radius: 5px !important;
+    font-size: clamp(0.56rem, calc(var(--ws-cell-size) * 0.48), 0.76rem) !important;
+    line-height: 1 !important;
+  }
+}
+
+/* Très petits téléphones : priorité absolue à la visibilité complète de la grille. */
+@media (max-width: 390px) {
+  #word-grid {
+    --ws-cell-size: clamp(15px, calc((100vw - 58px) / 12), 21px);
+    --ws-gap: 1px;
+    --ws-pad: 4px;
+    max-width: calc(100vw - 14px) !important;
+  }
+
+  #word-grid .cell {
+    border-radius: 4px !important;
+    font-size: clamp(0.5rem, calc(var(--ws-cell-size) * 0.47), 0.66rem) !important;
+  }
+}
+
+
+
+/* ===== Mots mêlés : version plus ergonomique, surtout sur téléphone ===== */
+#tab-mots .word-mobile-tip {
+  max-width: 760px;
+  margin: -4px auto 18px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: #fff7d6;
+  border: 2px solid #ffe08a;
+  color: #6b4b00;
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.25;
+}
+
+#tab-mots .word-search-wrap {
+  grid-template-columns: minmax(340px, 1fr) minmax(240px, 320px) !important;
+  gap: 22px !important;
+}
+
+#tab-mots .grid-container {
+  padding: 18px !important;
+  overflow: visible !important;
+}
+
+#word-grid {
+  --ws-cell-size: 38px;
+  --ws-gap: 6px;
+  --ws-pad: 10px;
+  grid-template-columns: repeat(12, var(--ws-cell-size)) !important;
+  width: calc(12 * var(--ws-cell-size) + 11 * var(--ws-gap) + 2 * var(--ws-pad)) !important;
+  max-width: 100% !important;
+}
+
+#word-grid .cell {
+  width: var(--ws-cell-size) !important;
+  height: var(--ws-cell-size) !important;
+  min-width: var(--ws-cell-size) !important;
+  min-height: var(--ws-cell-size) !important;
+  border-radius: 11px !important;
+  font-size: 1.08rem !important;
+}
+
+#word-grid .cell.selected {
+  outline: 3px solid #ffb703 !important;
+  outline-offset: 1px !important;
+}
+
+#word-grid .cell.found {
+  outline: 3px solid #52b788 !important;
+  outline-offset: 1px !important;
+}
+
+#tab-mots .words-to-find {
+  padding: 18px !important;
+}
+
+#wordList {
+  gap: 9px !important;
+}
+
+#wordList .word-item,
+#wordList span,
+#wordList div {
+  font-size: 0.98rem;
+  padding: 9px 11px;
+}
+
+/* Téléphone : les mots à trouver passent au-dessus, puis la grille apparaît en grand. */
+@media (max-width: 950px) {
+  #tab-mots .word-search-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  #tab-mots .words-to-find {
+    order: 1;
+  }
+
+  #tab-mots .grid-container {
+    order: 2;
+  }
+
+  #wordList {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  #tab-mots .word-mobile-tip {
+    font-size: 0.92rem;
+    margin-bottom: 14px;
+  }
+
+  #tab-mots .grid-container {
+    padding: 8px !important;
+  }
+
+  #word-grid {
+    --ws-cell-size: clamp(24px, calc((100vw - 66px) / 12), 32px);
+    --ws-gap: 2px;
+    --ws-pad: 5px;
+    grid-template-columns: repeat(12, var(--ws-cell-size)) !important;
+    width: calc(12 * var(--ws-cell-size) + 11 * var(--ws-gap) + 2 * var(--ws-pad)) !important;
+    max-width: calc(100vw - 18px) !important;
+  }
+
+  #word-grid .cell {
+    width: var(--ws-cell-size) !important;
+    height: var(--ws-cell-size) !important;
+    min-width: var(--ws-cell-size) !important;
+    min-height: var(--ws-cell-size) !important;
+    max-width: var(--ws-cell-size) !important;
+    max-height: var(--ws-cell-size) !important;
+    border-radius: 7px !important;
+    border-width: 1px !important;
+    font-size: clamp(0.78rem, calc(var(--ws-cell-size) * 0.52), 0.95rem) !important;
+  }
+
+  #wordList {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+  }
+
+  #wordList .word-item,
+  #wordList span,
+  #wordList div {
+    font-size: 0.86rem;
+    padding: 7px 8px;
+    line-height: 1.1;
+  }
+}
+
+@media (max-width: 390px) {
+  #word-grid {
+    --ws-cell-size: clamp(22px, calc((100vw - 54px) / 12), 28px);
+    --ws-gap: 1.5px;
+    --ws-pad: 4px;
+  }
+
+  #word-grid .cell {
+    font-size: 0.72rem !important;
+    border-radius: 6px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1146,8 +3159,10 @@ header p,
 
 <nav class="tabs" aria-label="Navigation">
   <button class="tab-btn course-entry active" onclick="showTab('cours', this)">📚 Cours</button>
-  <button class="tab-btn exercise-entry" onclick="showTab('quiz', this)">❓ Quiz</button>
+  <button class="tab-btn exercise-entry" onclick="showTab('quiz', this)">🖼️ Images</button>
+  <button class="tab-btn exercise-entry" onclick="showTab('schema', this)">📐 Schémas</button>
   <button class="tab-btn exercise-entry" onclick="showTab('drag', this)">🖱️ Associer</button>
+  <button class="tab-btn exercise-entry" onclick="showTab('utilite', this)">🧠 Utilité</button>
   <button class="tab-btn exercise-entry" onclick="showTab('mots', this)">🔤 Mots</button>
 </nav>
 
@@ -1157,6 +3172,10 @@ header p,
     <div class="section-title"><span>📖</span> Les instruments de verrerie</div>
     <p class="intro">Clique sur une carte pour afficher davantage d'informations et les utilisations de chaque instrument.</p>
     <div class="instruments-grid" id="cours-grid"></div>
+
+    <div class="course-start-exercise-wrap">
+      <button class="course-start-exercise-btn" onclick="goToExerciseTab('quiz')">🖼️ Accéder au premier exercice ?</button>
+    </div>
   </div>
 
   <div class="section" id="tab-quiz">
@@ -1167,12 +3186,12 @@ header p,
       <div class="progress-bar-wrap">
         <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
       </div>
-      <div class="quiz-score-badge">⭐ <span id="quizScore">0</span></div>
+      <div class="quiz-score-badge">⭐ <span id="quizScore">0/0</span></div>
     </div>
 
     <div class="quiz-card" id="quizCard">
-      <div class="quiz-image" id="quizImage"></div>
       <div class="quiz-question" id="quizQuestion"></div>
+      <div class="quiz-image" id="quizImage"></div>
       <div class="quiz-choices" id="quizChoices"></div>
       <div class="feedback" id="feedback"></div>
       <button class="next-btn" id="nextBtn" onclick="nextQuestion()" style="display:none">Question suivante →</button>
@@ -1183,7 +3202,40 @@ header p,
         <div class="medal" id="resultMedal"></div>
         <div class="big-score" id="resultScore"></div>
         <p id="resultMsg"></p>
-        <button class="restart-btn" onclick="startQuiz()">🔄 Recommencer</button>
+        <div class="review-box" id="quizReview"></div>
+        <button class="next-exercise-btn" onclick="goToNextExercise()">➡️ Exercice suivant ?</button>
+        <button class="restart-btn" onclick="startQuiz()">🔄 Recommencer ?</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="tab-schema">
+    <div class="section-title"><span>📐</span> Quiz — Reconnais le schéma !</div>
+    <div class="exercise-instruction">Observe le schéma, puis choisis le bon nom d’instrument.</div>
+    <div class="quiz-header">
+      <div>Question <span id="schemaQNum">1</span> / <span id="schemaQTotal">10</span></div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="schemaProgressFill" style="width:0%"></div>
+      </div>
+      <div class="quiz-score-badge">⭐ <span id="schemaQuizScore">0/0</span></div>
+    </div>
+
+    <div class="quiz-card" id="schemaQuizCard">
+      <div class="quiz-question" id="schemaQuizQuestion"></div>
+      <div class="quiz-image" id="schemaQuizImage"></div>
+      <div class="quiz-choices" id="schemaQuizChoices"></div>
+      <div class="feedback" id="schemaFeedback"></div>
+      <button class="next-btn" id="schemaNextBtn" onclick="nextSchemaQuestion()" style="display:none">Question suivante →</button>
+    </div>
+
+    <div id="schemaQuizResult" style="display:none">
+      <div class="quiz-card result-box">
+        <div class="medal" id="schemaResultMedal"></div>
+        <div class="big-score" id="schemaResultScore"></div>
+        <p id="schemaResultMsg"></p>
+        <div class="review-box" id="schemaReview"></div>
+        <button class="next-exercise-btn" onclick="goToNextExercise()">➡️ Exercice suivant ?</button>
+        <button class="restart-btn" onclick="startSchemaQuiz()">🔄 Recommencer ?</button>
       </div>
     </div>
   </div>
@@ -1196,26 +3248,58 @@ header p,
 
     <div class="drag-zone">
       <div class="images-pool">
-        <h3>🖼️ Images</h3>
         <div class="drag-items-grid click-assoc-grid" id="dragItemsGrid"></div>
       </div>
 
       <div class="labels-list">
-        <h3>🏷️ Noms</h3>
         <div id="dropTargets" class="click-assoc-labels"></div>
       </div>
     </div>
 
     <div class="drag-actions">
       <button class="check-btn" onclick="checkDrag()">✅ Vérifier</button>
-      <button class="reset-drag-btn" onclick="resetDrag()">🔄 Recommencer</button>
+      <button class="next-exercise-btn" id="dragNextExerciseBtn" onclick="goToNextExercise()">➡️ Exercice suivant ?</button>
+      <button class="reset-drag-btn" onclick="resetDrag()">🔄 Recommencer ?</button>
       <div class="drag-score" id="dragScore" style="display:none">✅ <span id="dragScoreVal">0</span>/8 corrects !</div>
+      <div class="review-box assoc-review" id="dragReview" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="section" id="tab-utilite">
+    <div class="section-title"><span>🧠</span> Quiz — À quoi sert cet instrument ?</div>
+    <div class="exercise-instruction">Observe l’image, puis choisis l’utilisation principale de cet instrument.</div>
+    <div class="quiz-header">
+      <div>Question <span id="utilQNum">1</span> / <span id="utilQTotal">10</span></div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="utilProgressFill" style="width:0%"></div>
+      </div>
+      <div class="quiz-score-badge">⭐ <span id="utilQuizScore">0/0</span></div>
+    </div>
+
+    <div class="quiz-card" id="utilQuizCard">
+      <div class="quiz-question" id="utilQuizQuestion"></div>
+      <div class="quiz-image" id="utilQuizImage"></div>
+      <div class="quiz-choices" id="utilQuizChoices"></div>
+      <div class="feedback" id="utilFeedback"></div>
+      <button class="next-btn" id="utilNextBtn" onclick="nextUtilQuestion()" style="display:none">Question suivante →</button>
+    </div>
+
+    <div id="utilQuizResult" style="display:none">
+      <div class="quiz-card result-box">
+        <div class="medal" id="utilResultMedal"></div>
+        <div class="big-score" id="utilResultScore"></div>
+        <p id="utilResultMsg"></p>
+        <div class="review-box" id="utilReview"></div>
+        <button class="next-exercise-btn" onclick="goToNextExercise()">➡️ Exercice suivant ?</button>
+        <button class="restart-btn" onclick="startUtilQuiz()">🔄 Recommencer ?</button>
+      </div>
     </div>
   </div>
 
   <div class="section" id="tab-mots">
-    <div class="section-title"><span>🔤</span> Mots mêlés — Trouve les instruments !</div>
-    <div class="exercise-instruction">Clique sur la première lettre du mot, puis sur sa dernière lettre.</div>
+    <div class="section-title"><span>🔤</span> Mots mêlés — Retrouve les noms de verrerie !</div>
+    <div class="exercise-instruction">Clique sur la première lettre d’un mot, puis sur sa dernière lettre. Les mots peuvent être horizontaux, verticaux ou en diagonale.</div>
+    <div class="word-mobile-tip">💡 Sur téléphone : touche d’abord le début du mot, puis sa dernière lettre.</div>
 
     <div class="word-search-wrap">
       <div class="grid-container">
@@ -1223,14 +3307,15 @@ header p,
       </div>
 
      <div class="words-to-find">
-  <h3>🔍 À trouver :</h3>
+  <h3>🔍 Mots à trouver</h3>
+  <p class="word-help-text">Trouve les mots de la liste. Les mots trouvés se cochent automatiquement.</p>
   <div id="wordList"></div>
 
   <div id="wsScore" style="margin-top:14px; font-weight:800; font-size:1rem; color:var(--vert); display:none">
     🎉 Bravo ! Tout trouvé !
   </div>
 
-  <button class="restart-word-btn" onclick="buildWordSearch()">🔄 Recommencer</button>
+  <button class="restart-word-btn" onclick="buildWordSearch()">🔄 Recommencer ?</button>
 </div>
     </div>
   </div>
@@ -1248,14 +3333,86 @@ header p,
 </div>
 
 <script>
+
+function fitWordSearchGrid() {
+  const grid = document.getElementById('word-grid');
+  const container = document.querySelector('#tab-mots .grid-container');
+  if (!grid || !container) return;
+
+  const columns = GRID_SIZE || 12;
+  const available = Math.max(240, container.clientWidth - 12);
+  const isSmall = window.matchMedia('(max-width: 620px)').matches;
+
+  const gap = isSmall ? (window.innerWidth <= 390 ? 1 : 2) : 5;
+  const pad = isSmall ? (window.innerWidth <= 390 ? 4 : 5) : 10;
+  const maxCell = isSmall ? 24 : 34;
+  const minCell = isSmall ? 14 : 24;
+
+  const cell = Math.max(minCell, Math.min(maxCell, Math.floor((available - (columns - 1) * gap - 2 * pad) / columns)));
+
+  grid.style.setProperty('--ws-cell-size', cell + 'px');
+  grid.style.setProperty('--ws-gap', gap + 'px');
+  grid.style.setProperty('--ws-pad', pad + 'px');
+}
+
+window.addEventListener('resize', fitWordSearchGrid);
+window.addEventListener('orientationchange', () => setTimeout(fitWordSearchGrid, 150));
+
+
+
+function goToExerciseTab(tabName) {
+  const btn = Array.from(document.querySelectorAll('.tab-btn'))
+    .find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(`'${tabName}'`));
+
+  if (btn) {
+    btn.click();
+    setTimeout(() => {
+      const activeSection = document.querySelector('.section.active');
+      if (activeSection) {
+        activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 80);
+  }
+}
+
+
+
+function updateQuizScoreDisplay(scoreId, score, answered) {
+  const el = document.getElementById(scoreId);
+  if (el) el.textContent = `${score}/${answered}`;
+}
+
+
+
+function goToNextExercise() {
+  const buttons = Array.from(document.querySelectorAll('.tab-btn'));
+  const activeIndex = buttons.findIndex(btn => btn.classList.contains('active'));
+  if (activeIndex === -1) return;
+
+  const next = buttons[activeIndex + 1] || buttons[0];
+  next.click();
+
+  setTimeout(() => {
+    const activeSection = document.querySelector('.section.active');
+    if (activeSection) {
+      activeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 80);
+}
+
+
 const QUIZ_TOTAL = 10;
+const SCHEMA_QUIZ_TOTAL = 10;
+const UTILITE_QUIZ_TOTAL = 10;
 const DRAG_TOTAL = 8;
-const WORD_COUNT = 10;
+const WORD_COUNT = 8;
 
 const QUIZ_POINTS = QUIZ_TOTAL * 10;
+const SCHEMA_QUIZ_POINTS = SCHEMA_QUIZ_TOTAL * 10;
+const UTILITE_QUIZ_POINTS = UTILITE_QUIZ_TOTAL * 10;
 const DRAG_POINTS = DRAG_TOTAL * 5;
 const WORD_POINTS = WORD_COUNT * 15;
-const TOTAL_MAX_SCORE = QUIZ_POINTS + DRAG_POINTS + WORD_POINTS;
+const TOTAL_MAX_SCORE = QUIZ_POINTS + SCHEMA_QUIZ_POINTS + UTILITE_QUIZ_POINTS + DRAG_POINTS + WORD_POINTS;
 
 const instruments = [
   {
@@ -1300,7 +3457,7 @@ const instruments = [
     emoji: "🔽",
     img: "https://raw.githubusercontent.com/Nabo33/Images/ba14ddbb8b62e467d112f1b02370468892a90d01/Verrerie/Entonnoir%202.png",
     desc: "L'entonnoir a une forme de cône évasé se terminant par un tube. Il facilite le versement d'un liquide dans un autre récipient à col étroit.",
-    utilisations: ["Filtrer un liquide (avec un filtre en papier)", "Transvaser un liquide dans un autre récipient"],
+    utilisations: ["Guider un liquide vers une petite ouverture afin de le transvaser proprement, sans perte.", "Transvaser un liquide dans un autre récipient"],
     tags: ["Filtrer", "Transvaser"]
   },
   {
@@ -1422,6 +3579,32 @@ const instruments = [
   }
 ];
 
+
+const symbolMap = {
+  agitateur: "https://raw.githubusercontent.com/Nabo33/Images/a3b18061979aa46d9420a2183289f2adeb8eb53f/Schema_agitateur.png",
+  ampoule_a_decanter: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_ampoule_a_decanter.png",
+  ballon_a_fond_plat: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_ballon_a_fond_plat.png",
+  ballon_a_fond_rond: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_ballon_a_fond_rond.png",
+  becher: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_becher.png",
+  boite_de_petri: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_boite_de_petri.png",
+  cristallisoir: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_cristallisoir.png",
+  entonnoir: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_entonnoir.png",
+  eprouvette: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_eprouvette_graduee.png",
+  erlenmeyer: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_erlenmeyer.png",
+  filtre: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_filtre.png",
+  fiole_jaugee: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_fiole_jaugee.png",
+  pipette: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_pipette.png",
+  potence: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_potence.png",
+  spatule: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_spatule.png",
+  tube_a_essai: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_tube_e_essai.png",
+  tube_refrigerant: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_tube_refrigerant.png",
+  verre_a_pied: "https://raw.githubusercontent.com/Nabo33/Images/756680889954ac2c19d187dd534995c51646bd67/Schema_verre_a_pied.png"
+};
+
+instruments.forEach(inst => {
+  inst.schema = symbolMap[inst.id] || "";
+});
+
 function cleanArray(arr) {
   return (arr || []).filter(v => typeof v === "string" && v.trim() !== "");
 }
@@ -1492,9 +3675,22 @@ function showTab(id, btn) {
 function imageHTML(inst, frameClass = "") {
   const extra = frameClass ? " " + frameClass : "";
   return `
-    <div class="img-frame${extra}">
-      <img src="${inst.img}" alt="${inst.nom}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div class="img-frame visual-frame object-frame object-${inst.id}${extra}">
+      <img class="auto-trim-img" data-trim-kind="object" crossorigin="anonymous" src="${inst.img}" alt="${inst.nom}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
       <span class="emoji-fallback" style="display:none">${inst.emoji || "🧪"}</span>
+    </div>
+  `;
+}
+
+function schemaHTML(inst, frameClass = "") {
+  if (!inst.schema) {
+    return `<div class="symbol-placeholder">Schéma<br>non fourni</div>`;
+  }
+  const extra = frameClass ? " " + frameClass : "";
+  return `
+    <div class="img-frame visual-frame symbol-frame schema-${inst.id}${extra}">
+      <img class="auto-trim-img" data-trim-kind="schema" crossorigin="anonymous" src="${inst.schema}" alt="Schéma de ${inst.nom}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <span class="symbol-placeholder" style="display:none">Schéma<br>non fourni</span>
     </div>
   `;
 }
@@ -1504,19 +3700,17 @@ function buildCours() {
   grid.innerHTML = '';
 
   instruments.forEach(inst => {
-    const tags = cleanArray(inst.tags);
     const card = document.createElement('div');
     card.className = 'instrument-card';
     card.innerHTML = `
-      <div class="card-img">
-        ${imageHTML(inst)}
-      </div>
-      <div class="card-body">
-        <h3>${inst.nom}</h3>
-        <p>${shortDesc(inst.desc)}</p>
-        <div class="utilise">
-          ${tags.length ? tags.map(t => `<span class="tag">${t}</span>`).join('') : `<span class="tag">À compléter</span>`}
+      <div class="card-img course-card-img">
+        <div class="course-visuals">
+          ${imageHTML(inst)}
+          ${schemaHTML(inst)}
         </div>
+      </div>
+      <div class="card-body course-card-body">
+        <h3>${inst.nom}</h3>
       </div>
     `;
     card.addEventListener('click', () => openModal(inst));
@@ -1560,26 +3754,161 @@ let qIndex = 0;
 let quizScore = 0;
 
 
-function buildQuizQuestion(inst) {
-  const type = Math.floor(Math.random() * 3);
 
-  if (type === 1) {
-    const usesPool = instruments
-      .map(i => cleanArray(i.utilisations)[0])
-      .filter(Boolean);
+/* ===== FEEDBACK DE FIN D'EXERCICE ===== */
+let quizMistakes = [];
+let schemaMistakes = [];
+let utilMistakes = [];
+let dragMistakes = [];
 
-    const firstUse = cleanArray(inst.utilisations)[0] || "Utilisation à compléter";
+function uniqueById(list) {
+  const seen = new Set();
+  return list.filter(inst => {
+    if (!inst || seen.has(inst.id)) return false;
+    seen.add(inst.id);
+    return true;
+  });
+}
 
+function masteryMessage(score, total, typeLabel = "exercice") {
+  if (score === total) {
     return {
-      inst,
-      image: inst.img,
-      emoji: inst.emoji,
-      question: `À quoi sert ${inst.nom} ?`,
-      answer: firstUse,
-      choices: getChoices(firstUse, usesPool)
+      medal: "🏆",
+      msg: `Parfait : tout est juste. Tu maîtrises cet ${typeLabel}.`
     };
   }
+  return {
+    medal: "🔁",
+    msg: `Tu as fait ${total - score} erreur(s). Il y a encore du travail : revois les éléments ci-dessous puis recommence pour obtenir tout juste.`
+  };
+}
 
+function reviewCardHTML(inst, mode = "image") {
+  const visual = mode === "schema" ? schemaHTML(inst) : imageHTML(inst);
+  return `
+    <div class="review-item">
+      <div class="review-visual">${visual}</div>
+      <div class="review-name">${inst.nom}</div>
+    </div>
+  `;
+}
+
+
+
+
+function utilReviewCardHTML(inst) {
+  const mainUse = cleanArray(inst.utilisations)[0] || "Utilité à compléter.";
+  return `
+    <div class="review-item util-review-item">
+      <div class="review-visual">${imageHTML(inst)}</div>
+      <div class="review-name">${inst.nom}</div>
+      <div class="review-use">${mainUse}</div>
+    </div>
+  `;
+}
+
+function renderUtilReview(containerId, mistakes, title) {
+  const box = document.getElementById(containerId);
+  if (!box) return;
+
+  const list = uniqueById(mistakes);
+  if (!list.length) {
+    box.style.display = "block";
+    box.innerHTML = `
+      <div class="review-title">✅ Rien à retravailler</div>
+    `;
+    autoTrimAllVisuals(box);
+    return;
+  }
+
+  box.style.display = "block";
+  box.innerHTML = `
+    <div class="review-title">${title}</div>
+    <div class="review-grid util-review-grid">
+      ${list.map(inst => utilReviewCardHTML(inst)).join("")}
+    </div>
+  `;
+  autoTrimAllVisuals(box);
+}
+
+
+function renderReviewTitleOnly(containerId, mistakes, mode, title) {
+  const box = document.getElementById(containerId);
+  if (!box) return;
+
+  const list = uniqueById(mistakes);
+  if (!list.length) {
+    box.style.display = "block";
+    box.innerHTML = `
+      <div class="review-title">✅ Rien à retravailler</div>
+    `;
+    autoTrimAllVisuals(box);
+    return;
+  }
+
+  box.style.display = "block";
+  box.innerHTML = `
+    <div class="review-title">${title}</div>
+    <div class="review-grid">
+      ${list.map(inst => reviewCardHTML(inst, mode)).join("")}
+    </div>
+  `;
+  autoTrimAllVisuals(box);
+}
+
+
+function renderReviewCompact(containerId, mistakes, mode) {
+  const box = document.getElementById(containerId);
+  if (!box) return;
+
+  const list = uniqueById(mistakes);
+  if (!list.length) {
+    box.style.display = "block";
+    box.innerHTML = `
+      <div class="review-title">✅ Rien à retravailler</div>
+    `;
+    autoTrimAllVisuals(box);
+    return;
+  }
+
+  box.style.display = "block";
+  box.innerHTML = `
+    <div class="review-grid">
+      ${list.map(inst => reviewCardHTML(inst, mode)).join("")}
+    </div>
+  `;
+  autoTrimAllVisuals(box);
+}
+
+
+function renderReview(containerId, mistakes, mode, title) {
+  const box = document.getElementById(containerId);
+  if (!box) return;
+
+  const list = uniqueById(mistakes);
+  if (!list.length) {
+    box.style.display = "block";
+    box.innerHTML = `
+      <div class="review-title">✅ Rien à retravailler</div>
+      <p class="review-text">Tu peux passer à l'exercice suivant ou recommencer pour t'entraîner.</p>
+    `;
+    autoTrimAllVisuals(box);
+    return;
+  }
+
+  box.style.display = "block";
+  box.innerHTML = `
+    <div class="review-title">${title}</div>
+    <p class="review-text">Observe-les à nouveau, mémorise le nom, puis recommence l'exercice.</p>
+    <div class="review-grid">
+      ${list.map(inst => reviewCardHTML(inst, mode)).join("")}
+    </div>
+  `;
+  autoTrimAllVisuals(box);
+}
+
+
+function buildQuizQuestion(inst) {
   return {
     inst,
     image: inst.img,
@@ -1599,15 +3928,18 @@ function getChoices(correct, pool) {
 function startQuiz() {
   quizScore = 0;
   qIndex = 0;
+  quizMistakes = [];
 
   const total = Math.min(QUIZ_TOTAL, instruments.length);
   const shuffled = [...instruments].sort(() => Math.random() - 0.5).slice(0, total);
   quizQuestions = shuffled.map(buildQuizQuestion);
 
   document.getElementById('quizResult').style.display = 'none';
+  const quizReview = document.getElementById('quizReview');
+  if (quizReview) { quizReview.style.display = 'none'; quizReview.innerHTML = ''; }
   document.getElementById('quizCard').style.display = 'block';
   document.getElementById('qTotal').textContent = quizQuestions.length;
-  document.getElementById('quizScore').textContent = 0;
+  updateQuizScoreDisplay('quizScore', 0, 0);
 
   renderQuestion();
 }
@@ -1638,7 +3970,8 @@ function renderQuestion() {
 }
 
 function answerQuiz(chosen, answer, btn) {
-  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+  const q = quizQuestions[qIndex];
+  document.querySelectorAll('#quizChoices .choice-btn').forEach(b => b.disabled = true);
   const fb = document.getElementById('feedback');
 
   addGlobalMax(10);
@@ -1648,18 +3981,20 @@ function answerQuiz(chosen, answer, btn) {
     fb.className = 'feedback correct';
     fb.textContent = "✅ Bravo ! C'est la bonne réponse !";
     quizScore++;
-    document.getElementById('quizScore').textContent = quizScore;
+    updateQuizScoreDisplay('quizScore', quizScore, qIndex + 1);
     const rect = btn.getBoundingClientRect();
     addGlobalScore(10, rect.left + rect.width / 2, rect.top);
   } else {
+    quizMistakes.push(q.inst);
     btn.classList.add('wrong');
     fb.className = 'feedback wrong';
     fb.textContent = `❌ Pas tout à fait ! La bonne réponse était : ${answer}`;
-    document.querySelectorAll('.choice-btn').forEach(b => {
+    document.querySelectorAll('#quizChoices .choice-btn').forEach(b => {
       if (b.textContent === answer) b.classList.add('correct');
     });
   }
 
+  updateQuizScoreDisplay('quizScore', quizScore, qIndex + 1);
   document.getElementById('nextBtn').style.display = 'inline-block';
 }
 
@@ -1673,25 +4008,227 @@ function showResult() {
   document.getElementById('quizCard').style.display = 'none';
   document.getElementById('progressFill').style.width = '100%';
 
-  const pct = quizScore / quizQuestions.length;
-  let medal = '😕';
-  let msg = "Continue à t'entraîner !";
+  const total = quizQuestions.length;
+  const result = masteryMessage(quizScore, total, "exercice sur les images");
 
-  if (pct >= 0.9) {
-    medal = '🏆';
-    msg = "Excellent ! Tu es un(e) pro de la verrerie !";
-  } else if (pct >= 0.7) {
-    medal = '🥇';
-    msg = "Très bien ! Tu maîtrises bien la verrerie !";
-  } else if (pct >= 0.5) {
-    medal = '🥈';
-    msg = "Pas mal ! Revois le cours pour progresser.";
+  document.getElementById('resultMedal').textContent = result.medal;
+  document.getElementById('resultScore').textContent = `${quizScore}/${total}`;
+  document.getElementById('resultMsg').textContent = result.msg;
+  renderReviewTitleOnly('quizReview', quizMistakes, 'image', '🖼️ Images à retravailler');
+  document.getElementById('quizResult').style.display = 'block';
+}
+
+
+/* ===== QUIZ SCHÉMAS ===== */
+let schemaQuizQuestions = [];
+let schemaQIndex = 0;
+let schemaQuizScore = 0;
+
+function buildSchemaQuizQuestion(inst) {
+  return {
+    inst,
+    question: "Quel est le nom de cet instrument représenté par ce schéma ?",
+    answer: inst.nom,
+    choices: getChoices(inst.nom, instruments.map(i => i.nom))
+  };
+}
+
+function startSchemaQuiz() {
+  schemaQuizScore = 0;
+  schemaQIndex = 0;
+  schemaMistakes = [];
+
+  const schemaPool = instruments.filter(inst => inst.schema);
+  const total = Math.min(SCHEMA_QUIZ_TOTAL, schemaPool.length);
+  const shuffled = [...schemaPool].sort(() => Math.random() - 0.5).slice(0, total);
+  schemaQuizQuestions = shuffled.map(buildSchemaQuizQuestion);
+
+  document.getElementById('schemaQuizResult').style.display = 'none';
+  const schemaReview = document.getElementById('schemaReview');
+  if (schemaReview) { schemaReview.style.display = 'none'; schemaReview.innerHTML = ''; }
+  document.getElementById('schemaQuizCard').style.display = 'block';
+  document.getElementById('schemaQTotal').textContent = schemaQuizQuestions.length;
+  updateQuizScoreDisplay('schemaQuizScore', 0, 0);
+
+  renderSchemaQuestion();
+}
+
+function renderSchemaQuestion() {
+  const q = schemaQuizQuestions[schemaQIndex];
+  document.getElementById('schemaQNum').textContent = schemaQIndex + 1;
+  document.getElementById('schemaProgressFill').style.width = ((schemaQIndex / schemaQuizQuestions.length) * 100) + '%';
+  document.getElementById('schemaQuizQuestion').textContent = q.question;
+  document.getElementById('schemaQuizImage').innerHTML = schemaHTML(q.inst);
+
+  const choices = document.getElementById('schemaQuizChoices');
+  choices.innerHTML = '';
+
+  q.choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.addEventListener('click', () => answerSchemaQuiz(c, q.answer, btn));
+    choices.appendChild(btn);
+  });
+
+  const feedback = document.getElementById('schemaFeedback');
+  feedback.className = 'feedback';
+  feedback.textContent = '';
+  document.getElementById('schemaNextBtn').style.display = 'none';
+}
+
+function answerSchemaQuiz(chosen, answer, btn) {
+  const q = schemaQuizQuestions[schemaQIndex];
+  document.querySelectorAll('#schemaQuizChoices .choice-btn').forEach(b => b.disabled = true);
+  const fb = document.getElementById('schemaFeedback');
+
+  if (chosen === answer) {
+    btn.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = "✅ Bravo ! C'est la bonne réponse !";
+    schemaQuizScore++;
+    updateQuizScoreDisplay('schemaQuizScore', schemaQuizScore, schemaQIndex + 1);
+  } else {
+    schemaMistakes.push(q.inst);
+    btn.classList.add('wrong');
+    fb.className = 'feedback wrong';
+    fb.textContent = `❌ Pas tout à fait ! La bonne réponse était : ${answer}`;
+    document.querySelectorAll('#schemaQuizChoices .choice-btn').forEach(b => {
+      if (b.textContent === answer) b.classList.add('correct');
+    });
   }
 
-  document.getElementById('resultMedal').textContent = medal;
-  document.getElementById('resultScore').textContent = `${quizScore}/${quizQuestions.length}`;
-  document.getElementById('resultMsg').textContent = msg;
-  document.getElementById('quizResult').style.display = 'block';
+  updateQuizScoreDisplay('schemaQuizScore', schemaQuizScore, schemaQIndex + 1);
+  document.getElementById('schemaNextBtn').style.display = 'inline-block';
+}
+
+function nextSchemaQuestion() {
+  schemaQIndex++;
+  if (schemaQIndex >= schemaQuizQuestions.length) showSchemaResult();
+  else renderSchemaQuestion();
+}
+
+function showSchemaResult() {
+  document.getElementById('schemaQuizCard').style.display = 'none';
+  document.getElementById('schemaProgressFill').style.width = '100%';
+
+  const total = schemaQuizQuestions.length;
+  const result = masteryMessage(schemaQuizScore, total, "exercice sur les schémas");
+
+  document.getElementById('schemaResultMedal').textContent = result.medal;
+  document.getElementById('schemaResultScore').textContent = `${schemaQuizScore}/${total}`;
+  document.getElementById('schemaResultMsg').textContent = result.msg;
+  renderReviewTitleOnly('schemaReview', schemaMistakes, 'schema', '📐 Schémas à retravailler');
+  document.getElementById('schemaQuizResult').style.display = 'block';
+}
+
+/* ===== QUIZ UTILITÉ ===== */
+let utilQuizQuestions = [];
+let utilQIndex = 0;
+let utilQuizScore = 0;
+
+function buildUtilQuizQuestion(inst) {
+  const usePool = instruments
+    .map(i => cleanArray(i.utilisations)[0])
+    .filter(Boolean);
+
+  const firstUse = cleanArray(inst.utilisations)[0] || "Utilisation à compléter";
+
+  return {
+    inst,
+    question: "À quoi sert principalement cet instrument ?",
+    answer: firstUse,
+    choices: getChoices(firstUse, usePool)
+  };
+}
+
+function startUtilQuiz() {
+  utilQuizScore = 0;
+  utilQIndex = 0;
+  utilMistakes = [];
+
+  const total = Math.min(UTILITE_QUIZ_TOTAL, instruments.length);
+  const shuffled = [...instruments].sort(() => Math.random() - 0.5).slice(0, total);
+  utilQuizQuestions = shuffled.map(buildUtilQuizQuestion);
+
+  document.getElementById('utilQuizResult').style.display = 'none';
+  const utilReview = document.getElementById('utilReview');
+  if (utilReview) { utilReview.style.display = 'none'; utilReview.innerHTML = ''; }
+  document.getElementById('utilQuizCard').style.display = 'block';
+  document.getElementById('utilQTotal').textContent = utilQuizQuestions.length;
+  updateQuizScoreDisplay('utilQuizScore', 0, 0);
+
+  renderUtilQuestion();
+}
+
+function renderUtilQuestion() {
+  const q = utilQuizQuestions[utilQIndex];
+  document.getElementById('utilQNum').textContent = utilQIndex + 1;
+  document.getElementById('utilProgressFill').style.width = ((utilQIndex / utilQuizQuestions.length) * 100) + '%';
+
+  document.getElementById('utilQuizImage').innerHTML = imageHTML(q.inst);
+  document.getElementById('utilQuizQuestion').textContent = q.question;
+
+  const choices = document.getElementById('utilQuizChoices');
+  choices.innerHTML = '';
+
+  q.choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = c;
+    btn.addEventListener('click', () => answerUtilQuiz(c, q.answer, btn));
+    choices.appendChild(btn);
+  });
+
+  const feedback = document.getElementById('utilFeedback');
+  feedback.className = 'feedback';
+  feedback.textContent = '';
+  document.getElementById('utilNextBtn').style.display = 'none';
+}
+
+function answerUtilQuiz(chosen, answer, btn) {
+  const q = utilQuizQuestions[utilQIndex];
+  document.querySelectorAll('#utilQuizChoices .choice-btn').forEach(b => b.disabled = true);
+  const fb = document.getElementById('utilFeedback');
+
+  if (chosen === answer) {
+    btn.classList.add('correct');
+    fb.className = 'feedback correct';
+    fb.textContent = "✅ Bravo ! C'est la bonne réponse !";
+    utilQuizScore++;
+    updateQuizScoreDisplay('utilQuizScore', utilQuizScore, utilQIndex + 1);
+  } else {
+    utilMistakes.push(q.inst);
+    btn.classList.add('wrong');
+    fb.className = 'feedback wrong';
+    fb.textContent = `❌ Pas tout à fait ! La bonne réponse était : ${answer}`;
+    document.querySelectorAll('#utilQuizChoices .choice-btn').forEach(b => {
+      if (b.textContent === answer) b.classList.add('correct');
+    });
+  }
+
+  updateQuizScoreDisplay('utilQuizScore', utilQuizScore, utilQIndex + 1);
+  document.getElementById('utilNextBtn').style.display = 'inline-block';
+}
+
+function nextUtilQuestion() {
+  utilQIndex++;
+  if (utilQIndex >= utilQuizQuestions.length) showUtilResult();
+  else renderUtilQuestion();
+}
+
+function showUtilResult() {
+  document.getElementById('utilQuizCard').style.display = 'none';
+  document.getElementById('utilProgressFill').style.width = '100%';
+
+  const total = utilQuizQuestions.length;
+  const result = masteryMessage(utilQuizScore, total, "exercice sur l'utilité des instruments");
+
+  document.getElementById('utilResultMedal').textContent = result.medal;
+  document.getElementById('utilResultScore').textContent = `${utilQuizScore}/${total}`;
+  document.getElementById('utilResultMsg').textContent = result.msg;
+  renderUtilReview('utilReview', utilMistakes, '🧠 Utilités à retravailler');
+  document.getElementById('utilQuizResult').style.display = 'block';
 }
 
 /* ===== ASSOCIATION AU CLIC ===== */
@@ -1702,6 +4239,9 @@ let dragMaxAdded = false;
 const ASSOC_COLOR_CLASSES = ['pair-0','pair-1','pair-2','pair-3','pair-4','pair-5','pair-6','pair-7'];
 
 function buildDrag() {
+  dragMistakes = [];
+  const dragReview = document.getElementById('dragReview');
+  if (dragReview) { dragReview.style.display = 'none'; dragReview.innerHTML = ''; }
   dragPairs = [...instruments].sort(() => Math.random() - 0.5).slice(0, Math.min(8, instruments.length));
   assocSelected = null;
   assocColorCounter = 0;
@@ -1722,7 +4262,7 @@ function buildDrag() {
     item.dataset.choice = '';
     item.dataset.pair = '';
     item.onclick = () => clickAssocCard('image', inst.id);
-    item.innerHTML = `${imageHTML(inst)}<div class="assoc-choice-chip" id="chip-img-${inst.id}">Choisis un nom</div>`;
+    item.innerHTML = `${imageHTML(inst)}<div class="assoc-choice-chip" id="chip-img-${inst.id}">&nbsp;</div>`;
     grid.appendChild(item);
   });
 
@@ -1788,7 +4328,7 @@ function clearPairFromElement(el) {
       if (otherIcon) otherIcon.textContent = '';
       if (other.dataset.type === 'image') {
         const chip = document.getElementById('chip-img-' + other.dataset.id);
-        if (chip) chip.textContent = 'Choisis un nom';
+        if (chip) { chip.innerHTML = '&nbsp;'; chip.style.visibility = 'hidden'; }
       }
     }
   }
@@ -1801,7 +4341,7 @@ function clearPairFromElement(el) {
   if (icon) icon.textContent = '';
   if (type === 'image') {
     const chip = document.getElementById('chip-img-' + id);
-    if (chip) chip.textContent = 'Choisis un nom';
+    if (chip) { chip.innerHTML = '&nbsp;'; chip.style.visibility = 'hidden'; }
   }
 }
 
@@ -1825,7 +4365,7 @@ function assignPair(imageId, labelId) {
 
   const inst = dragPairs.find(i => i.id === labelId);
   const chip = document.getElementById('chip-img-' + imageId);
-  if (chip) chip.textContent = inst ? inst.nom : 'Nom choisi';
+  if (chip) { chip.textContent = inst ? inst.nom : 'Nom choisi'; chip.style.visibility = 'visible'; }
 
   const icon = document.getElementById('icon-' + labelId);
   if (icon) icon.textContent = '🔗';
@@ -1874,6 +4414,7 @@ function checkDrag() {
   let correct = 0;
   const total = dragPairs.length;
   let filled = 0;
+  dragMistakes = [];
 
   if (!dragMaxAdded) {
     addGlobalMax(total * 5);
@@ -1885,7 +4426,10 @@ function checkDrag() {
   dragPairs.forEach(inst => {
     const imageEl = getAssocCard('image', inst.id);
     const chosenLabel = imageEl ? imageEl.dataset.choice : '';
-    if (!chosenLabel) return;
+    if (!chosenLabel) {
+      dragMistakes.push(inst);
+      return;
+    }
     filled++;
     const labelEl = getAssocCard('label', chosenLabel);
     const icon = document.getElementById('icon-' + chosenLabel);
@@ -1896,6 +4440,7 @@ function checkDrag() {
       if (icon) icon.textContent = '✅';
       correct++;
     } else {
+      dragMistakes.push(inst);
       imageEl.classList.add('wrong-drop');
       if (labelEl) labelEl.classList.add('wrong-drop');
       if (icon) icon.textContent = '❌';
@@ -1906,11 +4451,14 @@ function checkDrag() {
   sd.style.display = 'flex';
 
   if (filled < total) {
-    sd.innerHTML = `ℹ️ ${filled}/${total} association(s) complétée(s).`;
+    sd.innerHTML = `ℹ️ ${filled}/${total} association(s) complétée(s). Termine toutes les associations pour valider.`;
+    renderReview('dragReview', dragMistakes, 'image', '🎯 Associations à revoir');
     return;
   }
 
-  sd.innerHTML = `✅ <span id="dragScoreVal">${correct}</span>/${total} corrects !`;
+  const result = masteryMessage(correct, total, "exercice d’association");
+  sd.innerHTML = `${result.medal} <span id="dragScoreVal">${correct}</span>/${total} corrects — ${result.msg}`;
+  renderReview('dragReview', dragMistakes, 'image', '🎯 Associations à retravailler');
   if (correct > 0) addGlobalScore(correct * 5, 400, 400);
 }
 
@@ -1934,7 +4482,7 @@ const WORD_POOL = [...new Set(
     )
 )];
 
-const GRID_SIZE = 15;
+const GRID_SIZE = 12;
 
 let wsWords = [];
 let wsGrid = [];
@@ -2063,6 +4611,7 @@ function buildWordSearch() {
   });
 
   document.getElementById('wsScore').style.display = 'none';
+  fitWordSearchGrid();
 }
 
 function wsClick(r, c) {
@@ -2124,11 +4673,108 @@ function getCellsBetween(r1, c1, r2, c2) {
   return cells;
 }
 
+
+/* ===== Recadrage automatique réel des objets et schémas ===== */
+function isAlmostWhitePixel(r, g, b, a, threshold) {
+  if (a < 10) return true;
+  return r >= threshold && g >= threshold && b >= threshold;
+}
+
+function autoTrimImage(img) {
+  if (!img || img.dataset.trimDone === "1" || img.dataset.trimStarted === "1") return;
+  img.dataset.trimStarted = "1";
+
+  const process = () => {
+    try {
+      if (!img.complete || !img.naturalWidth || !img.naturalHeight) {
+        img.dataset.trimStarted = "";
+        return;
+      }
+
+      const sourceW = img.naturalWidth;
+      const sourceH = img.naturalHeight;
+      const canvas = document.createElement("canvas");
+      canvas.width = sourceW;
+      canvas.height = sourceH;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      ctx.drawImage(img, 0, 0);
+
+      const data = ctx.getImageData(0, 0, sourceW, sourceH).data;
+      const kind = img.dataset.trimKind || "object";
+      const threshold = kind === "schema" ? 250 : 246;
+
+      let minX = sourceW, minY = sourceH, maxX = -1, maxY = -1;
+      for (let y = 0; y < sourceH; y++) {
+        for (let x = 0; x < sourceW; x++) {
+          const i = (y * sourceW + x) * 4;
+          const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+          if (!isAlmostWhitePixel(r, g, b, a, threshold)) {
+            if (x < minX) minX = x;
+            if (y < minY) minY = y;
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+          }
+        }
+      }
+
+      if (maxX < 0 || maxY < 0) {
+        img.dataset.trimDone = "1";
+        return;
+      }
+
+      const pad = kind === "schema" ? 6 : 4;
+      minX = Math.max(0, minX - pad);
+      minY = Math.max(0, minY - pad);
+      maxX = Math.min(sourceW - 1, maxX + pad);
+      maxY = Math.min(sourceH - 1, maxY + pad);
+
+      const cropW = Math.max(1, maxX - minX + 1);
+      const cropH = Math.max(1, maxY - minY + 1);
+
+      const out = document.createElement("canvas");
+      out.width = cropW;
+      out.height = cropH;
+      const outCtx = out.getContext("2d");
+      outCtx.drawImage(canvas, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+
+      img.dataset.trimDone = "1";
+      img.src = out.toDataURL("image/png");
+    } catch (err) {
+      img.dataset.trimFailed = "1";
+    }
+  };
+
+  if (img.decode) {
+    img.decode().then(process).catch(() => {
+      if (img.complete) process();
+      else img.addEventListener("load", process, { once: true });
+    });
+  } else if (img.complete) {
+    process();
+  } else {
+    img.addEventListener("load", process, { once: true });
+  }
+}
+
+function autoTrimAllVisuals(root = document) {
+  root.querySelectorAll("img.auto-trim-img:not([data-trim-done='1']):not([data-trim-started='1'])").forEach(autoTrimImage);
+}
+
+function installAutoTrimObserver() {
+  autoTrimAllVisuals();
+  const observer = new MutationObserver(() => autoTrimAllVisuals());
+  observer.observe(document.body, { childList: true, subtree: true });
+}
+
 /* ===== INIT ===== */
 buildCours();
 startQuiz();
+startSchemaQuiz();
+startUtilQuiz();
 buildDrag();
 buildWordSearch();
+fitWordSearchGrid();
+installAutoTrimObserver();
 </script>
 </body>
 </html>
