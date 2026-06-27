@@ -1302,13 +1302,15 @@ function showMenu() {
   showLesson();
 }
 
-function showLesson() {
+function showLesson(shouldScroll = true) {
   document.getElementById('menu').style.display = 'none';
   document.getElementById('lesson-area').style.display = 'block';
   document.getElementById('game-area').style.display = 'none';
   document.getElementById('back-btn').style.display = 'none';
   setActiveTab('btnCours');
-  document.getElementById('lesson-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (shouldScroll) {
+    document.getElementById('lesson-area').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 function showExercise() {
@@ -1699,7 +1701,7 @@ function init() {
   updateMeniscus(currentVolume);
   resetZoomGuideLine();
   updateScoreDisplay();
-  showLesson();
+  showLesson(false);
 }
 
 if (srcEp.complete && srcMen.complete) {
