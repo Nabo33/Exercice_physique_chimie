@@ -337,6 +337,43 @@ header p,
   }
 }
 
+
+
+/* ===== Bouton sous le cours vers le premier exercice ===== */
+.course-start-exercise-wrap {
+  margin: 26px auto 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.course-start-exercise-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 15px 26px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.08rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--bleu), var(--violet));
+  color: #fff;
+  box-shadow: 0 5px 18px rgba(67, 97, 238, 0.24);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.course-start-exercise-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 22px rgba(67, 97, 238, 0.30);
+}
+
+@media(max-width:700px) {
+  .course-start-exercise-btn {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 1rem;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -425,12 +462,16 @@ header p,
       </table>
     </div>
   </div>
+
+  <div class="course-start-exercise-wrap">
+    <button type="button" class="course-start-exercise-btn" onclick="goToSection('exo4')">🧩 Accéder au premier exercice ?</button>
+  </div>
 </section>
 
 <section id="exo4" class="section">
   <div class="card">
     <h2>🧩 Exercice 1 — Complète le schéma</h2>
-    <div class="intro-card">Déplace au bon endroit les noms des changements d'état. À chaque réinitialisation, le schéma peut changer : observe bien l'ordre des états et le sens des flèches.</div>
+    <div class="intro-card">Déplace au bon endroit les noms des changements d'état. À chaque réinitialisation, le schéma peut changer : observe bien la position des états physiques et le sens des flèches.</div>
     <div class="drag-area" id="drag-bank">
       <div class="drag-token" draggable="true" data-word="fusion">Fusion</div>
       <div class="drag-token" draggable="true" data-word="solidification">Solidification</div>
