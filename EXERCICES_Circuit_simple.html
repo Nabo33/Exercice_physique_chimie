@@ -1843,6 +1843,57 @@ header p,
   }
 }
 
+
+
+/* ===== Correction bouton suivant dans les exercices ===== */
+.btn-row {
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+#btn-next {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* ===== Feedback général final : erreurs à ne pas commettre ===== */
+.general-feedback-success {
+  background: var(--vert-clair);
+  color: var(--vert);
+  border: 2px solid var(--vert);
+  border-radius: 18px;
+  padding: 14px 16px;
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.45;
+}
+
+.general-feedback-warning {
+  background: #fffaf0;
+  border: 2px solid #fbbf24;
+  border-radius: 18px;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.general-feedback-warning h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--bleu);
+  font-size: 1.08rem;
+  margin: 0 0 10px;
+}
+
+.general-feedback-warning ul {
+  margin-left: 20px;
+  line-height: 1.55;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.general-feedback-warning li + li {
+  margin-top: 8px;
+}
+
 </style>
 </head>
 <body>
@@ -1956,7 +2007,7 @@ header p,
       <div id="q-content"></div>
       <div class="feedback" id="feedback"></div>
       <div class="btn-row">
-        <button class="btn btn-primary" id="btn-next" style="display:none" onclick="nextQuestion()">Suivant →</button>
+        <button class="btn btn-primary" id="btn-next" style="display:none" onclick="nextQuestion()">Question suivante</button>
       </div>
     </div>
   </div>
@@ -3157,6 +3208,76 @@ function nextQuestion() {
   }
 }
 
+
+function circuitMistakeHint(reviewText) {
+  const r = normalizeText(reviewText);
+
+  if (r.includes('dipole') || r.includes('2 bornes') || r.includes('deux bornes')) {
+    return "Ne pas oublier qu’un dipôle possède deux bornes : deux endroits où brancher les câbles.";
+  }
+
+  if (r.includes('generateur') || r.includes('recepteur')) {
+    return "Ne pas confondre générateur et récepteur : le générateur fournit l’énergie électrique, le récepteur la reçoit et la transforme.";
+  }
+
+  if (r.includes('ampoule') || r.includes('culot') || r.includes('plot')) {
+    return "Ne pas brancher les deux câbles sur la même borne de l’ampoule : il faut utiliser le culot et le plot.";
+  }
+
+  if (r.includes('circuit electrique simple') || r.includes('fonctionne') || r.includes('circuit ferme') || r.includes('chemin')) {
+    return "Ne pas oublier qu’un circuit fonctionne seulement s’il est fermé : il faut un chemin complet entre les deux bornes du générateur.";
+  }
+
+  if (r.includes('interrupteur')) {
+    return "Ne pas inverser interrupteur ouvert et fermé : ouvert, le courant ne circule pas ; fermé, le courant peut circuler.";
+  }
+
+  if (r.includes('courant') && r.includes('energie')) {
+    return "Ne pas dire que la lampe consomme le courant : elle reçoit et transforme l’énergie électrique transportée par le courant.";
+  }
+
+  if (r.includes('court-circuit') || r.includes('dangereux')) {
+    return "Ne pas relier directement les deux bornes d’un générateur : cela crée un court-circuit dangereux.";
+  }
+
+  if (r.includes('symbole') || r.includes('schema')) {
+    return "Ne pas confondre le dessin de l’objet réel avec son symbole normalisé dans un schéma électrique.";
+  }
+
+  return "Ne pas répondre trop vite : identifie d’abord le générateur, les récepteurs, les bornes utilisées et vérifie si le circuit est fermé.";
+}
+
+function uniqueCircuitMistakeHints(wrongAnswers) {
+  const seen = new Set();
+  return wrongAnswers
+    .map(a => circuitMistakeHint(a.review || a.question || ''))
+    .filter(h => {
+      if (seen.has(h)) return false;
+      seen.add(h);
+      return true;
+    });
+}
+
+function renderGeneralFeedback(wrongAnswers) {
+  if (!wrongAnswers.length) {
+    return `
+      <div class="general-feedback-success">
+        ✅ Aucune erreur : tu maîtrises les notions travaillées dans cet exercice.
+      </div>
+    `;
+  }
+
+  const hints = uniqueCircuitMistakeHints(wrongAnswers).map(h => `<li>${h}</li>`).join('');
+
+  return `
+    <div class="general-feedback-warning">
+      <h3>⚠️ Erreurs à ne pas commettre</h3>
+      <ul>${hints}</ul>
+    </div>
+  `;
+}
+
+
 function showResults() {
   showScreen('screen-results');
   document.getElementById('progress-fill').style.width = '100%';
@@ -3185,13 +3306,7 @@ function showResults() {
   const recap = document.getElementById('recap');
   if (answered.length > 0) {
     const wrong = answered.filter(a => !a.correct);
-    if (wrong.length > 0) {
-      recap.innerHTML =
-        '<h3>Notions à retravailler :</h3>' +
-        wrong.map(a => `<div class="recap-item"><span class="icon">🔁</span><span>${a.review}</span></div>`).join('');
-    } else {
-      recap.innerHTML = '<div class="recap-item"><span class="icon">✅</span><span>Toutes les réponses sont correctes !</span></div>';
-    }
+    recap.innerHTML = renderGeneralFeedback(wrong);
   }
 
   document.getElementById('score-badge').textContent = `Score : ${score} / ${total}`;
