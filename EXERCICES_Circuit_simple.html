@@ -2335,11 +2335,15 @@ function renderQCM(q, container) {
   const letters = ['A', 'B', 'C', 'D'];
   const div = document.createElement('div');
   div.className = 'options';
-  q.options.forEach((opt, i) => {
+
+  const shuffledOptions = shuffle(q.options.map((opt, originalIndex) => ({ opt, originalIndex })));
+
+  shuffledOptions.forEach((item, displayIndex) => {
     const btn = document.createElement('button');
     btn.className = 'opt-btn';
-    btn.innerHTML = `<span class="letter">${letters[i]}</span><span>${opt}</span>`;
-    btn.onclick = () => handleQCM(i, q, div);
+    btn.dataset.originalIndex = item.originalIndex;
+    btn.innerHTML = `<span class="letter">${letters[displayIndex]}</span><span>${item.opt}</span>`;
+    btn.onclick = () => handleQCM(item.originalIndex, q, div);
     div.appendChild(btn);
   });
   container.appendChild(div);
@@ -2349,8 +2353,12 @@ function handleQCM(chosen, q, div) {
   const btns = div.querySelectorAll('.opt-btn');
   btns.forEach(b => b.disabled = true);
   const correct = chosen === q.answer;
-  btns[chosen].classList.add(correct ? 'correct' : 'wrong');
-  if (!correct) btns[q.answer].classList.add('correct');
+
+  btns.forEach(btn => {
+    const originalIndex = Number(btn.dataset.originalIndex);
+    if (originalIndex === chosen) btn.classList.add(correct ? 'correct' : 'wrong');
+    if (originalIndex === q.answer) btn.classList.add('correct');
+  });
 
   if (correct) {
     score++;
@@ -2371,25 +2379,29 @@ function renderMultiQCM(q, container) {
   const wrapper = document.createElement('div');
   wrapper.className = 'multiqcm-options';
 
-  q.options.forEach((opt, i) => {
+  const shuffledOptions = shuffle(q.options.map((opt, originalIndex) => ({ opt, originalIndex })));
+
+  shuffledOptions.forEach((item) => {
     const option = document.createElement('div');
     option.className = 'multiqcm-option';
+    option.dataset.originalIndex = item.originalIndex;
     option.innerHTML = `
       <input type="checkbox" tabindex="-1">
-      <span>${opt}</span>
+      <span>${item.opt}</span>
     `;
 
     option.addEventListener('click', () => {
       if (option.dataset.locked === 'true') return;
 
+      const originalIndex = Number(option.dataset.originalIndex);
       const checkbox = option.querySelector('input');
 
-      if (selected.has(i)) {
-        selected.delete(i);
+      if (selected.has(originalIndex)) {
+        selected.delete(originalIndex);
         checkbox.checked = false;
         option.classList.remove('selected');
       } else {
-        selected.add(i);
+        selected.add(originalIndex);
         checkbox.checked = true;
         option.classList.add('selected');
       }
@@ -2414,11 +2426,12 @@ function renderMultiQCM(q, container) {
 
     let allGood = selected.size === expected.size;
 
-    options.forEach((option, i) => {
+    options.forEach((option) => {
       option.dataset.locked = 'true';
 
-      const isSelected = selected.has(i);
-      const isCorrect = expected.has(i);
+      const originalIndex = Number(option.dataset.originalIndex);
+      const isSelected = selected.has(originalIndex);
+      const isCorrect = expected.has(originalIndex);
 
       if (isCorrect) {
         option.classList.add('correct');
@@ -2749,7 +2762,7 @@ function renderDoubleQCMImg(q, container) {
     <label>Choisis l’état de l’interrupteur :</label>
     <select class="quiz-select" id="select-state">
       <option value="">Choisir…</option>
-      ${q.options1.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+      ${shuffle([...q.options1]).map(opt => `<option value="${opt}">${opt}</option>`).join('')}
     </select>
   `;
 
@@ -2759,7 +2772,7 @@ function renderDoubleQCMImg(q, container) {
     <label>Choisis la bonne justification :</label>
     <select class="quiz-select" id="select-justification">
       <option value="">Choisir…</option>
-      ${q.options2.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+      ${shuffle([...q.options2]).map(opt => `<option value="${opt}">${opt}</option>`).join('')}
     </select>
   `;
 
@@ -2824,7 +2837,7 @@ function renderTripleQCMImg(q, container) {
     const stepCard = document.createElement('div');
     stepCard.className = 'deduction-step';
 
-    const optionsHtml = step.options.map(opt => `
+    const optionsHtml = shuffle([...step.options]).map(opt => `
       <button type="button" class="deduction-btn" data-step="${stepIndex}" data-value="${opt}">
         ${opt}
       </button>
@@ -2917,7 +2930,7 @@ function renderSentenceQCMImg(q, container) {
   const selectHtml = (blank, index) => `
     <select class="sentence-select" data-index="${index}" aria-label="${blank.key}">
       <option value="">Choisir…</option>
-      ${blank.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+      ${shuffle([...blank.options]).map(opt => `<option value="${opt}">${opt}</option>`).join('')}
     </select>
   `;
 
@@ -3008,7 +3021,7 @@ function renderSentenceQCM(q, container) {
   const selectHtml = (blank, index) => `
     <select class="sentence-select" data-index="${index}" aria-label="${blank.key}">
       <option value="">Choisir…</option>
-      ${blank.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+      ${shuffle([...blank.options]).map(opt => `<option value="${opt}">${opt}</option>`).join('')}
     </select>
   `;
 
