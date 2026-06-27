@@ -374,6 +374,259 @@ header p,
   }
 }
 
+
+
+/* ===== QCM question par question ===== */
+.qcm-single-card {
+  width: 100%;
+}
+
+.qcm-progress-header {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.qcm-single-container {
+  margin-top: 10px;
+}
+
+.qcm-current-question {
+  margin-bottom: 12px;
+  animation: slideIn .28s cubic-bezier(.4,2,.6,1);
+}
+
+.qcm-current-question h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--bleu);
+  font-size: 1.05rem;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 12px;
+}
+
+.qcm-current-question .question {
+  font-size: clamp(1.08rem, 2.4vw, 1.35rem);
+  line-height: 1.5;
+  text-align: center;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+
+.qcm-current-question .qcm-choices {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.qcm-current-question .qcm-btn {
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  padding: 14px 16px;
+}
+
+.qcm-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.qcm-result-box {
+  text-align: center;
+}
+
+.qcm-result-medal {
+  font-size: 3rem;
+  margin-bottom: 8px;
+}
+
+.qcm-final-score {
+  display: inline-flex;
+  margin-top: 8px;
+}
+
+@media(max-width:700px){
+  .qcm-progress-header {
+    align-items: stretch;
+  }
+
+  .qcm-current-question .qcm-btn {
+    font-size: .98rem;
+    padding: 13px 12px;
+  }
+
+  .qcm-actions .btn {
+    width: 100%;
+  }
+}
+
+
+
+/* ===== Correction largeur QCM : même largeur que les autres parties ===== */
+#exo3 .qcm-single-card {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+#exo3 .qcm-single-container,
+#exo3 .qcm-current-question {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+
+
+/* ===== QCM : bouton Question suivante désactivé avant réponse ===== */
+#qcm-next-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: grayscale(0.25);
+}
+
+#qcm-next-btn:disabled:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+
+
+/* ===== Feedbacks QCM plus précis ===== */
+#exo3 .feedback {
+  text-align: left;
+}
+
+.qcm-feedback-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.qcm-feedback-remember,
+.qcm-feedback-explain,
+.qcm-feedback-warning {
+  margin-top: 8px;
+  line-height: 1.45;
+}
+
+.qcm-feedback-warning {
+  background: rgba(255,255,255,0.62);
+  border-radius: 12px;
+  padding: 10px 12px;
+  border-left: 6px solid var(--jaune);
+}
+
+#exo3 .feedback.ok .qcm-feedback-remember {
+  background: rgba(255,255,255,0.62);
+  border-radius: 12px;
+  padding: 10px 12px;
+  border-left: 6px solid var(--vert);
+}
+
+
+
+/* ===== Bilan général QCM : erreurs à retravailler ===== */
+.qcm-general-review,
+.qcm-general-success {
+  margin-top: 18px;
+  text-align: left;
+}
+
+.qcm-general-success {
+  background: var(--vert-clair);
+  color: var(--vert);
+  border: 2px solid var(--vert);
+  border-radius: 18px;
+  padding: 14px 16px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.qcm-general-review > h3,
+.qcm-warning-list h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--bleu);
+  font-size: 1.08rem;
+  margin: 12px 0 8px;
+}
+
+.qcm-general-review-intro {
+  font-weight: 900;
+  color: var(--text);
+  background: #fff7d6;
+  border-left: 6px solid var(--jaune);
+  border-radius: 14px;
+  padding: 10px 12px;
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.qcm-review-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 12px 0 16px;
+}
+
+.qcm-review-item {
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.qcm-review-question {
+  color: var(--bleu);
+  font-weight: 1000;
+  margin-bottom: 6px;
+}
+
+.qcm-warning-list {
+  background: #fffaf0;
+  border: 2px solid #fbbf24;
+  border-radius: 18px;
+  padding: 14px 16px;
+}
+
+.qcm-warning-list ul {
+  margin-left: 20px;
+  line-height: 1.55;
+  font-weight: 900;
+}
+
+.qcm-warning-list li + li {
+  margin-top: 8px;
+}
+
+
+
+/* ===== Bilan QCM allégé : uniquement les erreurs à ne pas commettre ===== */
+.qcm-general-review {
+  margin-top: 18px;
+}
+
+.qcm-warning-list {
+  text-align: left;
+}
+
+.qcm-review-grid,
+.qcm-review-item,
+.qcm-review-question,
+.qcm-general-review-intro {
+  display: none !important;
+}
+
 </style>
 </head>
 <body>
@@ -501,15 +754,22 @@ header p,
 </section>
 
 <section id="exo3" class="section">
-  <div class="card">
+  <div class="card qcm-single-card">
     <h2>❓ Exercice 3 — Questions à choix multiple</h2>
-    <div id="qcm-container"></div>
-    <div id="qcm-score" style="display:none" class="score-bar">
+
+    <div id="qcm-score" class="score-bar qcm-progress-header">
       <div class="score-label">Question <span id="qcm-question-count">0 / 10</span></div>
       <div class="progress-bar-outer"><div class="progress-bar-inner" id="qcm-progress" style="width:0%"></div></div>
       <div class="score-num">⭐ <span id="qcm-score-num">0 / 0</span></div>
     </div>
-    <button type="button" class="btn btn-reset" onclick="resetQcm()">Réinitialiser</button><button type="button" class="btn btn-next" onclick="goToSection('exo5')">Exercice suivant →</button>
+
+    <div id="qcm-container" class="qcm-single-container"></div>
+
+    <div class="qcm-actions">
+      <button type="button" class="btn btn-next" id="qcm-next-btn" onclick="nextQcmQuestion()" disabled>Question suivante</button>
+      <button type="button" class="btn btn-reset" id="qcm-restart-btn" onclick="resetQcm()" style="display:none">Recommencer ?</button>
+      <button type="button" class="btn btn-next" onclick="goToSection('exo5')">Exercice suivant →</button>
+    </div>
   </div>
 </section>
 
@@ -749,71 +1009,260 @@ const qcmQuestionBank=[
  {q:"Dans une bouteille fermée contenant un peu d'eau et de l'air, l'air se trouve :",choices:["Seulement en bas", "Seulement au centre", "Dans tout l'espace non occupé par l'eau", "Uniquement collé aux parois"],answer:2,expl:"Un gaz occupe tout l'espace disponible."},
  {q:"Un glaçon, de l'eau liquide et de la vapeur d'eau sont :",choices:["Trois matières différentes", "La même matière dans des états différents", "Toujours des solides", "Toujours visibles"],answer:1,expl:"Il s'agit de la même matière, l'eau, dans trois états physiques différents."}
 ];
-const QCM_QUESTIONS_PER_ROUND=10;
-let qcmData=[];
-let previousQcmKeys=[];
-let qcmAnswered=0,qcmCorrect=0;
-function makeQcmKey(q){return q.q}
+
+const QCM_QUESTIONS_PER_ROUND = 10;
+let qcmData = [];
+let previousQcmKeys = [];
+let qcmIndex = 0;
+let qcmAnswered = 0;
+let qcmCorrect = 0;
+let qcmLocked = false;
+let qcmMistakes = [];
+
+function makeQcmKey(q){ return q.q; }
+
 function pickQcmQuestions(){
-  const shuffled=shuffle(qcmQuestionBank);
-  let picked=shuffled.filter(q=>!previousQcmKeys.includes(makeQcmKey(q))).slice(0,QCM_QUESTIONS_PER_ROUND);
-  if(picked.length<QCM_QUESTIONS_PER_ROUND){
-    const missing=QCM_QUESTIONS_PER_ROUND-picked.length;
-    const pickedKeys=picked.map(makeQcmKey);
-    picked=picked.concat(shuffled.filter(q=>!pickedKeys.includes(makeQcmKey(q))).slice(0,missing));
+  const shuffled = shuffle(qcmQuestionBank);
+  let picked = shuffled.filter(q => !previousQcmKeys.includes(makeQcmKey(q))).slice(0, QCM_QUESTIONS_PER_ROUND);
+  if (picked.length < QCM_QUESTIONS_PER_ROUND) {
+    const missing = QCM_QUESTIONS_PER_ROUND - picked.length;
+    const pickedKeys = picked.map(makeQcmKey);
+    picked = picked.concat(shuffled.filter(q => !pickedKeys.includes(makeQcmKey(q))).slice(0, missing));
   }
-  previousQcmKeys=picked.map(makeQcmKey);
+  previousQcmKeys = picked.map(makeQcmKey);
   return picked;
 }
+
+function updateQcmHeader() {
+  const total = qcmData.length || QCM_QUESTIONS_PER_ROUND;
+  const questionCount = document.getElementById('qcm-question-count');
+  const scoreNum = document.getElementById('qcm-score-num');
+  const progress = document.getElementById('qcm-progress');
+
+  if (questionCount) questionCount.textContent = `${Math.min(qcmIndex + 1, total)} / ${total}`;
+  if (scoreNum) scoreNum.textContent = `${qcmCorrect} / ${qcmAnswered}`;
+  if (progress) progress.style.width = `${Math.round((qcmAnswered / total) * 100)}%`;
+}
+
 function buildQcm(){
-  qcmData=pickQcmQuestions();
-  qcmAnswered=0;
-  qcmCorrect=0;
-  const score=document.getElementById('qcm-score');
-  if(score) score.style.display='none';
-  const scoreNum=document.getElementById('qcm-score-num');
-  if(scoreNum) scoreNum.textContent=`0 / 0`;
-  const questionCount=document.getElementById('qcm-question-count');
-  if(questionCount) questionCount.textContent=`0 / ${qcmData.length}`;
-  const progress=document.getElementById('qcm-progress');
-  if(progress) progress.style.width='0%';
-  const c=document.getElementById('qcm-container');
-  c.innerHTML='';
-  qcmData.forEach((q,i)=>{
-    const div=document.createElement('div');
-    div.className='exo-block';
-    div.innerHTML=`
-      <h3>Question ${i+1}/${qcmData.length}</h3>
+  qcmData = pickQcmQuestions();
+  qcmIndex = 0;
+  qcmAnswered = 0;
+  qcmCorrect = 0;
+  qcmLocked = false;
+  qcmMistakes = [];
+
+  const nextBtn = document.getElementById('qcm-next-btn');
+  if (nextBtn) {
+    nextBtn.disabled = true;
+    nextBtn.textContent = 'Question suivante';
+    nextBtn.style.display = 'inline-flex';
+  }
+
+  const restartBtn = document.getElementById('qcm-restart-btn');
+  if (restartBtn) restartBtn.style.display = 'none';
+
+  renderQcmQuestion();
+  updateQcmHeader();
+}
+
+function resetQcm(){ buildQcm(); }
+
+function renderQcmQuestion(){
+  const c = document.getElementById('qcm-container');
+  const nextBtn = document.getElementById('qcm-next-btn');
+  if (nextBtn) {
+    nextBtn.disabled = true;
+    nextBtn.textContent = 'Question suivante';
+    nextBtn.style.display = 'inline-flex';
+  }
+
+  const q = qcmData[qcmIndex];
+  if (!q) return;
+
+  qcmLocked = false;
+  c.innerHTML = `
+    <div class="exo-block qcm-current-question">
+      <h3>Question ${qcmIndex + 1}/${qcmData.length}</h3>
       <p class="question">${q.q}</p>
-      <div class="qcm-choices" id="qcm-${i}">
-        ${q.choices.map((x,j)=>`<button type="button" class="qcm-btn" onclick="answerQcm(${i},${j})">${x}</button>`).join('')}
+      <div class="qcm-choices" id="qcm-current-choices">
+        ${q.choices.map((x,j)=>`<button type="button" class="qcm-btn" onclick="answerQcm(${j})">${x}</button>`).join('')}
       </div>
-      <div class="feedback" id="qfb-${i}"></div>
-    `;
-    c.appendChild(div);
-  });
+      <div class="feedback" id="qcm-current-feedback"></div>
+    </div>
+  `;
+
+  updateQcmHeader();
 }
-function resetQcm(){buildQcm()}
-function answerQcm(i,j){
-  const group=document.getElementById(`qcm-${i}`);
-  if(group.querySelector('.correct,.incorrect')) return;
-  const btns=group.querySelectorAll('.qcm-btn');
-  btns.forEach(b=>b.classList.add('disabled'));
-  const q=qcmData[i];
-  const ok = j===q.answer;
-  btns[j].classList.add(ok?'correct':'incorrect');
-  if(!ok) btns[q.answer].classList.add('correct');
-  const fb=document.getElementById(`qfb-${i}`);
-  fb.className=ok?'feedback ok':'feedback ko';
-  fb.textContent=(ok?'✅ ':'❌ ')+q.expl;
+
+
+function qcmErrorHint(q, chosenText) {
+  const question = normalize(q.q);
+  const chosen = normalize(chosenText);
+  const correct = normalize(q.choices[q.answer]);
+
+  if (question.includes('vapeur') && chosen.includes('visible')) {
+    return "Erreur à éviter : confondre la vapeur d’eau, qui est un gaz invisible, avec le nuage blanc de fines gouttelettes que l’on peut parfois voir.";
+  }
+
+  if (question.includes('nuaq') || question.includes('nuage')) {
+    return "Erreur à éviter : croire qu’un nuage visible est de la vapeur d’eau. Un nuage visible contient surtout de minuscules gouttelettes d’eau liquide.";
+  }
+
+  if (question.includes('gaz') || question.includes('air') || correct.includes('gazeux')) {
+    return "Erreur à éviter : penser qu’un gaz garde une forme précise. Un gaz occupe tout l’espace disponible et il peut être comprimé.";
+  }
+
+  if (question.includes('solide') || correct.includes('solide')) {
+    return "Erreur à éviter : oublier qu’un solide garde généralement sa forme propre, même s’il est découpé en morceaux ou en petits grains.";
+  }
+
+  if (question.includes('liquide') || correct.includes('liquide')) {
+    return "Erreur à éviter : confondre liquide et gaz. Un liquide coule et prend la forme du récipient, mais il n’occupe pas tout l’espace disponible.";
+  }
+
+  if (question.includes('fusion') || correct.includes('fusion')) {
+    return "Erreur à éviter : inverser fusion et solidification. La fusion correspond au passage solide → liquide.";
+  }
+
+  if (question.includes('solidification') || correct.includes('solidification')) {
+    return "Erreur à éviter : inverser solidification et fusion. La solidification correspond au passage liquide → solide.";
+  }
+
+  if (question.includes('vaporisation') || correct.includes('vaporisation') || question.includes('ebullition') || question.includes('flaque')) {
+    return "Erreur à éviter : confondre vaporisation et liquéfaction. La vaporisation correspond au passage liquide → gazeux.";
+  }
+
+  if (question.includes('liquefaction') || correct.includes('liquefaction') || question.includes('buee') || question.includes('vitre')) {
+    return "Erreur à éviter : confondre liquéfaction et vaporisation. La liquéfaction correspond au passage gazeux → liquide.";
+  }
+
+  if (chosen.includes('chauff') || chosen.includes('refroid')) {
+    return "Erreur à éviter : ne pas relier le sens du changement d’état à l’action effectuée. Chauffer favorise fusion et vaporisation ; refroidir favorise solidification et liquéfaction.";
+  }
+
+  return "Erreur à éviter : se fier seulement à l’exemple. Il faut identifier l’état de départ, l’état d’arrivée, puis choisir le bon nom.";
+}
+
+
+function answerQcm(j){
+  if (qcmLocked) return;
+  qcmLocked = true;
+
+  const q = qcmData[qcmIndex];
+  const group = document.getElementById('qcm-current-choices');
+  const btns = group.querySelectorAll('.qcm-btn');
+  btns.forEach(b => b.classList.add('disabled'));
+
+  const ok = j === q.answer;
+  btns[j].classList.add(ok ? 'correct' : 'incorrect');
+  if (!ok) btns[q.answer].classList.add('correct');
+
   qcmAnswered++;
-  if(ok) qcmCorrect++;
-  document.getElementById('qcm-score').style.display='flex';
-  document.getElementById('qcm-score-num').textContent=`${qcmCorrect} / ${qcmAnswered}`;
-  const qc=document.getElementById('qcm-question-count');
-  if(qc) qc.textContent=`${qcmAnswered} / ${qcmData.length}`;
-  document.getElementById('qcm-progress').style.width=`${Math.round(qcmAnswered/qcmData.length*100)}%`;
+  if (ok) qcmCorrect++;
+
+  const fb = document.getElementById('qcm-current-feedback');
+  fb.className = ok ? 'feedback ok' : 'feedback ko';
+
+  const chosenText = q.choices[j];
+  const correctText = q.choices[q.answer];
+
+  if (ok) {
+    fb.textContent = '✅ Bonne réponse !';
+  } else {
+    qcmMistakes.push({
+      question: q.q,
+      chosen: chosenText,
+      correct: correctText,
+      explanation: q.expl,
+      hint: qcmErrorHint(q, chosenText)
+    });
+    fb.textContent = `❌ Pas tout à fait. La bonne réponse était : ${correctText}.`;
+  }
+
+  updateQcmHeader();
+
+  const nextBtn = document.getElementById('qcm-next-btn');
+  if (nextBtn) {
+    nextBtn.disabled = false;
+    nextBtn.style.display = 'inline-flex';
+    nextBtn.textContent = qcmIndex >= qcmData.length - 1 ? 'Voir le bilan' : 'Question suivante';
+  }
 }
+
+function nextQcmQuestion(){
+  if (qcmIndex >= qcmData.length - 1) {
+    showQcmResult();
+    return;
+  }
+  qcmIndex++;
+  renderQcmQuestion();
+}
+
+
+function uniqueQcmMistakeHints() {
+  const seen = new Set();
+  return qcmMistakes
+    .map(m => m.hint)
+    .filter(h => {
+      if (seen.has(h)) return false;
+      seen.add(h);
+      return true;
+    });
+}
+
+function qcmGeneralReviewHTML() {
+  if (!qcmMistakes.length) {
+    return `
+      <div class="qcm-general-success">
+        ✅ Aucune erreur : tu maîtrises les changements d’état travaillés dans ce QCM.
+      </div>
+    `;
+  }
+
+  const hints = uniqueQcmMistakeHints().map(h => `<li>${h}</li>`).join('');
+
+  return `
+    <div class="qcm-general-review">
+      <div class="qcm-warning-list">
+        <h3>⚠️ Erreurs à ne pas commettre</h3>
+        <ul>${hints}</ul>
+      </div>
+    </div>
+  `;
+}
+
+
+function showQcmResult(){
+  const c = document.getElementById('qcm-container');
+  const nextBtn = document.getElementById('qcm-next-btn');
+  if (nextBtn) {
+    nextBtn.style.display = 'none';
+    nextBtn.disabled = true;
+  }
+
+  const restartBtn = document.getElementById('qcm-restart-btn');
+  if (restartBtn) restartBtn.style.display = 'inline-flex';
+
+  const perfect = qcmCorrect === qcmData.length;
+  c.innerHTML = `
+    <div class="exo-block qcm-current-question qcm-result-box">
+      <div class="qcm-result-medal">${perfect ? '🏆' : '🔁'}</div>
+      <h3>Bilan du QCM</h3>
+      <p class="question">${perfect
+        ? 'Parfait : toutes les réponses sont justes.'
+        : 'Il y a encore du travail : regarde précisément les erreurs ci-dessous puis recommence pour obtenir tout juste.'}</p>
+      <div class="score-num qcm-final-score">⭐ ${qcmCorrect} / ${qcmData.length}</div>
+      ${qcmGeneralReviewHTML()}
+    </div>
+  `;
+
+  const questionCount = document.getElementById('qcm-question-count');
+  const progress = document.getElementById('qcm-progress');
+  if (questionCount) questionCount.textContent = `${qcmData.length} / ${qcmData.length}`;
+  if (progress) progress.style.width = '100%';
+}
+
 document.addEventListener('dragstart',e=>{if(e.target.classList.contains('drag-token')){e.dataTransfer.setData('text',e.target.dataset.word);e.target.classList.add('dragging')}})
 document.addEventListener('dragend',e=>{if(e.target.classList.contains('drag-token'))e.target.classList.remove('dragging')})
 function allowDrop(e){e.preventDefault();e.currentTarget.classList.add('over')}
