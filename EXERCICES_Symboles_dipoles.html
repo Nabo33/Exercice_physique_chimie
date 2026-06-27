@@ -1711,6 +1711,81 @@ header p,
   }
 }
 
+
+
+/* ===== Feedback général : erreurs à ne pas commettre ===== */
+.review-warning-list {
+  width: 100%;
+  max-width: 820px;
+  margin: 18px auto 4px;
+  background: #fffaf0;
+  border: 2px solid #fbbf24;
+  border-radius: 18px;
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.review-warning-list h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--bleu-elec);
+  font-size: 1.08rem;
+  margin: 0 0 10px;
+}
+
+.review-warning-list ul {
+  margin-left: 20px;
+  line-height: 1.55;
+  font-weight: 900;
+  color: var(--texte);
+}
+
+.review-warning-list li + li {
+  margin-top: 8px;
+}
+
+/* On masque les anciens blocs de reprise nom/symbole si d'anciennes règles les recréent. */
+.review-grid,
+.review-item,
+.review-symbol,
+.review-name,
+.review-title,
+.review-subtitle {
+  display: none !important;
+}
+
+
+
+/* ===== Boutons de fin : recommencer / exercice suivant ===== */
+.end-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.end-actions .restart-btn {
+  margin-top: 0 !important;
+}
+
+.next-exercise-end-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media(max-width:700px) {
+  .end-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .end-actions .restart-btn {
+    width: 100%;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1773,7 +1848,10 @@ header p,
     <div class="end-score-big" id="end-score-big">0/10</div>
     <p id="end-msg" style="color:var(--text-dim)"></p>
     <div class="review-box" id="review-box"></div>
-    <button class="restart-btn" onclick="startQuiz()">🔄 Recommencer</button>
+    <div class="end-actions">
+      <button class="restart-btn next-exercise-end-btn" id="end-next-exercise-btn" onclick="goToNextExerciseFromEnd()">Exercice suivant</button>
+      <button class="restart-btn" onclick="startQuiz()">🔄 Recommencer</button>
+    </div>
   </div>
 </div>
 
@@ -2361,6 +2439,33 @@ function getReviewSymbol(d) {
   return `<div class="review-symbol">${getDipoleVisual(d)}</div>`;
 }
 
+function getDipoleMistakeHint(d) {
+  const hints = {
+    pile: "Ne pas confondre la pile avec un récepteur : c’est une source d’énergie. Sur son symbole, les deux traits n’ont pas la même longueur.",
+    ampoule: "Ne pas oublier que l’ampoule se reconnaît grâce à un cercle contenant une croix en diagonale.",
+    interrupteur_ouvert: "Ne pas confondre interrupteur ouvert et interrupteur fermé : ouvert signifie que le circuit est coupé.",
+    interrupteur_ferme: "Ne pas confondre interrupteur fermé et interrupteur ouvert : fermé signifie que le courant peut circuler.",
+    fils: "Ne pas chercher un symbole compliqué : les fils de connexion sont représentés par de simples traits.",
+    moteur: "Ne pas confondre moteur et ampoule : le moteur se reconnaît grâce à la lettre M dans un cercle.",
+    diode: "Ne pas confondre diode et DEL : la diode possède un triangle et une barre, mais pas de flèches lumineuses.",
+    del: "Ne pas confondre DEL et diode simple : la DEL reprend le symbole de la diode avec deux flèches qui sortent.",
+    resistance: "Ne pas confondre la résistance avec un fil : son symbole contient un rectangle allongé.",
+    generateur: "Ne pas confondre le générateur avec la pile : son symbole est différent et il représente une source d’énergie utilisée pour alimenter le circuit."
+  };
+  return hints[d.id] || "Ne pas se fier à l’objet réel : il faut mémoriser la forme précise du symbole électrique.";
+}
+
+function uniqueReviewHints() {
+  const seen = new Set();
+  return mistakes
+    .map(d => getDipoleMistakeHint(d))
+    .filter(h => {
+      if (seen.has(h)) return false;
+      seen.add(h);
+      return true;
+    });
+}
+
 function renderReviewBox() {
   const box = document.getElementById('review-box');
   if (!box) return;
@@ -2368,25 +2473,59 @@ function renderReviewBox() {
   if (mistakes.length === 0) {
     box.innerHTML = `
       <div class="review-success">
-        ✅ Aucun symbole à retravailler : tu as tout réussi dans cet exercice !
+        ✅ Aucune erreur : tu maîtrises les symboles travaillés dans cet exercice.
       </div>
     `;
     return;
   }
 
-  const cards = mistakes.map(d => `
-    <div class="review-item">
-      ${getReviewSymbol(d)}
-      <div class="review-name">${d.nom}</div>
-    </div>
-  `).join('');
+  const hints = uniqueReviewHints().map(h => `<li>${h}</li>`).join('');
 
   box.innerHTML = `
-    <div class="review-title">À retravailler</div>
-    <div class="review-subtitle">Revois le nom et le symbole des éléments suivants :</div>
-    <div class="review-grid">${cards}</div>
+    <div class="review-warning-list">
+      <h3>⚠️ Erreurs à ne pas commettre</h3>
+      <ul>${hints}</ul>
+    </div>
   `;
 }
+
+
+function getNextExerciseInfo() {
+  const order = [
+    { mode: 'nom-vers-symbole', buttonId: 'tab-ex1' },
+    { mode: 'symbole-vers-nom', buttonId: 'tab-ex2' },
+    { mode: 'trouver-bon', buttonId: 'tab-ex3' }
+  ];
+  const index = order.findIndex(item => item.mode === quizMode);
+  return index >= 0 && index < order.length - 1 ? order[index + 1] : null;
+}
+
+function updateEndNextExerciseButton() {
+  const btn = document.getElementById('end-next-exercise-btn');
+  if (!btn) return;
+
+  const next = getNextExerciseInfo();
+  if (!next) {
+    btn.style.display = 'none';
+    return;
+  }
+
+  btn.style.display = 'inline-flex';
+
+  const labels = {
+    'symbole-vers-nom': 'Exercice suivant : retrouver le nom',
+    'trouver-bon': 'Exercice suivant : choisir le bon symbole'
+  };
+
+  btn.textContent = labels[next.mode] || 'Exercice suivant';
+}
+
+function goToNextExerciseFromEnd() {
+  const next = getNextExerciseInfo();
+  if (!next) return;
+  openExercise(next.mode, next.buttonId);
+}
+
 
 function endQuiz() {
   document.getElementById('quiz-play').style.display='none';
@@ -2408,6 +2547,7 @@ function endQuiz() {
   document.getElementById('end-score-big').textContent=score+'/'+TOTAL_Q;
   document.getElementById('end-msg').textContent=msg;
   renderReviewBox();
+  updateEndNextExerciseButton();
 }
 
 function setActiveMainTab(buttonId) {
