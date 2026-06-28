@@ -992,6 +992,454 @@ header p,
   order:6 !important;
 }
 
+
+
+/* ===== Réorganisation de la partie cours ===== */
+.course-section-heading {
+  font-family: 'Fredoka One', cursive !important;
+  color: var(--bleu) !important;
+  font-size: 1.35rem !important;
+  margin: 24px 0 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  line-height: 1.25 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+#cours .course-intro {
+  margin-bottom: 22px !important;
+}
+
+#cours .protection-card {
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
+}
+
+#cours #courseGrid {
+  margin-bottom: 24px !important;
+}
+
+.danger-classes-card {
+  margin-top: 0 !important;
+}
+
+.danger-classes-note {
+  margin-top: 14px !important;
+}
+
+
+
+/* ===== Cours découpé en sections séparées ===== */
+#cours {
+  display: grid;
+  gap: 22px;
+}
+
+.course-block {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px 22px;
+}
+
+.course-block .section-title {
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.course-block-intro {
+  border-left: 7px solid var(--vert);
+}
+
+.course-block-danger {
+  border-left: 7px solid var(--bleu);
+}
+
+.course-block-classes {
+  border-left: 7px solid var(--jaune);
+}
+
+.course-block .course-intro {
+  margin-bottom: 18px !important;
+  max-width: none !important;
+}
+
+.course-block .protection-card {
+  margin: 0 !important;
+}
+
+.course-block #courseGrid {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.course-block .danger-classes-card {
+  margin: 0 0 14px !important;
+}
+
+.course-block .danger-classes-note {
+  margin: 0 !important;
+}
+
+@media(max-width:700px){
+  .course-block {
+    padding: 18px 14px;
+  }
+}
+
+
+
+/* ===== Suppression des 3 cadres principaux du cours ===== */
+#cours .course-block {
+  background: transparent !important;
+  border: none !important;
+  border-left: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+#cours {
+  gap: 26px !important;
+}
+
+
+
+/* ===== Ajustements cours : intro au-dessus + espace avant remarque ===== */
+#cours .course-intro-main {
+  margin-bottom: 22px !important;
+}
+
+#cours .danger-classes-note {
+  margin-top: 24px !important;
+}
+
+
+
+/* ===== Classes de dangers : pictogrammes miniatures ===== */
+.danger-classes-card {
+  display: grid !important;
+  gap: 14px !important;
+}
+
+.danger-family-card {
+  background: #fff !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 18px !important;
+  padding: 14px !important;
+  box-shadow: 0 3px 14px rgba(0,0,0,.06) !important;
+}
+
+.danger-family-card h3 {
+  font-family: 'Fredoka One', cursive !important;
+  font-size: 1.05rem !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  margin: 0 0 12px !important;
+  line-height: 1.25 !important;
+}
+
+.danger-family-physique h3 { color: #996500 !important; }
+.danger-family-sante h3 { color: #b91c1c !important; }
+.danger-family-environnement h3 { color: #15803d !important; }
+
+.danger-mini-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  align-items: stretch !important;
+}
+
+.danger-mini-picto {
+  flex: 0 1 118px !important;
+  min-height: 118px !important;
+  background: #f8fafc !important;
+  border: 2px solid var(--border) !important;
+  border-radius: 16px !important;
+  padding: 10px 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 7px !important;
+  font-weight: 900 !important;
+  font-size: .78rem !important;
+  line-height: 1.12 !important;
+  color: var(--text) !important;
+}
+
+.danger-mini-picto img {
+  width: 58px !important;
+  height: 58px !important;
+  object-fit: contain !important;
+  display: block !important;
+  background: #fff !important;
+  border-radius: 10px !important;
+}
+
+.danger-family-physique .danger-mini-picto {
+  border-color: #fcd34d !important;
+  background: #fffdf3 !important;
+}
+
+.danger-family-sante .danger-mini-picto {
+  border-color: #fca5a5 !important;
+  background: #fff7f7 !important;
+}
+
+.danger-family-environnement .danger-mini-picto {
+  border-color: #86efac !important;
+  background: #f6fff9 !important;
+}
+
+@media(max-width:700px){
+  .danger-mini-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .danger-mini-picto {
+    flex: none !important;
+    width: 100% !important;
+    min-height: 108px !important;
+  }
+}
+
+
+
+/* ===== Classes de dangers compactes : pictogrammes alignés sans cadres ===== */
+.danger-classes-card {
+  display: grid !important;
+  gap: 10px !important;
+}
+
+.danger-family-card {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: minmax(230px, 280px) 1fr !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+.danger-family-card h3 {
+  margin: 0 !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-weight: 1000 !important;
+  font-size: 1rem !important;
+  line-height: 1.25 !important;
+}
+
+.danger-mini-grid {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  align-items: flex-start !important;
+  overflow-x: auto !important;
+  padding: 2px 0 6px !important;
+}
+
+.danger-mini-picto {
+  flex: 0 0 auto !important;
+  width: 76px !important;
+  min-height: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: center !important;
+  gap: 4px !important;
+  font-weight: 900 !important;
+  font-size: .68rem !important;
+  line-height: 1.08 !important;
+  color: var(--text) !important;
+}
+
+.danger-mini-picto img {
+  width: 54px !important;
+  height: 54px !important;
+  object-fit: contain !important;
+  display: block !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.danger-family-physique .danger-mini-picto,
+.danger-family-sante .danger-mini-picto,
+.danger-family-environnement .danger-mini-picto {
+  border: none !important;
+  background: transparent !important;
+}
+
+.danger-classes-note {
+  margin-top: 16px !important;
+}
+
+@media(max-width:760px){
+  .danger-family-card {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .danger-mini-grid {
+    flex-wrap: wrap !important;
+    overflow-x: visible !important;
+  }
+
+  .danger-mini-picto {
+    width: 74px !important;
+  }
+}
+
+
+
+/* ===== Classes de dangers : version plus visuelle et ergonomique ===== */
+.danger-classes-card {
+  background: #fff !important;
+  border-left: 7px solid var(--jaune) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 3px 14px rgba(0,0,0,.08) !important;
+  padding: 16px !important;
+  display: grid !important;
+  gap: 12px !important;
+}
+
+.danger-classes-title {
+  font-family: 'Fredoka One', cursive !important;
+  color: var(--bleu) !important;
+  font-size: 1.12rem !important;
+  margin: 0 0 2px !important;
+}
+
+.danger-family-card {
+  border: 2px solid transparent !important;
+  border-radius: 18px !important;
+  padding: 12px 14px !important;
+  display: grid !important;
+  grid-template-columns: minmax(210px, 270px) 1fr !important;
+  gap: 14px !important;
+  align-items: center !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05) !important;
+}
+
+.danger-family-physique {
+  background: #fff8df !important;
+  border-color: #facc15 !important;
+}
+
+.danger-family-sante {
+  background: #fff1f2 !important;
+  border-color: #fb7185 !important;
+}
+
+.danger-family-environnement {
+  background: #ecfdf5 !important;
+  border-color: #34d399 !important;
+}
+
+.danger-family-card h3 {
+  margin: 0 !important;
+  font-family: 'Fredoka One', cursive !important;
+  font-size: 1.05rem !important;
+  line-height: 1.25 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.danger-family-physique h3 {
+  color: #92400e !important;
+}
+
+.danger-family-sante h3 {
+  color: #b91c1c !important;
+}
+
+.danger-family-environnement h3 {
+  color: #047857 !important;
+}
+
+.danger-mini-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  overflow-x: visible !important;
+  padding: 0 !important;
+}
+
+.danger-mini-picto {
+  width: 76px !important;
+  flex: 0 0 76px !important;
+  min-height: 88px !important;
+  background: rgba(255,255,255,.72) !important;
+  border: 1px solid rgba(255,255,255,.9) !important;
+  border-radius: 14px !important;
+  padding: 7px 5px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: center !important;
+  gap: 4px !important;
+  font-weight: 900 !important;
+  font-size: .68rem !important;
+  line-height: 1.08 !important;
+  color: var(--text) !important;
+}
+
+.danger-mini-picto img {
+  width: 50px !important;
+  height: 50px !important;
+  object-fit: contain !important;
+  display: block !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.danger-classes-note {
+  margin-top: 18px !important;
+}
+
+@media(max-width:760px){
+  .danger-family-card {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .danger-mini-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .danger-mini-picto {
+    width: 100% !important;
+    flex: none !important;
+    min-height: 92px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1010,27 +1458,14 @@ header p,
 <div class="wrap">
   <section class="panel" id="main-panel">
     <div id="cours" class="view active">
-      <h2 class="section-title">📚 Les pictogrammes de danger</h2>
-      <br>
-      <p class="course-intro">
+
+      <p class="course-intro course-intro-main">
         Un pictogramme permet d'identifier rapidement quel est le danger et les précautions qu'il est nécessaire de prendre lors du stockage ou lors de l'utilisation de produits chimiques.
       </p>
 
-      <div class="callout">
-        <div class="danger-classes-title">Il existe plusieurs classes de dangers :</div>
-        <div class="danger-classes-list">
-          <div class="mini-item">⚡ <u>Dangers physiques</u> : explosif, inflammable, comburant, gaz sous pression, corrosif</div>
-          <div class="mini-item">🩺 <u>Dangers pour la santé</u> : corrosif, toxique / mortel, fort danger pour la santé, nocif / irritant</div>
-          <div class="mini-item">🌿 <u>Danger pour l'environnement</u> : polluant, nocif / irritant</div>
-        </div>
-      </div>
-
-      <div class="callout tip">
-        ⚠️ Certains pictogrammes peuvent appartenir à plusieurs familles : <strong>Corrosif</strong> peut être classé comme danger physique ou danger pour la santé ; <strong>Nocif / irritant</strong> peut être classé comme danger pour la santé ou danger pour l’environnement.
-      </div>
-
-
-      <div class="protection-card">
+      <section class="course-block course-block-intro">
+        <h2 class="section-title">🛡️ Pictogrammes de sécurité</h2>
+        <div class="protection-card">
         <h3>🛡️ Se protéger pendant une expérience de chimie</h3>
         <p>Quand on manipule des produits chimiques, il faut adopter les bons gestes de sécurité : porter une blouse, des lunettes et des gants lorsque c’est nécessaire, écouter les consignes et ne jamais toucher, sentir ou goûter un produit.</p>
         <div class="protection-grid">
@@ -1047,9 +1482,86 @@ header p,
             <div><strong>Gants</strong><span>Ils protègent les mains quand le produit est dangereux.</span></div>
           </div>
         </div>
+      </section>
+
+      <section class="course-block course-block-danger">
+        <h2 class="section-title">📚 Les pictogrammes de danger</h2>
+        <div class="grid" id="courseGrid"></div>
+      </section>
+
+      <section class="course-block course-block-classes">
+        <h2 class="section-title">🗂️ Classes de dangers</h2>
+        <div class="callout danger-classes-card">
+        <div class="danger-classes-title">Il existe plusieurs classes de dangers :</div>
+
+        <div class="danger-family-card danger-family-physique">
+          <h3>⚡ Dangers physiques</h3>
+          <div class="danger-mini-grid">
+            <span class="danger-mini-picto" title="Explosif">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-explosion.jpg" alt="Explosif" loading="lazy">
+            <span>Explosif</span>
+          </span>
+            <span class="danger-mini-picto" title="Inflammable">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-inflammable.jpg" alt="Inflammable" loading="lazy">
+            <span>Inflammable</span>
+          </span>
+            <span class="danger-mini-picto" title="Comburant">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-comburant.jpg" alt="Comburant" loading="lazy">
+            <span>Comburant</span>
+          </span>
+            <span class="danger-mini-picto" title="Gaz sous pression">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-gaz-sous-pression.jpg" alt="Gaz sous pression" loading="lazy">
+            <span>Gaz sous pression</span>
+          </span>
+            <span class="danger-mini-picto" title="Corrosif">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-corrosif.jpg" alt="Corrosif" loading="lazy">
+            <span>Corrosif</span>
+          </span>
+          </div>
+        </div>
+
+        <div class="danger-family-card danger-family-sante">
+          <h3>🩺 Dangers pour la santé</h3>
+          <div class="danger-mini-grid">
+            <span class="danger-mini-picto" title="Corrosif">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-corrosif.jpg" alt="Corrosif" loading="lazy">
+            <span>Corrosif</span>
+          </span>
+            <span class="danger-mini-picto" title="Toxique / mortel">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-toxique.jpg" alt="Toxique / mortel" loading="lazy">
+            <span>Toxique / mortel</span>
+          </span>
+            <span class="danger-mini-picto" title="Fort danger pour la santé">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-CMR.jpg" alt="Fort danger pour la santé" loading="lazy">
+            <span>Fort danger pour la santé</span>
+          </span>
+            <span class="danger-mini-picto" title="Nocif / irritant">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-point-dexclamation.jpg" alt="Nocif / irritant" loading="lazy">
+            <span>Nocif / irritant</span>
+          </span>
+          </div>
+        </div>
+
+        <div class="danger-family-card danger-family-environnement">
+          <h3>🌿 Danger pour l'environnement</h3>
+          <div class="danger-mini-grid">
+            <span class="danger-mini-picto" title="Polluant pour l&#x27;environnement">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-environnement.jpg" alt="Polluant pour l&#x27;environnement" loading="lazy">
+            <span>Polluant pour l&#x27;environnement</span>
+          </span>
+            <span class="danger-mini-picto" title="Nocif / irritant">
+            <img src="https://raw.githubusercontent.com/Nabo33/Images/01de3ea0e519d9550c75f0a468f9f54e40ef2583/Pictogramme-chimique-point-dexclamation.jpg" alt="Nocif / irritant" loading="lazy">
+            <span>Nocif / irritant</span>
+          </span>
+          </div>
+        </div>
       </div>
 
-      <div class="grid" id="courseGrid"></div>
+      <div class="callout tip danger-classes-note">
+        ⚠️ Certains pictogrammes peuvent appartenir à plusieurs familles : <strong>Corrosif</strong> peut être classé comme danger physique ou danger pour la santé ; <strong>Nocif / irritant</strong> peut être classé comme danger pour la santé ou danger pour l’environnement.
+      </div>
+      </section>
+
     </div>
 
     <div id="defis" class="view">
