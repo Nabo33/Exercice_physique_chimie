@@ -1440,6 +1440,28 @@ header p,
   }
 }
 
+
+
+/* =========================================================
+   CORRECTION CRITIQUE NAVIGATION — le cours doit disparaître
+   quand un exercice est affiché.
+   Le sélecteur #cours { display:grid; } écrasait .view { display:none; }.
+   ========================================================= */
+#cours.view:not(.active),
+#defis.view:not(.active),
+.challenge-page:not(.active){
+  display:none !important;
+}
+
+#cours.view.active{
+  display:grid !important;
+}
+
+#defis.view.active,
+.challenge-page.active{
+  display:block !important;
+}
+
 </style>
 </head>
 <body>
@@ -1481,6 +1503,7 @@ header p,
             <img src="https://raw.githubusercontent.com/Nabo33/Images/ec380400ce46ca1e015850ce877db8c34732e88b/GANTS.gif" alt="Gants de protection" loading="lazy">
             <div><strong>Gants</strong><span>Ils protègent les mains quand le produit est dangereux.</span></div>
           </div>
+        </div>
         </div>
       </section>
 
@@ -1994,23 +2017,39 @@ function renderScores() {
 const mainNav = document.querySelector(".main-nav");
 const mainPanel = document.getElementById("main-panel");
 
+function applyViewVisibility(){
+  document.querySelectorAll(".view").forEach(v => {
+    v.hidden = !v.classList.contains("active");
+  });
+  document.querySelectorAll(".challenge-page").forEach(p => {
+    p.hidden = !p.classList.contains("active");
+  });
+}
+
 function showCourseView(){
   document.querySelectorAll(".main-btn").forEach(b => b.classList.remove("active"));
-  document.querySelector('.main-btn[data-view="cours"]').classList.add("active");
+  const courseBtn = document.querySelector('.main-btn[data-view="cours"]');
+  if(courseBtn) courseBtn.classList.add("active");
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  document.getElementById("cours").classList.add("active");
+  const cours = document.getElementById("cours");
+  if(cours) cours.classList.add("active");
   document.querySelectorAll(".challenge-page").forEach(p => p.classList.remove("active"));
   if (mainPanel) mainPanel.classList.remove("defis-mode");
+  applyViewVisibility();
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 function showChallengePage(pageId, btn){
   document.querySelectorAll(".main-btn").forEach(b => b.classList.remove("active"));
   if(btn) btn.classList.add("active");
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  document.getElementById("defis").classList.add("active");
+  const defis = document.getElementById("defis");
+  if(defis) defis.classList.add("active");
   document.querySelectorAll(".challenge-page").forEach(p => p.classList.remove("active"));
   const page=document.getElementById(pageId);
   if(page) page.classList.add("active");
   if (mainPanel) mainPanel.classList.add("defis-mode");
+  applyViewVisibility();
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function showNextExercise(currentPageId){
@@ -2051,7 +2090,9 @@ document.querySelectorAll('.challenge-btn').forEach(btn => btn.addEventListener(
   document.querySelectorAll('.challenge-page').forEach(p => p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById(btn.dataset.page).classList.add('active');
+  applyViewVisibility();
 }));
+applyViewVisibility();
 
 const courseGrid = document.getElementById('courseGrid');
 pictos.forEach(p => {
