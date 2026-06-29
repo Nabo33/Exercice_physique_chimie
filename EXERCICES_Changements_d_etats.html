@@ -59,6 +59,7 @@ td{padding:11px;border-bottom:1px solid var(--border);font-weight:700}
 .blank,.blank-select{min-width:145px;padding:.5rem .75rem;margin:.15rem .2rem;border:2px solid var(--border);border-radius:12px;background:white;color:var(--text);font-family:'Nunito',sans-serif;font-weight:800;font-size:.96rem;text-align:center}
 .blank:focus,.blank-select:focus{outline:none;border-color:#60a5fa;box-shadow:0 0 0 3px rgba(96,165,250,.2)}
 .good,.correct-drop{border-color:var(--success)!important;background:#d1fae5!important;color:#065f46!important}
+.almost{border-color:#fbbc04!important;background:#fff8df!important;color:#8a6200!important}
 .bad,.incorrect-drop{border-color:var(--danger)!important;background:#fee2e2!important;color:#991b1b!important}
 .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;border:none;border-radius:12px;padding:12px 24px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;margin-top:12px;transition:.15s;box-shadow:0 4px 14px rgba(37,99,235,.3)}
 .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.35)}
@@ -141,6 +142,7 @@ td{font-weight:800;color:var(--text)}
 .assoc-item:hover,.qcm-btn:hover:not(.disabled),.choice-btn:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);color:var(--bleu);transform:translateY(-1px)}
 .selected{border-color:var(--bleu)!important;background:var(--bleu-clair)!important;color:var(--bleu)!important}
 .matched-ok,.qcm-btn.correct,.choice-btn.correct,.good,.correct-drop{border-color:var(--vert)!important;background:var(--vert-clair)!important;color:var(--vert)!important}
+.almost{border-color:var(--jaune)!important;background:var(--jaune-clair)!important;color:#8a6200!important}
 .matched-fail,.qcm-btn.incorrect,.choice-btn.wrong,.bad,.incorrect-drop{border-color:var(--rouge)!important;background:var(--rouge-clair)!important;color:var(--rouge)!important}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--bleu),var(--violet));color:white;border:none;border-radius:999px;padding:12px 24px;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;cursor:pointer;margin-top:12px;transition:.15s;box-shadow:0 4px 14px rgba(26,115,232,.30)}
 .btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,115,232,.35)}
@@ -611,6 +613,110 @@ header p,
 
 
 
+
+
+/* ===== Bilan QCM amélioré : rappel des questions et corrections lisibles ===== */
+.qcm-detailed-review {
+  margin-top: 18px;
+  text-align: left;
+}
+
+.qcm-detailed-review h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--bleu);
+  font-size: 1.12rem;
+  margin: 0 0 10px;
+}
+
+.qcm-review-intro {
+  background: #fff7d6;
+  border-left: 7px solid var(--jaune);
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 900;
+  line-height: 1.45;
+  margin-bottom: 14px;
+}
+
+.qcm-mistake-card {
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+.qcm-mistake-question {
+  font-weight: 1000;
+  color: var(--text);
+  line-height: 1.45;
+  margin-bottom: 10px;
+}
+
+.qcm-mistake-answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.qcm-answer-bad,
+.qcm-answer-good {
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.qcm-answer-bad {
+  background: var(--rouge-clair);
+  color: var(--rouge);
+  border: 2px solid rgba(234,67,53,.35);
+}
+
+.qcm-answer-good {
+  background: var(--vert-clair);
+  color: var(--vert);
+  border: 2px solid rgba(15,157,88,.35);
+}
+
+.qcm-simple-rule {
+  background: var(--bleu-clair);
+  color: var(--bleu);
+  border-left: 7px solid var(--bleu);
+  border-radius: 14px;
+  padding: 10px 12px;
+  font-weight: 900;
+  line-height: 1.45;
+  margin-top: 10px;
+}
+
+.qcm-explanation {
+  margin-top: 8px;
+  font-weight: 850;
+  color: var(--text);
+  line-height: 1.45;
+}
+
+@media(max-width:700px){
+  .qcm-mistake-answers { grid-template-columns: 1fr; }
+  .qcm-mistake-card { padding: 12px; }
+}
+
+
+
+
+/* ===== Bilan QCM personnalisé : analyse globale des erreurs ===== */
+.qcm-global-diagnosis {margin-top:18px;text-align:left;background:linear-gradient(180deg,#fff,#f8fbff);border:2px solid var(--border);border-radius:20px;padding:16px;box-shadow:var(--shadow-soft)}
+.qcm-global-diagnosis h3,.qcm-detailed-review h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.12rem;margin:0 0 10px}
+.qcm-diagnosis-intro{font-weight:900;line-height:1.5;color:var(--text);margin-bottom:12px}
+.qcm-advice-card{background:#fff;border:2px solid var(--border);border-left:8px solid var(--bleu);border-radius:18px;padding:12px 14px;margin-top:10px;font-weight:850;line-height:1.45}
+.qcm-advice-card.priority{border-left-color:var(--rouge)}.qcm-advice-card.vigilance{border-left-color:var(--jaune)}.qcm-advice-card.consolidation{border-left-color:var(--cyan)}.qcm-advice-card.success{border-left-color:var(--vert)}
+.qcm-advice-title{font-weight:1000;margin-bottom:6px}.qcm-advice-card ul{margin:8px 0 0 20px;font-weight:900}.qcm-advice-card li+li{margin-top:4px}
+.qcm-detail-toggle{width:100%;margin-top:16px;background:#fff;color:var(--bleu);border:2.5px solid var(--bleu);box-shadow:var(--shadow-soft)}
+.qcm-detailed-review{margin-top:14px;text-align:left}
+
 /* ===== Bilan QCM allégé : uniquement les erreurs à ne pas commettre ===== */
 .qcm-general-review {
   margin-top: 18px;
@@ -625,6 +731,80 @@ header p,
 .qcm-review-question,
 .qcm-general-review-intro {
   display: none !important;
+}
+
+
+/* ===== Correction mobile — schéma exercice 1 =====
+   Les zones de dépôt sont maintenant positionnées dans le même repère que le SVG.
+   Elles restent donc alignées avec les flèches quand l'écran est étroit. */
+#exo4 .schema-wrap{
+  position:relative !important;
+  width:100% !important;
+  max-width:660px !important;
+  margin:18px auto 14px !important;
+  aspect-ratio:660 / 280 !important;
+  overflow:visible !important;
+}
+#exo4 .schema-wrap svg{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  display:block !important;
+}
+#exo4 .drop-zone-on-schema{
+  left:calc((var(--schema-x, 0) / 660) * 100%) !important;
+  top:calc((var(--schema-y, 0) / 280) * 100%) !important;
+  transform:translate(-50%, -50%) !important;
+  width:clamp(84px, 16vw, 126px) !important;
+  min-height:clamp(36px, 6vw, 44px) !important;
+  padding:.38rem .45rem !important;
+  line-height:1.08 !important;
+  z-index:2 !important;
+}
+@media(max-width:700px){
+  #exo4 .schema-wrap{
+    margin-top:14px !important;
+    margin-bottom:12px !important;
+  }
+  #exo4 .drop-zone-on-schema{
+    width:84px !important;
+    min-height:36px !important;
+    font-size:.70rem !important;
+    border-radius:12px !important;
+  }
+  #exo4 .drag-area{
+    justify-content:center !important;
+  }
+  #exo4 .drag-token{
+    flex:1 1 130px !important;
+    text-align:center !important;
+  }
+}
+@media(max-width:390px){
+  #exo4 .drop-zone-on-schema{
+    width:78px !important;
+    font-size:.66rem !important;
+    padding:.32rem .35rem !important;
+  }
+}
+
+/* ===== Sélection / inversion des réponses placées sur le schéma ===== */
+#exo4 .drop-zone-on-schema.selected-zone{
+  border-style:solid !important;
+  border-color:var(--violet) !important;
+  background:var(--violet-clair) !important;
+  color:var(--violet) !important;
+  transform:translate(-50%, -50%) scale(1.04) !important;
+}
+#exo4 .drop-zone-on-schema.filled{
+  border-style:solid !important;
+}
+#exo4 .drop-zone-on-schema[draggable="true"]{
+  cursor:grab !important;
+}
+#exo4 .drop-zone-on-schema.dragging-zone{
+  opacity:.65;
 }
 
 </style>
@@ -840,58 +1020,67 @@ function checkTrous(){
   const fb=document.getElementById('fb-trous'); fb.className=ok===3?'feedback ok':'feedback ko'; fb.innerHTML=ok===3?'✅ Bravo ! Toutes les réponses sont correctes.':`Tu as <strong>${ok}</strong> bonne(s) réponse(s) sur 3.<br>${errs.join(' ')}`;
 }
 function resetTrous(){for(const id in repTrous1){const el=document.getElementById(id);el.value='';el.classList.remove('good','bad')}document.getElementById('fb-trous').className='feedback'}
+function distanceEdition(a,b){
+  a=normalize(a); b=normalize(b);
+  const dp=Array.from({length:a.length+1},()=>Array(b.length+1).fill(0));
+  for(let i=0;i<=a.length;i++) dp[i][0]=i;
+  for(let j=0;j<=b.length;j++) dp[0][j]=j;
+  for(let i=1;i<=a.length;i++){
+    for(let j=1;j<=b.length;j++){
+      const cout=a[i-1]===b[j-1]?0:1;
+      dp[i][j]=Math.min(dp[i-1][j]+1,dp[i][j-1]+1,dp[i-1][j-1]+cout);
+    }
+  }
+  return dp[a.length][b.length];
+}
+function markTrous2(el,status){
+  el.classList.remove('good','bad','almost');
+  el.classList.add(status);
+}
 function checkTrous2(){
-  let ok=0; for(const id in repTrous2){const el=document.getElementById(id); const good=normalize(el.value)===normalize(repTrous2[id]); mark(el,good); if(good)ok++;}
-  const fb=document.getElementById('fb-trous2'); fb.className=ok===4?'feedback ok':'feedback ko'; fb.innerHTML=ok===4?'✅ Excellent ! Tous les changements d’état sont bien nommés.':`Tu as <strong>${ok}</strong> bonne(s) réponse(s) sur 4.`;
+  let ok=0;
+  let presque=0;
+  let lignes=[];
+  for(const id in repTrous2){
+    const el=document.getElementById(id);
+    const attendu=repTrous2[id];
+    const reponse=el.value.trim();
+    const bonne=normalize(reponse)===normalize(attendu);
+    const proche=!bonne && reponse!=='' && distanceEdition(reponse,attendu)<=2;
+    if(bonne){
+      ok++;
+      markTrous2(el,'good');
+      lignes.push(`✅ <strong>${attendu}</strong> : correct.`);
+    }else if(proche){
+      presque++;
+      markTrous2(el,'almost');
+      lignes.push(`🟡 <strong>${attendu}</strong> : presque bon, il y a sûrement une petite erreur d’orthographe ou une faute de frappe.`);
+    }else{
+      markTrous2(el,'bad');
+      const affichage=reponse ? `Tu as écrit : « ${reponse} ». ` : 'Tu n’as pas répondu. ';
+      lignes.push(`❌ <strong>${attendu}</strong> : ${affichage}Correction : <strong>${attendu}</strong>.`);
+    }
+  }
+  const fb=document.getElementById('fb-trous2');
+  const totalValide=ok+presque;
+  if(ok===4){
+    fb.className='feedback ok';
+    fb.innerHTML='✅ Excellent ! Tous les changements d’état sont bien nommés.<br><br><strong>Correction :</strong><br>'+lignes.join('<br>');
+  }else if(totalValide===4){
+    fb.className='feedback ok';
+    fb.innerHTML=`🟡 C’est presque parfait : tu as compris les changements d’état, mais il reste ${presque} petite(s) erreur(s) d’orthographe ou faute(s) de frappe.<br><br><strong>Correction :</strong><br>${lignes.join('<br>')}`;
+  }else{
+    fb.className='feedback ko';
+    fb.innerHTML=`Tu as <strong>${ok}</strong> réponse(s) correcte(s) sur 4`+(presque?` et <strong>${presque}</strong> presque bonne(s).`:'.')+`<br><br><strong>Correction :</strong><br>${lignes.join('<br>')}`;
+  }
 }
 function resetTrous2(){
-(function buildBubbles(){
-  const c=document.getElementById('bubbles');
-  if(!c) return;
-  c.innerHTML='';
-  for(let i=0;i<70;i++){
-    const s=document.createElement('div');
-    s.className='bubble';
-    const size=30+Math.random()*70;
-    s.style.width=size+'px';
-    s.style.height=size+'px';
-    s.style.left=Math.random()*100+'%';
-    s.style.top=Math.random()*100+'%';
-    s.style.setProperty('--d',(3+Math.random()*5)+'s');
-    s.style.animationDelay=(Math.random()*4)+'s';
-    c.appendChild(s);
-  }
-})();
-
-let selectedSchemaToken=null;
-document.addEventListener('click',e=>{
-  const token=e.target.closest && e.target.closest('.drag-token');
-  if(token){
-    if(token.style.display==='none') return;
-    document.querySelectorAll('.drag-token').forEach(t=>t.classList.remove('selected-token'));
-    token.classList.add('selected-token');
-    selectedSchemaToken=token.dataset.word;
-    return;
-  }
-  const zone=e.target.closest && e.target.closest('.drop-zone-on-schema');
-  if(zone && selectedSchemaToken){
-    const tok=document.querySelector(`.drag-token[data-word="${selectedSchemaToken}"]`);
-    if(!tok || tok.style.display==='none') return;
-    if(zone.dataset.current){
-      const prev=document.querySelector(`.drag-token[data-word="${zone.dataset.current}"]`);
-      if(prev) prev.style.display='';
-    }
-    zone.textContent=tok.textContent;
-    zone.dataset.current=selectedSchemaToken;
-    zone.classList.add('filled');
-    zone.classList.remove('correct-drop','incorrect-drop');
-    tok.style.display='none';
-    tok.classList.remove('selected-token');
-    selectedSchemaToken=null;
-  }
-});
-
-shuffleTrous2Order();renderTrous2();document.getElementById('fb-trous2').className='feedback'}
+  shuffleTrous2Order();
+  renderTrous2();
+  const fb=document.getElementById('fb-trous2');
+  fb.className='feedback';
+  fb.innerHTML='';
+}
 const assocData=[
   {key:'fusion',label:'Fusion',phrases:[
     'La glace fond dans un verre d’eau tiède.',
@@ -1018,6 +1207,7 @@ let qcmAnswered = 0;
 let qcmCorrect = 0;
 let qcmLocked = false;
 let qcmMistakes = [];
+let qcmResults = [];
 
 function makeQcmKey(q){ return q.q; }
 
@@ -1051,6 +1241,7 @@ function buildQcm(){
   qcmCorrect = 0;
   qcmLocked = false;
   qcmMistakes = [];
+  qcmResults = [];
 
   const nextBtn = document.getElementById('qcm-next-btn');
   if (nextBtn) {
@@ -1096,54 +1287,42 @@ function renderQcmQuestion(){
 }
 
 
-function qcmErrorHint(q, chosenText) {
+function qcmConcept(q) {
   const question = normalize(q.q);
-  const chosen = normalize(chosenText);
   const correct = normalize(q.choices[q.answer]);
-
-  if (question.includes('vapeur') && chosen.includes('visible')) {
-    return "Erreur à éviter : confondre la vapeur d’eau, qui est un gaz invisible, avec le nuage blanc de fines gouttelettes que l’on peut parfois voir.";
-  }
-
-  if (question.includes('nuaq') || question.includes('nuage')) {
-    return "Erreur à éviter : croire qu’un nuage visible est de la vapeur d’eau. Un nuage visible contient surtout de minuscules gouttelettes d’eau liquide.";
-  }
-
-  if (question.includes('gaz') || question.includes('air') || correct.includes('gazeux')) {
-    return "Erreur à éviter : penser qu’un gaz garde une forme précise. Un gaz occupe tout l’espace disponible et il peut être comprimé.";
-  }
-
-  if (question.includes('solide') || correct.includes('solide')) {
-    return "Erreur à éviter : oublier qu’un solide garde généralement sa forme propre, même s’il est découpé en morceaux ou en petits grains.";
-  }
-
-  if (question.includes('liquide') || correct.includes('liquide')) {
-    return "Erreur à éviter : confondre liquide et gaz. Un liquide coule et prend la forme du récipient, mais il n’occupe pas tout l’espace disponible.";
-  }
-
-  if (question.includes('fusion') || correct.includes('fusion')) {
-    return "Erreur à éviter : inverser fusion et solidification. La fusion correspond au passage solide → liquide.";
-  }
-
-  if (question.includes('solidification') || correct.includes('solidification')) {
-    return "Erreur à éviter : inverser solidification et fusion. La solidification correspond au passage liquide → solide.";
-  }
-
-  if (question.includes('vaporisation') || correct.includes('vaporisation') || question.includes('ebullition') || question.includes('flaque')) {
-    return "Erreur à éviter : confondre vaporisation et liquéfaction. La vaporisation correspond au passage liquide → gazeux.";
-  }
-
-  if (question.includes('liquefaction') || correct.includes('liquefaction') || question.includes('buee') || question.includes('vitre')) {
-    return "Erreur à éviter : confondre liquéfaction et vaporisation. La liquéfaction correspond au passage gazeux → liquide.";
-  }
-
-  if (chosen.includes('chauff') || chosen.includes('refroid')) {
-    return "Erreur à éviter : ne pas relier le sens du changement d’état à l’action effectuée. Chauffer favorise fusion et vaporisation ; refroidir favorise solidification et liquéfaction.";
-  }
-
-  return "Erreur à éviter : se fier seulement à l’exemple. Il faut identifier l’état de départ, l’état d’arrivée, puis choisir le bon nom.";
+  if (question.includes('nuage') || question.includes('vapeur') || question.includes('buee') || question.includes('vitre')) return 'vapeur_nuage';
+  if (correct.includes('fusion') || correct.includes('solidification') || correct.includes('vaporisation') || correct.includes('liquefaction') || question.includes('changement') || question.includes('passage') || question.includes('fond') || question.includes('congelateur') || question.includes('bout') || question.includes('flaque') || question.includes('durcit') || question.includes('beurre') || question.includes('chocolat')) return 'changements_etat';
+  if (question.includes('gaz') || question.includes('air') || correct.includes('gazeux') || question.includes('ballon') || question.includes('compress')) return 'gaz';
+  if (correct.includes('solide') || correct.includes('liquide') || correct.includes('gazeux') || question.includes('etat physique') || question.includes('solide') || question.includes('liquide')) return 'etats_physiques';
+  return 'general';
 }
 
+const qcmConceptInfo = {
+  changements_etat: {title:'les changements d’état', rule:'Pour trouver le bon nom, repère toujours l’état de départ puis l’état d’arrivée.', essentials:['Solide → liquide = fusion','Liquide → solide = solidification','Liquide → gazeux = vaporisation','Gazeux → liquide = liquéfaction']},
+  etats_physiques: {title:'les états physiques', rule:'Il faut reconnaître si la matière est solide, liquide ou gazeuse avant de répondre.', essentials:['Solide : il garde généralement sa forme propre','Liquide : il coule et prend la forme du récipient','Gaz : il occupe tout l’espace disponible']},
+  gaz: {title:'les propriétés des gaz', rule:'Un gaz n’a pas de forme propre : il occupe tout l’espace disponible et peut être comprimé.', essentials:['L’air est un gaz','Un gaz occupe l’espace disponible','La plupart des gaz sont invisibles']},
+  vapeur_nuage: {title:'la vapeur d’eau, la buée et les nuages', rule:'Attention : la vapeur d’eau est un gaz invisible. Ce que l’on voit est souvent formé de petites gouttelettes liquides.', essentials:['Vapeur d’eau pure = gaz invisible','Buée = gouttelettes liquides sur une surface froide','Nuage visible = minuscules gouttelettes liquides, parfois cristaux de glace']},
+  general: {title:'la méthode de lecture des questions', rule:'Relis bien la question et cherche les mots importants avant de choisir une réponse.', essentials:['Repérer les mots-clés','Identifier l’état de départ','Identifier l’état d’arrivée']}
+};
+
+function qcmSimpleRule(q, correctText) {
+  const correct = normalize(correctText);
+  const question = normalize(q.q);
+  if (correct.includes('fusion')) return 'Fusion = solide → liquide.';
+  if (correct.includes('solidification')) return 'Solidification = liquide → solide.';
+  if (correct.includes('vaporisation')) return 'Vaporisation = liquide → gazeux.';
+  if (correct.includes('liquefaction')) return 'Liquéfaction = gazeux → liquide.';
+  if (question.includes('vapeur') && (correct.includes('invisible') || correct.includes('gazeux'))) return 'La vapeur d’eau pure est un gaz invisible.';
+  if (question.includes('nuage')) return 'Un nuage visible contient surtout de minuscules gouttelettes d’eau liquide.';
+  if (correct.includes('solide')) return 'Un solide garde généralement sa forme propre.';
+  if (correct.includes('liquide')) return 'Un liquide coule et prend la forme du récipient.';
+  if (correct.includes('gazeux') || qcmConcept({q:q.q, choices:[correctText], answer:0}) === 'gaz') return 'Un gaz occupe tout l’espace disponible et peut être comprimé.';
+  return qcmConceptInfo[qcmConcept({q:q.q, choices:[correctText], answer:0})].rule;
+}
+
+function qcmErrorHint(q, chosenText) {
+  return qcmSimpleRule(q, q.choices[q.answer]);
+}
 
 function answerQcm(j){
   if (qcmLocked) return;
@@ -1167,16 +1346,22 @@ function answerQcm(j){
   const chosenText = q.choices[j];
   const correctText = q.choices[q.answer];
 
+  const concept = qcmConcept(q);
+  const answerRecord = {
+    question: q.q,
+    chosen: chosenText,
+    correct: correctText,
+    explanation: q.expl,
+    hint: qcmErrorHint(q, chosenText),
+    concept,
+    ok
+  };
+  qcmResults.push(answerRecord);
+
   if (ok) {
     fb.textContent = '✅ Bonne réponse !';
   } else {
-    qcmMistakes.push({
-      question: q.q,
-      chosen: chosenText,
-      correct: correctText,
-      explanation: q.expl,
-      hint: qcmErrorHint(q, chosenText)
-    });
+    qcmMistakes.push(answerRecord);
     fb.textContent = `❌ Pas tout à fait. La bonne réponse était : ${correctText}.`;
   }
 
@@ -1202,36 +1387,67 @@ function nextQcmQuestion(){
 
 function uniqueQcmMistakeHints() {
   const seen = new Set();
-  return qcmMistakes
-    .map(m => m.hint)
-    .filter(h => {
-      if (seen.has(h)) return false;
-      seen.add(h);
-      return true;
-    });
+  return qcmMistakes.map(m => m.hint).filter(h => { if (seen.has(h)) return false; seen.add(h); return true; });
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+function qcmAdviceForConcept(concept, stats) {
+  const info = qcmConceptInfo[concept] || qcmConceptInfo.general;
+  const mistakeCount = stats.wrong;
+  const successCount = stats.correct;
+  const total = stats.total;
+  const essentials = info.essentials.map(x => `<li>${escapeHTML(x)}</li>`).join('');
+
+  if (mistakeCount > 0 && successCount > 0) {
+    return `<div class="qcm-advice-card vigilance"><div class="qcm-advice-title">⚠️ Vigilance sur ${escapeHTML(info.title)}</div><div>Tu as parfois réussi, mais tu t’es aussi trompé sur des questions proches. Ce n’est pas forcément une notion totalement non comprise : cela ressemble plutôt à une connaissance à consolider ou à une erreur d’étourderie.</div><div style="margin-top:8px"><strong>Conseil :</strong> ${escapeHTML(info.rule)}</div><ul>${essentials}</ul></div>`;
+  }
+  if (mistakeCount >= 2 || (mistakeCount === total && total > 0)) {
+    return `<div class="qcm-advice-card priority"><div class="qcm-advice-title">🎯 À retravailler en priorité : ${escapeHTML(info.title)}</div><div>Plusieurs erreurs portent sur cette même idée. Il faut reprendre cette partie du cours avant de recommencer le QCM.</div><div style="margin-top:8px"><strong>Méthode :</strong> ${escapeHTML(info.rule)}</div><ul>${essentials}</ul></div>`;
+  }
+  return `<div class="qcm-advice-card consolidation"><div class="qcm-advice-title">🔁 Petite erreur à corriger : ${escapeHTML(info.title)}</div><div>Tu n’as fait qu’une erreur sur ce point. Relis la correction, puis vérifie que tu sais expliquer pourquoi la bonne réponse convient.</div><div style="margin-top:8px"><strong>À retenir :</strong> ${escapeHTML(info.rule)}</div></div>`;
+}
+
+function qcmGlobalDiagnosisHTML() {
+  if (!qcmMistakes.length) {
+    return `<div class="qcm-global-diagnosis"><h3>🔎 Analyse globale</h3><div class="qcm-advice-card success"><div class="qcm-advice-title">✅ Très bonne maîtrise</div><div>Aucune erreur : tu maîtrises les notions travaillées dans ce QCM. Pour consolider, essaie de refaire l’exercice plus tard en expliquant chaque réponse dans ta tête.</div></div></div>`;
+  }
+
+  const byConcept = {};
+  qcmResults.forEach(r => {
+    if (!byConcept[r.concept]) byConcept[r.concept] = {total:0, correct:0, wrong:0, mistakes:[]};
+    byConcept[r.concept].total++;
+    if (r.ok) byConcept[r.concept].correct++;
+    else { byConcept[r.concept].wrong++; byConcept[r.concept].mistakes.push(r); }
+  });
+  const problemConcepts = Object.keys(byConcept).filter(k => byConcept[k].wrong > 0).sort((a,b) => byConcept[b].wrong - byConcept[a].wrong);
+  const mainAdvice = problemConcepts.map(k => qcmAdviceForConcept(k, byConcept[k])).join('');
+  let intro;
+  if (qcmCorrect >= qcmData.length - 2) intro = 'Ton résultat est plutôt bon. Les erreurs restantes semblent surtout être des points à consolider ou des moments de vigilance.';
+  else if (problemConcepts.length === 1) intro = 'Tes erreurs se concentrent surtout sur une même partie du cours. C’est une bonne nouvelle : tu sais précisément quoi retravailler.';
+  else intro = 'Tes erreurs concernent plusieurs points. Le plus efficace est de reprendre les conseils ci-dessous, puis de recommencer le QCM.';
+  return `<div class="qcm-global-diagnosis"><h3>🔎 Analyse globale de tes erreurs</h3><div class="qcm-diagnosis-intro">${escapeHTML(intro)}</div>${mainAdvice}</div>`;
+}
+
+function qcmDetailedMistakesHTML() {
+  if (!qcmMistakes.length) return '';
+  const cards = qcmMistakes.map((m, index) => `<div class="qcm-mistake-card"><div class="qcm-mistake-question">Question ${index + 1} ratée : ${escapeHTML(m.question)}</div><div class="qcm-mistake-answers"><div class="qcm-answer-bad">❌ Ta réponse : ${escapeHTML(m.chosen)}</div><div class="qcm-answer-good">✅ Bonne réponse : ${escapeHTML(m.correct)}</div></div><div class="qcm-simple-rule">📌 À retenir : ${escapeHTML(qcmSimpleRule({q:m.question}, m.correct))}</div><div class="qcm-explanation">💡 Pourquoi ? ${escapeHTML(m.explanation)}</div></div>`).join('');
+  return `<button type="button" class="btn qcm-detail-toggle" onclick="toggleQcmDetails(this)">Voir le détail de mes erreurs</button><div class="qcm-detailed-review" id="qcm-detail-review" style="display:none"><h3>🧾 Détail des questions ratées</h3><div class="qcm-review-intro">Cette partie sert à retrouver les questions précises que tu as ratées. Commence surtout par lire l’analyse globale au-dessus.</div>${cards}</div>`;
+}
+
+function toggleQcmDetails(btn) {
+  const detail = document.getElementById('qcm-detail-review');
+  if (!detail) return;
+  const visible = detail.style.display !== 'none';
+  detail.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? 'Voir le détail de mes erreurs' : 'Masquer le détail de mes erreurs';
 }
 
 function qcmGeneralReviewHTML() {
-  if (!qcmMistakes.length) {
-    return `
-      <div class="qcm-general-success">
-        ✅ Aucune erreur : tu maîtrises les changements d’état travaillés dans ce QCM.
-      </div>
-    `;
-  }
-
-  const hints = uniqueQcmMistakeHints().map(h => `<li>${h}</li>`).join('');
-
-  return `
-    <div class="qcm-general-review">
-      <div class="qcm-warning-list">
-        <h3>⚠️ Erreurs à ne pas commettre</h3>
-        <ul>${hints}</ul>
-      </div>
-    </div>
-  `;
+  return qcmGlobalDiagnosisHTML() + qcmDetailedMistakesHTML();
 }
-
 
 function showQcmResult(){
   const c = document.getElementById('qcm-container');
@@ -1251,7 +1467,7 @@ function showQcmResult(){
       <h3>Bilan du QCM</h3>
       <p class="question">${perfect
         ? 'Parfait : toutes les réponses sont justes.'
-        : 'Il y a encore du travail : regarde précisément les erreurs ci-dessous puis recommence pour obtenir tout juste.'}</p>
+        : 'Observe l’analyse de tes erreurs : elle t’indique quoi retravailler ou quand être plus vigilant.'}</p>
       <div class="score-num qcm-final-score">⭐ ${qcmCorrect} / ${qcmData.length}</div>
       ${qcmGeneralReviewHTML()}
     </div>
@@ -1263,11 +1479,41 @@ function showQcmResult(){
   if (progress) progress.style.width = '100%';
 }
 
-document.addEventListener('dragstart',e=>{if(e.target.classList.contains('drag-token')){e.dataTransfer.setData('text',e.target.dataset.word);e.target.classList.add('dragging')}})
-document.addEventListener('dragend',e=>{if(e.target.classList.contains('drag-token'))e.target.classList.remove('dragging')})
+document.addEventListener('dragstart',e=>{
+  if(e.target.classList.contains('drag-token')){
+    e.dataTransfer.setData('text',e.target.dataset.word);
+    e.target.classList.add('dragging');
+  }
+  if(e.target.classList.contains('drop-zone-on-schema') && e.target.dataset.current){
+    e.dataTransfer.setData('zone-id',e.target.id);
+    e.target.classList.add('dragging-zone');
+  }
+})
+document.addEventListener('dragend',e=>{
+  if(e.target.classList.contains('drag-token')) e.target.classList.remove('dragging');
+  if(e.target.classList.contains('drop-zone-on-schema')) e.target.classList.remove('dragging-zone');
+})
 function allowDrop(e){e.preventDefault();e.currentTarget.classList.add('over')}
 document.addEventListener('dragleave',e=>{if(e.target.classList&&e.target.classList.contains('drop-zone'))e.target.classList.remove('over')})
-function drop(e){e.preventDefault();const z=e.currentTarget;z.classList.remove('over');const word=e.dataTransfer.getData('text');const tok=document.querySelector(`.drag-token[data-word="${word}"]`);if(z.dataset.current){const prev=document.querySelector(`.drag-token[data-word="${z.dataset.current}"]`);if(prev)prev.style.display=''}z.textContent=tok.textContent;z.dataset.current=word;z.classList.add('filled');z.classList.remove('correct-drop','incorrect-drop');tok.style.display='none'}
+function drop(e){
+  e.preventDefault();
+  const targetZone=e.currentTarget;
+  targetZone.classList.remove('over');
+  const sourceZoneId=e.dataTransfer.getData('zone-id');
+  const word=e.dataTransfer.getData('text');
+
+  if(sourceZoneId){
+    const sourceZone=document.getElementById(sourceZoneId);
+    if(sourceZone && sourceZone!==targetZone) swapOrMoveSchemaZones(sourceZone,targetZone);
+    clearSchemaSelection();
+    return;
+  }
+
+  if(word){
+    placeSchemaTokenInZone(word,targetZone);
+    clearSchemaSelection();
+  }
+}
 const schemaVariants = [
   {
     name: "classique",
@@ -1373,16 +1619,126 @@ function renderExo4Schema(){
   const zoneIds = ['dz-fusion','dz-solidification','dz-vaporisation','dz-liquefaction'];
   zoneIds.forEach((id,index)=>{
     const zone = document.getElementById(id);
-    if(!zone) return;
-    zone.dataset.answer = variant.arrows[index].answer;
-    delete zone.dataset.current;
-    zone.textContent = "Dépose ici";
-    zone.className = "drop-zone drop-zone-on-schema";
+    const arrow = variant.arrows[index];
+    if(!zone || !arrow) return;
+    zone.dataset.answer = arrow.answer;
+    if(typeof clearSchemaZone === 'function') clearSchemaZone(zone);
+    else {
+      delete zone.dataset.current;
+      zone.textContent = "Dépose ici";
+      zone.className = "drop-zone drop-zone-on-schema";
+    }
+
+    // Positionnement responsive : on calcule la position de la case
+    // à partir des coordonnées réelles de la flèche dans le viewBox SVG.
+    const midX = (arrow.x1 + arrow.x2) / 2;
+    const isTopArrow = Math.min(arrow.y1, arrow.y2) <= 130;
+    zone.style.setProperty('--schema-x', midX);
+    zone.style.setProperty('--schema-y', isTopArrow ? 58 : 222);
   });
 }
 
+
+function getSchemaTokenLabel(word){
+  const tok=document.querySelector(`.drag-token[data-word="${word}"]`);
+  return tok ? tok.textContent : word;
+}
+function setSchemaZoneWord(zone,word){
+  if(!zone) return;
+  zone.dataset.current=word;
+  zone.textContent=getSchemaTokenLabel(word);
+  zone.classList.add('filled');
+  zone.classList.remove('correct-drop','incorrect-drop','selected-zone');
+  zone.setAttribute('draggable','true');
+}
+function clearSchemaZone(zone){
+  if(!zone) return;
+  delete zone.dataset.current;
+  zone.textContent='Dépose ici';
+  zone.classList.remove('filled','correct-drop','incorrect-drop','selected-zone','dragging-zone');
+  zone.removeAttribute('draggable');
+}
+function releaseSchemaToken(word){
+  const tok=document.querySelector(`.drag-token[data-word="${word}"]`);
+  if(tok) tok.style.display='';
+}
+function hideSchemaToken(word){
+  const tok=document.querySelector(`.drag-token[data-word="${word}"]`);
+  if(tok) tok.style.display='none';
+}
+function placeSchemaTokenInZone(word,zone){
+  if(!word || !zone) return;
+  if(zone.dataset.current) releaseSchemaToken(zone.dataset.current);
+  setSchemaZoneWord(zone,word);
+  hideSchemaToken(word);
+}
+function swapOrMoveSchemaZones(sourceZone,targetZone){
+  if(!sourceZone || !targetZone || sourceZone===targetZone) return;
+  const sourceWord=sourceZone.dataset.current;
+  const targetWord=targetZone.dataset.current;
+  if(!sourceWord) return;
+
+  if(targetWord){
+    setSchemaZoneWord(sourceZone,targetWord);
+    setSchemaZoneWord(targetZone,sourceWord);
+  }else{
+    clearSchemaZone(sourceZone);
+    setSchemaZoneWord(targetZone,sourceWord);
+  }
+}
+function clearSchemaSelection(){
+  window.selectedSchemaPlacement=null;
+  document.querySelectorAll('.drag-token').forEach(t=>t.classList.remove('selected-token'));
+  document.querySelectorAll('#exo4 .drop-zone-on-schema').forEach(z=>z.classList.remove('selected-zone'));
+}
+function selectSchemaBankToken(token){
+  clearSchemaSelection();
+  if(!token || token.style.display==='none') return;
+  token.classList.add('selected-token');
+  window.selectedSchemaPlacement={type:'bank',word:token.dataset.word};
+}
+function selectOrUseSchemaZone(zone){
+  if(!zone) return;
+  const selection=window.selectedSchemaPlacement;
+
+  if(!selection){
+    if(zone.dataset.current){
+      clearSchemaSelection();
+      zone.classList.add('selected-zone');
+      window.selectedSchemaPlacement={type:'zone',zoneId:zone.id};
+    }
+    return;
+  }
+
+  if(selection.type==='bank'){
+    placeSchemaTokenInZone(selection.word,zone);
+    clearSchemaSelection();
+    return;
+  }
+
+  if(selection.type==='zone'){
+    const sourceZone=document.getElementById(selection.zoneId);
+    if(sourceZone===zone){
+      clearSchemaSelection();
+      return;
+    }
+    swapOrMoveSchemaZones(sourceZone,zone);
+    clearSchemaSelection();
+  }
+}
+
+document.addEventListener('click',e=>{
+  const token=e.target.closest && e.target.closest('#exo4 .drag-token');
+  const zone=e.target.closest && e.target.closest('#exo4 .drop-zone-on-schema');
+  if(!token && !zone) return;
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  if(token) selectSchemaBankToken(token);
+  else selectOrUseSchemaZone(zone);
+},true);
+
 function checkDrop(){const zones=document.querySelectorAll('.drop-zone');let ok=0;zones.forEach(z=>{if(z.dataset.current===z.dataset.answer){z.classList.add('correct-drop');z.classList.remove('incorrect-drop');ok++}else{z.classList.add('incorrect-drop');z.classList.remove('correct-drop')}});const fb=document.getElementById('fb-drop');fb.className=ok===4?'feedback ok':'feedback ko';fb.textContent=ok===4?"🎉 Parfait ! Tous les changements d'état sont bien placés.":`${ok}/4 correct(s). Les cases en rouge sont incorrectes.`}
-function resetDrop(){document.querySelectorAll('.drag-token').forEach(t=>t.style.display='');document.getElementById('fb-drop').className='feedback';renderExo4Schema()}
+function resetDrop(){document.querySelectorAll('.drag-token').forEach(t=>t.style.display='');clearSchemaSelection();document.getElementById('fb-drop').className='feedback';renderExo4Schema()}
 const levelInfo=[
   {level:1,name:'Découverte',target:5,goal:'5 bonnes réponses pour débloquer le palier 2'},
   {level:2,name:'Entraînement',target:10,goal:'10 bonnes réponses pour débloquer le palier 3'},
