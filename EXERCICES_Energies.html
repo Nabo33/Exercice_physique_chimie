@@ -123,6 +123,65 @@ header p,
   }
 }
 
+
+
+/* ===== Feedback final : définitions ===== */
+.end-feedback{max-width:760px;margin:16px auto 0;background:var(--bleu-clair);border:1px solid #cddffc;border-radius:18px;padding:14px 16px;text-align:left;font-weight:850;line-height:1.45;}
+.end-feedback h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.12rem;margin:0 0 8px;}
+.end-feedback ul{margin:8px 0 0 20px;}
+.end-feedback li{margin:5px 0;}
+.revision-chip.urgent{background:var(--rouge-clair);color:var(--rouge);border-color:#f4b4ae;}
+.revision-chip.ok{background:var(--vert-clair);color:var(--vert);border-color:#b7dfc9;}
+.end-motivation{max-width:760px;margin:10px auto 14px;border-radius:22px;padding:16px 18px;font-weight:900;text-align:center;line-height:1.35;border:2px solid transparent;}
+.end-motivation .mood-title{font-family:'Fredoka One',cursive;font-size:1.35rem;margin-bottom:5px;}
+.end-motivation .mood-sub{font-size:1rem;}
+.end-motivation.excellent{background:linear-gradient(135deg,var(--vert-clair),#fff8df);border-color:var(--vert);color:var(--vert);}
+.end-motivation.good{background:var(--bleu-clair);border-color:var(--bleu);color:var(--bleu);}
+.end-motivation.medium{background:var(--jaune-clair);border-color:var(--jaune);color:#755100;}
+.end-motivation.low{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge);}
+.confetti-line{font-size:1.4rem;letter-spacing:.08em;margin-bottom:4px;}
+
+
+/* ===== Bouton fin de cours : accès direct au premier exercice ===== */
+.course-start-exercise{
+  text-align:center;
+  margin:28px auto 0;
+}
+.course-start-exercise .start-exercise-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-family:'Nunito',sans-serif;
+  font-weight:900;
+  font-size:1.08rem;
+  border:2.5px solid #fff;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  color:#fff;
+  box-shadow:0 6px 22px rgba(6,182,212,.30);
+  padding:14px 24px;
+  cursor:pointer;
+  transition:.22s;
+}
+.course-start-exercise .start-exercise-btn:hover{
+  background:linear-gradient(135deg,#0891b2,#6d28d9);
+  transform:translateY(-2px);
+  box-shadow:var(--ombre-forte);
+}
+.course-start-exercise .start-exercise-help{
+  margin-top:8px;
+  color:var(--gris);
+  font-weight:800;
+  font-size:.92rem;
+}
+@media(max-width:700px){
+  .course-start-exercise .start-exercise-btn{
+    width:100%;
+    padding:14px 16px;
+  }
+}
+
 </style>
 <!-- Version vérifiée : texte à trous avec […] par défaut et validation bloquée si aucun verbe choisi. -->
 </head>
@@ -162,6 +221,14 @@ header p,
     </p>
   </div>
   <div class="source-grid" id="sourceGrid"></div>
+
+  <div class="course-start-exercise">
+    <button class="start-exercise-btn" onclick="showExercise('qcm', document.querySelector('.tab-btn[data-exercise=&quot;qcm&quot;]'))">
+      🤓 Commencer le premier exercice
+    </button>
+    <div class="start-exercise-help">Définitions des 7 formes d’énergie</div>
+  </div>
+
 </section>
 
 <section class="section" id="exercices-section">
@@ -236,10 +303,11 @@ const SOURCES=[
  {source:'Centrale nucléaire',primary:'Énergie nucléaire',img:IMG.centrale}
 ];
 let exercise='qcm',score=0,qCount=0,current=null,answered=false,dragAnswers=[];
+let qcmMistakes=[];
 let qcmPool=[];
 let imagePool=[];
 let trousPool=[];
-const EXERCISE_LIMITS={qcm:20, images:10, trous:10};
+const EXERCISE_LIMITS={qcm:14, images:10, trous:10};
 function isLimitedExercise(){return Object.prototype.hasOwnProperty.call(EXERCISE_LIMITS, exercise)}
 function currentLimit(){return EXERCISE_LIMITS[exercise] || null}
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
@@ -259,7 +327,7 @@ const EXERCISE_TITLES={
  trous:'✍️ Construire une phrase'
 };
 const EXERCISE_INTROS={
- qcm:'Lis la question, puis choisis la bonne réponse. Objectif : 20 questions.',
+ qcm:'Lis la question, puis choisis la bonne réponse. Objectif : 14 questions pour revoir les 7 formes d’énergie.',
  assoc:'Clique sur une définition, puis clique sur la forme d’énergie qui correspond. Il n’y a pas de score : tu peux t’entraîner librement.',
  images:'Observe l’image, puis choisis la forme d’énergie représentée. Objectif : 10 questions.',
  trous:'Choisis le bon verbe pour compléter la phrase. Objectif : 10 questions.'
@@ -287,7 +355,7 @@ function setExercise(m,updateNav=true){
  newRun();
 }
 function resetPools(){qcmPool=[];imagePool=[];trousPool=[]}
-function newRun(){score=0;qCount=0;resetPools();updateBar();nextQuestion(true)}
+function newRun(){score=0;qCount=0;qcmMistakes=[];resetPools();updateBar();nextQuestion(true)}
 function updateBar(){
  const quizBar=document.querySelector('.quiz-bar');
  const nextBtn=document.getElementById('nextBtn');
@@ -330,6 +398,35 @@ function finishQuestion(){
  if(qCount>=limit)document.getElementById('nextBtn').textContent='Voir le résultat →';
  else document.getElementById('nextBtn').textContent='Question suivante →';
 }
+function buildMotivationMessage(){
+ const limit=currentLimit();
+ const ratio=score/limit;
+ if(ratio===1){
+   return `<div class="end-motivation excellent"><div class="confetti-line">🎉 ✨ 🎊</div><div class="mood-title">Excellent ! Félicitations !</div><div class="mood-sub">Les définitions sont très bien maîtrisées.</div></div>`;
+ }
+ if(ratio>=0.8){
+   return `<div class="end-motivation good"><div class="mood-title">👏 Bravo ! On y est presque !</div><div class="mood-sub">Encore un petit effort sur les énergies indiquées.</div></div>`;
+ }
+ if(ratio>=0.55){
+   return `<div class="end-motivation medium"><div class="mood-title">💪 C’est en bonne voie !</div><div class="mood-sub">Reprends les définitions ciblées, puis recommence.</div></div>`;
+ }
+ return `<div class="end-motivation low"><div class="mood-title">📚 Il faut reprendre les définitions.</div><div class="mood-sub">Relis les énergies à retravailler, puis retente l’exercice.</div></div>`;
+}
+function buildFinalFeedback(){
+ if(exercise!=='qcm') return '';
+ if(qcmMistakes.length===0){
+   return `<div class="end-feedback"><h3>✅ Bilan</h3><p>Les 7 formes d’énergie sont maîtrisées.</p></div>`;
+ }
+ const energyIds=[...new Set(qcmMistakes.map(m=>m.energyId))];
+ const energiesToReview=energyIds
+   .map(id=>ENERGIES.find(e=>e.id===id))
+   .filter(Boolean)
+   .sort((a,b)=>a.nom.localeCompare(b.nom,'fr'));
+ const chips=energiesToReview
+   .map(e=>`<span class="revision-chip">${e.icon} ${e.nom}</span>`)
+   .join('');
+ return `<div class="end-feedback"><h3>🎯 À retravailler</h3><div class="revision-list">${chips}</div></div>`;
+}
 function renderEndScreen(){
  clearFeedback();
  const limit=currentLimit();
@@ -337,7 +434,9 @@ function renderEndScreen(){
  document.getElementById('qCount').textContent=limit+' / '+limit;
  document.getElementById('scoreVal').textContent=score+' / '+limit;
  document.getElementById('progressBar').style.width='100%';
- document.getElementById('playArea').innerHTML=`<div class="end show"><div style="font-size:3rem">🏁</div><h2 class="section-title" style="justify-content:center">Exercice terminé !</h2><div class="big-score">${score} / ${limit}</div><p class="intro" style="margin-bottom:14px">Tu as obtenu ${score} bonne(s) réponse(s) sur ${limit} question(s).</p><button class="reset-btn" onclick="newRun()">🔄 Recommencer</button></div>`;
+ const motivation=buildMotivationMessage();
+ const finalFeedback=buildFinalFeedback();
+ document.getElementById('playArea').innerHTML=`<div class="end show"><div style="font-size:3rem">🏁</div><h2 class="section-title" style="justify-content:center">Exercice terminé !</h2><div class="big-score">${score} / ${limit}</div>${motivation}${finalFeedback}<button class="reset-btn" onclick="newRun()">🔄 Recommencer</button></div>`;
 }
 function takeNextFromPool(poolName, maker){
  let pool = poolName==='qcm' ? qcmPool : poolName==='images' ? imagePool : trousPool;
@@ -348,7 +447,7 @@ function takeNextFromPool(poolName, maker){
  else trousPool=pool;
  return item;
 }
-function answerButton(ok,detail){if(answered)return;answered=true;document.querySelectorAll('.answer').forEach(b=>b.disabled=true);if(ok){score++;event.currentTarget.classList.add('correct');setFeedback(true,'✅ Bravo ! '+detail)}else{event.currentTarget.classList.add('wrong');document.querySelectorAll('.answer').forEach(b=>{if(b.dataset.correct==='true')b.classList.add('correct')});setFeedback(false,'❌ Pas tout à fait… '+detail)}finishQuestion()}
+function answerButton(ok,detail){if(answered)return;answered=true;document.querySelectorAll('.answer').forEach(b=>b.disabled=true);if(ok){score++;event.currentTarget.classList.add('correct');setFeedback(true,'✅ Bravo ! '+detail)}else{if(exercise==='qcm' && current){qcmMistakes.push({energyId:current.correctId,type:current.type});}event.currentTarget.classList.add('wrong');document.querySelectorAll('.answer').forEach(b=>{if(b.dataset.correct==='true')b.classList.add('correct')});setFeedback(false,'❌ Pas tout à fait… '+detail)}finishQuestion()}
 function makeQcmPool(){
  const questions=[];
  ENERGIES.forEach(e=>{
@@ -371,6 +470,7 @@ function makeQcmPool(){
 }
 function renderQCM(){
  const q=takeNextFromPool('qcm', makeQcmPool);
+ current=q;
  const e=ENERGIES.find(x=>x.id===q.correctId);
  let choicesHTML='';
  if(q.type==='findName'){
