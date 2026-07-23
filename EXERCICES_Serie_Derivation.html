@@ -1,0 +1,3014 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuits en série et en dérivation – 5ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2563eb;
+  --cyan:#06b6d4;
+  --green:#16a34a;
+  --red:#dc2626;
+  --purple:#7c3aed;
+  --ink:#172033;
+  --line:#dbe5f2;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Trebuchet MS", Arial, sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#eef7ff,#f8fbff 45%,#f4fff8);
+}
+header{
+  min-height:150px;
+  padding:28px 20px 22px;
+  text-align:center;
+  color:white;
+  background:linear-gradient(135deg,#2563eb,#06b6d4,#16a34a);
+  box-shadow:0 5px 20px rgba(29,78,216,.2);
+}
+header .logo{font-size:42px}
+header h1{margin:4px 0 3px;font-size:clamp(28px,4vw,44px)}
+header p{margin:0;font-weight:bold}
+
+.tabs{
+  position:sticky;
+  top:0;
+  z-index:10;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  padding:12px;
+  background:#ffffffee;
+  backdrop-filter:blur(8px);
+  box-shadow:0 3px 14px rgba(0,0,0,.06);
+}
+.tab{
+  border:0;
+  border-radius:999px;
+  padding:11px 22px;
+  font:700 16px inherit;
+  color:#334155;
+  background:#eaf1fa;
+  cursor:pointer;
+}
+.tab.active{
+  color:white;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  box-shadow:0 6px 18px rgba(37,99,235,.25);
+}
+
+main{max-width:1120px;margin:auto;padding:24px 16px 60px}
+.section{display:none}
+.section.active{display:block}
+
+h2.title{font-size:28px;margin:10px 0 18px}
+.intro,.card,.quiz-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 9px 25px rgba(23,59,104,.07);
+}
+.intro{
+  padding:20px 24px;
+  font-size:18px;
+  line-height:1.55;
+  border-left:8px solid var(--cyan);
+}
+.grid2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin:20px 0;
+}
+.card{padding:20px}
+.card h3{margin-top:0;font-size:22px;text-decoration:underline;text-underline-offset:4px}
+.card h4{text-decoration:underline;text-underline-offset:4px}
+.card p strong,
+.card p .key{
+  color:var(--red);
+}
+.serie{border-top:7px solid var(--purple)}
+.deriv{border-top:7px solid var(--green)}
+
+svg{max-width:100%;height:auto}
+.circuit-box{
+  background:#fbfdff;
+  border:2px solid #dbeafe;
+  border-radius:18px;
+  padding:10px;
+  margin:12px 0;
+}
+.note{
+  padding:15px 18px;
+  border-radius:15px;
+  background:#fff9db;
+  border-left:6px solid #eab308;
+  line-height:1.45;
+}
+.key{font-weight:bold;color:var(--red)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  padding:8px 12px;
+  border-radius:999px;
+  background:#eef5ff;
+  font-weight:bold;
+}
+.action{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:11px 16px;
+  font:700 15px inherit;
+  cursor:pointer;
+  background:#eaf1fa;
+  color:#21314d;
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:white;
+}
+.btn.green{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:white;
+}
+.demo-status{
+  min-height:48px;
+  padding:12px 15px;
+  margin-top:12px;
+  border-radius:14px;
+  background:#eef7ff;
+  font-weight:bold;
+  line-height:1.4;
+}
+.lesson-actions{text-align:center;margin:30px 0}
+.lesson-actions .btn{font-size:18px;padding:14px 24px}
+
+.exercise-menu{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:18px;
+}
+.mode{
+  padding:14px 10px;
+  border:2px solid #dbe5f2;
+  border-radius:18px;
+  background:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+.mode.active{
+  border-color:var(--blue);
+  background:#eaf3ff;
+  color:#1748a0;
+}
+
+.quiz-card{padding:22px;min-height:430px}
+.progress{height:12px;background:#e8eef6;border-radius:99px;overflow:hidden}
+.bar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green));
+  transition:.3s;
+}
+.quiz-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  margin:13px 0;
+}
+.score{
+  font-weight:bold;
+  background:#fff4c2;
+  padding:8px 12px;
+  border-radius:99px;
+}
+.question{
+  font-size:22px;
+  font-weight:bold;
+  line-height:1.35;
+  margin:20px 0;
+}
+.choices{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.choice{
+  border:2px solid #dbe5f2;
+  border-radius:16px;
+  padding:14px;
+  background:white;
+  font:700 16px inherit;
+  cursor:pointer;
+  text-align:left;
+}
+.choice:hover{border-color:#60a5fa;background:#f4f9ff}
+.choice.correct{border-color:#22c55e;background:#ecfdf3}
+.choice.wrong{border-color:#ef4444;background:#fff1f2}
+
+.feedback{
+  display:none;
+  margin-top:16px;
+  padding:15px 18px;
+  border-radius:14px;
+  line-height:1.45;
+}
+.feedback.show{display:block}
+.feedback.ok{background:#ecfdf3;border-left:6px solid #16a34a}
+.feedback.no{background:#fff1f2;border-left:6px solid #dc2626}
+.next{display:none;margin:18px auto 0}
+.visual{max-width:620px;margin:0 auto 14px}
+
+.result{text-align:center}
+.result .medal{font-size:64px}
+.review{
+  max-width:650px;
+  margin:20px auto;
+  text-align:left;
+  background:#f7f9fc;
+  padding:17px;
+  border-radius:16px;
+}
+.review li{margin:8px 0}
+.hidden-mark{opacity:0}
+.visible-mark{opacity:1}
+.lampOn{fill:#fde047; filter:drop-shadow(0 0 10px #fde047)}
+.lampOff{fill:#eef2f7 !important; filter:none !important}
+.break-mark{opacity:0}
+.break-visible{opacity:1}
+
+/* Circuits construits avec les images fournies */
+
+/* Images distantes chargées depuis GitHub.
+   Le JavaScript retire uniquement le fond relié aux bords de chaque PNG,
+   puis recadre l’objet avant son positionnement. */
+.real-circuit{
+  position:relative;
+  width:100%;
+  aspect-ratio:1363/995;
+  min-height:300px;
+  overflow:hidden;
+  background:#fff;
+  border-radius:12px;
+}
+.real-circuit.derivation-scene{aspect-ratio:1363/995}
+.real-circuit.compact{max-width:520px;margin:auto}
+.real-circuit .wire-layer,
+.real-circuit .mark-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.real-circuit .wire-layer{z-index:1}
+.real-circuit .mark-layer{z-index:8;pointer-events:none}
+.real-circuit .wire{
+  fill:none;
+  stroke:#000;
+  stroke-width:16;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
+}
+.real-circuit .component,
+.real-circuit .lamp-holder{
+  position:absolute;
+}
+.real-circuit img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:transparent;
+  user-select:none;
+  -webkit-user-drag:none;
+  opacity:0;
+  transition:opacity .12s linear;
+}
+.real-circuit img.asset-ready{opacity:1}
+/* Règle d’alignement commune à toutes les ampoules :
+   le socle gris est considéré comme situé à 86 % de la hauteur du
+   conteneur .lamp-holder. Pour chaque circuit :
+   top = (Y du fil / hauteur du viewBox × 100) − (0,86 × height).
+   L’image reste calée en bas du conteneur.
+
+   Audit global effectué : toutes les ampoules utilisent ce même ratio.
+   Si le calcul donne un top négatif, on déplace légèrement le trait dans
+   le viewBox plutôt que de laisser l’ampoule sortir du cadre. */
+.real-circuit .lamp-holder img{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+}
+.real-circuit .lamp-holder .lamp-on{
+  width:100%;
+  height:100%;
+}
+.real-circuit .lamp-holder .lamp-off{
+  width:84%;
+  height:84%;
+}
+
+/* L'ampoule faiblement allumée du circuit en série doit garder la même taille
+   que l'ampoule éteinte pour éviter un effet de zoom. */
+#serieLamp.lamp-on{
+  width:95%;
+  height:95%;
+}
+
+/* Circuit en série : coordonnées reprises sur l’image modèle 1363 × 995. */
+/* Règles génériques du circuit en série.
+   On exclut les variantes d'exercices qui possèdent leur propre placement
+   (quiz-series3 et quiz-deriv2m), sinon plusieurs dipôles se superposent. */
+.real-circuit:not(.derivation-scene):not(.quiz-deriv):not(.quiz-weird):not(.quiz-series3):not(.quiz-deriv2m) .battery{
+  z-index:3;
+  left:31.55%;
+  top:9.45%;
+  width:34.75%;
+  height:20.55%;
+}
+.real-circuit:not(.derivation-scene):not(.quiz-deriv):not(.quiz-weird):not(.quiz-series3):not(.quiz-deriv2m) .lamp-holder{
+  z-index:4;
+  left:18.65%;
+  /* Fil à Y=817 dans un viewBox de hauteur 995 :
+     top = 817/995×100 − 0,86×38,15 = 49,30 %. */
+  top:49.30%;
+  width:21.85%;
+  height:38.15%;
+}
+.real-circuit:not(.derivation-scene):not(.quiz-deriv):not(.quiz-weird):not(.quiz-series3):not(.quiz-deriv2m) .motor-body{
+  z-index:3;
+  left:56.65%;
+  top:50.70%;
+  width:17.25%;
+  height:37.25%;
+}
+.real-circuit:not(.derivation-scene):not(.quiz-deriv):not(.quiz-weird):not(.quiz-series3):not(.quiz-deriv2m) .propeller{
+  z-index:5;
+  left:51.55%;
+  top:41.55%;
+  width:27.15%;
+  height:40.65%;
+  transform-origin:50% 50%;
+  animation:propellerRotation .82s linear infinite;
+}
+.real-circuit .propeller.stopped{
+  animation-play-state:paused;
+  opacity:.86!important;
+}
+@keyframes propellerRotation{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+/* Circuit en dérivation */
+.derivation-scene .battery{z-index:3;left:31.55%;top:8.45%;width:34.75%;height:18.65%}
+.derivation-scene .lamp-holder{
+  z-index:4;left:17.73%;width:21.85%;height:34.51%;
+  /* Fil à Y=520 dans un viewBox de hauteur 1100. */
+  top:17.59%;
+}
+.derivation-scene .motor-body{z-index:3;left:58.10%;top:55.00%;width:15.40%;height:31.40%}
+.derivation-scene .propeller{z-index:5;left:52.70%;top:46.20%;width:25.80%;height:38.50%;transform-origin:50% 50%;animation:propellerRotation .82s linear infinite;}
+
+/* Dans le cours, les récepteurs fonctionnent moins fortement en série qu’en dérivation. */
+#serieMotor{
+  animation-duration:1.65s;
+}
+
+/* Visuels compacts des exercices */
+.real-circuit.quiz-series{aspect-ratio:1363/995}
+.quiz-series .battery{z-index:3;left:31.55%;top:9.45%;width:34.75%;height:20.55%}
+.quiz-series .lamp-holder{
+  z-index:4;left:18.65%;width:21.85%;height:38.15%;
+  /* Fil à Y=817 dans un viewBox de hauteur 995. */
+  top:49.30%;
+}
+.quiz-series .motor-body{z-index:3;left:56.65%;top:50.70%;width:17.25%;height:37.25%}
+.quiz-series .propeller{
+  z-index:5;left:51.55%;top:41.55%;width:27.15%;height:40.65%;
+  transform-origin:50% 50%;animation:propellerRotation 1.65s linear infinite;
+}
+/* Règles de fonctionnement utilisées dans les exercices */
+.lamp-normal .lamp-on{
+  width:100%;
+  height:100%;
+  opacity:1;
+  filter:none;
+}
+.lamp-weak .lamp-on{
+  width:95%;
+  height:95%;
+  opacity:1;
+  filter:none;
+}
+.lamp-very-weak .lamp-on{
+  width:95%;
+  height:95%;
+  opacity:.62;
+  filter:brightness(.72) saturate(.72);
+}
+.motor-normal{
+  animation-duration:.82s !important;
+}
+.motor-slow{
+  animation-duration:1.65s !important;
+}
+.motor-very-slow{
+  animation-duration:2.4s !important;
+}
+
+.real-circuit.quiz-deriv{aspect-ratio:1363/1100}
+.quiz-deriv .battery{z-index:3;left:31.55%;top:8.45%;width:34.75%;height:18.65%}
+.quiz-deriv .lamp-holder{
+  z-index:4;left:17.73%;width:21.85%;height:34.51%;
+  /* Fil à Y=520 dans un viewBox de hauteur 1100. */
+  top:17.59%;
+}
+.quiz-deriv .motor-body{z-index:3;left:58.10%;top:55.00%;width:15.40%;height:31.40%}
+.quiz-deriv .propeller{
+  z-index:5;left:52.70%;top:46.20%;width:25.80%;height:38.50%;
+  transform-origin:50% 50%;animation:propellerRotation .82s linear infinite;
+}
+
+.real-circuit.quiz-weird{aspect-ratio:1363/1200}
+.quiz-weird .battery{z-index:3;left:31.55%;top:74.00%;width:34.75%;height:16.50%}
+.quiz-weird .lamp-holder{
+  z-index:4;left:17.30%;width:21.85%;height:27.80%;
+  /* Fil supérieur déplacé à Y=300 dans un viewBox de hauteur 1200.
+     top = 300/1200×100 − 0,86×27,80 = 1,09 %.
+     Cette géométrie évite une valeur négative et empêche l’ampoule d’être coupée. */
+  top:1.09%;
+}
+.quiz-weird .motor-body{z-index:3;left:57.30%;top:33.80%;width:15.70%;height:28.90%}
+.quiz-weird .propeller{
+  z-index:5;left:51.80%;top:25.30%;width:26.20%;height:37.20%;
+  transform-origin:50% 50%;animation:propellerRotation .82s linear infinite;
+}
+
+.real-circuit.quiz-series3{aspect-ratio:1363/995}
+.real-circuit.quiz-series3 .battery{z-index:3;left:31.55%;top:9.45%;width:34.75%;height:20.55%}
+.real-circuit.quiz-series3 .lamp-holder{
+  z-index:4;
+  /* Ajustement visuel : les 3 lampes sont légèrement abaissées
+     pour que le trait passe mieux au niveau du socle gris. */
+  top:52.20%;
+  width:15.50%;
+  height:37.60%;
+}
+.real-circuit.quiz-series3 .lamp-a{left:16.00%}
+.real-circuit.quiz-series3 .lamp-b{left:41.50%}
+.real-circuit.quiz-series3 .lamp-c{left:67.00%}
+.real-circuit.quiz-deriv2m{aspect-ratio:1363/1100}
+/* Dérivation des exercices : trois branches nettement séparées.
+   - branche principale en haut : pile seule ;
+   - branche dérivée centrale : une lampe seule, légèrement décalée vers la gauche ;
+   - branche dérivée basse : une deuxième lampe seule, légèrement décalée vers la droite.
+   Les fils passent au niveau du socle gris des ampoules, comme dans les autres schémas, afin qu’aucune branche ne paraisse ouverte. */
+.real-circuit.quiz-deriv2m .battery{z-index:3;left:31.55%;top:8.45%;width:34.75%;height:18.65%}
+.real-circuit.quiz-deriv2m .lamp-holder{
+  z-index:4;left:35.80%;width:21.85%;height:34.30%;
+  /* Branche centrale à Y=520 dans un viewBox de hauteur 1100. */
+  top:17.77%;
+}
+.real-circuit.quiz-deriv2m .lamp2-holder{
+  z-index:4;left:48.90%;width:21.85%;height:34.30%;
+  /* Branche basse à Y=885 dans un viewBox de hauteur 1100. */
+  top:50.96%;
+}
+
+.node-dot{fill:#111827}
+/* Règle de placement utilisée dans l’exercice :
+   chaque nœud est placé à l’extrémité d’une branche dérivée horizontale,
+   exactement à son contact avec un montant vertical. */
+.loop-highlight,.branch-highlight,.node-highlight{opacity:0;transition:opacity .2s}
+.visible-mark{opacity:1!important}
+.break-mark{opacity:0}
+.break-visible{opacity:1}
+
+/* Exercices de repérage par clic */
+.interactive-circuit .node-layer{display:none}
+.click-overlay{
+  position:absolute;
+  inset:0;
+  z-index:30;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+.click-point{
+  pointer-events:auto;
+  cursor:pointer;
+  fill:#ffffff;
+  fill-opacity:.88;
+  stroke:#2563eb;
+  stroke-width:5;
+  transition:.15s;
+}
+.click-point:hover{fill:#dbeafe;stroke-width:7}
+.click-point.selected{fill:#fde047;stroke:#ca8a04}
+.click-point.correct{fill:#22c55e;stroke:#15803d}
+.click-point.wrong{fill:#ef4444;stroke:#b91c1c}
+.click-point.correct{animation:nodePulse .7s ease 2}
+@keyframes nodePulse{50%{r:34;stroke-width:9}}
+.branch-feedback-path{
+  fill:none;
+  stroke-width:24;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  opacity:.78;
+  pointer-events:none;
+}
+.branch-feedback-path.correct{stroke:#22c55e}
+.branch-feedback-path.wrong{stroke:#ef4444}
+.all-branches-path{
+  fill:none;
+  stroke-width:22;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  opacity:.98;
+  pointer-events:none;
+}
+.branch-legend{
+  margin:12px auto 0;
+  max-width:760px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 12px;
+  justify-content:center;
+}
+.branch-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#f8fafc;
+  border:1px solid #dbe5f2;
+  font-size:.92rem;
+  font-weight:700;
+  color:#334155;
+}
+.branch-chip-line{
+  width:28px;
+  height:0;
+  border-top:6px solid currentColor;
+  border-radius:999px;
+  display:inline-block;
+}
+.visual-feedback-box{
+  margin:14px auto 0;
+  max-width:620px;
+  padding:12px 16px;
+  border-radius:14px;
+  background:#f8fafc;
+  border:2px solid #dbe5f2;
+  font-weight:bold;
+  text-align:center;
+}
+.visual-feedback-box.ok{background:#ecfdf3;border-color:#22c55e;color:#166534}
+.visual-feedback-box.no{background:#fff1f2;border-color:#ef4444;color:#991b1b}
+.interactive-circuit .branch-dipole{cursor:pointer;outline:0 solid transparent;transition:.15s}
+.dipole-hitbox{
+  position:absolute;
+  z-index:35;
+  cursor:pointer;
+  background:transparent;
+  border:0;
+  padding:0;
+  margin:0;
+}
+.dipole-hitbox:hover{outline:4px solid rgba(37,99,235,.28);border-radius:12px}
+.dipole-hitbox.selected{outline:5px solid #facc15;border-radius:12px}
+.dipole-hitbox.correct{outline:6px solid #22c55e;border-radius:12px}
+.dipole-hitbox.wrong{outline:6px solid #ef4444;border-radius:12px}
+.interactive-circuit .branch-dipole.selected{filter:drop-shadow(0 0 10px #facc15)}
+.interactive-circuit .branch-dipole.correct{filter:drop-shadow(0 0 12px #22c55e)}
+.interactive-circuit .branch-dipole.wrong{filter:drop-shadow(0 0 12px #ef4444)}
+.click-instruction{
+  margin:10px 0 14px;
+  padding:12px 15px;
+  border-radius:14px;
+  background:#eef7ff;
+  font-weight:bold;
+  text-align:center;
+}
+.click-progress{color:#1748a0;margin-top:6px;font-size:15px}
+
+@media(max-width:520px){
+  .real-circuit{min-height:235px}
+}
+}
+
+footer{text-align:center;color:#64748b;padding:25px}
+
+@media(max-width:800px){
+  .grid2,.exercise-menu{grid-template-columns:1fr}
+  .choices{grid-template-columns:1fr}
+  .quiz-head{align-items:flex-start}
+  .tabs{gap:6px}
+  .tab{padding:10px 13px}
+}
+
+
+/* ===== Harmonisation visuelle avec « Les circuits électriques – 6ème » ===== */
+:root{
+  --nuit:#0f172a;
+  --vert-elec:#22c55e;
+  --blue:#1a73e8;
+  --cyan:#06b6d4;
+  --green:#0f9d58;
+  --red:#ea4335;
+  --purple:#7c4dff;
+  --ink:#1a1a2e;
+  --line:#dde1f0;
+  --bg:#f0f4ff;
+  --blue-light:#e8f0fe;
+  --green-light:#e6f4ea;
+  --red-light:#fce8e6;
+  --yellow:#fbbc04;
+  --shadow-soft:0 3px 14px rgba(0,0,0,.08);
+  --shadow:0 4px 20px rgba(0,0,0,.10);
+  --radius:22px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+header{
+  position:relative;
+  min-height:0;
+  padding:30px 18px 24px;
+  background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);
+  border-radius:0;
+  box-shadow:0 4px 20px rgba(26,115,232,.30);
+  overflow:hidden;
+}
+header::after{
+  content:"";
+  position:absolute;
+  inset:auto -10% -70px -10%;
+  height:120px;
+  background:rgba(255,255,255,.13);
+  border-radius:50%;
+}
+header .logo{
+  position:relative;
+  z-index:2;
+  display:inline-block;
+  font-size:2.8rem;
+  line-height:1;
+  animation:pulseLogo 2.2s ease-in-out infinite;
+}
+@keyframes pulseLogo{
+  0%,100%{transform:scale(1) rotate(-5deg)}
+  50%{transform:scale(1.08) rotate(5deg)}
+}
+header h1{
+  position:relative;
+  z-index:2;
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(1.75rem,5vw,3rem);
+  letter-spacing:.5px;
+  text-shadow:0 2px 8px rgba(0,0,0,.22);
+  margin:0;
+}
+header p{
+  position:relative;
+  z-index:2;
+  margin-top:6px;
+  color:rgba(255,255,255,.9);
+  font-weight:800;
+}
+.tabs{
+  position:sticky;
+  top:0;
+  z-index:20;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:12px 10px;
+  background:rgba(240,244,255,.86);
+  backdrop-filter:blur(8px);
+  border:0;
+  margin:0;
+  box-shadow:none;
+}
+.tab{
+  min-height:46px;
+  min-width:128px;
+  padding:9px 16px;
+  border:2.5px solid #fff;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--blue),var(--vert-elec));
+  color:#fff;
+  box-shadow:0 6px 22px rgba(6,182,212,.30);
+  font-family:'Nunito',sans-serif;
+  font-weight:900;
+  font-size:.98rem;
+  transition:.22s;
+}
+.tab:hover{
+  background:linear-gradient(135deg,#1d4ed8,#16a34a);
+  transform:translateY(-1px);
+  box-shadow:0 8px 26px rgba(6,182,212,.34);
+}
+.tab.active{
+  background:#fff;
+  color:var(--blue);
+  border-color:var(--cyan);
+  box-shadow:0 6px 22px rgba(6,182,212,.26);
+  transform:none;
+}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 64px}
+.section.active{animation:slideInStyle .35s cubic-bezier(.4,2,.6,1)}
+@keyframes slideInStyle{
+  from{opacity:0;transform:translateY(24px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+h2.title{
+  font-family:'Fredoka One',cursive;
+  color:var(--blue);
+  font-size:1.72rem;
+  margin:4px 0 16px;
+}
+.intro,.card,.quiz-card{
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-soft);
+}
+.intro{
+  max-width:880px;
+  margin:0 auto 18px;
+  background:#fff;
+  border-left:0;
+  border:2.5px solid var(--cyan);
+  padding:24px;
+  font-weight:800;
+}
+.card{
+  max-width:1080px;
+  margin:0 auto 18px;
+  padding:24px;
+  border-width:2.5px;
+  background:#fff;
+}
+.card h3,.card h4{
+  font-family:'Fredoka One',cursive;
+  text-decoration:none;
+}
+.card h3{font-size:1.35rem}
+.card h4{font-size:1.08rem;color:var(--blue)}
+.serie{border-top:2.5px solid var(--purple);background:linear-gradient(180deg,#fff,#f8f4ff)}
+.deriv{border-top:2.5px solid var(--green);background:linear-gradient(180deg,#fff,#f4fff8)}
+.circuit-box{
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:18px;
+  box-shadow:var(--shadow-soft);
+}
+.note{
+  background:linear-gradient(180deg,#fff,#fffaf0);
+  border:2.5px solid var(--yellow);
+  border-radius:20px;
+  box-shadow:var(--shadow-soft);
+  font-weight:800;
+}
+.chip{
+  background:#fff;
+  color:var(--blue);
+  border:2px solid var(--cyan);
+  box-shadow:var(--shadow-soft);
+  font-weight:900;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border-radius:999px;
+  padding:10px 18px;
+  border:2px solid var(--line);
+  background:#fff;
+  color:var(--blue);
+  box-shadow:var(--shadow-soft);
+  font-family:'Nunito',sans-serif;
+  font-weight:900;
+  transition:.18s;
+}
+.btn:hover{transform:translateY(-2px);border-color:var(--blue);background:var(--blue-light)}
+.btn.primary{
+  border:0;
+  background:linear-gradient(135deg,var(--nuit),var(--blue),var(--vert-elec));
+  color:#fff;
+  box-shadow:0 4px 14px rgba(26,115,232,.30);
+}
+.btn.green{
+  border:0;
+  background:linear-gradient(135deg,#0f9d58,#22c55e);
+  color:#fff;
+}
+.demo-status{
+  background:linear-gradient(180deg,#fff,#f7fbff);
+  border:2px solid var(--cyan);
+  border-radius:18px;
+  box-shadow:var(--shadow-soft);
+  font-weight:900;
+}
+.exercise-menu{max-width:980px;margin:0 auto 18px;display:grid;grid-template-columns:repeat(2,minmax(260px,1fr));gap:12px}
+.mode{
+  min-height:58px;
+  padding:11px 16px;
+  border:2.5px solid #fff;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--blue),var(--vert-elec));
+  color:#fff;
+  box-shadow:0 6px 22px rgba(6,182,212,.30);
+  font-family:'Nunito',sans-serif;
+  font-weight:900;
+  font-size:.98rem;
+  line-height:1.2;
+  transition:.22s;
+}
+.mode:hover{
+  background:linear-gradient(135deg,#1d4ed8,#16a34a);
+  transform:translateY(-1px);
+  box-shadow:0 8px 26px rgba(6,182,212,.34);
+  color:#fff;
+  border-color:#fff;
+}
+.mode.active{
+  background:#fff;
+  color:var(--blue);
+  border-color:var(--cyan);
+  box-shadow:0 6px 22px rgba(6,182,212,.26);
+  transform:none;
+}
+.quiz-card{
+  max-width:980px;
+  margin:0 auto;
+  padding:22px;
+  background:#fff;
+}
+.progress{
+  height:16px;
+  background:#e8eef8;
+  border:2px solid #d5e0f2;
+  border-radius:999px;
+  box-shadow:inset 0 2px 5px rgba(15,23,42,.08);
+}
+.bar{background:linear-gradient(90deg,var(--nuit),var(--blue),var(--vert-elec));border-radius:999px}
+.quiz-head{margin:14px 0 10px;font-weight:900;color:var(--text-muted,#657085)}
+.score{
+  background:linear-gradient(135deg,var(--yellow),#fff3b0);
+  color:#3b2f00;
+  border:2px solid #f5d46a;
+  box-shadow:var(--shadow-soft);
+  font-weight:900;
+}
+.question{font-size:1.18rem;font-weight:900;color:var(--ink)}
+.choice{
+  border:2.5px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  font-family:'Nunito',sans-serif;
+  font-weight:900;
+  transition:.15s;
+}
+.choice:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light);color:var(--blue);transform:translateY(-1px)}
+.choice.correct{border-color:var(--green);background:var(--green-light);color:var(--green)}
+.choice.wrong{border-color:var(--red);background:var(--red-light);color:var(--red)}
+.feedback{
+  border-radius:16px;
+  padding:14px 18px;
+  font-weight:900;
+}
+.feedback.ok{background:var(--green-light);color:var(--green);border:2px solid var(--green)}
+.feedback.no{background:var(--red-light);color:var(--red);border:2px solid var(--red)}
+.click-instruction,.visual-feedback-box,.review{
+  border-radius:18px;
+  box-shadow:var(--shadow-soft);
+  font-weight:900;
+}
+.click-instruction{background:linear-gradient(180deg,#fff,#f7fbff);border:2px solid var(--cyan)}
+.result .medal{font-size:4rem}
+.result h2{font-family:'Fredoka One',cursive;color:var(--blue)}
+.review{background:#fff;border:2px solid var(--line)}
+footer{font-weight:800;color:#657085}
+@media(max-width:700px){
+  header{padding:24px 12px 18px}
+  .tabs{position:relative;gap:8px;padding:12px 8px}
+  .tab{flex:1 1 100%;width:100%;max-width:none}
+  main{padding:14px 12px 54px}
+  .intro,.card,.quiz-card{padding:18px 14px}
+  .choices{grid-template-columns:1fr}
+  .btn{width:100%}
+}
+
+
+
+/* ===== Charte exacte du fichier « Circuit simple » ===== */
+:root{
+  --nuit:#0f172a;
+  --vert-elec:#22c55e;
+  --bleu:#1a73e8;
+  --bleu-clair:#e8f0fe;
+  --violet:#7c4dff;
+  --violet-clair:#ede7f6;
+  --vert:#0f9d58;
+  --vert-clair:#e6f4ea;
+  --rouge:#ea4335;
+  --rouge-clair:#fce8e6;
+  --jaune:#fbbc04;
+  --jaune-clair:#fff8df;
+  --cyan:#06b6d4;
+  --cyan-clair:#e6fbff;
+  --bg:#f0f4ff;
+  --card:#ffffff;
+  --text:#1a1a2e;
+  --text-muted:#657085;
+  --border:#dde1f0;
+  --shadow:0 4px 20px rgba(0,0,0,.10);
+  --shadow-soft:0 3px 14px rgba(0,0,0,.08);
+  --shadow-strong:0 8px 32px rgba(0,0,0,.16);
+  --radius:22px;
+  /* Alias nécessaires au code existant */
+  --blue:var(--bleu);
+  --blue-light:var(--bleu-clair);
+  --purple:var(--violet);
+  --green:var(--vert);
+  --green-light:var(--vert-clair);
+  --red:var(--rouge);
+  --red-light:var(--rouge-clair);
+  --yellow:var(--jaune);
+  --ink:var(--text);
+  --line:var(--border);
+}
+body{
+  background:var(--bg) !important;
+  color:var(--text) !important;
+}
+header{
+  background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%) !important;
+  box-shadow:0 4px 20px rgba(26,115,232,.30) !important;
+}
+.tabs{
+  background:rgba(240,244,255,.86) !important;
+}
+.tab,
+.mode{
+  background:linear-gradient(135deg,var(--bleu),var(--vert-elec)) !important;
+  color:#fff !important;
+  border:2.5px solid #fff !important;
+  box-shadow:0 6px 22px rgba(6,182,212,.30) !important;
+}
+.tab:hover,
+.mode:hover{
+  background:linear-gradient(135deg,#1d4ed8,#16a34a) !important;
+  color:#fff !important;
+  border-color:#fff !important;
+  box-shadow:0 8px 26px rgba(6,182,212,.34) !important;
+}
+.tab.active,
+.mode.active{
+  background:#fff !important;
+  color:var(--bleu) !important;
+  border-color:var(--cyan) !important;
+  box-shadow:0 6px 22px rgba(6,182,212,.26) !important;
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--nuit),var(--bleu),var(--vert-elec)) !important;
+  color:#fff !important;
+  box-shadow:0 4px 14px rgba(26,115,232,.30) !important;
+}
+.btn.green{
+  background:linear-gradient(135deg,var(--vert),var(--vert-elec)) !important;
+  color:#fff !important;
+}
+.progress .bar,
+.bar{
+  background:linear-gradient(90deg,var(--nuit),var(--bleu),var(--vert-elec)) !important;
+}
+.score{
+  background:linear-gradient(135deg,var(--jaune),#fff3b0) !important;
+  color:#3b2f00 !important;
+  border-color:#f5d46a !important;
+}
+h2.title,
+.card h4,
+.result h2{
+  color:var(--bleu) !important;
+}
+.intro,
+.click-instruction{
+  border-color:var(--cyan) !important;
+}
+.choice:hover:not(:disabled){
+  border-color:var(--bleu) !important;
+  background:var(--bleu-clair) !important;
+  color:var(--bleu) !important;
+}
+.choice.correct,
+.feedback.ok{
+  border-color:var(--vert) !important;
+  background:var(--vert-clair) !important;
+  color:var(--vert) !important;
+}
+.choice.wrong,
+.feedback.no{
+  border-color:var(--rouge) !important;
+  background:var(--rouge-clair) !important;
+  color:var(--rouge) !important;
+}
+
+
+/* ================================================================
+   HARMONISATION FINALE — charte commune des fichiers d'électricité
+   Références : Circuit simple / Symboles des dipôles / Schématisation
+   Cette couche est volontairement placée en dernier pour neutraliser les
+   anciens essais de style sans modifier la logique ni le contenu 5e.
+   ================================================================ */
+:root{
+  --bleu:#1a73e8;
+  --bleu-clair:#e8f0fe;
+  --vert:#0f9d58;
+  --vert-clair:#e6f4ea;
+  --rouge:#ea4335;
+  --rouge-clair:#fce8e6;
+  --jaune:#fbbc04;
+  --jaune-clair:#fef9e3;
+  --violet:#7c4dff;
+  --violet-clair:#ede7f6;
+  --cyan:#06b6d4;
+  --bg:#f0f4ff;
+  --carte:#ffffff;
+  --texte:#1a1a2e;
+  --gris:#6c757d;
+  --border:#dde1f0;
+  --ombre:0 4px 20px rgba(0,0,0,.10);
+  --ombre-forte:0 8px 32px rgba(0,0,0,.16);
+  --radius:20px;
+  /* alias nécessaires au code historique */
+  --blue:var(--bleu);
+  --green:var(--vert);
+  --red:var(--rouge);
+  --purple:var(--violet);
+  --ink:var(--texte);
+  --line:var(--border);
+  --yellow:var(--jaune);
+  --blue-light:var(--bleu-clair);
+  --green-light:var(--vert-clair);
+  --red-light:var(--rouge-clair);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+  font-family:'Nunito',sans-serif;
+  color:var(--texte);
+  background:var(--bg);
+}
+header{
+  position:relative;
+  min-height:0;
+  padding:28px 20px 22px;
+  text-align:center;
+  color:#fff;
+  background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);
+  border-radius:0;
+  box-shadow:0 4px 20px rgba(26,115,232,.30);
+  overflow:hidden;
+}
+header::after{display:none}
+header .logo{
+  position:relative;
+  z-index:1;
+  display:inline-block;
+  font-size:2.6rem;
+  line-height:1;
+  margin-bottom:4px;
+}
+header h1{
+  position:relative;
+  z-index:1;
+  margin:0;
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(1.8rem,5vw,3rem);
+  letter-spacing:1px;
+  color:#fff;
+  text-shadow:0 2px 8px rgba(0,0,0,.20);
+}
+header p{
+  position:relative;
+  z-index:1;
+  margin:6px 0 0;
+  color:rgba(255,255,255,.88);
+  font-size:1rem;
+  font-weight:600;
+}
+.tabs{
+  position:relative;
+  top:auto;
+  z-index:10;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:16px 16px 0;
+  background:transparent;
+  backdrop-filter:none;
+  box-shadow:none;
+}
+.tab{
+  min-width:0;
+  min-height:0;
+  max-width:none;
+  padding:10px 24px;
+  border:2.5px solid transparent;
+  border-radius:50px;
+  background:var(--carte);
+  color:var(--gris);
+  box-shadow:var(--ombre);
+  font-family:'Nunito',sans-serif;
+  font-size:1rem;
+  font-weight:700;
+  line-height:1.2;
+  cursor:pointer;
+  transition:all .25s;
+}
+.tab:hover{
+  transform:translateY(-2px);
+  color:var(--gris);
+  background:var(--carte);
+  border-color:transparent;
+  box-shadow:var(--ombre-forte);
+}
+.tab.active{
+  transform:translateY(-2px);
+  color:#fff;
+  background:var(--bleu);
+  border-color:var(--bleu);
+  box-shadow:var(--ombre);
+}
+main{
+  width:100%;
+  max-width:1150px;
+  margin:0 auto;
+  padding:24px 16px 60px;
+}
+.section{display:none;width:100%}
+.section.active{display:block;animation:fadeInUnified .35s ease}
+@keyframes fadeInUnified{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+h2.title{
+  margin:0 0 16px;
+  font-family:'Fredoka One',cursive;
+  font-size:1.8rem;
+  color:var(--bleu);
+}
+.intro{
+  width:100%;
+  max-width:none;
+  margin:0 0 24px;
+  padding:18px 22px;
+  border:0;
+  border-left:5px solid var(--bleu);
+  border-radius:0 var(--radius) var(--radius) 0;
+  background:linear-gradient(135deg,var(--bleu-clair),#fff);
+  box-shadow:none;
+  font-size:1rem;
+  font-weight:700;
+  line-height:1.65;
+}
+.grid2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  width:100%;
+  margin:0 0 24px;
+  align-items:start;
+}
+.card{
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:22px 20px;
+  border:0;
+  border-top:5px solid var(--bleu);
+  border-radius:var(--radius);
+  background:var(--carte);
+  box-shadow:var(--ombre);
+}
+.card.serie{border-top-color:var(--violet);background:var(--carte)}
+.card.deriv{border-top-color:var(--vert);background:var(--carte)}
+.card h3,.card h4{font-family:'Fredoka One',cursive;text-decoration:none}
+.card h3{margin:0 0 14px;font-size:1.35rem}
+.card h4{margin:18px 0 10px;font-size:1.08rem;color:var(--bleu)}
+.card p{line-height:1.6}
+.circuit-box{
+  width:100%;
+  margin:12px 0;
+  padding:10px;
+  border:2px solid var(--border);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 3px 14px rgba(0,0,0,.08);
+}
+.note,.demo-status,.click-instruction,.visual-feedback-box,.review{
+  border-radius:16px;
+  box-shadow:none;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  min-height:44px;
+  padding:10px 22px;
+  border:2.5px solid transparent;
+  border-radius:50px;
+  background:var(--carte);
+  color:var(--gris);
+  box-shadow:var(--ombre);
+  font-family:'Nunito',sans-serif;
+  font-size:.95rem;
+  font-weight:700;
+  line-height:1.2;
+  cursor:pointer;
+  transition:all .25s;
+}
+.btn:hover{
+  transform:translateY(-2px);
+  color:var(--bleu);
+  background:var(--bleu-clair);
+  border-color:var(--bleu);
+  box-shadow:var(--ombre-forte);
+}
+.btn.primary,.btn.green{
+  color:#fff;
+  background:var(--bleu);
+  border-color:var(--bleu);
+  box-shadow:0 4px 14px rgba(26,115,232,.35);
+}
+.btn.primary:hover,.btn.green:hover{
+  color:#fff;
+  background:#1557b0;
+  border-color:#1557b0;
+}
+.lesson-actions{margin:28px 0;text-align:center}
+.exercise-menu{
+  display:flex;
+  justify-content:center;
+  align-items:stretch;
+  flex-wrap:wrap;
+  gap:8px;
+  width:100%;
+  max-width:none;
+  margin:0 0 20px;
+}
+.mode{
+  flex:0 1 auto;
+  min-width:180px;
+  max-width:260px;
+  min-height:52px;
+  padding:10px 18px;
+  border:2.5px solid transparent;
+  border-radius:50px;
+  background:var(--carte);
+  color:var(--gris);
+  box-shadow:var(--ombre);
+  font-family:'Nunito',sans-serif;
+  font-size:.9rem;
+  font-weight:700;
+  line-height:1.2;
+  text-align:center;
+  cursor:pointer;
+  transition:all .25s;
+}
+.mode small{font-size:.78rem;font-weight:700;color:inherit;opacity:.88}
+.mode:hover{
+  transform:translateY(-2px);
+  color:var(--gris);
+  background:var(--carte);
+  border-color:transparent;
+  box-shadow:var(--ombre-forte);
+}
+.mode.active{
+  transform:translateY(-2px);
+  color:#fff;
+  background:var(--bleu);
+  border-color:var(--bleu);
+  box-shadow:var(--ombre);
+}
+.quiz-card{
+  width:100%;
+  max-width:980px;
+  min-height:430px;
+  margin:0 auto;
+  padding:22px 20px;
+  border:0;
+  border-radius:var(--radius);
+  background:var(--carte);
+  box-shadow:var(--ombre);
+}
+.progress{
+  height:12px;
+  border:0;
+  border-radius:10px;
+  background:#e0e0e0;
+  box-shadow:none;
+  overflow:hidden;
+}
+.bar{
+  height:100%;
+  border-radius:10px;
+  background:linear-gradient(90deg,var(--bleu),var(--violet));
+}
+.quiz-head{margin:14px 0 18px;color:var(--gris);font-weight:700}
+.score{
+  padding:6px 16px;
+  border:0;
+  border-radius:20px;
+  background:var(--jaune);
+  color:#333;
+  box-shadow:none;
+  font-weight:800;
+}
+.question{
+  margin:18px 0;
+  color:var(--texte);
+  font-size:1.18rem;
+  font-weight:800;
+  line-height:1.45;
+}
+.choices{gap:12px}
+.choice{
+  min-height:58px;
+  padding:14px 16px;
+  border:2.5px solid var(--border);
+  border-radius:14px;
+  background:#f8f9ff;
+  color:var(--texte);
+  box-shadow:none;
+  font-family:'Nunito',sans-serif;
+  font-size:.95rem;
+  font-weight:700;
+  line-height:1.35;
+  transition:all .2s;
+}
+.choice:hover:not(:disabled){
+  transform:scale(1.015);
+  color:var(--texte);
+  background:var(--bleu-clair);
+  border-color:var(--bleu);
+}
+.choice.correct{color:var(--vert);background:var(--vert-clair);border-color:var(--vert)}
+.choice.wrong{color:var(--rouge);background:var(--rouge-clair);border-color:var(--rouge)}
+.feedback{
+  margin-top:16px;
+  padding:14px 18px;
+  border-radius:14px;
+  font-size:.98rem;
+  font-weight:800;
+  line-height:1.5;
+}
+.feedback.ok{color:var(--vert);background:var(--vert-clair);border:1px solid var(--vert)}
+.feedback.no{color:var(--rouge);background:var(--rouge-clair);border:1px solid var(--rouge)}
+.next{margin-top:18px}
+.visual{width:100%;max-width:620px;margin:0 auto 14px}
+footer{padding:24px;text-align:center;color:var(--gris);font-weight:600}
+@media(max-width:900px){
+  .grid2{grid-template-columns:1fr}
+  .exercise-menu{align-items:stretch}
+  .mode{flex:1 1 calc(50% - 8px);max-width:none}
+}
+@media(max-width:700px){
+  header{padding:24px 12px 18px}
+  .tabs{padding:14px 10px 0}
+  .tab{flex:1 1 140px;padding:10px 16px}
+  main{padding:20px 12px 50px}
+  .intro,.card,.quiz-card{padding:18px 14px}
+  .mode{flex:1 1 100%;min-width:0}
+  .choices{grid-template-columns:1fr}
+  .btn{width:100%}
+}
+
+
+/* =========================================================
+   THÈME ÉLECTRICITÉ EXACT DU FICHIER « CIRCUIT SIMPLE »
+   Nuit / bleu / vert électrique — couche finale prioritaire
+   ========================================================= */
+header{
+  background:linear-gradient(135deg,#0f172a,#2563eb,#22c55e) !important;
+  box-shadow:0 4px 20px rgba(37,99,235,.30) !important;
+}
+header .logo{
+  background:transparent !important;
+  box-shadow:none !important;
+  border:none !important;
+  text-shadow:0 0 16px rgba(34,197,94,.75),0 0 28px rgba(37,99,235,.55) !important;
+}
+.tab,
+.mode,
+.btn.primary,
+.btn.green{
+  background:linear-gradient(135deg,#0f172a,#2563eb,#22c55e) !important;
+  border-color:#ffffff !important;
+  color:#ffffff !important;
+  box-shadow:0 8px 24px rgba(37,99,235,.26),0 0 18px rgba(34,197,94,.18) !important;
+}
+.tab:hover,
+.mode:hover,
+.btn.primary:hover,
+.btn.green:hover{
+  background:linear-gradient(135deg,#020617,#1d4ed8,#16a34a) !important;
+  border-color:#ffffff !important;
+  color:#ffffff !important;
+  box-shadow:0 10px 28px rgba(37,99,235,.34),0 0 22px rgba(34,197,94,.26) !important;
+}
+.tab.active,
+.mode.active{
+  background:#ffffff !important;
+  color:#0f172a !important;
+  border-color:#22c55e !important;
+  box-shadow:0 6px 22px rgba(34,197,94,.28) !important;
+}
+.btn:not(.primary):not(.green){
+  background:#ffffff !important;
+  color:#0f172a !important;
+  border-color:#22c55e !important;
+}
+.btn:not(.primary):not(.green):hover{
+  background:#ecfdf5 !important;
+  color:#0f172a !important;
+  border-color:#16a34a !important;
+}
+.bar{
+  background:linear-gradient(90deg,#0f172a,#2563eb,#22c55e) !important;
+}
+.quiz-card{
+  border:2.5px solid #22c55e !important;
+  background:linear-gradient(180deg,#ffffff,#f0fdf4) !important;
+}
+.score{
+  background:linear-gradient(135deg,#dcfce7,#bbf7d0) !important;
+  color:#14532d !important;
+  border:2px solid #22c55e !important;
+}
+.intro{
+  border-color:#22c55e !important;
+  background:linear-gradient(135deg,#ecfdf5,#ffffff) !important;
+}
+.card.serie{
+  border-top-color:#2563eb !important;
+}
+.card.deriv{
+  border-top-color:#22c55e !important;
+}
+h2.title,
+.card h4,
+.result h2{
+  color:#2563eb !important;
+}
+.choice:hover:not(:disabled){
+  background:#eff6ff !important;
+  border-color:#2563eb !important;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚡</div>
+  <h1>Circuits en série et en dérivation</h1>
+  <p>Physique-Chimie · Classe de 5e · symbole générateur</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab active" id="tabCours" onclick="showSection('cours')">📚 Cours</button>
+  <button class="tab" id="tabExos" onclick="showSection('exercices')">🎯 Exercices</button>
+</nav>
+
+<main>
+<section class="section active" id="cours">
+  <h2 class="title">📚 L’essentiel à comprendre</h2>
+
+  <div class="intro">
+    Il existe 2 types de circuits :
+    le <strong>circuit en série</strong>, qui ne possède qu’une seule boucle,
+    et le <strong>circuit en dérivation</strong>, qui possède plusieurs boucles.
+  </div>
+
+  <div class="grid2">
+    <!-- BLOC GAUCHE : CIRCUIT EN SÉRIE -->
+    <article class="card serie">
+      <h3>🟣 Circuit en série</h3>
+
+<div class="circuit-box">
+<div class="real-circuit" aria-label="Circuit en série avec pile, lampe et moteur à hélice">
+  <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
+    <path class="wire" d="M157 202 H431 M898 202 H1139 V817 H157 V202"/>
+  </svg>
+
+  <img crossorigin="anonymous" class="component battery circuit-asset"
+       src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png"
+       alt="Pile">
+  <div class="lamp-holder">
+    <img crossorigin="anonymous" id="serieLamp" class="lamp-on circuit-asset"
+         src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png"
+         data-on="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png"
+         data-off="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_eteinte.png"
+         alt="Lampe allumée">
+  </div>
+
+  <img crossorigin="anonymous" class="component motor-body circuit-asset"
+       src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png"
+       alt="Moteur sans hélice">
+  <img crossorigin="anonymous" id="serieMotor" class="component propeller circuit-asset"
+       src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png"
+       alt="Hélice du moteur">
+
+  <svg class="mark-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
+    <path id="serieLoop" class="loop-highlight"
+          d="M180 220 H431 M898 220 H1118 V795 H180 V220"
+          fill="none" stroke="#16a34a" stroke-width="10" stroke-dasharray="18 13" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="serieBreakMark" class="break-mark" d="M362 630 h78" stroke="#fff" stroke-width="24" stroke-linecap="round"/>
+    <path id="serieBreakBolt" class="break-mark"
+          d="M386 598 l24 28 -16 0 26 36"
+          fill="none" stroke="#dc2626" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="serieMotorBreakBolt" class="break-mark"
+          d="M835 620 l24 28 -16 0 26 36"
+          fill="none" stroke="#dc2626" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+      </div>
+
+      <h4>🔎 Savoir reconnaître</h4>
+      <p>
+        Un circuit en série ne possède qu’<span class="key">une seule boucle</span> :
+        le courant n’a qu’un seul chemin possible pour aller d’une borne du générateur à l’autre.
+      </p>
+      <p>Les dipôles se suivent dans la même boucle.</p>
+
+      <div class="action">
+        <button class="btn" onclick="toggleMark('serieLoop')">👁️ Afficher la boucle</button>
+      </div>
+
+      <hr style="border:0;border-top:2px solid #e7dfef;margin:24px 0">
+
+      <h4>💥 Que se passe-t-il si un dipôle est cassé ?</h4>
+      <p>
+        Si un récepteur est cassé, l’unique boucle est ouverte :
+        <strong>aucun récepteur du circuit ne fonctionne plus</strong>.
+      </p>
+      <div class="action">
+        <button class="btn" onclick="serieBreak('lamp')">💡 Casser la lampe</button>
+        <button class="btn" onclick="serieBreak('motor')">⚙️ Casser le moteur</button>
+        <button class="btn" onclick="serieReset()">✅ Tout refonctionne</button>
+      </div>
+      <div class="demo-status" id="serieStatus">
+        La boucle est fermée : la lampe et le moteur fonctionnent.
+      </div>
+    </article>
+
+    <!-- BLOC DROIT : CIRCUIT EN DÉRIVATION -->
+    <article class="card deriv">
+      <h3>🟢 Circuit en dérivation</h3>
+
+<div class="circuit-box">
+<div class="real-circuit derivation-scene" aria-label="Circuit en dérivation avec pile, lampe et moteur à hélice">
+  <svg class="wire-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none" aria-hidden="true">
+    <!-- Branche principale -->
+    <path class="wire" d="M157 520 V196 H453 M883 196 H1139 V520"/>
+    <!-- Branche dérivée 1 : trait continu derrière l’ampoule -->
+    <path class="wire" d="M157 520 H1139"/>
+    <!-- Branche dérivée 2 : trait continu derrière le moteur -->
+    <path class="wire" d="M157 520 V885 H1139 V520"/>
+    <circle class="node-dot" cx="157" cy="520" r="13"/>
+    <circle class="node-dot" cx="1139" cy="520" r="13"/>
+  </svg>
+
+  <img crossorigin="anonymous" class="component battery circuit-asset"
+       src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png"
+       alt="Pile">
+  <div class="lamp-holder">
+    <img crossorigin="anonymous" id="derivLamp" class="lamp-on circuit-asset"
+         src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png"
+         data-on="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png"
+         data-off="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_eteinte.png"
+         alt="Lampe allumée">
+  </div>
+
+  <img crossorigin="anonymous" class="component motor-body circuit-asset"
+       src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png"
+       alt="Moteur sans hélice">
+  <img crossorigin="anonymous" id="derivMotor" class="component propeller circuit-asset"
+       src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png"
+       alt="Hélice du moteur">
+
+  <svg class="mark-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none" aria-hidden="true">
+    <g id="nodes" class="node-highlight">
+      <circle cx="157" cy="520" r="29" fill="none" stroke="#dc2626" stroke-width="8"/>
+      <circle cx="1139" cy="520" r="29" fill="none" stroke="#dc2626" stroke-width="8"/>
+    </g>
+    <g id="derivLoops" class="loop-highlight">
+      <path d="M196 486 V252 H466 M870 252 H1100 V486 H196"
+            fill="none" stroke="#16a34a" stroke-width="10"
+            stroke-dasharray="18 13" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M180 540 V855 H1116 V540 M1116 500 V235 H883 M453 235 H180 V500"
+            fill="none" stroke="#2563eb" stroke-width="10"
+            stroke-dasharray="18 13" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <path id="branchMain" class="branch-highlight"
+          d="M157 520 V196 H453 M883 196 H1139 V520"
+          fill="none" stroke="#dc2626" stroke-width="18" opacity=".84"/>
+    <path id="branch1" class="branch-highlight"
+          d="M157 520 H1139"
+          fill="none" stroke="#16a34a" stroke-width="18" opacity=".70"/>
+    <path id="branch2" class="branch-highlight"
+          d="M157 520 V885 H1139 V520"
+          fill="none" stroke="#2563eb" stroke-width="18" opacity=".70"/>
+    <path id="derivBreakMark" class="break-mark" d="M350 352 h78" stroke="#fff" stroke-width="24" stroke-linecap="round"/>
+    <path id="derivBreakBolt" class="break-mark"
+          d="M374 320 l24 28 -16 0 26 36"
+          fill="none" stroke="#dc2626" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="derivMotorBreakBolt" class="break-mark"
+          d="M830 694 l24 28 -16 0 26 36"
+          fill="none" stroke="#dc2626" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
+      </div>
+
+      <h4>🔎 Savoir reconnaître</h4>
+      <p>
+        Un circuit en dérivation possède <span class="key">plusieurs boucles</span> :
+        le courant dispose de plusieurs chemins possibles.
+      </p>
+      <div class="action">
+        <button class="btn" onclick="toggleDerivLoops()">🟢 Afficher les boucles</button>
+      </div>
+
+      <p>
+        Les <strong>nœuds</strong> sont les points où le courant se sépare et se rejoint.
+        Une <strong>branche</strong> est une portion de circuit comprise entre deux nœuds.
+      </p>
+      <div class="action">
+        <button class="btn" onclick="toggleMark('nodes')">🔴 Afficher les nœuds</button>
+      </div>
+
+      <p>
+        La <strong>branche principale</strong> contient le générateur.
+        Les autres sont les <strong>branches dérivées</strong>.
+      </p>
+      <div class="action">
+        <button class="btn" onclick="showBranches()">🌈 Afficher les branches</button>
+      </div>
+
+      <hr style="border:0;border-top:2px solid #dcefe2;margin:24px 0">
+
+      <h4>💥 Que se passe-t-il si un dipôle est cassé ?</h4>
+      <p>
+        Si un récepteur est cassé, seule sa branche est ouverte :
+        <strong>les récepteurs placés dans les autres branches peuvent continuer à fonctionner</strong>.
+      </p>
+      <div class="action">
+        <button class="btn" onclick="derivBreak('lamp')">💡 Casser la lampe</button>
+        <button class="btn" onclick="derivBreak('motor')">⚙️ Casser le moteur</button>
+        <button class="btn" onclick="derivReset()">✅ Tout refonctionne</button>
+      </div>
+      <div class="demo-status" id="derivStatus">
+        Les deux branches sont fermées : la lampe et le moteur fonctionnent.
+      </div>
+    </article>
+  </div>
+
+  <div class="lesson-actions">
+    <button class="btn primary" onclick="showSection('exercices')">🎯 Passer aux exercices</button>
+  </div>
+</section>
+
+<section class="section" id="exercices">
+  <h2 class="title">🎯 Exercices interactifs</h2>
+
+  <div class="exercise-menu">
+    <button class="mode active" data-mode="type" onclick="setMode('type',this)">🔎 Série ou dérivation ?<br><small>15 circuits</small></button>
+    <button class="mode" data-mode="structure" onclick="setMode('structure',this)">🌿 Nœuds, branches et boucles<br><small>15 questions parmi plus de 30</small></button>
+    <button class="mode" data-mode="effect" onclick="setMode('effect',this)">💡 Prévoir le fonctionnement</button>
+    <button class="mode" data-mode="mix" onclick="setMode('mix',this)">🎲 Parcours complet<br><small>10 questions variées</small></button>
+  </div>
+
+  <div class="quiz-card" id="quizCard">
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="quiz-head">
+      <div id="counter">Question 1 / 10</div>
+      <div class="score">⭐ <span id="score">0</span></div>
+    </div>
+    <div id="questionArea"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn primary next" id="nextBtn" onclick="nextQuestion()">Question suivante →</button>
+  </div>
+</section>
+</main>
+
+
+<script>
+const svgs = {
+  serie: `
+<div class="real-circuit compact quiz-series" data-topology="serie" data-receivers="2" aria-label="Circuit en série avec une lampe faiblement allumée et un moteur tournant lentement">
+  <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none">
+    <path class="wire" d="M157 202 H431 M898 202 H1139 V817 H157 V202"/>
+  </svg>
+  <img crossorigin="anonymous" class="component battery" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
+  <div class="lamp-holder lamp-weak"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Lampe faiblement allumée"></div>
+  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+  <img crossorigin="anonymous" class="component propeller motor-slow" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice tournant lentement">
+</div>`,
+
+  deriv: `
+<div class="real-circuit compact quiz-deriv" data-topology="derivation" data-derived-branches="2" data-main-y="215" data-branch-ys="520,885" data-node-ys="520" aria-label="Circuit en dérivation avec une lampe sur une branche dérivée et un moteur sur l’autre branche dérivée">
+  <svg class="wire-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none">
+    <path class="wire" d="M157 520 V215 H431 M898 215 H1139 V520"/>
+    <path class="wire" d="M157 520 H1139"/>
+    <path class="wire" d="M157 520 V885 H1139 V520"/>
+    <circle class="node-dot" cx="157" cy="520" r="13"/><circle class="node-dot" cx="1139" cy="520" r="13"/>
+  </svg>
+  <img crossorigin="anonymous" class="component battery" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
+  <div class="lamp-holder lamp-normal"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Lampe bien allumée"></div>
+  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+  <img crossorigin="anonymous" class="component propeller motor-normal" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice tournant normalement">
+</div>`,
+
+  weird: `
+<div class="real-circuit compact quiz-weird" data-topology="derivation" data-derived-branches="2" data-main-y="980" data-branch-ys="300,697" data-node-ys="697" aria-label="Circuit en dérivation avec branche principale en bas, une lampe sur une branche dérivée et un moteur sur l’autre branche dérivée">
+  <svg class="wire-layer" viewBox="0 0 1363 1200" preserveAspectRatio="none">
+    <!-- Nœuds abaissés à Y=697 pour rester cohérents avec la branche du moteur. -->
+    <path class="wire" d="M157 697 V300 H1139 V697"/>
+    <path class="wire" d="M157 697 H1139"/>
+    <path class="wire" d="M157 697 V980 H1139 V697"/>
+    <circle class="node-dot" cx="157" cy="697" r="13"/>
+    <circle class="node-dot" cx="1139" cy="697" r="13"/>
+  </svg>
+  <div class="lamp-holder lamp-normal">
+    <img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Lampe bien allumée">
+  </div>
+  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+  <img crossorigin="anonymous" class="component propeller motor-normal" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice tournant normalement">
+  <img crossorigin="anonymous" class="component battery" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
+</div>`,
+
+  serie3: `
+<div class="real-circuit compact quiz-series3" data-topology="serie" data-receivers="3" aria-label="Circuit en série avec trois lampes très faiblement allumées">
+  <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none">
+    <path class="wire" d="M157 202 H431 M898 202 H1139 V817 H157 V202"/>
+    <path class="wire" d="M157 817 H1139"/>
+  </svg>
+  <img crossorigin="anonymous" class="component battery" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
+  <div class="lamp-holder lamp-a lamp-very-weak"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Lampe très faiblement allumée"></div>
+  <div class="lamp-holder lamp-b lamp-very-weak"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Lampe très faiblement allumée"></div>
+  <div class="lamp-holder lamp-c lamp-very-weak"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Lampe très faiblement allumée"></div>
+</div>`,
+
+  deriv2m: `
+<div class="real-circuit compact quiz-deriv2m" data-topology="derivation" data-derived-branches="2" data-main-y="196" data-branch-ys="520,885" data-node-ys="520" aria-label="Circuit en dérivation fermé : pile seule dans la branche principale et une lampe dans chacune des deux branches dérivées">
+  <svg class="wire-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none">
+    <!-- Branche principale : pile seule, en haut. -->
+    <path class="wire" d="M157 520 V196 H1139 V520"/>
+    <!-- Branche dérivée 1 : une seule lampe, légèrement décalée vers la gauche. Le fil continu passe derrière l’image. -->
+    <path class="wire" d="M157 520 H1139"/>
+    <!-- Branche dérivée 2 : une seule lampe, légèrement décalée vers la droite. Le fil continu passe derrière l’image. -->
+    <path class="wire" d="M157 520 V885 H1139 V520"/>
+    <circle class="node-dot" cx="157" cy="520" r="13"/>
+    <circle class="node-dot" cx="1139" cy="520" r="13"/>
+  </svg>
+  <img crossorigin="anonymous" class="component battery" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile dans la branche principale">
+  <div class="lamp-holder lamp-normal"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Lampe bien allumée et raccordée à la première branche dérivée"></div>
+  <div class="lamp-holder lamp-normal lamp2-holder"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Lampe bien allumée et raccordée à la deuxième branche dérivée"></div>
+</div>`
+};
+
+
+/* Banque de 15 circuits pour l'exercice « Série ou dérivation ? ».
+   Positionnement vertical systématique :
+   - ampoule : trait à 86 % de la hauteur du conteneur ;
+   - moteur : trait à 84 % de la hauteur du corps ;
+   - l'hélice reçoit exactement le même décalage vertical que le moteur. */
+const circuitAssets = {
+  battery:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png",
+  lampNormal:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png",
+  lampWeak:"https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png",
+  motor:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png",
+  prop:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png"
+};
+function lampHtml(x,y,H=995,size=18,state="normal",z=4){
+  const top=y/H*100-.86*32;
+  const cls=state==="very"?"lamp-very-weak":state==="weak"?"lamp-weak":"lamp-normal";
+  const src=state==="normal"?circuitAssets.lampNormal:circuitAssets.lampWeak;
+  return `<div class="lamp-holder ${cls}" style="z-index:${z};left:${x}%;top:${top.toFixed(2)}%;width:${size}%;height:32%"><img crossorigin="anonymous" class="lamp-on" src="${src}" alt="Lampe"></div>`;
+}
+function motorHtml(x,y,H=995,state="normal",zBody=3,zProp=5){
+  const h=31, top=y/H*100-.84*h;
+  const propTop=top-8.4;
+  const speed=state==="very"?"motor-very-slow":state==="slow"?"motor-slow":"motor-normal";
+  return `<img crossorigin="anonymous" class="component motor-body" style="z-index:${zBody};left:${x}%;top:${top.toFixed(2)}%;width:15%;height:${h}%" src="${circuitAssets.motor}" alt="Moteur">
+  <img crossorigin="anonymous" class="component propeller ${speed}" style="z-index:${zProp};left:${(x-5.2).toFixed(2)}%;top:${propTop.toFixed(2)}%;width:25.5%;height:38%;transform-origin:50% 50%;animation-name:propellerRotation;animation-timing-function:linear;animation-iteration-count:infinite" src="${circuitAssets.prop}" alt="Hélice">`;
+}
+function computeBranchShift(branches, branchIndex){
+  /* Règle simple de placement horizontal :
+     - par défaut, chaque branche est centrée ;
+     - si plusieurs branches dérivées voisines ont chacune un nombre impair
+       de dipôles (dans nos schémas : 1 dipôle), on décale ces dipôles
+       horizontalement les uns par rapport aux autres pour éviter qu’ils soient
+       parfaitement alignés. */
+  const counts = branches.map(branch => branch.length);
+  if(counts[branchIndex] % 2 === 0) return 0;
+
+  let start = branchIndex;
+  while(start > 0 && counts[start-1] % 2 === 1) start--;
+  let end = branchIndex;
+  while(end < counts.length - 1 && counts[end+1] % 2 === 1) end++;
+
+  const runLength = end - start + 1;
+  if(runLength === 1) return 0;
+
+  const pos = branchIndex - start;
+  if(runLength === 2) return [-9, 9][pos];
+  if(runLength === 3) return [-10, 0, 10][pos];
+
+  return (pos - (runLength - 1) / 2) * 8;
+}
+function receiverXs(n, branchShift=0, extraShift=0){
+  const shift = branchShift + extraShift;
+  return n===1 ? [41 + shift] : [28 + shift, 57 + shift];
+}
+function makeSeries(receivers,label){
+  const H=995, y=817;
+  const count=receivers.length;
+  const xs=count===1?[41]:count===2?[23,59]:[16,41,66];
+  const state=count===1?"normal":count===2?"weak":"very";
+  let comps=receivers.map((r,i)=>r==="lamp"?lampHtml(xs[i],y,H,count===3?16:19,state):motorHtml(xs[i]+2,y,H,state==="normal"?"normal":state==="weak"?"slow":"very")).join('');
+  return `<div class="real-circuit compact" data-topology="serie" aria-label="${label}">
+  <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none"><path class="wire" d="M157 202 H431 M898 202 H1139 V817 H157 V202"/></svg>
+  <img crossorigin="anonymous" class="component battery" style="z-index:3;left:31.55%;top:9.45%;width:34.75%;height:20.55%" src="${circuitAssets.battery}" alt="Pile">${comps}</div>`;
+}
+
+function nodesAtYs(nodeYs, zIndex){
+  /* Un nœud se place uniquement sur une vraie intersection utile entre un
+     trait horizontal et un montant vertical continu, jamais sur un simple coin. */
+  const uniqueYs=[...new Set(nodeYs)];
+  const circles=uniqueYs.map(y=>
+    `<circle class="node-dot" cx="157" cy="${y}" r="13"/>` +
+    `<circle class="node-dot" cx="1139" cy="${y}" r="13"/>`
+  ).join('');
+  return `<svg class="wire-layer node-layer" style="z-index:${zIndex}" viewBox="0 0 1363 1100" preserveAspectRatio="none">${circles}</svg>`;
+}
+function makeParallelRectangular(branches,label,mainPosition='top'){
+  const H=1100;
+  let mainY, branchYs;
+  if(mainPosition==='middle'){
+    mainY=520;
+    branchYs = branches.length===2 ? [300,780] : [260,720,900];
+  }else if(mainPosition==='bottom'){
+    mainY=900;
+    branchYs = branches.length===2 ? [300,610] : [250,500,720];
+  }else{
+    mainY=190;
+    branchYs = branches.length===2 ? [500,810] : [390,610,830];
+  }
+
+  /* Les montants verticaux commencent exactement sur le trait horizontal le
+     plus haut et se terminent exactement sur le trait horizontal le plus bas.
+     Ils ne dépassent donc jamais du circuit et aucune portion ne reste isolée. */
+  const horizontalYs=[mainY,...branchYs];
+  const topY=Math.min(...horizontalYs);
+  const bottomY=Math.max(...horizontalYs);
+  const internalNodeYs=[...new Set(horizontalYs.filter(y=>y>topY && y<bottomY))];
+  function branchNodeY(y){
+    if(internalNodeYs.includes(y)) return y;
+    if(y===topY) return internalNodeYs[0];
+    if(y===bottomY) return internalNodeYs[internalNodeYs.length-1];
+    return y;
+  }
+  const batteryTop = mainPosition==='middle' ? 36.8 : (mainPosition==='bottom' ? 73.5 : 7);
+
+  let wireLayers=`<svg class="wire-layer" style="z-index:1" viewBox="0 0 1363 1100" preserveAspectRatio="none">
+    <path class="wire vertical-rail" d="M157 ${topY} V${bottomY}"/>
+    <path class="wire vertical-rail" d="M1139 ${topY} V${bottomY}"/>
+    <path class="wire main-wire" d="M157 ${mainY} H453"/>
+    <path class="wire main-wire" d="M883 ${mainY} H1139"/>
+  </svg>`;
+
+  let comps='';
+  branches.forEach((branch,bi)=>{
+    const y=branchYs[bi], n=branch.length;
+    const xs=receiverXs(n, computeBranchShift(branches, bi), mainPosition==='bottom'?2:0);
+    const state=n===1?"normal":"weak";
+    const layerRank=bi+1;
+    const wireZ=2*layerRank;
+    const compZ=wireZ+1;
+    const propZ=wireZ+2;
+
+    /* Chaque trait horizontal dérivé porte obligatoirement au moins un récepteur. */
+    wireLayers += `<svg class="wire-layer" style="z-index:${wireZ}" viewBox="0 0 1363 1100" preserveAspectRatio="none"><path class="wire derived-wire" d="M157 ${y} H1139"/></svg>`;
+    branch.forEach((r,i)=>{
+      const nodeY=branchNodeY(y);
+      if(r==="lamp"){
+        comps += lampHtml(xs[i],y,H,n===1?19:17,state,compZ)
+          .replace('class="lamp-holder', `data-node-y="${nodeY}" data-line-y="${y}" class="lamp-holder branch-dipole`);
+      }else{
+        comps += motorHtml(xs[i]+2,y,H,n===1?"normal":"slow",compZ,propZ)
+          .replace('class="component motor-body', `data-node-y="${nodeY}" data-line-y="${y}" class="component motor-body branch-dipole`)
+          .replace('class="component propeller', `data-node-y="${nodeY}" data-line-y="${y}" class="component propeller branch-dipole`);
+      }
+    });
+  });
+
+  /* Les coins supérieur et inférieur ne reçoivent jamais de point noir.
+     Les nœuds sont uniquement les intersections internes en T. */
+  const nodeZ=2*branches.length+4;
+  const nodes=nodesAtYs(internalNodeYs,nodeZ);
+  return `<div class="real-circuit compact" style="aspect-ratio:1363/1100" data-topology="derivation" data-main-y="${mainY}" data-branch-ys="${branchYs.join(',')}" data-node-ys="${internalNodeYs.join(',')}" data-expected-nodes="${internalNodeYs.length*2}" aria-label="${label}">
+  ${wireLayers}
+  <img crossorigin="anonymous" data-node-y="${branchNodeY(mainY)}" data-line-y="${mainY}" data-main-dipole="true" class="component battery branch-dipole" style="z-index:3;left:31.55%;top:${batteryTop}%;width:34.75%;height:18.5%" src="${circuitAssets.battery}" alt="Pile">${comps}${nodes}</div>`;
+}
+Object.assign(svgs,{
+  type01:makeSeries(["lamp"],"Circuit en série avec une lampe"),
+  type02:makeSeries(["motor"],"Circuit en série avec un moteur"),
+  type03:makeSeries(["lamp","lamp"],"Circuit en série avec deux lampes faiblement allumées"),
+  type04:makeSeries(["lamp","motor"],"Circuit en série avec une lampe et un moteur fonctionnant moins bien"),
+  type05:makeSeries(["lamp","lamp","lamp"],"Circuit en série avec trois lampes très faiblement allumées"),
+  type06:makeSeries(["motor","motor"],"Circuit en série avec deux moteurs tournant lentement"),
+  type07:makeSeries(["lamp","motor","lamp"],"Circuit en série avec trois récepteurs fonctionnant très faiblement"),
+  type08:makeParallelRectangular([["lamp"],["lamp"]],"Circuit en dérivation avec deux lampes et branche principale au milieu",'middle'),
+  type09:makeParallelRectangular([["lamp"],["motor"]],"Circuit en dérivation avec une lampe, un moteur et branche principale au milieu",'middle'),
+  type10:makeParallelRectangular([["lamp"],["lamp"],["motor"]],"Circuit en dérivation avec trois branches dérivées",'top'),
+  type11:makeParallelRectangular([["motor"],["lamp"],["motor"]],"Circuit en dérivation avec trois branches et deux moteurs",'top'),
+  type12:makeParallelRectangular([["lamp","lamp"],["motor"]],"Circuit en dérivation avec deux lampes en série dans une branche",'top'),
+  type13:makeParallelRectangular([["lamp","motor"],["lamp"]],"Circuit en dérivation avec deux récepteurs en série dans une branche",'top'),
+  type14:makeParallelRectangular([["lamp"],["lamp","lamp"],["motor"]],"Circuit en dérivation avec trois branches dérivées",'top'),
+  type15:makeParallelRectangular([["lamp"],["motor"],["lamp"]],"Circuit en dérivation avec branche principale en bas",'bottom'),
+  type16:makeParallelRectangular([["motor"],["lamp","motor"]],"Circuit en dérivation avec branche principale en bas et deux branches dérivées différentes",'bottom'),
+  type17:makeParallelRectangular([["lamp","motor"],["motor"]],"Circuit en dérivation avec branche principale au milieu et trois récepteurs",'middle'),
+  type18:makeParallelRectangular([["motor"],["lamp"],["lamp","motor"]],"Circuit en dérivation avec trois branches dérivées de compositions différentes",'top'),
+  type19:makeParallelRectangular([["lamp","lamp"],["motor"],["lamp"]],"Circuit en dérivation avec branche principale en bas et quatre récepteurs",'bottom')
+});
+
+
+/* Contrevérification automatique des circuits « Série ou dérivation ? » :
+   - si la branche principale est en haut ou en bas, les points noirs sont
+     placés sur les branches dérivées internes ;
+   - si la branche principale est au milieu, les points noirs sont placés aux
+     extrémités de cette branche principale, là où elle rencontre les montants.
+   Aucun point n'est accepté à une hauteur arbitraire du montant vertical. */
+function auditTypeCircuitNodes(){
+  const errors=[];
+  for(let i=8;i<=19;i++){
+    const key=`type${String(i).padStart(2,'0')}`;
+    const html=svgs[key] || '';
+    const dots=[...html.matchAll(/<circle class="node-dot" cx="(157|1139)" cy="(\d+)" r="13"\s*\/?>(?:<\/circle>)?/g)]
+      .map(m=>`${m[1]},${m[2]}`);
+    const mainYs=[...html.matchAll(/<path class="wire main-wire" d="M157 (\d+) H453"\/>/g)].map(m=>Number(m[1]));
+    const derivedYs=[...html.matchAll(/<path class="wire derived-wire" d="M157 (\d+) H1139"\/>/g)].map(m=>Number(m[1]));
+    const allYs=[...mainYs,...derivedYs];
+    const top=Math.min(...allYs), bottom=Math.max(...allYs);
+    const expectedYs=[...new Set(allYs.filter(y=>y>top && y<bottom))];
+    const expected=expectedYs.flatMap(y=>[`157,${y}`,`1139,${y}`]);
+    const missing=expected.filter(p=>!dots.includes(p));
+    const misplaced=dots.filter(p=>!expected.includes(p));
+    if(missing.length || misplaced.length){
+      errors.push(`${key} — manquants : ${missing.join(' ; ') || 'aucun'} — mal placés : ${misplaced.join(' ; ') || 'aucun'}`);
+    }
+    if(derivedYs.length===0) errors.push(`${key} — aucune branche dérivée trouvée`);
+  }
+  if(errors.length) console.error('Audit des nœuds échoué :',errors);
+  else console.info('Audit des nœuds validé : aucun point sur les coins, uniquement sur les intersections internes.');
+}
+function auditOrthogonalTypeCircuits(){
+  const errors=[];
+  for(let i=8;i<=19;i++){
+    const key=`type${String(i).padStart(2,'0')}`;
+    const html=svgs[key] || '';
+    const paths=[...html.matchAll(/<path class="wire" d="([^"]+)"/g)].map(m=>m[1]);
+    paths.forEach((d,index)=>{
+      if(/[LlCcSsQqTtAa]/.test(d)) errors.push(`${key}, fil ${index+1} : segment non horizontal/vertical`);
+    });
+  }
+  if(errors.length) console.error('Audit géométrique échoué :',errors);
+  else console.info('Audit géométrique validé : type08 à type19 utilisent uniquement des montants verticaux continus et des branches dérivées horizontales.');
+}
+auditTypeCircuitNodes();
+auditOrthogonalTypeCircuits();
+
+
+const processedAssetCache = new Map();
+
+function absoluteUrl(url){
+  try{return new URL(url, location.href).href}catch(e){return url}
+}
+function edgeBackgroundMask(imageData, width, height){
+  const d=imageData.data;
+  const visited=new Uint8Array(width*height);
+  const queue=new Int32Array(width*height);
+  let head=0,tail=0;
+
+  function isBackground(i){
+    const p=i*4;
+    const r=d[p],g=d[p+1],b=d[p+2],a=d[p+3];
+    if(a<12) return true;
+    const max=Math.max(r,g,b), min=Math.min(r,g,b);
+    const saturation=max-min;
+    const brightness=(r+g+b)/3;
+    return brightness>168 && saturation<42;
+  }
+  function add(i){
+    if(i<0 || i>=width*height || visited[i] || !isBackground(i)) return;
+    visited[i]=1; queue[tail++]=i;
+  }
+  for(let x=0;x<width;x++){add(x);add((height-1)*width+x)}
+  for(let y=0;y<height;y++){add(y*width);add(y*width+width-1)}
+
+  while(head<tail){
+    const i=queue[head++], x=i%width, y=(i/width)|0;
+    if(x>0)add(i-1); if(x<width-1)add(i+1);
+    if(y>0)add(i-width); if(y<height-1)add(i+width);
+  }
+  for(let i=0;i<visited.length;i++){
+    if(visited[i]) d[i*4+3]=0;
+  }
+}
+function trimCanvas(canvas){
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  const w=canvas.width,h=canvas.height;
+  const d=ctx.getImageData(0,0,w,h).data;
+  let minX=w,minY=h,maxX=-1,maxY=-1;
+  for(let y=0;y<h;y++){
+    for(let x=0;x<w;x++){
+      if(d[(y*w+x)*4+3]>10){
+        if(x<minX)minX=x;if(x>maxX)maxX=x;
+        if(y<minY)minY=y;if(y>maxY)maxY=y;
+      }
+    }
+  }
+  if(maxX<minX || maxY<minY) return canvas;
+  const pad=Math.max(2,Math.round(Math.max(w,h)*.004));
+  minX=Math.max(0,minX-pad);minY=Math.max(0,minY-pad);
+  maxX=Math.min(w-1,maxX+pad);maxY=Math.min(h-1,maxY+pad);
+  const out=document.createElement('canvas');
+  out.width=maxX-minX+1;out.height=maxY-minY+1;
+  out.getContext('2d').drawImage(canvas,minX,minY,out.width,out.height,0,0,out.width,out.height);
+  return out;
+}
+function processAssetUrl(url, trim = true){
+  url=absoluteUrl(url);
+  const cacheKey = url + '::trim=' + (trim ? '1' : '0');
+  if(url.startsWith('data:') || url.startsWith('blob:')) return Promise.resolve(url);
+  if(processedAssetCache.has(cacheKey)) return processedAssetCache.get(cacheKey);
+
+  const promise=new Promise(resolve=>{
+    const source=new Image();
+    source.crossOrigin='anonymous';
+    source.onload=()=>{
+      try{
+        const canvas=document.createElement('canvas');
+        canvas.width=source.naturalWidth;
+        canvas.height=source.naturalHeight;
+        const ctx=canvas.getContext('2d',{willReadFrequently:true});
+        ctx.drawImage(source,0,0);
+        const data=ctx.getImageData(0,0,canvas.width,canvas.height);
+        edgeBackgroundMask(data,canvas.width,canvas.height);
+        ctx.putImageData(data,0,0);
+        const outputCanvas = trim ? trimCanvas(canvas) : canvas;
+        resolve(outputCanvas.toDataURL('image/png'));
+      }catch(error){
+        resolve(url);
+      }
+    };
+    source.onerror=()=>resolve(url);
+    source.src=url;
+  });
+  processedAssetCache.set(cacheKey,promise);
+  return promise;
+}
+async function prepareCircuitAsset(img){
+  const shouldTrim = !img.classList.contains('propeller');
+  if(img.dataset.on){
+    img.dataset.on=await processAssetUrl(img.dataset.on, shouldTrim);
+  }
+  if(img.dataset.off){
+    img.dataset.off=await processAssetUrl(img.dataset.off, shouldTrim);
+  }
+  img.src=await processAssetUrl(img.currentSrc || img.src, shouldTrim);
+  img.classList.add('asset-ready');
+}
+async function prepareCircuitAssets(root=document){
+  const images=[...root.querySelectorAll('.real-circuit img')];
+  await Promise.all(images.map(prepareCircuitAsset));
+}
+document.addEventListener('DOMContentLoaded',()=>prepareCircuitAssets(document));
+
+const questions = [
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type01",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type02",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type03",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type04",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type05",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type06",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type07",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type08",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type09",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type10",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type11",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type12",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type13",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type14",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type15",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"vocab",q:"Comment appelle-t-on les points où le courant se sépare et se rejoint ?",o:["Les bornes","Les nœuds","Les boucles","Les générateurs"],a:1,e:"Ces points de jonction sont appelés des nœuds.",r:"Définir un nœud"},
+  {cat:"vocab",q:"Une branche est une portion de circuit comprise…",o:["entre deux lampes","entre les bornes d’une pile","entre deux nœuds","dans une seule boucle"],a:2,e:"Une branche est comprise entre deux nœuds.",r:"Définir une branche"},
+  {cat:"vocab",q:"Quelle branche contient toujours le générateur ?",o:["Une branche dérivée","La branche principale","La branche la plus longue","Toutes les branches"],a:1,e:"Par définition, le générateur appartient à la branche principale.",r:"Identifier la branche principale"},
+  {cat:"vocab",q:"Dans ce circuit en dérivation, combien y a-t-il de branches au total ?",v:"deriv2m",o:["2","3","4","5"],a:1,e:"On compte une branche principale avec la pile et deux branches dérivées, chacune avec une lampe. Il y a donc trois branches.",r:"Compter les branches"},
+  {cat:"vocab",q:"Observe ce circuit en dérivation. Combien comporte-t-il de boucles ?",v:"deriv2m",o:["1","2","3","4"],a:1,e:"Ce circuit comporte 2 boucles : chacune associe la branche principale à l’une des deux branches dérivées.",r:"Compter les boucles",showLoops:true},
+  {cat:"vocab",q:"Combien y a-t-il de boucles dans ce circuit en dérivation ?",v:"type12",o:["1","2","3","4"],a:1,e:"Il y a 2 boucles, car le circuit possède deux branches dérivées reliées à la branche principale.",r:"Compter les boucles",showLoops:true},
+  {cat:"vocab",q:"Observe le schéma. Combien de boucles peut-on repérer ?",v:"type13",o:["1","2","3","4"],a:1,e:"On repère 2 boucles. Le nombre de dipôles dans une branche ne change pas le nombre de boucles.",r:"Compter les boucles",showLoops:true},
+  {cat:"vocab",q:"Combien ce circuit en dérivation possède-t-il de boucles ?",v:"type10",o:["2","3","4","6"],a:1,e:"Ce circuit possède 3 boucles, une pour chacune des trois branches dérivées associée à la branche principale.",r:"Compter les boucles",showLoops:true},
+  {cat:"vocab",q:"Quel est le nombre total de boucles dans ce circuit ?",v:"type14",o:["2","3","4","5"],a:1,e:"Il y a 3 boucles. Chaque branche dérivée forme une boucle avec la branche principale.",r:"Compter les boucles",showLoops:true},
+  {cat:"vocab",q:"Observe ce circuit en dérivation. Combien y a-t-il de branches au total ?",v:"type10",o:["4","5","6","7"],a:2,e:"Il y a 6 branches au total : quatre branches horizontales et deux portions verticales comprises entre deux nœuds.",r:"Compter les branches"},
+  {cat:"vocab",q:"Combien de branches au total peux-tu repérer dans ce circuit en dérivation ?",v:"type11",o:["3","4","5","6"],a:3,e:"On compte 6 branches : la branche principale, trois branches horizontales supplémentaires et deux branches verticales entre les nœuds.",r:"Compter les branches"},
+  {cat:"vocab",q:"Ce circuit en dérivation comporte combien de branches au total ?",v:"type14",o:["4","5","6","8"],a:2,e:"Ce circuit comporte 6 branches au total. Les deux portions verticales situées entre deux nœuds sont elles aussi des branches.",r:"Compter les branches"},
+  {cat:"vocab",q:"Observe attentivement ce circuit dont la branche principale est en bas. Combien y a-t-il de branches au total ?",v:"type15",o:["3","4","5","6"],a:3,e:"Il y a 6 branches au total : quatre branches horizontales et deux branches verticales comprises entre des nœuds.",r:"Compter les branches"},
+  {cat:"effect",q:"Dans un circuit en série, une lampe grille. Que se passe-t-il ?",o:["Les autres brillent davantage","Tous les récepteurs s’éteignent","Seule cette lampe s’éteint","La pile se recharge"],a:1,e:"La lampe grillée ouvre l’unique boucle : le courant ne circule plus nulle part.",r:"Prévoir une panne en série"},
+  {cat:"effect",q:"Dans un circuit en dérivation, une lampe grille sur une branche. Que se passe-t-il généralement ?",o:["Toutes les lampes s’éteignent","La pile cesse de fonctionner","Les lampes des autres branches restent allumées","Le courant change de sens"],a:2,e:"Le courant peut encore circuler dans les autres branches fermées.",r:"Prévoir une panne en dérivation"},
+  {cat:"effect",q:"On ajoute un récepteur en série. Comment évolue généralement le fonctionnement des récepteurs présents ?",o:["Les récepteurs fonctionnent mieux","Les récepteurs fonctionnent moins bien","Tout reste exactement identique","Les récepteurs grillent"],a:1,e:"Lorsqu’on ajoute un récepteur en série, les récepteurs présents fonctionnent généralement moins bien.",r:"Influence du nombre de récepteurs en série"},
+  {cat:"effect",q:"On ajoute une nouvelle branche avec une lampe dans un circuit en dérivation. Que se passe-t-il pour les récepteurs déjà présents ?",o:["Ils s’arrêtent","Ils continuent à fonctionner correctement","Ils sont court-circuités","Ils fonctionnent de moins en moins bien"],a:1,e:"Chaque branche dérivée est reliée aux bornes du générateur : les récepteurs déjà présents continuent donc à fonctionner correctement.",r:"Influence du nombre de branches"},
+  {cat:"effect",q:"Dans une même branche dérivée, on place plusieurs récepteurs les uns à la suite des autres. Comment fonctionnent-ils ?",o:["Ils fonctionnent mieux","Ils fonctionnent moins bien","Ils disparaissent du circuit","Ils produisent de l’énergie"],a:1,e:"Dans cette branche, les récepteurs sont en série : plus on en ajoute dans la même branche, moins chacun fonctionne efficacement.",r:"Plusieurs récepteurs dans une branche dérivée"},
+  {cat:"effect",q:"Quand on ajoute une branche en dérivation, l’intensité totale fournie par le générateur…",o:["diminue toujours","devient nulle","augmente généralement","change de sens"],a:2,e:"Une nouvelle branche demande un courant supplémentaire : l’intensité totale augmente généralement.",r:"Intensité totale en dérivation"},
+  {cat:"vocab",q:"Laquelle de ces phrases est correcte ?",o:["Une boucle est toujours une branche","Une branche est comprise entre deux nœuds","La branche principale ne contient jamais de pile","Un circuit en série possède plusieurs nœuds"],a:1,e:"La définition correcte est : une branche est comprise entre deux nœuds.",r:"Vocabulaire des circuits"},
+  {cat:"effect",q:"Pourquoi les autres lampes peuvent-elles rester allumées lorsqu’une branche est ouverte ?",o:["Parce que le courant traverse l’air","Parce qu’il existe d’autres chemins fermés","Parce que la lampe cassée produit du courant","Parce que les nœuds disparaissent"],a:1,e:"Les autres boucles offrent encore des chemins fermés entre les bornes du générateur.",r:"Comprendre les boucles en dérivation"}
+];
+
+const repereCircuits = [
+  {v:"type08", branches:3, main:"au milieu", mainShort:"milieu", fourNodes:false},
+  {v:"type09", branches:3, main:"au milieu", mainShort:"milieu", fourNodes:false},
+  {v:"type10", branches:6, main:"en haut",   mainShort:"haut", fourNodes:true},
+  {v:"type11", branches:6, main:"en haut",   mainShort:"haut", fourNodes:true},
+  {v:"type12", branches:3, main:"en haut",   mainShort:"haut", fourNodes:false},
+  {v:"type13", branches:3, main:"en haut",   mainShort:"haut", fourNodes:false},
+  {v:"type14", branches:6, main:"en haut",   mainShort:"haut", fourNodes:true},
+  {v:"type15", branches:6, main:"en bas",    mainShort:"bas", fourNodes:true},
+  {v:"type16", branches:3, main:"en bas",    mainShort:"bas", fourNodes:false},
+  {v:"type17", branches:3, main:"au milieu", mainShort:"milieu", fourNodes:false},
+  {v:"type18", branches:6, main:"en haut",   mainShort:"haut", fourNodes:true},
+  {v:"type19", branches:6, main:"en bas",    mainShort:"bas", fourNodes:true}
+];
+
+repereCircuits.forEach(c=>{
+  const optionsBranches=c.fourNodes ? ["3","4","5","6"] : ["2","3","4","5"];
+  const branchExplanation=c.fourNodes
+    ? "On compte les quatre branches horizontales, ainsi que les deux portions verticales comprises entre les deux nœuds de gauche et entre les deux nœuds de droite. Il y a donc 6 branches au total."
+    : "Entre les deux nœuds, on distingue trois chemins différents : la branche principale et deux branches dérivées. Il y a donc 3 branches au total.";
+  questions.push({
+    cat:"repere", kind:"qcm", repereCircuit:c.v,
+    q:"Observe ce circuit en dérivation. Combien y a-t-il de branches au total ?",
+    v:c.v, o:optionsBranches, a:optionsBranches.indexOf(String(c.branches)),
+    e:branchExplanation,
+    r:"Compter toutes les portions comprises entre deux nœuds"
+  });
+
+  questions.push({
+    cat:"repere", kind:"clickMainBranch", repereCircuit:c.v,
+    q:"Repère la branche principale : clique sur un nœud, puis sur le dipôle présent dans cette branche, puis sur l’autre nœud.",
+    v:c.v,
+    e:"La branche principale est la portion du circuit comprise entre deux nœuds et contenant le générateur. Son trajet est maintenant surligné.",
+    r:"Repérer la branche principale entre deux nœuds"
+  });
+
+  questions.push({
+    cat:"repere", kind:"clickNodes", repereCircuit:c.v,
+    q:"Clique sur tous les nœuds du circuit, puis valide.",
+    v:c.v,
+    e:"Les nœuds sont les points du circuit où les courants se séparent ou se rejoignent. Les coins du rectangle sont juste des « virages ».",
+    r:"Repérer les nœuds sur un circuit"
+  });
+
+  questions.push({
+    cat:"repere", kind:"clickBranch", repereCircuit:c.v,
+    q:"Repère une branche (n’importe laquelle). Méthode : clique sur un nœud, puis sur un dipôle de cette branche, puis sur l’autre nœud.",
+    v:c.v,
+    e:"Une branche est une portion de circuit comprise entre deux nœuds. Il faut donc bien savoir repérer les nœuds du circuit.",
+    r:"Repérer une branche entre deux nœuds"
+  });
+});
+
+let mode="type", pool=[], index=0, score=0, errors=[], locked=false;
+let clickState=null;
+
+function showSection(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.getElementById("tabCours").classList.toggle("active", id==="cours");
+  document.getElementById("tabExos").classList.toggle("active", id==="exercices");
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="exercices" && !pool.length) startQuiz();
+}
+function toggleMark(id){
+  document.getElementById(id).classList.toggle("visible-mark");
+}
+function toggleDerivLoops(){
+  const loops = document.getElementById("derivLoops");
+  const willShow = !loops.classList.contains("visible-mark");
+
+  // Boucles et branches ne doivent jamais être affichées simultanément.
+  ["branchMain","branch1","branch2"].forEach(id =>
+    document.getElementById(id).classList.remove("visible-mark")
+  );
+  loops.classList.toggle("visible-mark", willShow);
+}
+
+function showBranches(){
+  const branchIds = ["branchMain","branch1","branch2"];
+  const willShow = !branchIds.every(id =>
+    document.getElementById(id).classList.contains("visible-mark")
+  );
+
+  // Boucles et branches ne doivent jamais être affichées simultanément.
+  document.getElementById("derivLoops").classList.remove("visible-mark");
+  branchIds.forEach(id =>
+    document.getElementById(id).classList.toggle("visible-mark", willShow)
+  );
+}
+
+let serieBrokenComponent = null;
+
+function serieBreak(component){
+  serieBrokenComponent = component;
+
+  const serieLamp = document.getElementById("serieLamp");
+  const serieMotor = document.getElementById("serieMotor");
+
+  const lampBroken = component === "lamp";
+  const motorBroken = component === "motor";
+
+  // Dans les deux cas, l'unique boucle est ouverte :
+  // la lampe est éteinte et le moteur ne tourne plus.
+  serieLamp.src = lampBroken ? serieLamp.dataset.off : serieLamp.dataset.off;
+  serieLamp.alt = "Lampe éteinte";
+  serieLamp.className = "lamp-off circuit-asset asset-ready";
+
+  serieMotor.classList.add("stopped");
+  serieMotor.style.animationPlayState = "paused";
+
+  // Éclair rouge sur le dipôle cassé.
+  document.getElementById("serieBreakMark").classList.toggle("break-visible", lampBroken);
+  document.getElementById("serieBreakBolt").classList.toggle("break-visible", lampBroken);
+  document.getElementById("serieMotorBreakBolt").classList.toggle("break-visible", motorBroken);
+
+  document.getElementById("serieStatus").textContent = lampBroken
+    ? "La lampe est cassée : l’unique boucle est ouverte. La lampe est éteinte et le moteur s’arrête."
+    : "Le moteur est cassé : l’unique boucle est ouverte. Le moteur s’arrête et la lampe s’éteint.";
+}
+
+function serieReset(){
+  serieBrokenComponent = null;
+
+  const serieLamp = document.getElementById("serieLamp");
+  const serieMotor = document.getElementById("serieMotor");
+
+  serieLamp.src = serieLamp.dataset.on;
+  serieLamp.alt = "Lampe allumée";
+  serieLamp.className = "lamp-on circuit-asset asset-ready";
+
+  serieMotor.classList.remove("stopped");
+  serieMotor.style.animationPlayState = "running";
+
+  document.getElementById("serieBreakMark").classList.remove("break-visible");
+  document.getElementById("serieBreakBolt").classList.remove("break-visible");
+  document.getElementById("serieMotorBreakBolt").classList.remove("break-visible");
+
+  document.getElementById("serieStatus").textContent =
+    "La boucle est fermée : la lampe est allumée et le moteur tourne.";
+}
+
+let derivBrokenComponent = null;
+
+function derivBreak(component){
+  derivBrokenComponent = component;
+
+  const derivLamp = document.getElementById("derivLamp");
+  const derivMotor = document.getElementById("derivMotor");
+
+  const lampBroken = component === "lamp";
+  const motorBroken = component === "motor";
+
+  // Chaque récepteur est dans sa propre branche.
+  derivLamp.src = lampBroken ? derivLamp.dataset.off : derivLamp.dataset.on;
+  derivLamp.alt = lampBroken ? "Lampe éteinte" : "Lampe allumée";
+  derivLamp.className =
+    (lampBroken ? "lamp-off" : "lamp-on") + " circuit-asset asset-ready";
+
+  derivMotor.classList.toggle("stopped", motorBroken);
+  derivMotor.style.animationPlayState = motorBroken ? "paused" : "running";
+
+  // Éclair rouge uniquement sur le dipôle cassé.
+  document.getElementById("derivBreakMark").classList.toggle("break-visible", lampBroken);
+  document.getElementById("derivBreakBolt").classList.toggle("break-visible", lampBroken);
+  document.getElementById("derivMotorBreakBolt").classList.toggle("break-visible", motorBroken);
+
+  document.getElementById("derivStatus").textContent = lampBroken
+    ? "La lampe est cassée : sa branche est ouverte. La lampe est éteinte, mais le moteur continue de tourner."
+    : "Le moteur est cassé : sa branche est ouverte. Le moteur s’arrête, mais la lampe reste allumée.";
+}
+
+function derivReset(){
+  derivBrokenComponent = null;
+
+  const derivLamp = document.getElementById("derivLamp");
+  const derivMotor = document.getElementById("derivMotor");
+
+  derivLamp.src = derivLamp.dataset.on;
+  derivLamp.alt = "Lampe allumée";
+  derivLamp.className = "lamp-on circuit-asset asset-ready";
+
+  derivMotor.classList.remove("stopped");
+  derivMotor.style.animationPlayState = "running";
+
+  document.getElementById("derivBreakMark").classList.remove("break-visible");
+  document.getElementById("derivBreakBolt").classList.remove("break-visible");
+  document.getElementById("derivMotorBreakBolt").classList.remove("break-visible");
+
+  document.getElementById("derivStatus").textContent =
+    "Les deux branches sont fermées : la lampe est allumée et le moteur tourne.";
+}
+
+function setMode(m,btn){
+  mode=m;
+  document.querySelectorAll(".mode").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  startQuiz();
+}
+function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
+
+/* Parcours fusionné « Nœuds, branches et boucles » :
+   - une banque de plus de 30 questions issues des anciennes parties
+     « Nœuds, branches et boucles » et « Repérer dans un circuit » ;
+   - seulement 15 questions proposées à chaque tentative ;
+   - 3 définitions simples placées au début ;
+   - 12 questions visuelles ensuite, dans un ordre progressif : repérer d’abord
+     les nœuds, puis compter les boucles et les branches, et enfin repérer
+     la branche principale ou une branche quelconque ;
+   - autant que possible, un même circuit n'est utilisé qu'une seule fois. */
+function buildStructurePool(){
+  const definitions=shuffle(questions.filter(q=>q.cat==="vocab" && !q.v && !q.kind)).slice(0,3);
+  const usedCircuits=new Set();
+
+  function takeDistinct(candidates,count){
+    const picked=[];
+    for(const q of shuffle(candidates)){
+      const circuit=q.v || q.repereCircuit;
+      if(!circuit || usedCircuits.has(circuit)) continue;
+      picked.push(q);
+      usedCircuits.add(circuit);
+      if(picked.length===count) break;
+    }
+    return picked;
+  }
+
+  const loopCounts=questions.filter(q=>q.cat==="vocab" && q.v && q.showLoops);
+  const branchCounts=questions.filter(q=>
+    (q.cat==="vocab" && q.v && /compter les branches/i.test(q.r||"")) ||
+    (q.cat==="repere" && q.kind==="qcm")
+  );
+  const nodeQuestions=questions.filter(q=>q.cat==="repere" && q.kind==="clickNodes");
+  const mainBranchQuestions=questions.filter(q=>q.cat==="repere" && q.kind==="clickMainBranch");
+  const branchQuestions=questions.filter(q=>q.cat==="repere" && q.kind==="clickBranch");
+
+  const visual=[];
+  visual.push(...takeDistinct(loopCounts,2));
+  visual.push(...takeDistinct(branchCounts,3));
+  visual.push(...takeDistinct(nodeQuestions,2));
+  visual.push(...takeDistinct(mainBranchQuestions,2));
+  visual.push(...takeDistinct(branchQuestions,3));
+
+  /* Sécurité : si une famille ne fournit pas assez de circuits distincts,
+     on complète avec d'autres questions visuelles sans doublon de circuit. */
+  if(visual.length<12){
+    const fallback=questions.filter(q=>(q.cat==="vocab" && q.v) || q.cat==="repere");
+    visual.push(...takeDistinct(fallback,12-visual.length));
+  }
+
+  /* Progression pédagogique avec alternance :
+     - les nœuds arrivent avant le premier comptage de branches ;
+     - deux questions demandant la même réflexion et conduisant à la même
+       réponse ne sont pas placées l'une à la suite de l'autre ;
+     - une autre compétence est intercalée entre deux comptages similaires. */
+  const nodes=shuffle(visual.filter(q=>q.kind==="clickNodes"));
+  const loops=shuffle(visual.filter(q=>q.showLoops));
+  const branchCountQuestions=shuffle(visual.filter(q=>
+    q.kind==="qcm" || (!q.kind && /compter les branches/i.test(q.r||""))
+  ));
+  const mainSelections=shuffle(visual.filter(q=>q.kind==="clickMainBranch"));
+  const freeBranchSelections=shuffle(visual.filter(q=>q.kind==="clickBranch"));
+  const remaining=shuffle(visual.filter(q=>
+    !nodes.includes(q) && !loops.includes(q) && !branchCountQuestions.includes(q) &&
+    !mainSelections.includes(q) && !freeBranchSelections.includes(q)
+  ));
+
+  const groups=[nodes,loops,branchCountQuestions,mainSelections,freeBranchSelections,remaining];
+  const ordered=[];
+  const signature=q=>{
+    const skill=q.kind || q.r || q.cat || '';
+    const answer=Array.isArray(q.o) && Number.isInteger(q.a) ? q.o[q.a] : '';
+    return `${skill}::${answer}`.toLowerCase();
+  };
+
+  /* On choisit à chaque étape une question provenant d'une autre famille,
+     et dont la signature pédagogique diffère de la question précédente. */
+  while(ordered.length<12 && groups.some(g=>g.length)){
+    let chosenGroup=-1;
+    for(let offset=0;offset<groups.length;offset++){
+      const gi=(ordered.length+offset)%groups.length;
+      if(!groups[gi].length) continue;
+      const candidateIndex=groups[gi].findIndex(q=>
+        !ordered.length || signature(q)!==signature(ordered[ordered.length-1])
+      );
+      if(candidateIndex!==-1){
+        chosenGroup=gi;
+        ordered.push(groups[gi].splice(candidateIndex,1)[0]);
+        break;
+      }
+    }
+    if(chosenGroup===-1){
+      const fallbackGroup=groups.find(g=>g.length);
+      if(!fallbackGroup) break;
+      ordered.push(fallbackGroup.shift());
+    }
+  }
+
+  return [...definitions,...ordered].slice(0,15);
+}
+
+function startQuiz(){
+  const source = mode==="mix" ? questions : questions.filter(q=>q.cat===mode);
+  const maxQuestions = mode==="mix" ? 10 : mode==="type" ? Math.min(15, source.length) : Math.min(8, source.length);
+  pool = mode==="structure" ? buildStructurePool() : shuffle(source).slice(0, maxQuestions);
+  index = 0;
+  score = 0;
+  errors = [];
+  document.getElementById("score").textContent = 0;
+  render();
+}
+
+function render(){
+  locked=false;
+  clickState=null;
+  document.getElementById("feedback").className = "feedback";
+  document.getElementById("nextBtn").style.display = "none";
+  document.getElementById("bar").style.width = (index/pool.length*100) + "%";
+  document.getElementById("counter").textContent = `Question ${index+1} / ${pool.length}`;
+  const q = pool[index];
+  const visual = q.v ? `<div class="visual circuit-box">${svgs[q.v]}</div>` : "";
+
+  if(q.kind==="clickNodes"){
+    document.getElementById("questionArea").innerHTML = `
+      ${visual}
+      <div class="question">${q.q}</div>
+      <div class="click-instruction">Sélectionne les points qui te semblent être des nœuds.<div class="click-progress" id="clickProgress">0 point sélectionné</div></div>
+      <div class="action" style="justify-content:center"><button class="btn primary" onclick="validateNodeClicks()">✅ Valider mes choix</button></div>`;
+    prepareCircuitAssets(document.getElementById("questionArea"));
+    requestAnimationFrame(setupNodeClickQuestion);
+    return;
+  }
+
+  if(q.kind==="clickBranch" || q.kind==="clickMainBranch"){
+    const targetLabel="dipôle présent dans cette branche";
+    document.getElementById("questionArea").innerHTML = `
+      ${visual}
+      <div class="question">${q.q}</div>
+      <div class="click-instruction">1. Nœud &nbsp;→&nbsp; 2. ${targetLabel} &nbsp;→&nbsp; 3. Autre nœud<div class="click-progress" id="clickProgress">Clique d’abord sur un nœud.</div></div>
+      <div class="action" style="justify-content:center"><button class="btn" onclick="resetBranchClicks()">↩️ Recommencer la sélection</button></div>`;
+    prepareCircuitAssets(document.getElementById("questionArea"));
+    requestAnimationFrame(()=>setupBranchClickQuestion(q.kind==="clickMainBranch"));
+    return;
+  }
+
+  document.getElementById("questionArea").innerHTML = `
+    ${visual}
+    <div class="question">${q.q}</div>
+    <div class="choices">
+      ${q.o.map((x,i)=>`<button class="choice" onclick="answer(${i},this)">${x}</button>`).join("")}
+    </div>`;
+  prepareCircuitAssets(document.getElementById("questionArea"));
+}
+
+function circuitGeometry(circuit){
+  const ys=[];
+  circuit.querySelectorAll('path.main-wire,path.derived-wire').forEach(path=>{
+    const d=path.getAttribute('d')||'';
+    const m=d.match(/M157\s+(\d+)/);
+    if(m) ys.push(Number(m[1]));
+  });
+  return {
+    allYs:[...new Set(ys)],
+    correctYs:(circuit.dataset.nodeYs||'').split(',').filter(Boolean).map(Number)
+  };
+}
+function addCandidateOverlay(circuit,onClick){
+  circuit.classList.add('interactive-circuit');
+  const {allYs}=circuitGeometry(circuit);
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','click-overlay');
+  svg.setAttribute('viewBox','0 0 1363 1100');
+  svg.setAttribute('preserveAspectRatio','none');
+  allYs.forEach(y=>[157,1139].forEach(x=>{
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r','25');
+    c.setAttribute('class','click-point');
+    c.dataset.x=x; c.dataset.y=y;
+    c.addEventListener('click',()=>onClick(c));
+    svg.appendChild(c);
+  }));
+  circuit.appendChild(svg);
+  return svg;
+}
+function setupNodeClickQuestion(){
+  const circuit=document.querySelector('#questionArea .real-circuit');
+  if(!circuit) return;
+  clickState={selected:new Set(), circuit};
+  addCandidateOverlay(circuit,c=>{
+    if(locked) return;
+    const key=`${c.dataset.x},${c.dataset.y}`;
+    if(clickState.selected.has(key)){
+      clickState.selected.delete(key); c.classList.remove('selected');
+    }else{
+      clickState.selected.add(key); c.classList.add('selected');
+    }
+    document.getElementById('clickProgress').textContent=`${clickState.selected.size} point${clickState.selected.size>1?'s':''} sélectionné${clickState.selected.size>1?'s':''}`;
+  });
+}
+function validateNodeClicks(){
+  if(locked || !clickState) return;
+  const circuit=clickState.circuit;
+  const correctYs=(circuit.dataset.nodeYs||'').split(',').filter(Boolean).map(Number);
+  const expected=new Set(correctYs.flatMap(y=>[`157,${y}`,`1139,${y}`]));
+  const selected=clickState.selected;
+  const ok=selected.size===expected.size && [...selected].every(k=>expected.has(k));
+  locked=true;
+  circuit.querySelectorAll('.click-point').forEach(c=>{
+    const key=`${c.dataset.x},${c.dataset.y}`;
+    c.classList.remove('selected');
+    if(expected.has(key)) c.classList.add('correct');
+    else if(selected.has(key)) c.classList.add('wrong');
+    c.style.pointerEvents='none';
+  });
+  addVisualFeedback(ok
+    ? 'Tous les nœuds sont indiqués en vert. Les autres points proposés sont de simples virages.'
+    : 'Les nœuds corrects apparaissent en vert. Les points rouges sélectionnés sont de simples virages.',ok);
+  completeInteractiveAnswer(ok);
+}
+function setupBranchClickQuestion(mainOnly=false){
+  const circuit=document.querySelector('#questionArea .real-circuit');
+  if(!circuit) return;
+  clickState={step:0, firstNode:null, dipole:null, dipoleHitbox:null, secondNode:null, circuit};
+  addCandidateOverlay(circuit,c=>handleBranchNodeClick(c));
+
+  const dipoles=[...circuit.querySelectorAll('.branch-dipole')];
+  dipoles.forEach(el=>{
+    /* Même pour une question sur la branche principale, tous les dipôles doivent
+       pouvoir être sélectionnés : choisir un dipôle d'une branche dérivée fait
+       partie des erreurs possibles que l'élève peut commettre. */
+
+    /* Zone cliquable indépendante de l'image : elle reste accessible même si
+       le PNG transparent, son recadrage ou le calque SVG réduisent la zone réelle. */
+    const hitbox=document.createElement('button');
+    hitbox.type='button';
+    hitbox.className='dipole-hitbox';
+    hitbox.setAttribute('aria-label',el.alt || 'Dipôle');
+    const left=el.offsetLeft/circuit.clientWidth*100;
+    const top=el.offsetTop/circuit.clientHeight*100;
+    const width=el.offsetWidth/circuit.clientWidth*100;
+    const height=el.offsetHeight/circuit.clientHeight*100;
+    hitbox.style.left=`${left}%`;
+    hitbox.style.top=`${top}%`;
+    hitbox.style.width=`${width}%`;
+    hitbox.style.height=`${height}%`;
+
+    const selectDipole=ev=>{
+      ev.stopPropagation();
+      if(locked || clickState.step!==1) return;
+      circuit.querySelectorAll('.branch-dipole.selected').forEach(d=>d.classList.remove('selected'));
+      circuit.querySelectorAll('.dipole-hitbox.selected').forEach(d=>d.classList.remove('selected'));
+      clickState.dipole=el;
+      clickState.dipoleHitbox=hitbox;
+      el.classList.add('selected');
+      hitbox.classList.add('selected');
+      clickState.step=2;
+      document.getElementById('clickProgress').textContent='Clique maintenant sur l’autre nœud de la même branche.';
+    };
+    hitbox.addEventListener('click',selectDipole);
+    circuit.appendChild(hitbox);
+  });
+}
+function handleBranchNodeClick(c){
+  if(locked || !clickState) return;
+  if(clickState.step===0){
+    clickState.firstNode=c; c.classList.add('selected'); clickState.step=1;
+    document.getElementById('clickProgress').textContent='Clique sur le dipôle présent dans cette branche.';
+  }else if(clickState.step===2 && c!==clickState.firstNode){
+    clickState.secondNode=c; c.classList.add('selected');
+    validateBranchClicks();
+  }
+}
+function branchPathFromNodeAndLine(nodeY,lineY,side='both'){
+  if(side==='left') return `M157 ${nodeY[0]} V${nodeY[1]}`;
+  if(side==='right') return `M1139 ${nodeY[0]} V${nodeY[1]}`;
+  if(!Number.isFinite(lineY) || !Number.isFinite(nodeY)) return `M157 ${nodeY} H1139`;
+  if(lineY===nodeY) return `M157 ${nodeY} H1139`;
+  return `M157 ${nodeY} V${lineY} H1139 V${nodeY}`;
+}
+function branchPathForSelection(circuit,dipole,nodeY){
+  const lineY=Number(dipole.dataset.lineY);
+  return branchPathFromNodeAndLine(nodeY,lineY);
+}
+function collectAllBranchSpecs(circuit){
+  const mainY=Number(circuit.dataset.mainY);
+  const branchYs=(circuit.dataset.branchYs||'').split(',').filter(Boolean).map(Number);
+  const nodeYs=(circuit.dataset.nodeYs||'').split(',').filter(Boolean).map(Number).sort((a,b)=>a-b);
+  const horizontalYs=[mainY,...branchYs].sort((a,b)=>a-b);
+  const specs=[];
+  let n=1;
+  function mapNodeY(lineY){
+    if(nodeYs.includes(lineY)) return lineY;
+    if(lineY<nodeYs[0]) return nodeYs[0];
+    if(lineY>nodeYs[nodeYs.length-1]) return nodeYs[nodeYs.length-1];
+    return lineY;
+  }
+  horizontalYs.forEach(lineY=>{
+    const nodeY=mapNodeY(lineY);
+    specs.push({label:`Branche ${n++}`, path:branchPathFromNodeAndLine(nodeY,lineY)});
+  });
+  if(nodeYs.length===2){
+    specs.push({label:`Branche ${n++}`, path:branchPathFromNodeAndLine([nodeYs[0],nodeYs[1]],null,'left')});
+    specs.push({label:`Branche ${n++}`, path:branchPathFromNodeAndLine([nodeYs[0],nodeYs[1]],null,'right')});
+  }
+  return specs;
+}
+function drawBranchFeedback(circuit,dipole,nodeY,ok){
+  const old=circuit.querySelector('.branch-feedback-overlay');
+  if(old) old.remove();
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','click-overlay branch-feedback-overlay');
+  svg.setAttribute('viewBox','0 0 1363 1100');
+  svg.setAttribute('preserveAspectRatio','none');
+  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d',branchPathForSelection(circuit,dipole,nodeY));
+  path.setAttribute('class','branch-feedback-path '+(ok?'correct':'wrong'));
+  svg.appendChild(path);
+  circuit.appendChild(svg);
+}
+function drawMainBranchCorrection(circuit,selectedDipole,selectedNodeY){
+  /* En cas d'erreur, on conserve en rouge la branche choisie par l'élève et
+     on ajoute en vert la véritable branche principale contenant la pile. */
+  const old=circuit.querySelector('.branch-feedback-overlay');
+  if(old) old.remove();
+
+  const mainDipole=circuit.querySelector('.branch-dipole[data-main-dipole="true"]');
+  if(!mainDipole) return;
+  const mainNodeY=Number(mainDipole.dataset.nodeY);
+
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','click-overlay branch-feedback-overlay');
+  svg.setAttribute('viewBox','0 0 1363 1100');
+  svg.setAttribute('preserveAspectRatio','none');
+
+  const wrongPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  wrongPath.setAttribute('d',branchPathForSelection(circuit,selectedDipole,selectedNodeY));
+  wrongPath.setAttribute('class','branch-feedback-path wrong');
+  svg.appendChild(wrongPath);
+
+  const correctPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+  correctPath.setAttribute('d',branchPathForSelection(circuit,mainDipole,mainNodeY));
+  correctPath.setAttribute('class','branch-feedback-path correct');
+  svg.appendChild(correctPath);
+
+  circuit.appendChild(svg);
+}
+function showAllBranchesOnCircuit(circuit){
+  const oldOverlay=circuit.querySelector('.all-branches-overlay');
+  if(oldOverlay) oldOverlay.remove();
+
+  /* Palette très vive pour mieux distinguer jusqu'à 6 branches sur un même schéma. */
+  const colors=['#0066FF','#FF1744','#00C853','#AA00FF','#FF6D00','#00B8D4','#FF4081','#00E676'];
+  const specs=collectAllBranchSpecs(circuit);
+
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','click-overlay all-branches-overlay');
+  svg.setAttribute('viewBox','0 0 1363 1100');
+  svg.setAttribute('preserveAspectRatio','none');
+  specs.forEach((spec,i)=>{
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',spec.path);
+    path.setAttribute('class','all-branches-path');
+    path.style.stroke=colors[i%colors.length];
+    svg.appendChild(path);
+  });
+  circuit.appendChild(svg);
+}
+function collectDerivationLoopSpecs(circuit){
+  const mainY=Number(circuit.dataset.mainY);
+  const branchYs=(circuit.dataset.branchYs||'').split(',').filter(Boolean).map(Number);
+  const colors=['#16a34a','#2563eb','#ea580c','#7c3aed','#e11d48'];
+  const loopSpecs=[];
+
+  /* Les boucles sont construites comme des cadres réellement emboîtés.
+     Pour chaque côté de la branche principale :
+     - la branche la plus éloignée forme la boucle extérieure ;
+     - la branche la plus proche forme la boucle intérieure ;
+     - plus une boucle est intérieure, plus ses côtés gauche et droit sont
+       rapprochés et plus son trait proche de la branche principale est décalé.
+     Ainsi, aucun segment d'une boucle ne coupe une autre boucle. */
+  const groups=[
+    branchYs.filter(y=>y<mainY).sort((a,b)=>Math.abs(a-mainY)-Math.abs(b-mainY)),
+    branchYs.filter(y=>y>mainY).sort((a,b)=>Math.abs(a-mainY)-Math.abs(b-mainY))
+  ];
+
+  groups.forEach(group=>{
+    const count=group.length;
+    group.forEach((branchY,nearRank)=>{
+      const dir=Math.sign(branchY-mainY) || 1;
+      const innerLevel=count-1-nearRank;
+
+      // La boucle la plus éloignée est la plus large ; la plus proche est la plus resserrée.
+      const leftX=196 + innerLevel*22;
+      const rightX=1100 - innerLevel*22;
+
+      // La boucle extérieure reste près de la branche principale ; les boucles
+      // intérieures s'en écartent progressivement, sans jamais la traverser.
+      const mainOffset=18 + innerLevel*20;
+      const branchOffset=18;
+      const mainLoopY=mainY + dir*mainOffset;
+      const branchLoopY=branchY - dir*branchOffset;
+      const color=colors[loopSpecs.length % colors.length];
+
+      loopSpecs.push({
+        color,
+        path:`M${leftX} ${mainLoopY} H453 M883 ${mainLoopY} H${rightX} V${branchLoopY} H${leftX} V${mainLoopY}`
+      });
+    });
+  });
+
+  return loopSpecs;
+}
+function showDerivationLoopsOnCircuit(circuit){
+  const oldOverlay=circuit.querySelector('.derivation-loops-overlay');
+  if(oldOverlay) oldOverlay.remove();
+
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','click-overlay derivation-loops-overlay');
+  svg.setAttribute('viewBox','0 0 1363 1100');
+  svg.setAttribute('preserveAspectRatio','none');
+
+  collectDerivationLoopSpecs(circuit).forEach(spec=>{
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',spec.path);
+    path.setAttribute('fill','none');
+    path.setAttribute('stroke',spec.color);
+    path.setAttribute('stroke-width','10');
+    path.setAttribute('stroke-dasharray','18 13');
+    path.setAttribute('stroke-linecap','round');
+    path.setAttribute('stroke-linejoin','round');
+    path.style.opacity='.95';
+    svg.appendChild(path);
+  });
+  circuit.appendChild(svg);
+}
+function showSeriesLoopOnCircuit(circuit){
+  const oldOverlay=circuit.querySelector('.series-loop-overlay');
+  if(oldOverlay) oldOverlay.remove();
+
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('class','click-overlay series-loop-overlay');
+  svg.setAttribute('viewBox','0 0 1363 995');
+  svg.setAttribute('preserveAspectRatio','none');
+
+  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d','M180 220 H431 M898 220 H1118 V795 H180 V220');
+  path.setAttribute('fill','none');
+  path.setAttribute('stroke','#16a34a');
+  path.setAttribute('stroke-width','10');
+  path.setAttribute('stroke-dasharray','18 13');
+  path.setAttribute('stroke-linecap','round');
+  path.setAttribute('stroke-linejoin','round');
+  path.style.opacity='.95';
+  svg.appendChild(path);
+  circuit.appendChild(svg);
+}
+function showTypeLoopsForCurrentQuestion(q){
+  if(!q) return;
+  if(q.showLoops || (q.cat==='type' && q.a===1)){
+    const circuit=document.querySelector('#questionArea .real-circuit[data-topology="derivation"]');
+    if(!circuit || !circuit.dataset.mainY || !circuit.dataset.branchYs) return;
+    showDerivationLoopsOnCircuit(circuit);
+    return;
+  }
+  if(q.cat==='type' && q.a===0){
+    const circuit=document.querySelector('#questionArea .real-circuit[data-topology="serie"]');
+    if(!circuit) return;
+    showSeriesLoopOnCircuit(circuit);
+  }
+}
+function questionNeedsAllBranchesFeedback(q){
+  if(!q || !q.v) return false;
+  /* Une question qui demande de compter les boucles ne doit afficher que les
+     boucles, même si son explication emploie les mots « branche principale »
+     ou « branche dérivée ». */
+  if(q.showLoops) return false;
+  const text=`${q.q||''} ${q.e||''} ${q.r||''}`.toLowerCase();
+  if(text.includes('boucle')) return false;
+  return text.includes('branche') && (
+    text.includes('combien') ||
+    text.includes('compter') ||
+    text.includes('branches au total')
+  );
+}
+function showAllBranchesForCurrentQuestion(q){
+  if(!questionNeedsAllBranchesFeedback(q)) return;
+  const circuit=document.querySelector('#questionArea .real-circuit[data-topology="derivation"]');
+  if(!circuit || !circuit.dataset.mainY || !circuit.dataset.nodeYs) return;
+  showAllBranchesOnCircuit(circuit);
+}
+
+function addVisualFeedback(message,ok){
+  const area=document.getElementById('questionArea');
+  const old=area.querySelector('.visual-feedback-box');
+  if(old) old.remove();
+  const box=document.createElement('div');
+  box.className='visual-feedback-box '+(ok?'ok':'no');
+  box.innerHTML=(ok?'✅ ':'❌ ')+message;
+  area.appendChild(box);
+}
+
+function validateBranchClicks(){
+  const {firstNode,secondNode,dipole,circuit}=clickState;
+  const y1=Number(firstNode.dataset.y), y2=Number(secondNode.dataset.y);
+  const x1=Number(firstNode.dataset.x), x2=Number(secondNode.dataset.x);
+  const dipoleNodeY=Number(dipole.dataset.nodeY);
+  const correctYs=(circuit.dataset.nodeYs||'').split(',').filter(Boolean).map(Number);
+  const isMainQuestion=pool[index].kind==='clickMainBranch';
+  const isExpectedDipole=!isMainQuestion || dipole.dataset.mainDipole==='true';
+  const ok=y1===y2 && y1===dipoleNodeY && x1!==x2 && correctYs.includes(y1) && isExpectedDipole;
+  locked=true;
+  [firstNode,secondNode].forEach(c=>{c.classList.remove('selected');c.classList.add(ok?'correct':'wrong');});
+  dipole.classList.remove('selected');dipole.classList.add(ok?'correct':'wrong');
+  if(clickState.dipoleHitbox){
+    clickState.dipoleHitbox.classList.remove('selected');
+    clickState.dipoleHitbox.classList.add(ok?'correct':'wrong');
+  }
+  circuit.querySelectorAll('.click-point,.dipole-hitbox').forEach(c=>c.style.pointerEvents='none');
+  if(isMainQuestion){
+    if(ok){
+      drawBranchFeedback(circuit,dipole,y1,true);
+      addVisualFeedback('La branche principale contenant le générateur est surlignée en vert.',true);
+    }else{
+      drawMainBranchCorrection(circuit,dipole,y1);
+      addVisualFeedback('La branche choisie apparaît en rouge. La véritable branche principale, qui contient le générateur, apparaît en vert.',false);
+    }
+  }else{
+    if(ok){
+      drawBranchFeedback(circuit,dipole,y1,true);
+      addVisualFeedback('La branche choisie est surlignée en vert entre ses deux nœuds.',true);
+    }else{
+      showAllBranchesOnCircuit(circuit);
+      addVisualFeedback('Cela ne correspond pas à une branche. Les bonnes réponses sont maintenant affichées sur le schéma.',false);
+    }
+  }
+  completeInteractiveAnswer(ok);
+}
+function resetBranchClicks(){
+  if(locked){return;}
+  const q=pool[index];
+  render();
+}
+function completeInteractiveAnswer(ok){
+  const q=pool[index];
+  if(ok){score++;document.getElementById('score').textContent=score;}
+  else errors.push(q.r);
+  const f=document.getElementById('feedback');
+  f.className='feedback show '+(ok?'ok':'no');
+  if(!ok && q.kind==='clickBranch'){
+    f.innerHTML='❌ <strong>Cela ne correspond pas à une branche.</strong> ❌ Une branche est une portion de circuit comprise entre deux nœuds. Il faut donc bien savoir repérer les nœuds du circuit. Les bonnes réponses sont affichées sur le schéma.';
+  }else{
+    f.innerHTML=(ok?'✅ <strong>Bonne réponse !</strong> ':'❌ <strong>Ce repérage n’est pas correct.</strong> ')+q.e;
+  }
+  document.getElementById('nextBtn').style.display='block';
+  document.getElementById('bar').style.width=((index+1)/pool.length*100)+'%';
+}
+
+function answer(i,btn){
+  if(locked) return;
+  locked=true;
+  const q = pool[index];
+  const ok = i===q.a;
+  document.querySelectorAll(".choice").forEach((b,j)=>{
+    b.disabled=true;
+    if(j===q.a) b.classList.add("correct");
+  });
+  if(!ok){
+    btn.classList.add("wrong");
+    errors.push(q.r);
+  } else {
+    score++;
+    document.getElementById("score").textContent = score;
+  }
+  const f = document.getElementById("feedback");
+  f.className = "feedback show " + (ok ? "ok" : "no");
+  if(q.cat==="type" && q.a===1){
+    f.innerHTML = (ok
+      ? "✅ <strong>Bonne réponse !</strong> "
+      : "❌ <strong>Pas tout à fait.</strong> ") + "C’est un circuit en dérivation car il est constitué de plusieurs boucles. Les différentes boucles sont affichées sur le schéma.";
+  }else if(q.cat==="type" && q.a===0){
+    f.innerHTML = (ok
+      ? "✅ <strong>Bonne réponse !</strong> "
+      : "❌ <strong>Pas tout à fait.</strong> ") + "C’est un circuit en série car il est constitué d’une seule boucle. La boucle est affichée sur le schéma.";
+  }else{
+    f.innerHTML = (ok
+      ? "✅ <strong>Bonne réponse !</strong> "
+      : "❌ <strong>Pas tout à fait.</strong> ") + q.e;
+  }
+
+  // Pour l'exercice « Série ou dérivation ? », le feedback affiche aussi
+  // la ou les boucles directement sur le schéma.
+  showTypeLoopsForCurrentQuestion(q);
+
+  // Pour toute question de comptage des branches, le feedback devient aussi
+  // visuel : chaque portion comprise entre deux nœuds reçoit sa propre couleur,
+  // que la réponse de l’élève soit juste ou fausse.
+  showAllBranchesForCurrentQuestion(q);
+
+  document.getElementById("nextBtn").style.display = "block";
+  document.getElementById("bar").style.width = ((index+1)/pool.length*100) + "%";
+}
+
+function nextQuestion(){
+  index++;
+  if(index < pool.length) render();
+  else finish();
+}
+
+function finish(){
+  const pct = Math.round(score/pool.length*100);
+  const medal = pct===100 ? "🏆" : pct>=80 ? "🎉" : pct>=60 ? "👏" : "📚";
+  const msg = pct===100
+    ? "Excellent ! Toutes les notions sont maîtrisées."
+    : pct>=80
+    ? "Bravo ! Le chapitre est presque parfaitement maîtrisé."
+    : pct>=60
+    ? "Bon travail ! Quelques points restent à consolider."
+    : "Il faut reprendre certaines notions, puis recommencer.";
+
+  let counts = {};
+  errors.forEach(e => counts[e] = (counts[e] || 0) + 1);
+  let list = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,4);
+
+  document.getElementById("questionArea").innerHTML = `
+    <div class="result">
+      <div class="medal">${medal}</div>
+      <h2>${score} / ${pool.length}</h2>
+      <p>${msg}</p>
+      ${list.length
+        ? `<div class="review"><strong>🎯 À retravailler :</strong><ul>${list.map(x=>`<li>${x[0]}</li>`).join("")}</ul></div>`
+        : `<div class="review">✅ Aucun point particulier à retravailler.</div>`}
+      <button class="btn green" onclick="startQuiz()">🔄 Recommencer</button>
+    </div>`;
+  document.getElementById("counter").textContent = "Bilan final";
+  document.getElementById("feedback").className = "feedback";
+  document.getElementById("nextBtn").style.display = "none";
+  if(pct>=80) confetti();
+}
+
+function confetti(){
+  for(let i=0;i<70;i++){
+    const d = document.createElement("div");
+    d.style.cssText = `position:fixed;z-index:99;top:-15px;left:${Math.random()*100}vw;width:9px;height:14px;background:hsl(${Math.random()*360} 80% 55%);transform:rotate(${Math.random()*360}deg);animation:fall ${2+Math.random()*2}s linear forwards`;
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),4200);
+  }
+}
+const st = document.createElement("style");
+st.textContent = "@keyframes fall{to{transform:translateY(110vh) rotate(900deg)}}";
+document.head.appendChild(st);
+</script>
+</body>
+</html>
