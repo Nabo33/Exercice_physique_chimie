@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les courts-circuits – 5ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bleu:#1a73e8;--bleu-clair:#e8f0fe;--vert:#0f9d58;--vert-clair:#e6f4ea;
+  --rouge:#ea4335;--rouge-clair:#fce8e6;--jaune:#fbbc04;--violet:#7c4dff;
+  --cyan:#06b6d4;--bg:#f0f4ff;--carte:#fff;--texte:#1a1a2e;--gris:#657085;
+  --border:#dde1f0;--ombre:0 4px 20px rgba(0,0,0,.10);--ombre-forte:0 8px 32px rgba(0,0,0,.16);
+  --radius:20px;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;overflow-x:hidden;font-family:'Nunito',sans-serif;color:var(--texte);background:var(--bg)}
+header{padding:28px 20px 22px;text-align:center;color:#fff;background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);box-shadow:0 4px 20px rgba(26,115,232,.30)}
+header .logo{font-size:2.6rem;line-height:1;margin-bottom:4px}
+header h1{margin:0;font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5vw,3rem);letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.20)}
+header p{margin:6px 0 0;color:rgba(255,255,255,.9);font-weight:700}
+.tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;max-width:1150px;margin:0 auto;padding:16px 16px 0}
+.tab{padding:10px 22px;border:2.5px solid transparent;border-radius:999px;background:var(--carte);color:var(--gris);box-shadow:var(--ombre);font:800 .98rem 'Nunito',sans-serif;cursor:pointer;transition:.2s}
+.tab:hover{transform:translateY(-2px);color:var(--bleu);background:var(--bleu-clair);border-color:var(--bleu)}
+.tab.active{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+main{width:100%;max-width:1150px;margin:0 auto;padding:24px 16px 60px}
+.page{display:none}
+.page.active{display:block;animation:pageFade .25s ease}
+@keyframes pageFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h2.title{margin:0 0 16px;font-family:'Fredoka One',cursive;font-size:1.8rem;color:var(--bleu)}
+.intro{margin:0 0 24px;padding:18px 22px;border-left:5px solid var(--bleu);border-radius:0 var(--radius) var(--radius) 0;background:linear-gradient(135deg,var(--bleu-clair),#fff);font-weight:700;line-height:1.65}
+.key{color:var(--rouge);font-weight:900}
+.definition{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+.card{padding:22px 20px;border-top:5px solid var(--bleu);border-radius:var(--radius);background:var(--carte);box-shadow:var(--ombre)}
+.card h3{margin:0 0 12px;font-family:'Fredoka One',cursive;font-size:1.35rem}
+.card p{line-height:1.6;margin:.55rem 0}
+.card.definition-card{border-top-color:var(--cyan)}
+.card.impact-card{border-top-color:var(--jaune)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.card.serie{border-top-color:var(--violet)} .card.deriv{border-top-color:var(--vert)}
+.circuit-box{position:relative;margin:12px 0;padding:10px;border:2px solid var(--border);border-radius:18px;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.real-circuit{
+  position:relative;
+  width:100%;
+  aspect-ratio:1363/995;
+  min-height:300px;
+  overflow:hidden;
+  background:#fff;
+  border-radius:12px;
+}
+.real-circuit.derivation-scene{aspect-ratio:1363/995}
+.real-circuit .wire-layer,
+.real-circuit .trace-layer,
+.real-circuit .short-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.real-circuit .wire-layer{z-index:1}
+.real-circuit .trace-layer{z-index:2;pointer-events:none}
+.real-circuit .short-layer{z-index:9;pointer-events:none}
+.real-circuit .current-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:10;
+  pointer-events:none;
+}
+.current-arrow{
+  display:none;
+  fill:none;
+  stroke:#ff0000;
+  stroke-width:8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 0 1px rgba(255,0,0,.18));
+}
+.current-arrow.on{display:block}
+.current-trace{
+  display:none;
+  fill:none;
+  stroke:#ff0000;
+  stroke-width:10;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  opacity:.72;
+}
+.current-trace.on{display:block}
+.real-circuit .wire{
+  fill:none;
+  stroke:#000;
+  stroke-width:16;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
+}
+.real-circuit .component,
+.real-circuit .lamp-holder{position:absolute}
+.real-circuit img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:transparent;
+  user-select:none;
+  -webkit-user-drag:none;
+  opacity:0;
+  transition:opacity .12s linear;
+}
+.real-circuit img.asset-ready{opacity:1}
+.real-circuit .lamp-holder img{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+}
+.real-circuit .lamp-holder .lamp-on{width:100%;height:100%}
+.real-circuit .lamp-holder .lamp-off{width:84%;height:84%}
+#seriesLamp.lamp-on{width:95%;height:95%}
+
+/* Circuit en série : règles recopiées du fichier modèle. */
+.real-circuit.series .battery{z-index:3;left:31.55%;top:9.45%;width:34.75%;height:20.55%}
+.real-circuit.series .lamp-holder{z-index:4;left:18.65%;top:49.30%;width:21.85%;height:38.15%}
+.real-circuit.series .motor-body{z-index:3;left:56.65%;top:50.70%;width:17.25%;height:37.25%}
+.real-circuit.series .propeller{
+  z-index:5;left:51.55%;top:41.55%;width:27.15%;height:40.65%;
+  transform-origin:50% 50%;animation:propellerRotation .82s linear infinite;
+}
+#seriesProp{animation-duration:1.65s}
+
+/* Circuit en dérivation : règles recopiées du fichier modèle. */
+.derivation-scene .battery{z-index:3;left:31.55%;top:8.45%;width:34.75%;height:18.65%}
+.derivation-scene .lamp-holder{z-index:4;left:17.73%;width:21.85%;height:34.51%;top:17.59%}
+.derivation-scene .motor-body{z-index:3;left:58.10%;top:55.00%;width:15.40%;height:31.40%}
+.derivation-scene .propeller{
+  z-index:5;left:52.70%;top:46.20%;width:25.80%;height:38.50%;
+  transform-origin:50% 50%;animation:propellerRotation .82s linear infinite;
+}
+.propeller.stopped{animation-play-state:paused;opacity:.86!important}
+@keyframes propellerRotation{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.node-dot{fill:#111827}
+.click-zone{position:absolute;z-index:20;border:3px dashed transparent;border-radius:14px;background:transparent;cursor:pointer;transition:.18s}
+.click-zone:hover,.click-zone:focus-visible{outline:none;border-color:var(--bleu);background:rgba(26,115,232,.06)}
+.click-zone.active{border-color:transparent;background:transparent}
+.click-zone .tag{display:none}
+.click-zone.active .tag{display:none}
+.series .hit-battery,.derivation-scene .hit-battery{left:30%;top:7%;width:38%;height:25%}
+.series .hit-lamp{left:17%;top:47%;width:25%;height:42%}.series .hit-motor{left:51%;top:39%;width:30%;height:50%}
+.derivation-scene .hit-lamp{left:16%;top:14%;width:25%;height:39%}.derivation-scene .hit-motor{left:51%;top:43%;width:31%;height:45%}
+.short-wire{display:none;fill:none;stroke:#000;stroke-width:16;stroke-linecap:round;stroke-linejoin:round}
+.short-wire.on{display:block}
+.short-wire.current{stroke:var(--rouge);filter:drop-shadow(0 0 4px rgba(234,67,53,.28))}
+.status{margin-top:16px;padding:14px 16px;border-radius:16px;background:linear-gradient(180deg,#fff,#f7fbff);border:2px solid var(--cyan);font-weight:800;line-height:1.5}
+.status.danger{background:var(--rouge-clair);border-color:var(--rouge);color:#991b1b}
+.status.good{background:var(--vert-clair);border-color:var(--vert);color:#166534}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{min-height:44px;padding:10px 20px;border:2.5px solid transparent;border-radius:50px;background:#fff;color:var(--gris);box-shadow:var(--ombre);font:800 .95rem 'Nunito',sans-serif;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-2px);color:var(--bleu);background:var(--bleu-clair);border-color:var(--bleu);box-shadow:var(--ombre-forte)}
+.tip{margin-top:14px;padding:12px 15px;border-radius:14px;background:#fff8df;border-left:5px solid var(--jaune);font-weight:800;line-height:1.5}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chip{padding:7px 11px;border-radius:999px;background:#fff;border:2px solid var(--border);font-size:.9rem;font-weight:800;color:var(--gris)}
+.danger-box{margin-top:24px;padding:20px 22px;border-radius:var(--radius);background:linear-gradient(135deg,#fff,var(--rouge-clair));border-left:6px solid var(--rouge);box-shadow:var(--ombre)}
+.danger-box h3{margin:0 0 8px;font-family:'Fredoka One',cursive;color:var(--rouge)}
+.danger-box p{margin:.45rem 0;line-height:1.6;font-weight:700}
+.real-circuit.explore-scene{aspect-ratio:1363/1200}
+.explore-scene .battery{z-index:3;left:18.35%;top:7.90%;width:30.82%;height:17.80%}
+.explore-scene .lamp-series-holder{z-index:4;left:19.82%;width:18.20%;height:30.00%;top:17.53%}
+.explore-scene .explore-motor{z-index:3;left:58.10%;top:16.96%;width:15.40%;height:31.40%}
+.explore-scene .explore-prop{z-index:5;left:52.70%;top:8.16%;width:25.80%;height:38.50%;transform-origin:50% 50%;animation:propellerRotation 1.35s linear infinite}
+.explore-scene .lamp-bottom-holder{z-index:4;left:40.57%;width:18.20%;height:30.00%;top:47.95%}
+.explore-scene .hit-battery{left:17.2%;top:6.6%;width:33%;height:22%}
+.explore-scene .hit-switch{left:57.8%;top:8.5%;width:12.5%;height:14%}
+.explore-scene .hit-lamp-series{left:18.7%;top:15.2%;width:21.5%;height:36%}
+.explore-scene .hit-explore-motor{left:51.5%;top:6.5%;width:28.5%;height:47%}
+.explore-scene .hit-lamp-bottom{left:39.2%;top:45.5%;width:21.5%;height:36%}
+.real-circuit .switch-symbol{z-index:6}
+.real-circuit .switch-line{fill:none;stroke:#000;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+.real-circuit .switch-contact{fill:#fff;stroke:#000;stroke-width:8}
+.plus-card{border-top-color:var(--cyan)}
+.compact-plus-card{max-width:820px;margin:0 auto;padding:16px 16px 18px}
+.compact-plus-card .circuit-box{max-width:720px;margin:0 auto 12px;padding:8px}
+.compact-plus-card .real-circuit{min-height:0}
+@media(max-width:850px){.definition,.grid2{grid-template-columns:1fr}.real-circuit{min-height:270px}}
+@media(max-width:520px){.tabs{padding:14px 10px 0}.tab{width:100%}main{padding:18px 10px 45px}.card{padding:18px 12px}.real-circuit{min-height:230px}.compact-plus-card{padding:12px}.compact-plus-card .real-circuit{min-height:0}.click-zone .tag{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">⚡</div>
+  <h1>Les courts-circuits</h1>
+  <p>Physique-Chimie · Classe de 5e · Partie cours</p>
+</header>
+<nav class="tabs" aria-label="Navigation du cours">
+  <button class="tab active" data-page="cours">📘 Cours</button>
+  <button class="tab" data-page="plus">🚀 Aller plus loin</button>
+</nav>
+<main>
+  <section class="page active" id="page-cours">
+  <h2 class="title">📚 L’essentiel à comprendre</h2>
+  <div class="intro">
+    Un court-circuit peut modifier complètement le fonctionnement d’un circuit électrique. Dans les deux schémas ci-dessous, <strong>clique sur n’importe quel dipôle</strong> pour ajouter un fil de court-circuit. Clique de nouveau dessus pour l’enlever.
+  </div>
+
+  <section class="definition">
+    <article class="card definition-card">
+      <h3>🔎 Définition</h3>
+      <p><span class="key">Un dipôle est court-circuité si ses deux bornes sont reliées par un fil.</span></p>
+    </article>
+    <article class="card impact-card">
+      <h3>💡 Impact d’un court-circuit</h3>
+      <p><span class="key">Un récepteur court-circuité ne fonctionne plus.</span> Le courant choisit de passer par le fil plutôt que par le récepteur.</p>
+    </article>
+  </section>
+
+  <section class="grid2">
+    <article class="card serie">
+      <h3>🟣 I. Court-circuit d’un récepteur placé en série</h3>
+      <p>En court-circuitant un dipôle en série, le nombre de récepteurs en fonctionnement diminue. <strong>Le courant devient plus important dans le circuit et les appareils restant fonctionnent mieux.</strong></p>
+      <div class="circuit-box">
+        <div class="real-circuit series" id="seriesCircuit" aria-label="Circuit en série interactif avec pile, lampe et moteur">
+          <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
+            <path class="wire" d="M157 202 H431 M898 202 H1139 V817 H157 V202"/>
+          </svg>
+          <svg class="trace-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
+            <!-- Circuit principal, découpé aux points de raccordement des courts-circuits. -->
+            <path id="seriesTraceLeftOuter" class="current-trace" d="M157 817 V202 H400"/>
+            <path id="seriesTraceBatteryLeftLead" class="current-trace" d="M400 202 H431"/>
+            <path id="seriesTraceBatteryRightLead" class="current-trace" d="M898 202 H940"/>
+            <path id="seriesTraceTopRightOuter" class="current-trace" d="M940 202 H1139 V817 H1015"/>
+
+            <path id="seriesTraceMotorRightLead" class="current-trace" d="M1015 817 H995"/>
+            <path id="seriesTraceMotorLeftLead" class="current-trace" d="M790 817 H700"/>
+            <path id="seriesTraceBetweenDipoles" class="current-trace" d="M700 817 H555"/>
+
+            <path id="seriesTraceLampRightLead" class="current-trace" d="M555 817 H455"/>
+            <path id="seriesTraceLampLeftLead" class="current-trace" d="M355 817 H220"/>
+            <path id="seriesTraceBottomLeftOuter" class="current-trace" d="M220 817 H157"/>
+          </svg>
+          <img crossorigin="anonymous" class="component battery circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
+          <div class="lamp-holder"><img crossorigin="anonymous" id="seriesLamp" class="lamp-on circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Lampe faiblement allumée"></div>
+          <img crossorigin="anonymous" class="component motor-body circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+          <img crossorigin="anonymous" id="seriesProp" class="component propeller circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice du moteur">
+          <svg class="short-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
+            <path id="seriesShortBattery" class="short-wire" d="M400 202 V312 H940 V202"/>
+            <path id="seriesShortLamp" class="short-wire" d="M220 817 V915 H555 V817"/>
+            <path id="seriesShortMotor" class="short-wire" d="M700 817 V915 H1015 V817"/>
+          </svg>
+          <svg class="current-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
+            <path id="seriesArrowTop" class="current-arrow" d="M1030 188 L1060 202 L1030 216"/>
+            <path id="seriesArrowRight" class="current-arrow" d="M1124 470 L1139 500 L1154 470"/>
+            <path id="seriesArrowBottom" class="current-arrow" d="M650 800 L620 817 L650 834"/>
+            <path id="seriesArrowLeft" class="current-arrow" d="M142 530 L157 500 L172 530"/>
+            <path id="seriesArrowLampDown" class="current-arrow" d="M540 875 L555 905 L570 875"/>
+            <path id="seriesArrowLampAcross" class="current-arrow" d="M370 900 L340 915 L370 930"/>
+            <path id="seriesArrowLampUp" class="current-arrow" d="M205 845 L220 815 L235 845"/>
+            <path id="seriesArrowMotorDown" class="current-arrow" d="M1000 875 L1015 905 L1030 875"/>
+            <path id="seriesArrowMotorAcross" class="current-arrow" d="M820 900 L790 915 L820 930"/>
+            <path id="seriesArrowMotorUp" class="current-arrow" d="M685 845 L700 815 L715 845"/>
+            <path id="seriesArrowBatteryDown" class="current-arrow" d="M925 270 L940 300 L955 270"/>
+            <path id="seriesArrowBatteryAcross" class="current-arrow" d="M650 297 L620 312 L650 327"/>
+            <path id="seriesArrowBatteryUp" class="current-arrow" d="M385 232 L400 202 L415 232"/>
+          </svg>
+          <button class="click-zone hit-battery" data-circuit="series" data-part="battery" aria-label="Ajouter ou enlever un court-circuit sur la pile"></button>
+          <button class="click-zone hit-lamp" data-circuit="series" data-part="lamp" aria-label="Ajouter ou enlever un court-circuit sur la lampe"></button>
+          <button class="click-zone hit-motor" data-circuit="series" data-part="motor" aria-label="Ajouter ou enlever un court-circuit sur le moteur"></button>
+        </div>
+      </div>
+      <div class="status" id="seriesStatus">Aucun court-circuit : la lampe et le moteur fonctionnent mal. La boucle possède en effet 2 récepteurs au lieu d’un. L’énergie produite par la pile n’est pas suffisante pour les faire tous les 2 fonctionner.</div>
+      
+    </article>
+
+    <article class="card deriv">
+      <h3>🟢 II. Court-circuit d’un récepteur en dérivation</h3>
+      <p>En court-circuitant un dipôle en dérivation, <strong>tous les récepteurs aussi en dérivation sont court-circuités et ne fonctionnent plus.</strong></p>
+      <div class="circuit-box">
+        <div class="real-circuit derivation-scene" id="parallelCircuit" aria-label="Circuit en dérivation interactif avec pile, lampe et moteur">
+          <svg class="wire-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none" aria-hidden="true">
+            <path class="wire" d="M157 520 V196 H453 M883 196 H1139 V520"/>
+            <path class="wire" d="M157 520 H1139"/>
+            <path class="wire" d="M157 520 V885 H1139 V520"/>
+            <circle class="node-dot" cx="157" cy="520" r="13"/><circle class="node-dot" cx="1139" cy="520" r="13"/>
+          </svg>
+          <svg class="trace-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none" aria-hidden="true">
+            <!-- Branche principale avec la pile. -->
+            <path id="parallelTraceReturnOuter" class="current-trace" d="M157 520 V196 H420"/>
+            <path id="parallelTraceBatteryLeftLead" class="current-trace" d="M420 196 H453"/>
+            <path id="parallelTraceBatteryRightLead" class="current-trace" d="M883 196 H920"/>
+            <path id="parallelTraceTopOuter" class="current-trace" d="M920 196 H1139 V520"/>
+
+            <!-- Branche de la lampe : parties extérieures + petits fils vers la lampe. -->
+            <path id="parallelTraceLampOuterRight" class="current-trace" d="M1139 520 H570"/>
+            <path id="parallelTraceLampRightLead" class="current-trace" d="M570 520 H455"/>
+            <path id="parallelTraceLampLeftLead" class="current-trace" d="M355 520 H210"/>
+            <path id="parallelTraceLampOuterLeft" class="current-trace" d="M210 520 H157"/>
+
+            <!-- Branche du moteur. -->
+            <path id="parallelTraceMotorOuterRight" class="current-trace" d="M1139 520 V885 H1015"/>
+            <path id="parallelTraceMotorRightLead" class="current-trace" d="M1015 885 H998"/>
+            <path id="parallelTraceMotorLeftLead" class="current-trace" d="M790 885 H690"/>
+            <path id="parallelTraceMotorOuterLeft" class="current-trace" d="M690 885 H157 V520"/>
+          </svg>
+          <img crossorigin="anonymous" class="component battery circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
+          <div class="lamp-holder"><img crossorigin="anonymous" id="parallelLamp" class="lamp-on circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Lampe allumée"></div>
+          <img crossorigin="anonymous" class="component motor-body circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+          <img crossorigin="anonymous" id="parallelProp" class="component propeller circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice du moteur">
+          <svg class="short-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none" aria-hidden="true">
+            <path id="parallelShortBattery" class="short-wire" d="M420 196 V306 H920 V196"/>
+            <path id="parallelShortLamp" class="short-wire" d="M210 520 V650 H570 V520"/>
+            <path id="parallelShortMotor" class="short-wire" d="M690 885 V1010 H1015 V885"/>
+          </svg>
+          <svg class="current-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none" aria-hidden="true">
+            <path id="parallelArrowTop" class="current-arrow" d="M1030 182 L1060 196 L1030 210"/>
+            <path id="parallelArrowRightUpper" class="current-arrow" d="M1124 400 L1139 430 L1154 400"/>
+            <path id="parallelArrowLeftUpper" class="current-arrow" d="M142 315 L157 285 L172 315"/>
+            <path id="parallelArrowMid" class="current-arrow" d="M850 505 L820 520 L850 535"/>
+            <path id="parallelArrowLampDown" class="current-arrow" d="M555 605 L570 635 L585 605"/>
+            <path id="parallelArrowLampAcross" class="current-arrow" d="M340 635 L310 650 L340 665"/>
+            <path id="parallelArrowLampUp" class="current-arrow" d="M195 550 L210 520 L225 550"/>
+            <path id="parallelArrowRightLower" class="current-arrow" d="M1124 730 L1139 760 L1154 730"/>
+            <path id="parallelArrowBottom" class="current-arrow" d="M490 870 L460 885 L490 900"/>
+            <path id="parallelArrowLeftLower" class="current-arrow" d="M142 640 L157 610 L172 640"/>
+            <path id="parallelArrowMotorDown" class="current-arrow" d="M1000 965 L1015 995 L1030 965"/>
+            <path id="parallelArrowMotorAcross" class="current-arrow" d="M820 995 L790 1010 L820 1025"/>
+            <path id="parallelArrowMotorUp" class="current-arrow" d="M675 915 L690 885 L705 915"/>
+            <path id="parallelArrowBatteryDown" class="current-arrow" d="M905 260 L920 290 L935 260"/>
+            <path id="parallelArrowBatteryAcross" class="current-arrow" d="M650 291 L620 306 L650 321"/>
+            <path id="parallelArrowBatteryUp" class="current-arrow" d="M405 226 L420 196 L435 226"/>
+          </svg>
+          <button class="click-zone hit-battery" data-circuit="parallel" data-part="battery" aria-label="Ajouter ou enlever un court-circuit sur la pile"></button>
+          <button class="click-zone hit-lamp" data-circuit="parallel" data-part="lamp" aria-label="Ajouter ou enlever un court-circuit sur la lampe"></button>
+          <button class="click-zone hit-motor" data-circuit="parallel" data-part="motor" aria-label="Ajouter ou enlever un court-circuit sur le moteur"></button>
+        </div>
+      </div>
+      <div class="status" id="parallelStatus">Aucun court-circuit : la lampe et le moteur fonctionnent normalement.</div>
+      
+    </article>
+  </section>
+
+  <section class="danger-box">
+    <h3>🔥 Le danger du court-circuit de la pile</h3>
+    <p>Si la pile est aussi court-circuitée et qu’il n’y a plus de récepteurs en fonctionnement, <strong>la pile se met à fournir énormément de courant et d’énergie électrique.</strong> Ce sont les câbles qui vont transformer cette énergie en chaleur, pouvant créer un départ d’incendie.</p>
+  </section>
+  </section>
+
+  <section class="page" id="page-plus">
+    <article class="card plus-card compact-plus-card">
+      <div class="circuit-box">
+        <div class="real-circuit explore-scene" id="exploreCircuit" aria-label="Circuit en dérivation avec pile et interrupteur dans la branche principale, une ampoule et un moteur dans une branche dérivée, et une ampoule seule dans une autre branche dérivée">
+          <svg class="wire-layer" viewBox="0 0 1363 1200" preserveAspectRatio="none" aria-hidden="true">
+            <path class="wire" d="M157 520 V196 H250"/>
+            <path class="wire" d="M670 196 H800"/>
+            <path class="wire" d="M930 196 H1139 V520"/>
+            <path class="wire" d="M157 520 H1139"/>
+            
+            
+            <path class="wire" d="M157 520 V885 H1139 V520"/>
+            
+            <circle class="node-dot" cx="157" cy="520" r="13"/>
+            <circle class="node-dot" cx="1139" cy="520" r="13"/>
+            <g class="switch-symbol">
+              <circle class="switch-contact" cx="800" cy="196" r="12"/>
+              <circle class="switch-contact" cx="930" cy="196" r="12"/>
+              <path class="switch-line" d="M810 178 L921 196"/>
+            </g>
+          </svg>
+          <svg class="trace-layer" viewBox="0 0 1363 1200" preserveAspectRatio="none" aria-hidden="true">
+            <!-- Branche principale : pile puis interrupteur. -->
+            <path id="exploreTraceReturnOuter" class="current-trace" d="M157 520 V196 H250"/>
+            <path id="exploreTraceBatteryRightLead" class="current-trace" d="M670 196 H800"/>
+            <path id="exploreTraceSwitchRightOuter" class="current-trace" d="M930 196 H1139 V520"/>
+
+            <!-- Branche du milieu : lampe puis moteur. -->
+            <path id="exploreTraceMiddleOuterLeft" class="current-trace" d="M157 520 H255"/>
+            <path id="exploreTraceLampSeriesLeftLead" class="current-trace" d="M355 520 H255"/>
+            <path id="exploreTraceLampSeriesRightLead" class="current-trace" d="M520 520 H435"/>
+            <path id="exploreTraceBetween" class="current-trace" d="M520 520 H690"/>
+            <path id="exploreTraceMotorInnerLeft" class="current-trace" d="M690 520 H760"/>
+            <path id="exploreTraceMotorLeftLead" class="current-trace" d="M790 520 H760"/>
+            <path id="exploreTraceMotorRightLead" class="current-trace" d="M970 520 H950"/>
+            <path id="exploreTraceMotorInnerRight" class="current-trace" d="M970 520 H1040"/>
+            <path id="exploreTraceMiddleOuterRight" class="current-trace" d="M1040 520 H1139"/>
+
+            <!-- Branche du bas : ampoule seule. -->
+            <path id="exploreTraceBottomOuterRight" class="current-trace" d="M1139 520 V885 H803"/>
+            <path id="exploreTraceBottomLampRightLead" class="current-trace" d="M803 885 H715"/>
+            <path id="exploreTraceBottomLampLeftLead" class="current-trace" d="M640 885 H540"/>
+            <path id="exploreTraceBottomOuterLeft" class="current-trace" d="M540 885 H157 V520"/>
+          </svg>
+          <img crossorigin="anonymous" class="component battery circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
+          <div class="lamp-holder lamp-series-holder"><img crossorigin="anonymous" id="exploreLampSeries" class="lamp-on circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Ampoule de la branche du milieu"></div>
+          <img crossorigin="anonymous" class="component motor-body explore-motor circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+          <img crossorigin="anonymous" id="exploreMotorProp" class="component propeller explore-prop circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice du moteur">
+          <div class="lamp-holder lamp-bottom-holder"><img crossorigin="anonymous" id="exploreLampBottom" class="lamp-on circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Ampoule de la branche du bas"></div>
+          <svg class="short-layer" viewBox="0 0 1363 1200" preserveAspectRatio="none" aria-hidden="true">
+            <path id="exploreShortBattery" class="short-wire" d="M250 196 V308 H670 V196"/>
+            <path id="exploreShortSwitch" class="short-wire" d="M800 196 V285 H930 V196"/>
+            <path id="exploreShortLampSeries" class="short-wire" d="M255 520 V650 H520 V520"/>
+            <path id="exploreShortMotor" class="short-wire" d="M690 520 V650 H1040 V520"/>
+            <path id="exploreShortLampBottom" class="short-wire" d="M540 885 V1015 H803 V885"/>
+          </svg>
+          <svg class="current-layer" viewBox="0 0 1363 1200" preserveAspectRatio="none" aria-hidden="true">
+            <path id="exploreArrowTop" class="current-arrow" d="M1030 182 L1060 196 L1030 210"/>
+            <path id="exploreArrowRightUpper" class="current-arrow" d="M1124 400 L1139 430 L1154 400"/>
+            <path id="exploreArrowLeftUpper" class="current-arrow" d="M142 310 L157 280 L172 310"/>
+            <path id="exploreArrowMid" class="current-arrow" d="M1110 505 L1080 520 L1110 535"/>
+            <path id="exploreArrowBetween" class="current-arrow" d="M700 505 L670 520 L700 535"/>
+            <path id="exploreArrowLampSeriesDown" class="current-arrow" d="M505 605 L520 635 L535 605"/>
+            <path id="exploreArrowLampSeriesAcross" class="current-arrow" d="M360 635 L330 650 L360 665"/>
+            <path id="exploreArrowLampSeriesUp" class="current-arrow" d="M240 550 L255 520 L270 550"/>
+            <path id="exploreArrowMotorDown" class="current-arrow" d="M1025 605 L1040 635 L1055 605"/>
+            <path id="exploreArrowMotorAcross" class="current-arrow" d="M875 635 L845 650 L875 665"/>
+            <path id="exploreArrowMotorUp" class="current-arrow" d="M675 550 L690 520 L705 550"/>
+            <path id="exploreArrowRightLower" class="current-arrow" d="M1124 730 L1139 760 L1154 730"/>
+            <path id="exploreArrowBottom" class="current-arrow" d="M890 870 L860 885 L890 900"/>
+            <path id="exploreArrowLeftLower" class="current-arrow" d="M142 640 L157 610 L172 640"/>
+            <path id="exploreArrowLampBottomDown" class="current-arrow" d="M788 970 L803 1000 L818 970"/>
+            <path id="exploreArrowLampBottomAcross" class="current-arrow" d="M620 1000 L590 1015 L620 1030"/>
+            <path id="exploreArrowLampBottomUp" class="current-arrow" d="M525 915 L540 885 L555 915"/>
+            <path id="exploreArrowBatteryDown" class="current-arrow" d="M655 270 L670 300 L685 270"/>
+            <path id="exploreArrowBatteryAcross" class="current-arrow" d="M370 293 L340 308 L370 323"/>
+            <path id="exploreArrowBatteryUp" class="current-arrow" d="M235 226 L250 196 L265 226"/>
+            <path id="exploreArrowSwitchDown" class="current-arrow" d="M915 247 L930 277 L945 247"/>
+            <path id="exploreArrowSwitchAcross" class="current-arrow" d="M865 270 L835 285 L865 300"/>
+            <path id="exploreArrowSwitchUp" class="current-arrow" d="M785 226 L800 196 L815 226"/>
+          </svg>
+          <button class="click-zone hit-battery" data-circuit="explore" data-part="battery" aria-label="Ajouter ou enlever un court-circuit sur la pile"></button>
+          <button class="click-zone hit-switch" data-circuit="explore" data-part="switch" aria-label="Ajouter ou enlever un court-circuit sur l’interrupteur"></button>
+          <button class="click-zone hit-lamp-series" data-circuit="explore" data-part="lampSeries" aria-label="Ajouter ou enlever un court-circuit sur l’ampoule de la branche du milieu"></button>
+          <button class="click-zone hit-explore-motor" data-circuit="explore" data-part="motor" aria-label="Ajouter ou enlever un court-circuit sur le moteur"></button>
+          <button class="click-zone hit-lamp-bottom" data-circuit="explore" data-part="lampBottom" aria-label="Ajouter ou enlever un court-circuit sur l’ampoule de la branche du bas"></button>
+        </div>
+      </div>
+      <div class="status" id="exploreStatus">Aucun court-circuit : dans la branche du milieu, l’ampoule brille faiblement et le moteur tourne lentement, tandis que l’ampoule seule de l’autre branche brille normalement.</div>
+    </article>
+  </section>
+</main>
+<script>
+const ASSETS={
+  lampWeak:'https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png',
+  lampOn:'https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png',
+  lampOff:'https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_eteinte.png'
+};
+const processedAssetCache = new Map();
+function absoluteUrl(url){
+  try{return new URL(url, location.href).href}catch(e){return url}
+}
+function edgeBackgroundMask(imageData, width, height){
+  const d=imageData.data;
+  const visited=new Uint8Array(width*height);
+  const queue=new Int32Array(width*height);
+  let head=0,tail=0;
+  function isBackground(i){
+    const p=i*4;
+    const r=d[p],g=d[p+1],b=d[p+2],a=d[p+3];
+    if(a<12) return true;
+    const max=Math.max(r,g,b), min=Math.min(r,g,b);
+    const saturation=max-min;
+    const brightness=(r+g+b)/3;
+    return brightness>168 && saturation<42;
+  }
+  function add(i){
+    if(i<0 || i>=width*height || visited[i] || !isBackground(i)) return;
+    visited[i]=1; queue[tail++]=i;
+  }
+  for(let x=0;x<width;x++){add(x);add((height-1)*width+x)}
+  for(let y=0;y<height;y++){add(y*width);add(y*width+width-1)}
+  while(head<tail){
+    const i=queue[head++], x=i%width, y=(i/width)|0;
+    if(x>0)add(i-1); if(x<width-1)add(i+1);
+    if(y>0)add(i-width); if(y<height-1)add(i+width);
+  }
+  for(let i=0;i<visited.length;i++) if(visited[i]) d[i*4+3]=0;
+}
+function trimCanvas(canvas){
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  const w=canvas.width,h=canvas.height;
+  const d=ctx.getImageData(0,0,w,h).data;
+  let minX=w,minY=h,maxX=-1,maxY=-1;
+  for(let y=0;y<h;y++) for(let x=0;x<w;x++) if(d[(y*w+x)*4+3]>10){
+    if(x<minX)minX=x;if(x>maxX)maxX=x;if(y<minY)minY=y;if(y>maxY)maxY=y;
+  }
+  if(maxX<minX || maxY<minY) return canvas;
+  const pad=Math.max(2,Math.round(Math.max(w,h)*.004));
+  minX=Math.max(0,minX-pad);minY=Math.max(0,minY-pad);
+  maxX=Math.min(w-1,maxX+pad);maxY=Math.min(h-1,maxY+pad);
+  const out=document.createElement('canvas');
+  out.width=maxX-minX+1;out.height=maxY-minY+1;
+  out.getContext('2d').drawImage(canvas,minX,minY,out.width,out.height,0,0,out.width,out.height);
+  return out;
+}
+function processAssetUrl(url, trim = true){
+  url=absoluteUrl(url);
+  const cacheKey=url+'::trim='+(trim?'1':'0');
+  if(url.startsWith('data:') || url.startsWith('blob:')) return Promise.resolve(url);
+  if(processedAssetCache.has(cacheKey)) return processedAssetCache.get(cacheKey);
+  const promise=new Promise(resolve=>{
+    const source=new Image(); source.crossOrigin='anonymous';
+    source.onload=()=>{
+      try{
+        const canvas=document.createElement('canvas');
+        canvas.width=source.naturalWidth;canvas.height=source.naturalHeight;
+        const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,0,0);
+        const data=ctx.getImageData(0,0,canvas.width,canvas.height);
+        edgeBackgroundMask(data,canvas.width,canvas.height);ctx.putImageData(data,0,0);
+        const outputCanvas=trim?trimCanvas(canvas):canvas;
+        resolve(outputCanvas.toDataURL('image/png'));
+      }catch(error){resolve(url)}
+    };
+    source.onerror=()=>resolve(url);source.src=url;
+  });
+  processedAssetCache.set(cacheKey,promise);return promise;
+}
+async function prepareCircuitAsset(img){
+  const shouldTrim=!img.classList.contains('propeller');
+  img.src=await processAssetUrl(img.currentSrc || img.src, shouldTrim);
+  img.classList.add('asset-ready');
+}
+async function prepareCircuitAssets(root=document){
+  const images=[...root.querySelectorAll('.real-circuit img')];
+  await Promise.all(images.map(prepareCircuitAsset));
+}
+function initTabs(){
+  const tabs=[...document.querySelectorAll('.tab[data-page]')];
+  const pages=[...document.querySelectorAll('.page')];
+  tabs.forEach(tab=>tab.addEventListener('click',()=>{
+    const target='page-'+tab.dataset.page;
+    tabs.forEach(t=>t.classList.toggle('active',t===tab));
+    pages.forEach(page=>page.classList.toggle('active',page.id===target));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+}
+document.addEventListener('DOMContentLoaded',async()=>{
+  initTabs();
+  await prepareCircuitAssets(document);
+  ASSETS.lampWeak=await processAssetUrl(ASSETS.lampWeak,true);
+  ASSETS.lampOn=await processAssetUrl(ASSETS.lampOn,true);
+  ASSETS.lampOff=await processAssetUrl(ASSETS.lampOff,true);
+});
+
+const state={series:{battery:false,lamp:false,motor:false},parallel:{battery:false,lamp:false,motor:false},explore:{battery:false,switch:false,lampSeries:false,motor:false,lampBottom:false}};
+function setPropellerRunning(prop, duration){
+  if(!prop) return;
+  prop.classList.remove('stopped');
+  prop.style.animation='propellerRotation '+duration+' linear infinite';
+  prop.style.animationPlayState='running';
+  prop.style.transform='rotate(0deg)';
+}
+function setPropellerStopped(prop){
+  if(!prop) return;
+  prop.classList.add('stopped');
+  prop.style.animation='none';
+  prop.style.animationPlayState='paused';
+  prop.style.transform='rotate(0deg)';
+}
+
+document.querySelectorAll('.click-zone').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const c=btn.dataset.circuit,p=btn.dataset.part;
+    state[c][p]=!state[c][p];
+    update(c);
+  });
+});
+function toggleVisual(c,p,on){
+  const cap=c[0].toUpperCase()+c.slice(1), part=p[0].toUpperCase()+p.slice(1);
+  document.getElementById(c+'Short'+part)?.classList.toggle('on',on);
+  document.querySelector(`.click-zone[data-circuit="${c}"][data-part="${p}"]`)?.classList.toggle('active',on);
+}
+function setCurrentArrows(ids,on){
+  ids.forEach(id=>document.getElementById(id)?.classList.toggle('on',on));
+}
+function setCurrentTraces(ids,on){
+  ids.forEach(id=>document.getElementById(id)?.classList.toggle('on',on));
+}
+function setCurrentShorts(ids,on){
+  ids.forEach(id=>document.getElementById(id)?.classList.toggle('current',on));
+}
+function circuitRootId(c){
+  return c==='parallel' ? 'parallelCircuit' : c==='series' ? 'seriesCircuit' : 'exploreCircuit';
+}
+function clearCurrentVisuals(c){
+  const root=document.getElementById(circuitRootId(c));
+  root?.querySelectorAll('.current-arrow').forEach(a=>a.classList.remove('on'));
+  root?.querySelectorAll('.current-trace').forEach(a=>a.classList.remove('on'));
+  root?.querySelectorAll('.short-wire').forEach(a=>a.classList.remove('current'));
+}
+function updateCurrentPath(c){
+  clearCurrentVisuals(c);
+
+  if(c==='series'){
+    const s=state.series;
+
+    // Si la pile elle-même est court-circuitée, la boucle de courant se limite à la pile
+    // et au fil qui relie directement ses deux bornes.
+    if(s.battery){
+      setCurrentTraces(['seriesTraceBatteryLeftLead','seriesTraceBatteryRightLead'],true);
+      setCurrentShorts(['seriesShortBattery'],true);
+      setCurrentArrows(['seriesArrowBatteryDown','seriesArrowBatteryAcross','seriesArrowBatteryUp'],true);
+      return;
+    }
+
+    // Parties du circuit qui restent parcourues quelle que soit la présence d'un court-circuit
+    // sur la lampe ou le moteur : elles conduisent jusqu'aux points de dérivation.
+    setCurrentTraces([
+      'seriesTraceLeftOuter','seriesTraceBatteryLeftLead','seriesTraceBatteryRightLead','seriesTraceTopRightOuter',
+      'seriesTraceBetweenDipoles','seriesTraceBottomLeftOuter'
+    ],true);
+    setCurrentArrows(['seriesArrowTop','seriesArrowRight','seriesArrowBottom','seriesArrowLeft'],true);
+
+    // MOTEUR :
+    // - normal -> courant dans les deux petits fils qui entrent/sortent du moteur ;
+    // - court-circuité -> ces petits fils redeviennent noirs et le fil de contournement devient rouge.
+    if(s.motor){
+      setCurrentShorts(['seriesShortMotor'],true);
+      setCurrentArrows(['seriesArrowMotorDown','seriesArrowMotorAcross','seriesArrowMotorUp'],true);
+    }else{
+      setCurrentTraces(['seriesTraceMotorRightLead','seriesTraceMotorLeftLead'],true);
+    }
+
+    // LAMPE : même logique.
+    if(s.lamp){
+      setCurrentShorts(['seriesShortLamp'],true);
+      setCurrentArrows(['seriesArrowLampDown','seriesArrowLampAcross','seriesArrowLampUp'],true);
+    }else{
+      setCurrentTraces(['seriesTraceLampRightLead','seriesTraceLampLeftLead'],true);
+    }
+    return;
+  }
+
+  if(c==='parallel'){
+    const s=state.parallel;
+
+    if(s.battery){
+      setCurrentTraces(['parallelTraceBatteryLeftLead','parallelTraceBatteryRightLead'],true);
+      setCurrentShorts(['parallelShortBattery'],true);
+      setCurrentArrows(['parallelArrowBatteryDown','parallelArrowBatteryAcross','parallelArrowBatteryUp'],true);
+      return;
+    }
+
+    // Branche principale contenant la pile : toujours parcourue si la pile n'est pas court-circuitée.
+    setCurrentTraces([
+      'parallelTraceReturnOuter','parallelTraceBatteryLeftLead','parallelTraceBatteryRightLead','parallelTraceTopOuter'
+    ],true);
+    setCurrentArrows(['parallelArrowTop','parallelArrowRightUpper','parallelArrowLeftUpper'],true);
+
+    if(!s.lamp && !s.motor){
+      // Aucun court-circuit : courant dans les deux branches dérivées et de part et d'autre des deux dipôles.
+      setCurrentTraces([
+        'parallelTraceLampOuterRight','parallelTraceLampRightLead','parallelTraceLampLeftLead','parallelTraceLampOuterLeft',
+        'parallelTraceMotorOuterRight','parallelTraceMotorRightLead','parallelTraceMotorLeftLead','parallelTraceMotorOuterLeft'
+      ],true);
+      setCurrentArrows(['parallelArrowMid','parallelArrowRightLower','parallelArrowBottom','parallelArrowLeftLower'],true);
+      return;
+    }
+
+    // Une branche court-circuitée relie directement les deux nœuds : le courant ne circule plus
+    // dans l'autre branche. On colore donc seulement la/les branche(s) de court-circuit.
+    if(s.lamp){
+      setCurrentTraces(['parallelTraceLampOuterRight','parallelTraceLampOuterLeft'],true);
+      setCurrentShorts(['parallelShortLamp'],true);
+      setCurrentArrows(['parallelArrowMid','parallelArrowLampDown','parallelArrowLampAcross','parallelArrowLampUp'],true);
+    }
+    if(s.motor){
+      setCurrentTraces(['parallelTraceMotorOuterRight','parallelTraceMotorOuterLeft'],true);
+      setCurrentShorts(['parallelShortMotor'],true);
+      setCurrentArrows(['parallelArrowRightLower','parallelArrowBottom','parallelArrowLeftLower',
+                        'parallelArrowMotorDown','parallelArrowMotorAcross','parallelArrowMotorUp'],true);
+    }
+    return;
+  }
+
+  const s=state.explore;
+
+  if(s.battery){
+    // Les coordonnées du court-circuit de la pile rejoignent directement ses bornes.
+    setCurrentShorts(['exploreShortBattery'],true);
+    setCurrentArrows(['exploreArrowBatteryDown','exploreArrowBatteryAcross','exploreArrowBatteryUp'],true);
+    return;
+  }
+
+  // Partie commune de la branche principale autour de la pile et de l'interrupteur.
+  setCurrentTraces(['exploreTraceReturnOuter','exploreTraceBatteryRightLead','exploreTraceSwitchRightOuter'],true);
+  setCurrentArrows(['exploreArrowTop','exploreArrowRightUpper','exploreArrowLeftUpper'],true);
+
+  // Interrupteur court-circuité : son fil de contournement est le chemin rouge.
+  if(s.switch){
+    setCurrentShorts(['exploreShortSwitch'],true);
+    setCurrentArrows(['exploreArrowSwitchDown','exploreArrowSwitchAcross','exploreArrowSwitchUp'],true);
+  }
+
+  // Si l'ampoule du bas est court-circuitée, cette branche court-circuite les deux nœuds :
+  // la branche du milieu n'est plus parcourue.
+  if(s.lampBottom){
+    setCurrentTraces(['exploreTraceBottomOuterRight','exploreTraceBottomOuterLeft'],true);
+    setCurrentShorts(['exploreShortLampBottom'],true);
+    setCurrentArrows(['exploreArrowRightLower','exploreArrowBottom','exploreArrowLeftLower',
+                      'exploreArrowLampBottomDown','exploreArrowLampBottomAcross','exploreArrowLampBottomUp'],true);
+    return;
+  }
+
+  // Branche du bas normale : courant de part et d'autre de son ampoule.
+  setCurrentTraces([
+    'exploreTraceBottomOuterRight','exploreTraceBottomLampRightLead',
+    'exploreTraceBottomLampLeftLead','exploreTraceBottomOuterLeft'
+  ],true);
+  setCurrentArrows(['exploreArrowRightLower','exploreArrowBottom','exploreArrowLeftLower'],true);
+
+  // Branche du milieu. Les parties extérieures et la portion entre les deux récepteurs restent parcourues
+  // tant qu'aucun court-circuit total entre les deux nœuds n'est créé par les deux récepteurs simultanément.
+  setCurrentTraces(['exploreTraceMiddleOuterLeft','exploreTraceBetween','exploreTraceMiddleOuterRight'],true);
+  setCurrentArrows(['exploreArrowMid','exploreArrowBetween'],true);
+
+  if(s.lampSeries){
+    setCurrentShorts(['exploreShortLampSeries'],true);
+    setCurrentArrows(['exploreArrowLampSeriesDown','exploreArrowLampSeriesAcross','exploreArrowLampSeriesUp'],true);
+  }else{
+    setCurrentTraces(['exploreTraceLampSeriesLeftLead','exploreTraceLampSeriesRightLead'],true);
+  }
+
+  if(s.motor){
+    setCurrentShorts(['exploreShortMotor'],true);
+    setCurrentArrows(['exploreArrowMotorDown','exploreArrowMotorAcross','exploreArrowMotorUp'],true);
+  }else{
+    setCurrentTraces([
+      'exploreTraceMotorInnerLeft','exploreTraceMotorLeftLead',
+      'exploreTraceMotorRightLead','exploreTraceMotorInnerRight'
+    ],true);
+  }
+
+  // Si les deux récepteurs de la branche du milieu sont court-circuités, cette branche devient elle-même
+  // un court-circuit entre les nœuds : la branche du bas ne doit alors plus être rouge.
+  if(s.lampSeries && s.motor){
+    setCurrentTraces([
+      'exploreTraceBottomOuterRight','exploreTraceBottomLampRightLead',
+      'exploreTraceBottomLampLeftLead','exploreTraceBottomOuterLeft'
+    ],false);
+    ['exploreArrowRightLower','exploreArrowBottom','exploreArrowLeftLower'].forEach(id=>document.getElementById(id)?.classList.remove('on'));
+  }
+}
+
+function update(c){
+  Object.keys(state[c]).forEach(p=>toggleVisual(c,p,state[c][p]));
+  updateCurrentPath(c);
+  if(c==='series') updateSeries();
+  else if(c==='parallel') updateParallel();
+  else updateExplore();
+}
+function updateSeries(){
+  const s=state.series, lamp=document.getElementById('seriesLamp'), prop=document.getElementById('seriesProp'), status=document.getElementById('seriesStatus');
+  const dangerous=s.battery || (s.lamp && s.motor);
+  status.className='status'+(dangerous?' danger':'');
+  if(dangerous){
+    lamp.src=ASSETS.lampOff; lamp.className='lamp-off circuit-asset asset-ready';
+    lamp.style.width='84%'; lamp.style.height='84%';
+    setPropellerStopped(prop);
+    status.innerHTML="⚠️ En court-circuitant les 2 appareils présents dans cette branche, on crée une boucle avec un générateur mais aucun récepteur. Cela est dangereux. Risque d'incendie !";
+    return;
+  }
+  if(s.lamp && !s.motor){
+    lamp.src=ASSETS.lampOff; lamp.className='lamp-off circuit-asset asset-ready';
+    lamp.style.width='84%'; lamp.style.height='84%';
+    setPropellerRunning(prop,'.82s');
+    status.innerHTML='La <strong>lampe est court-circuitée</strong> : elle ne fonctionne plus. Il y a alors moins de récepteurs en fonctionnement dans la boucle. Le moteur tourne plus rapidement.';
+  }else if(s.motor && !s.lamp){
+    lamp.src=ASSETS.lampOn; lamp.className='lamp-on circuit-asset asset-ready';
+    lamp.style.width='100%'; lamp.style.height='100%';
+    setPropellerStopped(prop);
+    status.innerHTML='Le <strong>moteur est court-circuité</strong> : il ne fonctionne plus. Il y a alors moins de récepteurs en fonctionnement dans la boucle. La lampe brille davantage.';
+  }else{
+    lamp.src=ASSETS.lampWeak; lamp.className='lamp-on circuit-asset asset-ready';
+    lamp.style.width='95%'; lamp.style.height='95%';
+    setPropellerRunning(prop,'1.65s');
+    status.innerHTML='Aucun court-circuit : la lampe et le moteur fonctionnent mal. La boucle possède en effet 2 récepteurs au lieu d’un. L’énergie produite par la pile n’est pas suffisante pour les faire tous les 2 fonctionner.';
+  }
+}
+function updateParallel(){
+  const s=state.parallel, lamp=document.getElementById('parallelLamp'), prop=document.getElementById('parallelProp'), status=document.getElementById('parallelStatus');
+  const dangerous=s.battery||s.lamp||s.motor;
+  status.className='status'+(dangerous?' danger':'');
+  if(dangerous){
+    lamp.src=ASSETS.lampOff; lamp.className='lamp-off circuit-asset asset-ready';
+    setPropellerStopped(prop);
+    if(s.lamp && !s.battery && !s.motor){
+      status.innerHTML=`⚠️ En court-circuitant la lampe, on crée une boucle avec un générateur mais aucun récepteur. La pile fournit beaucoup d'énergie et de courant dans cette boucle pouvant créer un départ d'incendie. Par contre, il n'y a plus aucun courant dans les autres boucles.`;
+    }else{
+      if(s.battery){
+        status.innerHTML=`⚠️ En court-circuitant les 2 appareils présents dans cette branche, on crée une boucle avec un générateur mais aucun récepteur. Cela est dangereux. Risque d'incendie !`;
+      }else if(s.lamp){
+        status.innerHTML=`⚠️ En court-circuitant la lampe, on crée une boucle avec un générateur mais aucun récepteur. La pile fournit beaucoup d'énergie et de courant dans cette boucle pouvant créer un départ d'incendie. Par contre, il n'y a plus aucun courant dans les autres boucles.`;
+      }else{
+        status.innerHTML=`⚠️ En court-circuitant le moteur, on crée une boucle avec un générateur mais aucun récepteur. La pile fournit beaucoup d'énergie et de courant dans cette boucle pouvant créer un départ d'incendie. Par contre, il n'y a plus aucun courant dans les autres boucles.`;
+      }
+    }
+  }else{
+    lamp.src=ASSETS.lampOn; lamp.className='lamp-on circuit-asset asset-ready';
+    setPropellerRunning(prop,'.82s');
+    status.innerHTML='Aucun court-circuit : la lampe et le moteur fonctionnent normalement.';
+  }
+}
+function updateExplore(){
+  const s=state.explore;
+  const lampSeries=document.getElementById('exploreLampSeries');
+  const lampBottom=document.getElementById('exploreLampBottom');
+  const prop=document.getElementById('exploreMotorProp');
+  const status=document.getElementById('exploreStatus');
+  const dangerous=s.battery || s.lampBottom || (s.lampSeries && s.motor);
+  status.className='status'+(dangerous?' danger':'');
+
+  if(dangerous){
+    lampSeries.src=ASSETS.lampOff; lampSeries.className='lamp-off circuit-asset asset-ready';
+    lampSeries.style.width='84%'; lampSeries.style.height='84%';
+    lampBottom.src=ASSETS.lampOff; lampBottom.className='lamp-off circuit-asset asset-ready';
+    lampBottom.style.width='84%'; lampBottom.style.height='84%';
+    setPropellerStopped(prop);
+    if(s.battery){
+      status.innerHTML='⚠️ <strong>La pile est court-circuitée.</strong> Les récepteurs ne fonctionnent plus et un très grand courant peut circuler dans les fils : il y a un risque d’échauffement et d’incendie.';
+    }else if(s.lampBottom){
+      status.innerHTML="⚠️ En court-circuitant l'ampoule, on crée une boucle avec un générateur mais aucun récepteur. Cela est dangereux. Risque d'incendie !";
+    }else{
+      status.innerHTML="⚠️ En court-circuitant les 2 appareils présents dans cette branche, on crée une boucle avec un générateur mais aucun récepteur. Cela est dangereux. Risque d'incendie !";
+    }
+    return;
+  }
+
+  lampBottom.src=ASSETS.lampOn; lampBottom.className='lamp-on circuit-asset asset-ready';
+  lampBottom.style.width='100%'; lampBottom.style.height='100%';
+
+  if(s.lampSeries && !s.motor){
+    lampSeries.src=ASSETS.lampOff; lampSeries.className='lamp-off circuit-asset asset-ready';
+    lampSeries.style.width='84%'; lampSeries.style.height='84%';
+    setPropellerRunning(prop,'.82s');
+    status.innerHTML='L’<strong>ampoule est court-circuitée</strong> : elle ne fonctionne plus. La boucle ne contient plus qu’un seul récepteur au lieu de 2 : le moteur. Il tourne mieux.<br><strong>L’ampoule de l’autre branche reste allumée normalement puisqu’elle fait partie d’une autre boucle.</strong>';
+  }else if(s.motor && !s.lampSeries){
+    lampSeries.src=ASSETS.lampOn; lampSeries.className='lamp-on circuit-asset asset-ready';
+    lampSeries.style.width='100%'; lampSeries.style.height='100%';
+    setPropellerStopped(prop);
+    status.innerHTML='Le <strong>moteur est court-circuité</strong> : il ne fonctionne plus. La boucle ne contient plus qu’un seul récepteur au lieu de 2 : l’ampoule. Elle brille davantage.<br><strong>L’ampoule de l’autre branche reste allumée normalement puisqu’elle fait partie d’une autre boucle.</strong>';
+  }else{
+    lampSeries.src=ASSETS.lampWeak; lampSeries.className='lamp-on circuit-asset asset-ready';
+    lampSeries.style.width='95%'; lampSeries.style.height='95%';
+    setPropellerRunning(prop,'1.35s');
+    if(s.switch){
+      status.innerHTML='L’<strong>interrupteur fermé</strong> est court-circuité, mais cela ne change pas le fonctionnement du circuit : dans la branche du milieu, l’ampoule brille faiblement et le moteur tourne lentement, tandis que l’ampoule seule de l’autre branche brille normalement.';
+    }else{
+      status.innerHTML='Aucun court-circuit : dans la branche du milieu, l’ampoule brille faiblement et le moteur tourne lentement, tandis que l’ampoule seule de l’autre branche brille normalement.';
+    }
+  }
+}
+function resetCircuit(c){
+  Object.keys(state[c]).forEach(p=>state[c][p]=false);update(c);
+}
+update('series');update('parallel');update('explore');
+</script>
+</body>
+</html>
