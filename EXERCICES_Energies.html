@@ -188,6 +188,24 @@ header p,
 .nutrition-wrap{max-width:900px;width:100%;margin:0 auto}.nutrition-card{background:#fff;border:1px solid var(--bord);border-radius:22px;box-shadow:0 3px 14px rgba(0,0,0,.08);padding:20px;margin-top:12px}.nutrition-step{display:inline-flex;align-items:center;gap:8px;background:var(--orange-clair);color:#9a3412;border:2px solid #fed7aa;border-radius:999px;padding:6px 12px;font-weight:900;margin-bottom:12px}.nutrition-card h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.35rem;margin-bottom:8px}.nutrition-card p{font-weight:750;line-height:1.55}.food-label{margin:16px auto;max-width:520px;border:3px solid var(--texte);border-radius:14px;background:#fff;padding:0;overflow:hidden;text-align:left}.food-label .food-title{background:var(--texte);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:1.2rem}.food-label .food-row{display:flex;justify-content:space-between;gap:18px;padding:9px 14px;border-top:1px solid #c9ced8;font-weight:850}.food-label .food-row.energy-row{background:#fff;font-size:inherit;font-weight:850}.food-label .food-row.sub-row{padding-left:28px;font-size:.94rem;color:var(--gris)}.food-label .food-unit{font-weight:900;white-space:nowrap}.calc-box{margin:16px auto;max-width:650px;background:var(--bleu-clair);border:2px solid #cddffc;border-radius:18px;padding:15px;text-align:center;font-weight:900;font-size:1.12rem}.calc-input{width:120px;max-width:38vw;font-family:'Nunito';font-weight:900;font-size:1.1rem;text-align:center;border:2.5px solid var(--bord);border-radius:12px;padding:9px;background:#fff;color:var(--texte)}.calc-input:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 4px rgba(26,115,232,.12)}.calc-input.wrong{border-color:var(--rouge);background:var(--rouge-clair)}.meal-table{width:100%;max-width:620px;margin:16px auto;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid var(--bord);border-radius:16px}.meal-table th,.meal-table td{padding:10px 12px;border-bottom:1px solid var(--bord);text-align:left;font-weight:850}.meal-table th{background:var(--bleu-clair);color:var(--bleu);font-weight:900}.meal-table tr:last-child td{border-bottom:0}.meal-table td:last-child,.meal-table th:last-child{text-align:right}.compare-bars{max-width:680px;margin:18px auto;display:grid;gap:12px}.compare-line{display:grid;grid-template-columns:90px 1fr 90px;gap:10px;align-items:center;font-weight:900}.bar-track{height:22px;border-radius:999px;background:#e5e7eb;overflow:hidden;border:1px solid #d1d5db}.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--violet))}.bar-fill.need{background:linear-gradient(90deg,var(--jaune),var(--orange))}.nutrition-answers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.nutrition-answer{font-family:'Nunito';font-weight:900;background:#fff;border:2.5px solid var(--bord);border-radius:16px;padding:14px;cursor:pointer;min-height:64px;color:var(--texte);transition:.18s}.nutrition-answer:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);transform:translateY(-1px)}.nutrition-answer.correct{background:var(--vert-clair);border-color:var(--vert);color:var(--vert)}.nutrition-answer.wrong{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge)}.mission-box{border-left:7px solid var(--violet);background:linear-gradient(180deg,#fff,#faf8ff)}.nutrition-hint{margin-top:12px;padding:11px 13px;border-radius:14px;background:var(--jaune-clair);border:1px solid #f5d77a;color:#755100;font-weight:900;line-height:1.4}.nutrition-check-row{text-align:center;margin-top:16px}.nutrition-small{font-size:.9rem;color:var(--gris);font-weight:800;margin-top:6px}.relation-select{font-family:'Nunito';font-weight:900;border:2.5px solid var(--bord);border-radius:12px;padding:9px 12px;background:#fff;color:var(--texte);font-size:1rem}.relation-select.wrong{border-color:var(--rouge);background:var(--rouge-clair)}
 @media(max-width:700px){.nutrition-card{padding:16px 12px}.nutrition-answers{grid-template-columns:1fr}.compare-line{grid-template-columns:72px 1fr 76px;font-size:.88rem}.meal-table th,.meal-table td{padding:9px 8px;font-size:.9rem}.food-label{width:100%}}
 
+
+/* ===== Calculatrice intégrée ===== */
+.calc-toggle-row{display:flex;justify-content:center;margin:12px 0 4px}
+.calc-toggle{border:2px solid var(--bleu);background:#fff;color:var(--bleu);border-radius:999px;padding:10px 16px;font-family:'Nunito',sans-serif;font-weight:900;cursor:pointer}
+.calc-toggle:hover{background:var(--bleu-clair)}
+.student-calculator{display:none;max-width:330px;margin:12px auto 6px;background:#fff;border:2px solid var(--bord);border-radius:20px;padding:14px;box-shadow:0 3px 14px rgba(0,0,0,.08)}
+.student-calculator.open{display:block}
+.calc-screen{background:#f6f7fb;border:2px solid var(--bord);border-radius:14px;padding:10px 12px;margin-bottom:10px;text-align:right}
+.calc-expression{min-height:20px;font-size:.88rem;color:var(--gris);font-weight:800;overflow-wrap:anywhere}
+.calc-display{min-height:38px;font-family:'Nunito',sans-serif;font-size:1.6rem;font-weight:900;color:var(--texte);overflow-wrap:anywhere}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.calc-key{min-height:48px;border:2px solid var(--bord);border-radius:12px;background:#fff;font-family:'Nunito',sans-serif;font-size:1.05rem;font-weight:900;cursor:pointer}
+.calc-key:hover{background:var(--bleu-clair);border-color:var(--bleu)}
+.calc-key.op{background:var(--bleu-clair);color:var(--bleu)}
+.calc-key.equal{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.calc-history{margin-top:10px;min-height:22px;text-align:center;font-size:.88rem;color:var(--gris);font-weight:800}
+@media(max-width:700px){.student-calculator{max-width:100%}}
+
 </style>
 <!-- Version vérifiée : texte à trous avec […] par défaut et validation bloquée si aucun verbe choisi. -->
 </head>
@@ -199,8 +217,8 @@ header p,
   <button class="tab-btn exercise-entry" data-exercise="qcm" onclick="showExercise('qcm', this)">🤓 Définitions</button>
   <button class="tab-btn exercise-entry" data-exercise="assoc" onclick="showExercise('assoc', this)">🎓 Associer</button>
   <button class="tab-btn exercise-entry" data-exercise="images" onclick="showExercise('images', this)">🖼️ Images</button>
-  <button class="tab-btn exercise-entry" data-exercise="trous" onclick="showExercise('trous', this)">✍️ Phrase</button>
-  <button class="tab-btn exercise-entry" data-exercise="nutrition" onclick="showExercise('nutrition', this)">🍽️ Nutrition</button>
+  <button class="tab-btn exercise-entry" data-exercise="trous" onclick="showExercise('trous', this)">✍️ Phrase à construire</button>
+  <button class="tab-btn exercise-entry" data-exercise="nutrition" onclick="showExercise('nutrition', this)">🍽️ Nutrition / Maths</button>
 </nav>
 
 <section class="section active" id="cours-section">
@@ -844,13 +862,29 @@ function makeNutritionRun(){
  const actualGap=Math.abs(mealTotal-needs);
  const name=pickOne(NUTRITION_NAMES);
 
+ // Étape 6 : nouveau repas indépendant pour vérifier le transfert.
+ const missionFoods=sampleFoods(3,[mainFood,...extras]).map(f=>({
+   name:f.name,
+   emoji:f.emoji,
+   label:f.name,
+   energy:f.energy
+ }));
+ const missionTotal=missionFoods.reduce((t,f)=>t+f.energy,0);
+ const missionRelWanted=pickOne(['lt','eq','gt']);
+ const missionGap=pickOne([200,300,400,500]);
+ let missionNeeds=missionTotal;
+ if(missionRelWanted==='lt') missionNeeds=missionTotal+missionGap;
+ if(missionRelWanted==='gt') missionNeeds=Math.max(200,missionTotal-missionGap);
+ const missionRel=relationOf(missionTotal,missionNeeds);
+ const missionName=pickOne(NUTRITION_NAMES);
+
  return {
    read:mainFood,
    multiply:{food:mainFood,count,total:mainTotal},
    sum:{foods:mealItems,total:mealTotal},
    compare:{apports:mealTotal,besoins:needs,rel:actualRel,name},
    gap:{apports:mealTotal,besoins:needs,rel:actualRel,gap:actualGap,name},
-   conclusion:{apports:mealTotal,besoins:needs,rel:actualRel,gap:actualGap,name,foods:mealItems}
+   mission:{foods:missionFoods,total:missionTotal,needs:missionNeeds,rel:missionRel,name:missionName}
  };
 }
 function nutritionHead(n,title,subtitle=''){
@@ -879,10 +913,98 @@ function compareBars(apports,besoins){
  return `<div class="compare-bars"><div class="compare-line"><span>Apports</span><div class="bar-track"><div class="bar-fill" style="width:${wa}%"></div></div><span>${fmtKJ(apports)} kJ</span></div><div class="compare-line"><span>Besoins</span><div class="bar-track"><div class="bar-fill need" style="width:${wb}%"></div></div><span>${fmtKJ(besoins)} kJ</span></div></div>`;
 }
 function setNutritionNumberCheck(expected,hint,success){nutritionExpected=expected;nutritionHint=hint;nutritionSuccessText=success}
+
+function calculatorHTML(){
+ return `<div class="calc-toggle-row"><button type="button" class="calc-toggle" onclick="toggleStudentCalculator()">🧮 Calculatrice</button></div>
+ <div class="student-calculator" id="studentCalculator">
+   <div class="calc-screen">
+     <div class="calc-expression" id="calcExpression"></div>
+     <div class="calc-display" id="calcDisplay">0</div>
+   </div>
+   <div class="calc-grid">
+     <button type="button" class="calc-key" onclick="calcClear()">C</button>
+     <button type="button" class="calc-key" onclick="calcBack()">⌫</button>
+     <button type="button" class="calc-key op" onclick="calcInput('÷')">÷</button>
+     <button type="button" class="calc-key op" onclick="calcInput('×')">×</button>
+     <button type="button" class="calc-key" onclick="calcInput('7')">7</button>
+     <button type="button" class="calc-key" onclick="calcInput('8')">8</button>
+     <button type="button" class="calc-key" onclick="calcInput('9')">9</button>
+     <button type="button" class="calc-key op" onclick="calcInput('−')">−</button>
+     <button type="button" class="calc-key" onclick="calcInput('4')">4</button>
+     <button type="button" class="calc-key" onclick="calcInput('5')">5</button>
+     <button type="button" class="calc-key" onclick="calcInput('6')">6</button>
+     <button type="button" class="calc-key op" onclick="calcInput('+')">+</button>
+     <button type="button" class="calc-key" onclick="calcInput('1')">1</button>
+     <button type="button" class="calc-key" onclick="calcInput('2')">2</button>
+     <button type="button" class="calc-key" onclick="calcInput('3')">3</button>
+     <button type="button" class="calc-key equal" onclick="calcEquals()">=</button>
+     <button type="button" class="calc-key" onclick="calcInput('0')" style="grid-column:span 2">0</button>
+     <button type="button" class="calc-key" onclick="calcInput(',')">,</button>
+     <button type="button" class="calc-key" onclick="calcInput('.')">.</button>
+   </div>
+   <div class="calc-history" id="calcHistory"></div>
+ </div>`;
+}
+let calcValue='';
+function toggleStudentCalculator(){
+ const c=document.getElementById('studentCalculator');
+ if(!c)return;
+ c.classList.toggle('open');
+}
+function updateCalcDisplay(){
+ const d=document.getElementById('calcDisplay');
+ if(d)d.textContent=calcValue||'0';
+}
+function calcInput(v){
+ const operators=['+','−','×','÷'];
+ if(operators.includes(v)){
+   if(!calcValue)return;
+   const last=calcValue.slice(-1);
+   if(operators.includes(last))calcValue=calcValue.slice(0,-1)+v;
+   else calcValue+=v;
+ }else{
+   calcValue+=v;
+ }
+ updateCalcDisplay();
+}
+function calcClear(){
+ calcValue='';
+ const e=document.getElementById('calcExpression');
+ const h=document.getElementById('calcHistory');
+ if(e)e.textContent='';
+ if(h)h.textContent='';
+ updateCalcDisplay();
+}
+function calcBack(){
+ calcValue=calcValue.slice(0,-1);
+ updateCalcDisplay();
+}
+function calcEquals(){
+ if(!calcValue)return;
+ const original=calcValue;
+ try{
+   const safe=original.replace(/,/g,'.').replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-');
+   if(!/^[0-9+\-*/.()\s]+$/.test(safe))throw new Error('Expression invalide');
+   const result=Function('"use strict";return ('+safe+')')();
+   if(!Number.isFinite(result))throw new Error('Résultat invalide');
+   const shown=Number.isInteger(result)?String(result):String(Math.round(result*1000)/1000).replace('.',',');
+   const e=document.getElementById('calcExpression');
+   const h=document.getElementById('calcHistory');
+   if(e)e.textContent=original+' =';
+   calcValue=shown;
+   updateCalcDisplay();
+   if(h)h.textContent=`Dernier calcul : ${original} = ${shown}`;
+ }catch(err){
+   const h=document.getElementById('calcHistory');
+   if(h)h.textContent='Calcul impossible. Vérifie ton opération.';
+ }
+}
+
 function renderNutrition(){
  nutritionStep=qCount;
  nutritionFirstTry=true;
  nutritionErrorCount=0;
+ calcValue='';
  if(!nutritionRunData)nutritionRunData=makeNutritionRun();
  const d=nutritionRunData;
  const p=document.getElementById('playArea');
@@ -905,7 +1027,7 @@ function renderNutrition(){
    const total=x.total;
    const foodLabelCount=foodCountLabel(x.food,x.count);
    setNutritionNumberCheck(total,'',`${fmtKJ(total)} kJ : tu as trouvé l’énergie apportée par ${x.count} ${foodLabelCount}.`);
-   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(2,'Calculer')}${foodLabel(x.food)}<p style="text-align:center;font-weight:900">Calculer l’énergie apportée par ${x.count} ${foodLabelCount}.</p><div class="calc-box">Énergie apportée = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Énergie apportée"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div></div></div>`;
+   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(2,'Calculer')}${foodLabel(x.food)}<p style="text-align:center;font-weight:900">Calculer l’énergie apportée par ${x.count} ${foodLabelCount}.</p><div class="calc-box">Énergie apportée = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Énergie apportée"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div>${calculatorHTML()}</div></div>`;
 
  }else if(nutritionStep===2){
    const x=d.sum;
@@ -914,7 +1036,7 @@ function renderNutrition(){
      `Repère l’énergie apportée par chacun des aliments du repas dans le tableau. Pour obtenir l’apport énergétique du repas entier, il faut réunir les apports des trois aliments. Quelle opération permet de réunir plusieurs quantités d’énergie ?`,
      `Le repas apporte ${fmtKJ(x.total)} kJ au total.`
    );
-   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(3,'Calculer')}${mealTable(x.foods)}<p style="text-align:center;font-weight:900">Calculer l’apport de ce repas.</p><div class="calc-box">Énergie apportée = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Apport énergétique du repas"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div></div></div>`;
+   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(3,'Calculer')}${mealTable(x.foods)}<p style="text-align:center;font-weight:900">Calculer l’apport de ce repas.</p><div class="calc-box">Énergie apportée = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Apport énergétique du repas"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div>${calculatorHTML()}</div></div>`;
 
  }else if(nutritionStep===3){
    const x=d.compare;
@@ -927,25 +1049,22 @@ function renderNutrition(){
      `Pour trouver l’écart, compare les deux valeurs puis cherche combien de kJ les séparent. Il faut soustraire la plus petite valeur de la plus grande.`,
      `L’écart entre les apports et les besoins est de ${fmtKJ(x.gap)} kJ.`
    );
-   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(5,'Calculer l’écart',`Le repas apporte ${fmtKJ(x.apports)} kJ et les besoins de ${x.name} sont de ${fmtKJ(x.besoins)} kJ.`)}${compareBars(x.apports,x.besoins)}<p style="text-align:center;font-weight:900">De combien les apports et les besoins diffèrent-ils ?</p><div class="calc-box">Écart = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Écart entre apports et besoins"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div></div></div>`;
+   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(5,'Calculer l’écart',`Le repas apporte ${fmtKJ(x.apports)} kJ et les besoins de ${x.name} sont de ${fmtKJ(x.besoins)} kJ.`)}${compareBars(x.apports,x.besoins)}<p style="text-align:center;font-weight:900">De combien les apports et les besoins diffèrent-ils ?</p><div class="calc-box">Écart = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Écart entre apports et besoins"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div>${calculatorHTML()}</div></div>`;
 
  }else{
-   const x=d.conclusion;
-   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card mission-box">${nutritionHead(6,'Conclure',`Utilise les résultats obtenus aux étapes précédentes pour compléter la conclusion sur le repas de ${x.name}.`)}
-     <div class="conclusion-box">
-       <p>Le repas apporte <strong>${fmtKJ(x.apports)} kJ</strong> et les besoins sont de <strong>${fmtKJ(x.besoins)} kJ</strong>.</p>
-       <div class="calc-box">Les apports sont
-         <select id="nutritionRelation" class="relation-select" aria-label="Comparaison entre les apports et les besoins">
-           <option value="">[…]</option>
-           <option value="lt">inférieurs</option>
-           <option value="eq">identiques</option>
-           <option value="gt">supérieurs</option>
-         </select>
-         aux besoins.
-       </div>
-       <div class="calc-box">L’écart est de <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Écart final"> kJ.</div>
+   const x=d.mission;
+   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card mission-box">${nutritionHead(6,'Mission : analyser un repas',`${x.name} a besoin de ${fmtKJ(x.needs)} kJ pour cette période. Calcule l’apport du repas puis compare-le aux besoins.`)}
+     ${mealTable(x.foods)}
+     <div class="calc-box">Apport total = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Apport total du repas"> kJ</div>
+     <div class="calc-box">Conclusion :
+       <select id="nutritionRelation" class="relation-select" aria-label="Conclusion sur les apports et les besoins">
+         <option value="">[…]</option>
+         <option value="lt">Les apports sont inférieurs aux besoins</option>
+         <option value="eq">Les apports sont identiques aux besoins</option>
+         <option value="gt">Les apports sont supérieurs aux besoins</option>
+       </select>
      </div>
-     <div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionConclusion()">Vérifier ma conclusion</button></div>
+     <div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionMission()">Vérifier ma mission</button></div>${calculatorHTML()}
    </div></div>`;
  }
 }
@@ -1039,33 +1158,46 @@ function checkNutritionNumberCurrent(){
  input.disabled=true;
  nutritionSuccess(nutritionSuccessText);
 }
-function checkNutritionConclusion(){
+function checkNutritionMission(){
  if(answered)return;
- const x=nutritionRunData.conclusion;
+ const x=nutritionRunData.mission;
  const input=document.getElementById('nutritionInput');
  const rel=document.getElementById('nutritionRelation');
  const val=parsedNutritionNumber();
+
  input.classList.remove('wrong');
  rel.classList.remove('wrong');
 
  let issues=[];
- if(rel.value!==x.rel){
-   rel.classList.add('wrong');
-   issues.push('Reprends la comparaison faite à l’étape 4 : les apports sont-ils inférieurs, identiques ou supérieurs aux besoins ?');
- }
- if(val!==x.gap){
+
+ if(!Number.isFinite(val)){
    input.classList.add('wrong');
-   issues.push('Reprends l’écart calculé à l’étape 5.');
+   issues.push('Commence par calculer l’apport énergétique total du repas.');
+ }else if(val!==x.total){
+   input.classList.add('wrong');
+   issues.push('Relis le tableau et cherche comment réunir les apports énergétiques des trois aliments du repas.');
+ }
+
+ if(!rel.value){
+   rel.classList.add('wrong');
+   issues.push('Choisis ensuite une conclusion en comparant l’apport total aux besoins.');
+ }else if(rel.value!==x.rel){
+   rel.classList.add('wrong');
+   issues.push('Recompare l’apport total obtenu avec les besoins énergétiques indiqués dans la consigne.');
  }
 
  if(issues.length){
+   nutritionErrorCount++;
+   if(nutritionErrorCount>=2 && Number.isFinite(val) && val!==x.total){
+     issues.push(`Pour calculer l’apport total, additionne les trois énergies du tableau : ${x.foods.map(f=>fmtKJ(f.energy)).join(' + ')}.`);
+   }
    nutritionWrong(issues.join(' '));
    return;
  }
 
  input.disabled=true;
  rel.disabled=true;
- nutritionSuccess(`Très bien. ${relationSentence(x.rel)} et l’écart est de ${fmtKJ(x.gap)} kJ.`);
+ nutritionSuccess(`Mission réussie ! Le repas apporte ${fmtKJ(x.total)} kJ. ${relationSentence(x.rel)}.`);
 }
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.getElementById('modal').classList.remove('open')});
