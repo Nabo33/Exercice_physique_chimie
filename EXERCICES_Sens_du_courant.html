@@ -1,0 +1,2871 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Le sens du courant électrique — 5ème</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bleu:#1a73e8; --bleu2:#2563eb; --bleu-clair:#e8f0fe;
+  --vert:#0f9d58; --vert-clair:#e6f4ea;
+  --rouge:#ea4335; --rouge-clair:#fce8e6;
+  --jaune:#fbbc04; --jaune-clair:#fff8d7;
+  --violet:#7c4dff; --violet-clair:#ede7f6;
+  --orange:#f97316; --orange-clair:#fff1e6;
+  --bg:#f0f4ff; --card:#fff; --txt:#1a1a2e; --gris:#6c757d;
+  --shadow:0 5px 22px rgba(0,0,0,.10); --shadow2:0 10px 32px rgba(0,0,0,.16);
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+header{
+  background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 55%,#0f9d58 100%);
+  padding:28px 18px 22px;text-align:center;color:white;
+  box-shadow:0 4px 20px rgba(26,115,232,.30)
+}
+header h1{font-family:'Fredoka One',cursive;font-size:clamp(1.8rem,5vw,3rem);letter-spacing:.5px}
+header p{font-weight:700;opacity:.9;margin-top:5px}
+.zap{font-size:2.5rem;display:inline-block;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.12) rotate(6deg)}}
+
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:16px 12px 0;position:sticky;top:0;z-index:20;background:rgba(240,244,255,.94);backdrop-filter:blur(8px)}
+.tab-btn{
+  border:2.5px solid transparent;border-radius:999px;background:white;color:var(--gris);
+  font-family:'Nunito';font-size:.95rem;font-weight:900;padding:10px 18px;cursor:pointer;
+  box-shadow:var(--shadow);transition:.2s
+}
+.tab-btn:hover{transform:translateY(-2px)}
+.tab-btn.active{background:var(--bleu);color:#fff;border-color:var(--bleu)}
+.section{display:none;max-width:1120px;margin:auto;padding:22px 16px 60px}
+.section.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.title{font-family:'Fredoka One';color:var(--bleu);font-size:1.8rem;margin:6px 0 14px}
+.intro{
+  background:linear-gradient(135deg,#fff,#f8fbff);border-left:6px solid var(--bleu);
+  border-radius:0 18px 18px 0;padding:15px 18px;margin-bottom:18px;font-weight:700;line-height:1.55;
+  box-shadow:0 3px 15px rgba(0,0,0,.06)
+}
+.card{background:white;border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card h3{font-size:1.15rem;margin-bottom:10px}
+.rule-quote{
+  text-align:center;
+  font-size:1.13rem;
+  line-height:1.6;
+  font-weight:900;
+  color:#c62828;
+  background:linear-gradient(135deg,var(--rouge-clair),#fff);
+  border:3px solid #fca5a5;
+  border-radius:22px;
+  padding:18px;
+  box-shadow:var(--shadow)
+}
+.lesson-figure{
+  width:100%;
+  max-width:680px;
+  display:block;
+  margin:16px auto 4px;
+  border-radius:0;
+  box-shadow:none;
+  background:transparent;
+}
+
+#lessonCircuit{
+  border:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  padding:0 !important;
+}
+
+
+.del-compare-grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(320px, 1fr));
+  gap:16px;
+  margin-top:16px;
+  align-items:start;
+  justify-content:stretch;
+}
+.del-demo-card{
+  border-radius:10px;
+  padding:10px;
+  background:#fff;
+  border:1.5px solid #e5e7eb;
+  box-shadow:none;
+}
+.del-demo-card.pass{background:#fff}
+.del-demo-card.block{background:#fff}
+.del-demo-title{
+  font-weight:900;
+  text-align:center;
+  margin-bottom:8px;
+  font-size:1.02rem;
+}
+.del-demo-circuit{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  padding:4px;
+  min-height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.del-demo-circuit svg{width:100%;height:auto;max-width:520px}
+.del-reasoning{
+  display:none;
+  margin-top:8px;
+  border-radius:8px;
+  padding:8px;
+  font-weight:800;
+  line-height:1.35;
+}
+.del-reasoning.show{display:block}
+.del-reasoning.pass{background:#f6fff8;border:1px solid #ccefd7}
+.del-reasoning.block{background:#fff8f8;border:1px solid #f3caca}
+.hypo-current{
+  stroke:#ef4444;
+  stroke-width:3.5;
+  fill:none;
+  stroke-dasharray:8 8;
+  opacity:.95;
+}
+
+
+.explain-led-arrow{
+  fill:none;
+  stroke:#111827;
+  stroke-width:4;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.compare-visual{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  font-weight:900;
+}
+.compare-chip{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#fff;
+  border:2px solid #e5e7eb;
+  border-radius:999px;
+  padding:6px 12px;
+}
+.compare-chip.current{border-color:#fca5a5;color:#b91c1c;background:#fff7f7}
+.compare-chip.del{border-color:#d1d5db;color:#111827;background:#fff}
+.compare-result{
+  text-align:center;
+  margin-top:10px;
+  font-weight:900;
+}
+.compare-result.pass{color:var(--vert)}
+.compare-result.block{color:var(--rouge)}
+.del-demo-circuit{
+  min-height:270px;
+}
+.del-demo-title{
+  font-size:1.08rem;
+}
+
+
+.del-explain-image{
+  display:block;
+  width:100%;
+  max-width:520px;
+  height:auto;
+  margin:6px auto 4px;
+  background:#fff;
+  border:1px solid #ececec;
+  border-radius:8px;
+}
+.del-reasoning .explain-caption{
+  margin-top:8px;
+  text-align:center;
+  font-weight:900;
+  line-height:1.45;
+}
+
+.del-led-ray{
+  stroke:#111827;
+  stroke-width:6;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.del-symbol-arrow{
+  stroke:#111827;
+  stroke-width:4;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.del-course-box{
+  margin:18px 0;
+  background:#fff;
+  border:1.5px solid #e5e7eb;
+  border-radius:12px;
+  padding:14px 16px;
+}
+.del-course-box h3{
+  margin-bottom:10px;
+  color:var(--violet);
+  font-size:1.12rem;
+}
+.del-course-box p{
+  font-weight:800;
+  line-height:1.6;
+}
+.del-course-examples{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+.del-course-case{
+  border-radius:16px;
+  padding:14px;
+  font-weight:800;
+  line-height:1.45;
+}
+.del-course-case.pass{
+  background:var(--vert-clair);
+  border:2px solid #86efac;
+}
+.del-course-case.block{
+  background:var(--rouge-clair);
+  border:2px solid #fca5a5;
+}
+.arrow-demo{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin:10px 0 8px;
+  font-weight:900;
+}
+.arrow-solid{
+  font-size:1.8rem;
+  color:#111827;
+}
+.arrow-current{
+  font-size:1.8rem;
+  color:#ef4444;
+}
+.arrow-dashed{
+  position:relative;
+  width:64px;
+  height:18px;
+  display:inline-block;
+}
+.arrow-dashed::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:12px;
+  top:8px;
+  border-top:3px dashed #ef4444;
+}
+.arrow-dashed::after{
+  content:"";
+  position:absolute;
+  right:0;
+  top:3px;
+  width:10px;
+  height:10px;
+  border-top:3px solid #ef4444;
+  border-right:3px solid #ef4444;
+  transform:rotate(45deg);
+}
+
+.note-mini{
+  margin-top:14px;
+  background:linear-gradient(135deg,var(--jaune-clair),#fff);
+  border-left:7px solid var(--jaune);
+  border-radius:18px;
+  padding:14px 16px;
+  font-weight:900;
+  line-height:1.5;
+}
+.circuit-box{
+  background:#fff;border:2px solid #dce5f5;border-radius:18px;padding:14px;
+  min-height:280px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden
+}
+.circuit-svg{width:100%;max-width:620px;height:auto}
+.wire{stroke:#1f2937;stroke-width:6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.wire.off{stroke:#1f2937}
+.dev{stroke:#111827;stroke-width:6;fill:white}
+.polarity{font-weight:900;font-size:28px;font-family:'Nunito'}
+.curr-arrow{fill:none;stroke:#ef4444;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;opacity:.98}
+.curr-arrow-dashed{
+  fill:none;
+  stroke:#ef4444;
+  stroke-width:5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:2.4 4.8;
+  opacity:.98;
+}
+.curr-arrow-dashed.blink{
+  animation:blockedCurrentFade 3s ease-in-out infinite;
+}
+@keyframes blockedCurrentFade{
+  0%,25%{opacity:0}
+  50%{opacity:1}
+  75%{opacity:.15}
+  100%{opacity:0}
+}
+.curr-path{
+  stroke:#ef4444;
+  stroke-width:4.2;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:9 7;
+  animation:dash 1s linear infinite;
+}
+@keyframes dash{
+  from{stroke-dashoffset:0}
+  to{stroke-dashoffset:-16}
+}
+.control-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.btn{
+  border:none;border-radius:999px;padding:11px 20px;font-family:'Nunito';font-weight:900;
+  font-size:.96rem;cursor:pointer;transition:.18s;box-shadow:0 4px 13px rgba(0,0,0,.12)
+}
+.btn:hover{transform:translateY(-2px)}
+.primary{background:linear-gradient(135deg,var(--bleu),var(--violet));color:#fff}
+.green{background:var(--vert);color:#fff}
+.red{background:var(--rouge);color:#fff}
+.light{background:#eef2ff;color:#344}
+.feedback{display:none;margin-top:14px;padding:14px 16px;border-radius:15px;font-weight:800;line-height:1.45}
+.feedback.show{display:block}
+.feedback.good{background:var(--vert-clair);border:2px solid #86efac;color:#0b6b3c}
+.feedback.bad{background:var(--rouge-clair);border:2px solid #fca5a5;color:#a61b12}
+.question{font-size:1.08rem;font-weight:900;margin:12px 0}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.choice{
+  border:2.5px solid #dbe3f0;background:#f8fafc;border-radius:14px;padding:13px;
+  font-family:'Nunito';font-weight:800;cursor:pointer;transition:.17s;text-align:left
+}
+.choice:hover{border-color:#93c5fd;background:#eff6ff;transform:translateY(-1px)}
+.choice.selected{border-color:#2563eb;background:#dbeafe;color:#12356f}
+.choice.correct{background:var(--vert-clair);border-color:var(--vert);color:#08733c}
+.choice.wrong{background:var(--rouge-clair);border-color:var(--rouge);color:#a61b12}
+.del-subquestion{font-size:1rem;font-weight:900;margin:16px 0 6px}
+.del-mini-title{font-weight:900;margin:10px 0 4px}
+.progress-wrap{height:12px;background:#e2e8f0;border-radius:999px;overflow:hidden;flex:1;min-width:150px}
+.progress{height:100%;width:0;background:linear-gradient(90deg,var(--bleu),var(--violet),var(--vert));transition:.35s}
+.quiz-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.badge{background:var(--jaune);padding:6px 13px;border-radius:999px;font-weight:900}
+.fan{transform-origin:center;transform-box:fill-box}
+.fan.cw{animation:spinCW .55s linear infinite}
+.fan.ccw{animation:spinCCW .55s linear infinite}
+.fan.stop{animation:none}
+@keyframes spinCW{to{transform:rotate(360deg)}}
+@keyframes spinCCW{to{transform:rotate(-360deg)}}
+.del-glow{filter:drop-shadow(0 0 9px #ef4444) drop-shadow(0 0 14px #fbbc04)}
+.score-final{font-family:'Fredoka One';font-size:3.5rem;color:var(--bleu);text-align:center;margin:12px}
+
+.motor-real{
+  position:relative;
+  width:100%;
+  max-width:760px;
+  margin:0 auto;
+  aspect-ratio:1363/995;
+  min-height:300px;
+  overflow:hidden;
+  background:#fff;
+  border-radius:12px;
+}
+.motor-real .wire-layer,
+.motor-real .mark-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.motor-real .wire-layer{z-index:1}
+.motor-real .mark-layer{z-index:8;pointer-events:none}
+.motor-real .wire{
+  fill:none;
+  stroke:#000;
+  stroke-width:16;
+  stroke-linecap:square;
+  stroke-linejoin:miter;
+}
+.motor-real .component,
+.motor-real .lamp-holder{
+  position:absolute;
+}
+.motor-real img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:transparent;
+  user-select:none;
+  -webkit-user-drag:none;
+  opacity:0;
+  transition:opacity .12s linear;
+}
+.motor-real img.asset-ready{opacity:1}
+
+/* Même règle d'alignement que dans le fichier Série/Dérivation :
+   le fil passe au niveau du socle gris de l'ampoule, à 86 % de sa hauteur. */
+.motor-real .lamp-holder img{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+}
+.motor-real .lamp-holder .lamp-on{
+  width:95%;
+  height:95%;
+}
+
+/* Coordonnées reprises exactement du circuit en série de référence. */
+.motor-real .battery{
+  z-index:3;
+  left:31.55%;
+  top:9.45%;
+  width:34.75%;
+  height:20.55%;
+  transform-origin:50% 50%;
+}
+.motor-real .battery.reversed{
+  transform:scaleX(-1);
+}
+.motor-real .lamp-holder{
+  z-index:4;
+  left:18.65%;
+  top:49.30%;
+  width:21.85%;
+  height:38.15%;
+}
+.motor-real .motor-body{
+  z-index:3;
+  left:56.65%;
+  top:50.70%;
+  width:17.25%;
+  height:37.25%;
+}
+.motor-real .propeller{
+  z-index:5;
+  left:51.55%;
+  top:41.55%;
+  width:27.15%;
+  height:40.65%;
+  transform-origin:50% 50%;
+}
+.motor-real .lamp-holder.swap-right{
+  left:54.35%;
+  top:49.30%;
+}
+.motor-real .motor-body.swap-left{
+  left:20.95%;
+  top:50.70%;
+}
+.motor-real .propeller.swap-left{
+  left:16.00%;
+  top:41.55%;
+}
+.motor-real .propeller.spin-cw{animation:spinCW 1.65s linear infinite}
+.motor-real .propeller.spin-ccw{animation:spinCCW 1.65s linear infinite}
+.motor-real .motor-arrow{
+  fill:none;
+  stroke:#ef4444;
+  stroke-width:14;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+@media(max-width:520px){
+  .motor-real{min-height:235px}
+}
+
+.hidden{display:none!important}
+.small{font-size:.9rem;color:var(--gris);font-weight:700}
+@media(max-width:760px){
+  .del-compare-grid{grid-template-columns:1fr}
+  .del-course-examples{grid-template-columns:1fr}
+  .choice-grid{grid-template-columns:1fr}
+  .tabs{position:relative}
+  .tab-btn{flex:1 1 44%}
+  #del .card > div[style*="grid-template-columns:repeat(2"]{grid-template-columns:1fr !important;}
+}
+
+/* ===== Harmonisation visuelle avec EXERCICES_Circuit_simple ===== */
+:root{
+  --nuit:#0f172a;
+  --vert-elec:#22c55e;
+  --bleu:#1a73e8;
+  --bleu-clair:#e8f0fe;
+  --violet:#7c4dff;
+  --violet-clair:#ede7f6;
+  --vert:#0f9d58;
+  --vert-clair:#e6f4ea;
+  --rouge:#ea4335;
+  --rouge-clair:#fce8e6;
+  --jaune:#fbbc04;
+  --jaune-clair:#fff8df;
+  --cyan:#06b6d4;
+  --cyan-clair:#e6fbff;
+  --bg:#f0f4ff;
+  --txt:#1a1a2e;
+  --gris:#657085;
+  --border:#dde1f0;
+  --shadow:0 4px 20px rgba(0,0,0,.10);
+  --shadow-soft:0 3px 14px rgba(0,0,0,.08);
+  --shadow2:0 8px 32px rgba(0,0,0,.16);
+  --radius:22px;
+}
+
+/* En-tête */
+header{
+  background:linear-gradient(135deg,#1a73e8 0%,#7c4dff 100%);
+  box-shadow:0 4px 20px rgba(26,115,232,.30);
+  padding:30px 18px 24px;
+}
+header h1{
+  text-shadow:0 2px 8px rgba(0,0,0,.22);
+}
+
+/* Onglets : même logique de boutons que dans "Circuits simples" */
+.tabs{
+  gap:10px;
+  padding:12px 10px;
+  background:rgba(240,244,255,.86);
+  backdrop-filter:blur(8px);
+}
+.tab-btn{
+  border:2.5px solid #fff;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--bleu),var(--vert-elec));
+  color:#fff;
+  box-shadow:0 6px 22px rgba(6,182,212,.30);
+  padding:9px 16px;
+  min-height:46px;
+  font-size:.98rem;
+  transition:.22s;
+}
+.tab-btn:hover{
+  background:linear-gradient(135deg,#1d4ed8,#16a34a);
+  transform:translateY(-1px);
+  box-shadow:0 8px 26px rgba(6,182,212,.34);
+  color:#fff;
+}
+.tab-btn.active{
+  background:#fff;
+  color:var(--bleu);
+  border-color:var(--cyan);
+  box-shadow:0 6px 22px rgba(6,182,212,.26);
+  transform:none;
+}
+
+/* Cartes */
+.card{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-soft);
+}
+.circuit-box{
+  border:2px solid var(--border);
+  border-radius:18px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+
+/* Boutons d'action */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border-radius:999px;
+  padding:.8rem 2rem;
+  font-family:'Nunito',sans-serif;
+  font-size:1rem;
+  font-weight:900;
+  border:none;
+  cursor:pointer;
+  transition:transform .1s, box-shadow .15s, background .18s;
+  box-shadow:none;
+}
+.btn:active{transform:scale(.97)}
+.btn:hover{transform:translateY(-1px)}
+
+.btn.primary,
+.primary{
+  background:linear-gradient(135deg,var(--nuit),var(--bleu),var(--vert-elec));
+  color:#fff;
+  box-shadow:0 4px 14px rgba(26,115,232,.30);
+}
+.btn.primary:hover,
+.primary:hover{
+  box-shadow:0 6px 20px rgba(26,115,232,.35);
+  transform:translateY(-2px);
+}
+
+.btn.light,
+.light{
+  background:#e2e8f0;
+  color:#334155;
+  box-shadow:none;
+}
+.btn.light:hover,
+.light:hover{
+  background:var(--bleu-clair);
+  color:var(--bleu);
+}
+
+.btn.green,
+.green{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(34,197,94,.24);
+}
+.btn.red,
+.red{
+  background:var(--rouge);
+  color:#fff;
+}
+
+/* Boutons de réponse/QCM */
+.choice{
+  border:2.5px solid var(--border);
+  border-radius:16px;
+  background:#fff;
+  color:var(--txt);
+  padding:.85rem 1.1rem;
+  font-family:'Nunito',sans-serif;
+  font-size:1rem;
+  font-weight:900;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  transition:border-color .15s, background .15s, transform .1s;
+}
+.choice:hover{
+  border-color:var(--bleu);
+  background:var(--bleu-clair);
+  color:var(--bleu);
+  transform:translateY(-1px);
+}
+.choice.selected{
+  border-color:var(--violet);
+  background:#f5f3ff;
+  color:var(--violet);
+}
+.choice.correct{
+  border-color:var(--vert);
+  background:var(--vert-clair);
+  color:var(--vert);
+}
+.choice.wrong{
+  border-color:var(--rouge);
+  background:var(--rouge-clair);
+  color:var(--rouge);
+}
+
+/* Feedback */
+.feedback{
+  border-radius:16px;
+  padding:14px 18px;
+  font-weight:900;
+}
+.feedback.good{
+  background:var(--vert-clair);
+  color:var(--vert);
+  border:2px solid var(--vert);
+}
+.feedback.bad{
+  background:var(--rouge-clair);
+  color:var(--rouge);
+  border:2px solid var(--rouge);
+}
+
+/* Suivi de progression */
+.quiz-top{
+  background:linear-gradient(180deg,#fff,#f7fbff);
+  border:2.5px solid var(--cyan);
+  border-radius:22px;
+  box-shadow:var(--shadow-soft);
+  padding:14px 16px;
+}
+.badge{
+  background:linear-gradient(135deg,var(--jaune),#fff3b0);
+  color:#3b2f00;
+  border:2px solid #f5d46a;
+  box-shadow:var(--shadow-soft);
+  padding:8px 14px;
+}
+.progress-wrap{
+  height:16px;
+  background:#e8eef8;
+  border:2px solid #d5e0f2;
+  box-shadow:inset 0 2px 5px rgba(15,23,42,.08);
+}
+.progress{
+  background:linear-gradient(90deg,var(--nuit),var(--bleu),var(--vert-elec));
+}
+
+/* Petites notes */
+.note-mini{
+  background:linear-gradient(180deg,#fff,#fffaf0);
+  border:2.5px solid var(--jaune);
+  border-left:2.5px solid var(--jaune);
+  border-radius:20px;
+  box-shadow:var(--shadow-soft);
+}
+
+/* Responsive identique dans l'esprit du fichier de référence */
+@media(max-width:700px){
+  .tab-btn{
+    flex:1 1 100%;
+    max-width:none;
+    width:100%;
+    padding:10px 12px;
+    font-size:1rem;
+  }
+  .btn{
+    width:100%;
+    margin-left:0;
+  }
+}
+
+
+/* ===== Thème électricité EXACT du fichier EXERCICES_Circuit_simple(6) =====
+   Le fichier de référence applique ces couleurs plus loin dans son CSS,
+   après le premier bloc d'harmonisation. */
+header{
+  background:linear-gradient(135deg,#0f172a,#2563eb,#22c55e) !important;
+}
+
+/* Navigation = .nav-btn du fichier de référence */
+.tab-btn,
+.btn.primary{
+  background:linear-gradient(135deg,#0f172a,#2563eb,#22c55e) !important;
+  border-color:#ffffff !important;
+  color:#ffffff !important;
+  box-shadow:0 8px 24px rgba(37,99,235,.26), 0 0 18px rgba(34,197,94,.18) !important;
+}
+.tab-btn:hover,
+.btn.primary:hover{
+  background:linear-gradient(135deg,#020617,#1d4ed8,#16a34a) !important;
+  box-shadow:0 10px 28px rgba(37,99,235,.34), 0 0 22px rgba(34,197,94,.26) !important;
+}
+.tab-btn.active{
+  background:#ffffff !important;
+  color:#0f172a !important;
+  border-color:#22c55e !important;
+  box-shadow:0 6px 22px rgba(34,197,94,.28) !important;
+}
+
+/* Boutons secondaires = .btn-secondary du fichier de référence */
+.btn.light{
+  background:#ffffff !important;
+  border:2px solid #22c55e !important;
+  color:#0f172a !important;
+}
+.btn.light:hover{
+  background:#ecfdf5 !important;
+  border-color:#16a34a !important;
+  color:#0f172a !important;
+}
+
+/* Boutons verts conservés dans le même esprit électrique */
+.btn.green{
+  background:linear-gradient(135deg,#16a34a,#22c55e) !important;
+  color:#ffffff !important;
+  border:2px solid #ffffff !important;
+  box-shadow:0 6px 18px rgba(34,197,94,.24) !important;
+}
+
+/* Barre de progression du fichier de référence */
+.progress{
+  background:linear-gradient(90deg,#0f172a,#2563eb,#22c55e) !important;
+}
+
+/* Encadré de progression = .quiz-status du fichier de référence */
+.quiz-top{
+  border-color:#22c55e !important;
+  background:linear-gradient(180deg,#ffffff,#f0fdf4) !important;
+}
+
+/* Badge de score/progression = .score-badge du fichier de référence */
+.badge{
+  background:linear-gradient(135deg,#dcfce7,#bbf7d0) !important;
+  color:#14532d !important;
+  border-color:#22c55e !important;
+}
+
+/* Réponses : reprendre exactement l'esprit du fichier fourni */
+.choice{
+  background:#ffffff !important;
+  border-color:#dde1f0 !important;
+  color:#1a1a2e !important;
+}
+.choice:hover{
+  border-color:#1a73e8 !important;
+  background:#e8f0fe !important;
+  color:#1a73e8 !important;
+}
+.choice.selected{
+  border-color:#7c4dff !important;
+  background:#ede7f6 !important;
+  color:#7c4dff !important;
+}
+.choice.correct{
+  border-color:#0f9d58 !important;
+  background:#e6f4ea !important;
+  color:#0f9d58 !important;
+}
+.choice.wrong{
+  border-color:#ea4335 !important;
+  background:#fce8e6 !important;
+  color:#ea4335 !important;
+}
+
+.feedback.good{
+  background:#e6f4ea !important;
+  color:#0f9d58 !important;
+  border-color:#0f9d58 !important;
+}
+.feedback.bad{
+  background:#fce8e6 !important;
+  color:#ea4335 !important;
+  border-color:#ea4335 !important;
+}
+
+
+/* Boutons interactifs du bloc moteur : même apparence, claire et très identifiable */
+.motor-actions{
+  gap:12px;
+}
+.motor-action-btn{
+  background:linear-gradient(135deg,#ffffff 0%,#eef4ff 52%,#ecfdf5 100%) !important;
+  color:#0f172a !important;
+  border:2.5px solid #22c55e !important;
+  box-shadow:0 4px 14px rgba(37,99,235,.12), 0 0 12px rgba(34,197,94,.10) !important;
+}
+.motor-action-btn:hover{
+  background:linear-gradient(135deg,#f8fbff 0%,#dbeafe 50%,#dcfce7 100%) !important;
+  border-color:#16a34a !important;
+  color:#0f172a !important;
+  transform:translateY(-2px) !important;
+  box-shadow:0 7px 18px rgba(37,99,235,.18), 0 0 16px rgba(34,197,94,.14) !important;
+}
+.motor-action-btn:active{
+  transform:scale(.98) !important;
+}
+
+
+/* Suppression des rectangles autour des deux blocs DEL de la leçon */
+#lesson .del-demo-card{
+  border:none !important;
+  box-shadow:none !important;
+  background:transparent !important;
+  border-radius:0 !important;
+  padding:0 !important;
+}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="zap">⚡</div>
+  <h1>Le sens du courant électrique</h1>
+  <p>Physique-Chimie 5ème</p>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="lesson">🧠 Leçon</button>
+  <button class="tab-btn" data-tab="sense">➡️ Sens du courant</button>
+  <button class="tab-btn" data-tab="motor">🌀 Moteur</button>
+  <button class="tab-btn" data-tab="del">🔺 DEL</button>
+  <button class="tab-btn" data-tab="challenge">🏆 Défi final</button>
+</nav>
+
+<main>
+<section id="lesson" class="section active">
+  <h2 class="title">🧠 L'essentiel à comprendre</h2>
+
+  <div class="card">
+    <div class="rule-quote">
+      Le sens conventionnel du courant électrique, à l’extérieur du générateur, va toujours de la borne positive à la borne négative.
+    </div>
+
+    <img class="lesson-figure" src="https://raw.githubusercontent.com/Nabo33/Images/923141e9ef3a11e5295d2bbfbb9aed207420f989/sens%20courant.png" alt="Schéma résumant le sens conventionnel du courant électrique">
+
+    <div id="lessonCircuit" class="circuit-box" style="margin-top:18px"></div>
+    <div class="control-row">
+      <button class="btn primary" id="lessonSwitchBtn" onclick="toggleLessonSwitch()">🔴 Ouvrir le circuit</button>
+      <button class="btn light" onclick="flipLessonBattery()">🔄 Inverser la pile</button>
+    </div>
+    <div class="note-mini">🚫 <strong>Circuit ouvert : pas de courant.</strong></div>
+  </div>
+
+  <div class="del-course-box">
+    <h3>🔎 DEL en sens passant ou en sens bloquant ?</h3>
+
+    <div class="del-compare-grid">
+      <div class="del-demo-card pass">
+        <div class="del-demo-title">✅ DEL en sens passant</div>
+        <div id="lessonDelPassCircuit" class="del-demo-circuit"></div>
+        <div class="control-row">
+          <button class="btn green" id="btnDelExplainPass" onclick="toggleDelReasoning('pass')">Voir</button>
+        </div>
+        <div id="delReasoningPass" class="del-reasoning pass">
+          <img class="del-explain-image" src="https://raw.githubusercontent.com/Nabo33/Images/796fca2594560cf88a0d4b716500f0dcb92ceada/DEL%20sens%20passant%20-%20explication.png" alt="DEL en sens passant">
+          <div class="explain-caption">Flèches dans le même sens ? → <strong>DEL dans le sens passant</strong>.</div>
+        </div>
+      </div>
+
+      <div class="del-demo-card block">
+        <div class="del-demo-title">⛔ DEL en sens bloquant</div>
+        <div id="lessonDelBlockCircuit" class="del-demo-circuit"></div>
+        <div class="control-row">
+          <button class="btn red" id="btnDelExplainBlock" onclick="toggleDelReasoning('block')">Voir</button>
+        </div>
+        <div id="delReasoningBlock" class="del-reasoning block">
+          <img class="del-explain-image" src="https://raw.githubusercontent.com/Nabo33/Images/796fca2594560cf88a0d4b716500f0dcb92ceada/DEL%20sens%20bloquant%20-%20explication.png" alt="DEL en sens bloquant">
+          <div class="explain-caption">Flèches en sens opposé ? → <strong>DEL dans le sens bloquant</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sense" class="section">
+  <h2 class="title">➡️ Exercice — Trouver le sens du courant</h2>
+  <div class="intro">Observe la borne <strong>+</strong> de la pile, puis choisis le sens de circulation du courant dans le circuit.</div>
+  <div class="card">
+    <div class="quiz-top">
+      <span class="badge" id="senseCount">Circuit 1 / 6</span>
+      <div class="progress-wrap"><div class="progress" id="senseProgress"></div></div>
+      <span class="badge" id="senseScore">Score : 0</span>
+    </div>
+    <div id="senseCircuit" class="circuit-box"></div>
+    <div class="question">Le courant circule toujours de la borne positive à la borne négative, ici cela correspond...</div>
+    <div class="choice-grid" id="senseChoices">
+      <button class="choice" data-answer="cw">↻ Au sens des aiguilles d'une montre</button>
+      <button class="choice" data-answer="ccw">↺ Au sens inverse des aiguilles d'une montre</button>
+    </div>
+    <div class="feedback" id="senseFeedback"></div>
+    <div class="control-row"><button class="btn primary hidden" id="senseNext" onclick="nextSense()">Question suivante ➜</button></div>
+  </div>
+</section>
+
+<section id="motor" class="section">
+  <h2 class="title">🌀 Moteur et sens du courant</h2>
+  <div class="card">
+    <h3>🔬 Expérience virtuelle</h3>
+    <div id="motorCircuit" class="circuit-box"></div>
+    <div class="control-row motor-actions">
+      <button class="btn motor-action-btn" onclick="flipMotorBattery()">🔄 Inverser les bornes de la pile</button>
+      <button class="btn motor-action-btn" onclick="swapMotorReceivers()">🔁 Échanger la place des récepteurs</button>
+      <button class="btn motor-action-btn" onclick="toggleMotorArrows()">➡️ Afficher / masquer les flèches</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <div class="question">Que faut-il faire pour changer le sens de rotation du moteur ?</div>
+    <div class="choice-grid" id="motorChoices">
+      <button class="choice" data-ok="0">Il faut échanger la position des récepteurs.</button>
+      <button class="choice" data-ok="0">Il faut ouvrir le circuit.</button>
+      <button class="choice" data-ok="1">Il faut inverser les bornes de la pile.</button>
+      <button class="choice" data-ok="0">Il faut mettre des flèches rouges.</button>
+    </div>
+    <div class="feedback" id="motorFeedback"></div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <div class="question">Que se passe-t-il si on échange la place des récepteurs ?</div>
+    <div class="choice-grid" id="swapChoices">
+      <button class="choice" data-ok="1">Le fonctionnement ne change pas : la lampe brille pareil et le moteur tourne dans le même sens.</button>
+      <button class="choice" data-ok="0">Le moteur tourne dans l'autre sens.</button>
+      <button class="choice" data-ok="0">La lampe s'éteint mais le moteur tourne pareil.</button>
+      <button class="choice" data-ok="0">Le circuit ne fonctionne plus.</button>
+    </div>
+    <div class="feedback" id="swapFeedback"></div>
+  </div>
+</section>
+
+<section id="del" class="section">
+  <h2 class="title">🔺 La DEL : sens passant ou sens bloquant ?</h2>
+  <div class="card">
+    <div class="quiz-top">
+      <span class="badge" id="delCount">Situation 1 / 10</span>
+      <div class="progress-wrap"><div class="progress" id="delProgress"></div></div>
+      <span class="badge" id="delScore">Score : 0</span>
+    </div>
+
+    <div id="delCircuit" class="circuit-box"></div>
+
+    <div class="question" id="delQuestion">Le courant peut-il circuler ?</div>
+    <div class="choice-grid" id="delYesNoChoices">
+      <button class="choice" data-answer="yes">Oui</button>
+      <button class="choice" data-answer="no">Non</button>
+    </div>
+
+    <div class="del-subquestion">Quelle est la bonne justification ?</div>
+    <div class="choice-grid" id="delReasonChoices"></div>
+
+    <div class="control-row">
+      <button class="btn primary" id="delValidate" onclick="validateDel()">Valider</button>
+      <button class="btn primary hidden" id="delNext" onclick="nextDel()">Situation suivante ➜</button>
+    </div>
+
+    <div class="feedback" id="delFeedback"></div>
+  </div>
+
+  <div class="note-mini">
+    🧠 Commence par repérer la borne <strong>+</strong>, imagine le sens du courant, puis compare-le au sens de la flèche de la DEL.
+  </div>
+</section>
+
+<section id="challenge" class="section">
+  <h2 class="title">🏆 Défi final — Que va-t-il se passer ?</h2>
+  <div class="intro">Mélange toutes les notions : sens du courant, interrupteur, moteur, lampe et DEL.</div>
+  <div class="card" id="challengeCard">
+    <div class="quiz-top">
+      <span class="badge" id="chCount">Question 1 / 8</span>
+      <div class="progress-wrap"><div class="progress" id="chProgress"></div></div>
+      <span class="badge" id="chScore">Score : 0</span>
+    </div>
+    <div id="chCircuit" class="circuit-box"></div>
+    <div class="question" id="chQuestion"></div>
+    <div class="choice-grid" id="chChoices"></div>
+    <div class="feedback" id="chFeedback"></div>
+    <div class="control-row"><button class="btn primary hidden" id="chNext" onclick="nextChallenge()">Question suivante ➜</button></div>
+  </div>
+  <div class="card hidden" id="challengeEnd">
+    <div style="text-align:center;font-size:3rem">🏆</div>
+    <div class="score-final" id="finalScore"></div>
+    <p id="finalMessage" style="text-align:center;font-weight:900"></p>
+    <div class="control-row"><button class="btn primary" onclick="restartChallenge()">🔄 Recommencer le défi</button></div>
+  </div>
+</section>
+</main>
+
+<script>
+// ---------- Navigation ----------
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+// ---------- SVG CIRCUIT ENGINE ----------
+function arrowPath(x, y, dir, size=13){
+  if(dir === 'up')    return `M${x-size*0.65},${y+size*0.45} L${x},${y-size*0.45} L${x+size*0.65},${y+size*0.45}`;
+  if(dir === 'down')  return `M${x-size*0.65},${y-size*0.45} L${x},${y+size*0.45} L${x+size*0.65},${y-size*0.45}`;
+  if(dir === 'left')  return `M${x+size*0.45},${y-size*0.65} L${x-size*0.45},${y} L${x+size*0.45},${y+size*0.65}`;
+  return `M${x-size*0.45},${y-size*0.65} L${x+size*0.45},${y} L${x-size*0.45},${y+size*0.65}`;
+}
+
+
+function arrowHeadPath(x, y, dir, size=13){
+  if(dir === 'up')    return `M${x-size*0.85},${y+size*0.55} L${x},${y-size*0.55} L${x+size*0.85},${y+size*0.55}`;
+  if(dir === 'down')  return `M${x-size*0.85},${y-size*0.55} L${x},${y+size*0.55} L${x+size*0.85},${y-size*0.55}`;
+  if(dir === 'left')  return `M${x+size*0.55},${y-size*0.85} L${x-size*0.55},${y} L${x+size*0.55},${y+size*0.85}`;
+  return `M${x-size*0.55},${y-size*0.85} L${x+size*0.55},${y} L${x-size*0.55},${y+size*0.85}`;
+}
+
+function motorLetterSvg(cx, cy){
+  return `<path d="M${cx-14} ${cy+12} V${cy-12} L${cx} ${cy+6} L${cx+14} ${cy-12} V${cy+12}"
+    fill="none" stroke="#111827" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`;
+}
+
+function circuitSVG({plus='left', device='lamp', delPass=true, open=false, arrows=true, motorDir='cw', glow=true}={}){
+  const cw = plus === 'left';
+  const currentExists = !open && !(device === 'del' && !delPass);
+  const showCurrent = arrows && currentExists;
+  const wireClass = currentExists ? 'wire' : 'wire off';
+
+  const leftX = 100, rightX = 500, topY = 70, bottomY = 250;
+  const centerX = 300;
+  const longPlateX = plus === 'left' ? 285 : 315;
+  const shortPlateX = plus === 'left' ? 315 : 285;
+  const plusX = plus === 'left' ? 265 : 335;
+  const minusX = plus === 'left' ? 335 : 265;
+  const batteryLeftWireEnd = Math.min(longPlateX, shortPlateX);
+  const batteryRightWireStart = Math.max(longPlateX, shortPlateX);
+
+  // ─────────────────────────────────────────────────────────────
+  // 1) Fils du circuit (toujours dessinés en premier)
+  // ─────────────────────────────────────────────────────────────
+  const topWireSvg = {
+    lamp: `
+      <line x1="${leftX}" y1="${topY}" x2="270" y2="${topY}" class="${wireClass}"/>
+      <line x1="330" y1="${topY}" x2="${rightX}" y2="${topY}" class="${wireClass}"/>`,
+    motor: `
+      <line x1="${leftX}" y1="${topY}" x2="269" y2="${topY}" class="${wireClass}"/>
+      <line x1="331" y1="${topY}" x2="${rightX}" y2="${topY}" class="${wireClass}"/>`,
+    del: `
+      <line x1="${leftX}" y1="${topY}" x2="275" y2="${topY}" class="${wireClass}"/>
+      <line x1="325" y1="${topY}" x2="${rightX}" y2="${topY}" class="${wireClass}"/>`
+  }[device];
+
+  const switchTop = 135;
+  const switchBottom = 185;
+  const switchR = 6;
+
+  const switchSvg = open ? `
+    <line x1="${rightX}" y1="${topY}" x2="${rightX}" y2="${switchTop-switchR}" class="wire off"/>
+    <circle cx="${rightX}" cy="${switchTop}" r="${switchR}" fill="#111827"/>
+    <circle cx="${rightX}" cy="${switchBottom}" r="${switchR}" fill="#111827"/>
+    <line x1="${rightX}" y1="${switchTop}" x2="${rightX-35}" y2="${(switchTop+switchBottom)/2}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+    <line x1="${rightX}" y1="${switchBottom+switchR}" x2="${rightX}" y2="${bottomY}" class="wire off"/>`
+  : `<line x1="${rightX}" y1="${topY}" x2="${rightX}" y2="${switchTop-switchR}" class="${wireClass}"/>
+     <circle cx="${rightX}" cy="${switchTop}" r="${switchR}" fill="#111827"/>
+     <line x1="${rightX}" y1="${switchTop+switchR}" x2="${rightX}" y2="${switchBottom-switchR}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+     <circle cx="${rightX}" cy="${switchBottom}" r="${switchR}" fill="#111827"/>
+     <line x1="${rightX}" y1="${switchBottom+switchR}" x2="${rightX}" y2="${bottomY}" class="${wireClass}"/>`;
+
+  const structuralWireSvg = `
+    ${topWireSvg}
+    <line x1="${leftX}" y1="${topY}" x2="${leftX}" y2="${bottomY}" class="${wireClass}"/>
+    ${switchSvg}
+    <line x1="${leftX}" y1="${bottomY}" x2="${batteryLeftWireEnd}" y2="${bottomY}" class="${wireClass}"/>
+    <line x1="${batteryRightWireStart}" y1="${bottomY}" x2="${rightX}" y2="${bottomY}" class="${wireClass}"/>
+  `;
+
+  // ─────────────────────────────────────────────────────────────
+  // 2) Petits traits rouges mobiles + flèches du courant
+  //    Ils doivent être visibles quand on affiche le courant.
+  //    Les traits rouges passent sous le symbole du dipôle du haut
+  //    car celui-ci sera dessiné APRES.
+  // ─────────────────────────────────────────────────────────────
+  let currentPathSvg = '';
+  let currentArrowSvg = '';
+
+  if(showCurrent){
+    const segs = cw
+      ? [
+          `M${longPlateX} ${bottomY} H${leftX}`,
+          `M${leftX} ${bottomY} V${topY}`,
+          `M${leftX} ${topY} H${rightX}`,
+          `M${rightX} ${topY} V${switchTop-switchR}`,
+          `M${rightX} ${switchTop+switchR} V${switchBottom-switchR}`,
+          `M${rightX} ${switchBottom+switchR} V${bottomY}`,
+          `M${rightX} ${bottomY} H${shortPlateX}`
+        ]
+      : [
+          `M${longPlateX} ${bottomY} H${rightX}`,
+          `M${rightX} ${bottomY} V${switchBottom+switchR}`,
+          `M${rightX} ${switchBottom-switchR} V${switchTop+switchR}`,
+          `M${rightX} ${switchTop-switchR} V${topY}`,
+          `M${rightX} ${topY} H${leftX}`,
+          `M${leftX} ${topY} V${bottomY}`,
+          `M${leftX} ${bottomY} H${shortPlateX}`
+        ];
+
+    // Flèches ouvertes placées sur des portions de fil situées ENTRE deux dipôles.
+    const arrowPolys = cw
+      ? [
+          [leftX, 155, 'up'],     // pile (+) -> dipôle du haut
+          [410, topY, 'right'],   // dipôle du haut -> interrupteur
+          [420, bottomY, 'left']  // interrupteur -> pile (-)
+        ]
+      : [
+          [420, bottomY, 'right'],// pile (+) -> interrupteur
+          [410, topY, 'left'],    // interrupteur -> dipôle du haut
+          [leftX, 155, 'down']    // dipôle du haut -> pile (-)
+        ];
+
+    currentPathSvg = segs.map(d => `<path d="${d}" class="curr-path"/>`).join('');
+    currentArrowSvg = arrowPolys.map(([x,y,dir]) => `<path class="curr-arrow" d="${arrowPath(x,y,dir)}"/>`).join('');
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // 3) Symbole du dipôle du haut (dessiné après les traits rouges)
+  // ─────────────────────────────────────────────────────────────
+  let deviceBodySvg = '';
+  if(device === 'lamp'){
+    deviceBodySvg = `
+      <circle cx="${centerX}" cy="${topY}" r="30" class="dev"/>
+      <path d="M280 50 L320 90 M320 50 L280 90" stroke="#111827" stroke-width="6"/>`;
+  } else if(device === 'motor'){
+    deviceBodySvg = `
+      <circle cx="${centerX}" cy="${topY}" r="31" class="dev"/>
+      ${motorLetterSvg(centerX, topY)}
+      <g class="fan ${motorDir}" transform="translate(${centerX} 122)">
+        <circle cx="0" cy="0" r="7" fill="#111827"/>
+        <path d="M0 -5 C15 -38 40 -24 20 -4 C12 4 8 4 0 -5Z" fill="#64748b"/>
+        <path d="M5 2 C38 14 24 40 4 20 C-4 12 -4 8 5 2Z" fill="#64748b"/>
+        <path d="M-5 0 C-15 38 -40 24 -20 4 C-12 -4 -8 -4 -5 0Z" fill="#64748b"/>
+      </g>`;
+  } else if(device === 'del'){
+    const lit = currentExists && glow;
+    deviceBodySvg = `<g class="${lit ? 'del-glow' : ''}">${ledSymbolSvg(300, 70, delPass === cw, lit)}</g>`;
+  }
+
+  return `<svg viewBox="0 0 600 320" class="circuit-svg" role="img" aria-label="Schéma d'un circuit électrique">
+    ${structuralWireSvg}
+    ${currentPathSvg}
+    ${deviceBodySvg}
+    <line x1="${longPlateX}" y1="207.5" x2="${longPlateX}" y2="292.5" stroke="#111827" stroke-width="6"/>
+    <line x1="${shortPlateX}" y1="235" x2="${shortPlateX}" y2="265" stroke="#111827" stroke-width="6"/>
+    <text x="${plusX}" y="302" text-anchor="middle" class="polarity" fill="#d32f2f">+</text>
+    <text x="${minusX}" y="302" text-anchor="middle" class="polarity">−</text>
+    ${currentArrowSvg}
+  </svg>`;
+}
+
+
+
+function ledSymbolSvg(cx, cy, pass=true, lit=false){
+  const left = cx - 18;
+  const right = cx + 18;
+  const top = cy - 18;
+  const bottom = cy + 18;
+
+  // Le fil horizontal traverse toujours le triangle.
+  const triangle = pass
+    ? `<polygon points="${left},${top} ${left},${bottom} ${right-2},${cy}" fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round"/>`
+    : `<polygon points="${right},${top} ${right},${bottom} ${left+2},${cy}" fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round"/>`;
+
+  const barX = pass ? right + 2 : left - 2;
+  const rays = pass
+    ? `
+      <path class="del-led-ray" d="M${cx-4} ${cy-31} L${cx+8} ${cy-43} M${cx+1} ${cy-43} L${cx+8} ${cy-43} L${cx+8} ${cy-36}"/>
+      <path class="del-led-ray" d="M${cx+8} ${cy-28} L${cx+20} ${cy-40} M${cx+13} ${cy-40} L${cx+20} ${cy-40} L${cx+20} ${cy-33}"/>
+    `
+    : `
+      <path class="del-led-ray" d="M${cx+4} ${cy-31} L${cx-8} ${cy-43} M${cx-1} ${cy-43} L${cx-8} ${cy-43} L${cx-8} ${cy-36}"/>
+      <path class="del-led-ray" d="M${cx-8} ${cy-28} L${cx-20} ${cy-40} M${cx-13} ${cy-40} L${cx-20} ${cy-40} L${cx-20} ${cy-33}"/>
+    `;
+
+  return `
+    <line x1="${cx-28}" y1="${cy}" x2="${cx+28}" y2="${cy}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+    ${triangle}
+    <line x1="${barX}" y1="${top}" x2="${barX}" y2="${bottom}" stroke="#111827" stroke-width="6"/>
+    ${rays}
+  `;
+}
+
+function delLessonCircuitSVG(pass=true, explain=false){
+  const leftX=80, rightX=520, topY=70, bottomY=250;
+  const battLong=260, battShort=290; // borne + à gauche
+  const lampX=190, delX=350;
+  const switchTop = 135;
+  const switchBottom = 185;
+  const switchR = 6;
+
+  const currentVisual = pass ? `
+      <path d="M${battLong} ${bottomY} H${leftX}" class="curr-path"/>
+      <path d="M${leftX} ${bottomY} V${topY}" class="curr-path"/>
+      <path d="M${leftX} ${topY} H${rightX}" class="curr-path"/>
+      <path d="M${rightX} ${topY} V${switchTop-switchR}" class="curr-path"/>
+      <path d="M${rightX} ${switchTop+switchR} V${switchBottom-switchR}" class="curr-path"/>
+      <path d="M${rightX} ${switchBottom+switchR} V${bottomY}" class="curr-path"/>
+      <path d="M${rightX} ${bottomY} H${battShort}" class="curr-path"/>
+      <path class="curr-arrow" d="${arrowPath(80,155,'up')}"/>
+      <path class="curr-arrow" d="${arrowPath(275,70,'right')}"/>
+      <path class="curr-arrow" d="${arrowPath(455,250,'left')}"/>
+    ` : `
+      <path class="curr-arrow-dashed blink" d="${arrowHeadPath(80,155,'up',15)}"/>
+      <path class="curr-arrow-dashed blink" d="${arrowHeadPath(275,70,'right',15)}"/>
+      <path class="curr-arrow-dashed blink" d="${arrowHeadPath(430,70,'right',15)}"/>
+      <path class="curr-arrow-dashed blink" d="${arrowHeadPath(380,250,'left',15)}"/>
+    `;
+  const explainVisual = '';
+return `<svg viewBox="0 0 600 320" role="img" aria-label="${pass ? 'Circuit avec DEL en sens passant' : 'Circuit avec DEL en sens bloquant'}">
+    <!-- Fils du circuit -->
+    <line x1="${leftX}" y1="${topY}" x2="160" y2="${topY}" class="wire"/>
+    <line x1="220" y1="${topY}" x2="332" y2="${topY}" class="wire"/>
+    <line x1="370" y1="${topY}" x2="${rightX}" y2="${topY}" class="wire"/>
+    <line x1="${leftX}" y1="${topY}" x2="${leftX}" y2="${bottomY}" class="wire"/>
+    <line x1="${leftX}" y1="${bottomY}" x2="${battLong}" y2="${bottomY}" class="wire"/>
+    <line x1="${battShort}" y1="${bottomY}" x2="${rightX}" y2="${bottomY}" class="wire"/>
+
+    <!-- Interrupteur fermé : dessiné AVANT les traits rouges mobiles,
+         afin que ceux-ci restent visibles sur toute la branche droite. -->
+    <line x1="${rightX}" y1="${topY}" x2="${rightX}" y2="129" class="wire"/>
+    <circle cx="${rightX}" cy="135" r="6" fill="#111827"/>
+    <line x1="${rightX}" y1="141" x2="${rightX}" y2="179" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="${rightX}" cy="185" r="6" fill="#111827"/>
+    <line x1="${rightX}" y1="191" x2="${rightX}" y2="${bottomY}" class="wire"/>
+
+    <!-- Courant par-dessus les fils et l'interrupteur -->
+    ${currentVisual}
+
+    <!-- Dipôles par-dessus le courant : aucun trait rouge ne traverse les symboles -->
+    <circle cx="${lampX}" cy="${topY}" r="30" class="dev"/>
+    <path d="M170 50 L210 90 M210 50 L170 90" stroke="#111827" stroke-width="6"/>
+
+    ${ledSymbolSvg(delX, topY, pass, pass)}
+
+    <!-- Pile par-dessus le courant -->
+    <line x1="${battLong}" y1="207.5" x2="${battLong}" y2="292.5" stroke="#111827" stroke-width="6"/>
+    <line x1="${battShort}" y1="235" x2="${battShort}" y2="265" stroke="#111827" stroke-width="6"/>
+    <text x="240" y="302" text-anchor="middle" class="polarity" fill="#d32f2f">+</text>
+    <text x="310" y="302" text-anchor="middle" class="polarity">−</text>
+
+    ${explainVisual}
+  </svg>`;
+}
+
+const delExplainState = { pass:false, block:false };
+
+function renderLessonDelCircuits(){
+  const p = document.getElementById('lessonDelPassCircuit');
+  const b = document.getElementById('lessonDelBlockCircuit');
+  if(p) p.innerHTML = delLessonCircuitSVG(true, delExplainState.pass);
+  if(b) b.innerHTML = delLessonCircuitSVG(false, delExplainState.block);
+
+  const btnPass = document.getElementById('btnDelExplainPass');
+  const btnBlock = document.getElementById('btnDelExplainBlock');
+  if(btnPass) btnPass.textContent = delExplainState.pass ? '🙈 Masquer' : '👁️ Voir pourquoi';
+  if(btnBlock) btnBlock.textContent = delExplainState.block ? '🙈 Masquer' : '👁️ Voir pourquoi';
+}
+
+function toggleDelReasoning(which){
+  delExplainState[which] = !delExplainState[which];
+  const id = which === 'pass' ? 'delReasoningPass' : 'delReasoningBlock';
+  const el = document.getElementById(id);
+  if(el) el.classList.toggle('show', delExplainState[which]);
+  renderLessonDelCircuits();
+}
+
+// ---------- Lesson ----------
+let lessonPlus='left', lessonOpen=false;
+
+function renderLesson(){
+  document.getElementById('lessonCircuit').innerHTML = circuitSVG({
+    plus: lessonPlus,
+    device: 'lamp',
+    open: lessonOpen,
+    arrows: true
+  });
+
+  const btn = document.getElementById('lessonSwitchBtn');
+  if(btn){
+    if(lessonOpen){
+      btn.textContent = '🟢 Fermer le circuit';
+      btn.classList.remove('primary');
+      btn.classList.add('green');
+    }else{
+      btn.textContent = '🔴 Ouvrir le circuit';
+      btn.classList.remove('green');
+      btn.classList.add('primary');
+    }
+  }
+}
+
+function toggleLessonSwitch(){
+  lessonOpen = !lessonOpen;
+  renderLesson();
+}
+
+function flipLessonBattery(){
+  lessonPlus = lessonPlus==='left' ? 'right' : 'left';
+  renderLesson();
+}
+
+renderLesson();
+renderLessonDelCircuits();
+
+// ---------- Sense quiz ----------
+function diodeSymbolSvg(cx, cy, pass=true){
+  const left = cx - 18;
+  const right = cx + 18;
+  const top = cy - 18;
+  const bottom = cy + 18;
+  const triangle = pass
+    ? `<polygon points="${left},${top} ${left},${bottom} ${right-2},${cy}" fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round"/>`
+    : `<polygon points="${right},${top} ${right},${bottom} ${left+2},${cy}" fill="none" stroke="#111827" stroke-width="6" stroke-linejoin="round"/>`;
+  const barX = pass ? right + 2 : left - 2;
+  return `
+    <line x1="${cx-28}" y1="${cy}" x2="${cx+28}" y2="${cy}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+    ${triangle}
+    <line x1="${barX}" y1="${top}" x2="${barX}" y2="${bottom}" stroke="#111827" stroke-width="6"/>
+  `;
+}
+
+function resistorSymbolSvg(cx, cy){
+  return `
+    <line x1="${cx-40}" y1="${cy}" x2="${cx-28}" y2="${cy}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+    <rect x="${cx-28}" y="${cy-16}" width="56" height="32" rx="3" fill="#fff" stroke="#111827" stroke-width="6"/>
+    <line x1="${cx+28}" y1="${cy}" x2="${cx+40}" y2="${cy}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+  `;
+}
+
+function senseDirection(cfg){
+  if(cfg.batterySide === 'bottom') return cfg.plusPos === 'left' ? 'cw' : 'ccw';
+  if(cfg.batterySide === 'top') return cfg.plusPos === 'right' ? 'cw' : 'ccw';
+  if(cfg.batterySide === 'left') return cfg.plusPos === 'top' ? 'cw' : 'ccw';
+  return cfg.plusPos === 'bottom' ? 'cw' : 'ccw';
+}
+
+function horizontalDeviceCenters(n){
+  const map = {
+    1:[300],
+    2:[190,410],
+    3:[160,300,440]
+  };
+  return map[n] || map[2];
+}
+
+function verticalDeviceCenters(n){
+  const map = {
+    1:[160],
+    2:[118,202],
+    3:[105,160,215]
+  };
+  return map[n] || map[2];
+}
+
+function deviceHalfExtent(device){
+  return {
+    lamp:30,
+    motor:31,
+    resistor:40,
+    diode:30,
+    del:30
+  }[device] || 30;
+}
+
+function senseDeviceBaseSvg(device, cx, cy, passToRight=true){
+  if(device === 'lamp'){
+    return `
+      <circle cx="${cx}" cy="${cy}" r="30" class="dev"/>
+      <path d="M${cx-20} ${cy-20} L${cx+20} ${cy+20} M${cx+20} ${cy-20} L${cx-20} ${cy+20}" stroke="#111827" stroke-width="6"/>`;
+  }
+  if(device === 'motor'){
+    return `
+      <circle cx="${cx}" cy="${cy}" r="31" class="dev"/>
+      ${motorLetterSvg(cx, cy)}`;
+  }
+  if(device === 'resistor'){
+    return resistorSymbolSvg(cx, cy);
+  }
+  if(device === 'diode'){
+    return diodeSymbolSvg(cx, cy, passToRight);
+  }
+  if(device === 'del'){
+    return ledSymbolSvg(cx, cy, passToRight, true);
+  }
+  return '';
+}
+
+function senseDeviceSvg(device, cx, cy, side, currentDir){
+  if(side === 'top' || side === 'bottom'){
+    return senseDeviceBaseSvg(device, cx, cy, currentDir === 'right');
+  }
+
+  const rotation = currentDir === 'down' ? 90 : -90;
+  return `<g transform="rotate(${rotation} ${cx} ${cy})">${senseDeviceBaseSvg(device, cx, cy, true)}</g>`;
+}
+
+function buildHorizontalSide(side, y, devices, currentDir, batteryGap=null){
+  const leftX = 100, rightX = 500;
+  let wireSvg = '';
+  let deviceSvg = '';
+  const segments = [];
+
+  if(batteryGap){
+    const [gapA, gapB] = batteryGap;
+    wireSvg = `
+      <line x1="${leftX}" y1="${y}" x2="${gapA}" y2="${y}" class="wire"/>
+      <line x1="${gapB}" y1="${y}" x2="${rightX}" y2="${y}" class="wire"/>`;
+    segments.push([leftX, gapA], [gapB, rightX]);
+    return { wireSvg, deviceSvg, segments };
+  }
+
+  if(!devices || devices.length === 0){
+    wireSvg = `<line x1="${leftX}" y1="${y}" x2="${rightX}" y2="${y}" class="wire"/>`;
+    segments.push([leftX, rightX]);
+    return { wireSvg, deviceSvg, segments };
+  }
+
+  const centers = horizontalDeviceCenters(devices.length);
+  let cursor = leftX;
+
+  devices.forEach((device, i) => {
+    const cx = centers[i];
+    const half = deviceHalfExtent(device);
+    const start = cx - half;
+    const end = cx + half;
+
+    if(start > cursor){
+      wireSvg += `<line x1="${cursor}" y1="${y}" x2="${start}" y2="${y}" class="wire"/>`;
+      segments.push([cursor, start]);
+    }
+
+    deviceSvg += senseDeviceSvg(device, cx, y, side, currentDir);
+    cursor = end;
+  });
+
+  if(cursor < rightX){
+    wireSvg += `<line x1="${cursor}" y1="${y}" x2="${rightX}" y2="${y}" class="wire"/>`;
+    segments.push([cursor, rightX]);
+  }
+
+  return { wireSvg, deviceSvg, segments };
+}
+
+function buildVerticalSide(side, x, devices, currentDir, batteryGap=null){
+  const topY = 70, bottomY = 250;
+  let wireSvg = '';
+  let deviceSvg = '';
+  const segments = [];
+
+  if(batteryGap){
+    const [gapA, gapB] = batteryGap;
+    wireSvg = `
+      <line x1="${x}" y1="${topY}" x2="${x}" y2="${gapA}" class="wire"/>
+      <line x1="${x}" y1="${gapB}" x2="${x}" y2="${bottomY}" class="wire"/>`;
+    segments.push([topY, gapA], [gapB, bottomY]);
+    return { wireSvg, deviceSvg, segments };
+  }
+
+  if(!devices || devices.length === 0){
+    wireSvg = `<line x1="${x}" y1="${topY}" x2="${x}" y2="${bottomY}" class="wire"/>`;
+    segments.push([topY, bottomY]);
+    return { wireSvg, deviceSvg, segments };
+  }
+
+  const centers = verticalDeviceCenters(devices.length);
+  let cursor = topY;
+
+  devices.forEach((device, i) => {
+    const cy = centers[i];
+    const half = deviceHalfExtent(device);
+    const start = cy - half;
+    const end = cy + half;
+
+    if(start > cursor){
+      wireSvg += `<line x1="${x}" y1="${cursor}" x2="${x}" y2="${start}" class="wire"/>`;
+      segments.push([cursor, start]);
+    }
+
+    deviceSvg += senseDeviceSvg(device, x, cy, side, currentDir);
+    cursor = end;
+  });
+
+  if(cursor < bottomY){
+    wireSvg += `<line x1="${x}" y1="${cursor}" x2="${x}" y2="${bottomY}" class="wire"/>`;
+    segments.push([cursor, bottomY]);
+  }
+
+  return { wireSvg, deviceSvg, segments };
+}
+
+function horizontalArrowSpecs(y, segments, dir){
+  return segments
+    .filter(([a,b]) => b-a > 42)
+    .map(([a,b]) => [ (a+b)/2, y, dir ]);
+}
+
+function verticalArrowSpecs(x, segments, dir){
+  return segments
+    .filter(([a,b]) => b-a > 42)
+    .map(([a,b]) => [ x, (a+b)/2, dir ]);
+}
+
+function senseCircuitSVG(cfg, showCurrent=false){
+  const leftX = 100, rightX = 500, topY = 70, bottomY = 250;
+  const dir = senseDirection(cfg);
+
+  const topDir = dir === 'cw' ? 'right' : 'left';
+  const bottomDir = dir === 'cw' ? 'left' : 'right';
+  const leftDir = dir === 'cw' ? 'up' : 'down';
+  const rightDir = dir === 'cw' ? 'down' : 'up';
+
+  let topGap = null, bottomGap = null, leftGap = null, rightGap = null;
+  let batterySvg = '';
+  let currentPath = '';
+
+  if(cfg.batterySide === 'top' || cfg.batterySide === 'bottom'){
+    const yBase = cfg.batterySide === 'top' ? topY : bottomY;
+    const longX = cfg.plusPos === 'left' ? 285 : 315;
+    const shortX = cfg.plusPos === 'left' ? 315 : 285;
+    const gapA = Math.min(longX, shortX);
+    const gapB = Math.max(longX, shortX);
+
+    const longTop = yBase - 42.5, longBottom = yBase + 42.5;
+    const shortTop = yBase - 15, shortBottom = yBase + 15;
+
+    const plusX = cfg.plusPos === 'left' ? longX - 42 : longX + 42;
+    const minusX = cfg.plusPos === 'left' ? shortX + 42 : shortX - 42;
+    const textY = cfg.batterySide === 'top' ? 96 : 302;
+
+    batterySvg = `
+      <line x1="${longX}" y1="${longTop}" x2="${longX}" y2="${longBottom}" stroke="#111827" stroke-width="6"/>
+      <line x1="${shortX}" y1="${shortTop}" x2="${shortX}" y2="${shortBottom}" stroke="#111827" stroke-width="6"/>
+      <text x="${plusX}" y="${textY}" text-anchor="middle" class="polarity" fill="#d32f2f">+</text>
+      <text x="${minusX}" y="${textY}" text-anchor="middle" class="polarity">−</text>`;
+
+    if(cfg.batterySide === 'top') topGap = [gapA, gapB];
+    else bottomGap = [gapA, gapB];
+
+    if(showCurrent){
+      currentPath = cfg.batterySide === 'bottom'
+        ? (dir === 'cw'
+          ? `M${longX} ${bottomY} H${leftX} V${topY} H${rightX} V${bottomY} H${shortX}`
+          : `M${longX} ${bottomY} H${rightX} V${topY} H${leftX} V${bottomY} H${shortX}`)
+        : (dir === 'cw'
+          ? `M${longX} ${topY} H${rightX} V${bottomY} H${leftX} V${topY} H${shortX}`
+          : `M${longX} ${topY} H${leftX} V${bottomY} H${rightX} V${topY} H${shortX}`);
+    }
+  }else{
+    const xBase = cfg.batterySide === 'left' ? leftX : rightX;
+    const longY = cfg.plusPos === 'top' ? 146 : 174;
+    const shortY = cfg.plusPos === 'top' ? 160 : 146;
+    const gapA = Math.min(longY, shortY);
+    const gapB = Math.max(longY, shortY);
+
+    const longLeft = xBase - 42.5, longRight = xBase + 42.5;
+    const shortLeft = xBase - 15, shortRight = xBase + 15;
+
+    const plusY = cfg.plusPos === 'top' ? longY - 10 : longY + 24;
+    const minusY = cfg.plusPos === 'top' ? shortY + 20 : shortY - 10;
+    const textX = cfg.batterySide === 'left' ? 45 : 555;
+
+    batterySvg = `
+      <line x1="${longLeft}" y1="${longY}" x2="${longRight}" y2="${longY}" stroke="#111827" stroke-width="6"/>
+      <line x1="${shortLeft}" y1="${shortY}" x2="${shortRight}" y2="${shortY}" stroke="#111827" stroke-width="6"/>
+      <text x="${textX}" y="${plusY}" text-anchor="middle" class="polarity" fill="#d32f2f">+</text>
+      <text x="${textX}" y="${minusY}" text-anchor="middle" class="polarity">−</text>`;
+
+    if(cfg.batterySide === 'left') leftGap = [gapA, gapB];
+    else rightGap = [gapA, gapB];
+
+    if(showCurrent){
+      currentPath = cfg.batterySide === 'left'
+        ? (dir === 'cw'
+          ? `M${leftX} ${longY} V${topY} H${rightX} V${bottomY} H${leftX} V${shortY}`
+          : `M${leftX} ${longY} V${bottomY} H${rightX} V${topY} H${leftX} V${shortY}`)
+        : (dir === 'cw'
+          ? `M${rightX} ${longY} V${bottomY} H${leftX} V${topY} H${rightX} V${shortY}`
+          : `M${rightX} ${longY} V${topY} H${leftX} V${bottomY} H${rightX} V${shortY}`);
+    }
+  }
+
+  const topSide = buildHorizontalSide('top', topY, cfg.batterySide === 'top' ? [] : (cfg.top || []), topDir, topGap);
+  const bottomSide = buildHorizontalSide('bottom', bottomY, cfg.batterySide === 'bottom' ? [] : (cfg.bottom || []), bottomDir, bottomGap);
+  const leftSide = buildVerticalSide('left', leftX, cfg.batterySide === 'left' ? [] : (cfg.left || []), leftDir, leftGap);
+  const rightSide = buildVerticalSide('right', rightX, cfg.batterySide === 'right' ? [] : (cfg.right || []), rightDir, rightGap);
+
+  const arrowSpecs = showCurrent ? [
+    ...horizontalArrowSpecs(topY, topSide.segments, topDir),
+    ...horizontalArrowSpecs(bottomY, bottomSide.segments, bottomDir),
+    ...verticalArrowSpecs(leftX, leftSide.segments, leftDir),
+    ...verticalArrowSpecs(rightX, rightSide.segments, rightDir)
+  ] : [];
+
+  const arrowsSvg = arrowSpecs
+    .map(([x,y,aDir]) => `<path class="curr-arrow" d="${arrowPath(x,y,aDir)}"/>`)
+    .join('');
+
+  return `<svg viewBox="0 0 600 320" class="circuit-svg" role="img" aria-label="Circuit pour déterminer le sens du courant">
+    ${topSide.wireSvg}
+    ${bottomSide.wireSvg}
+    ${leftSide.wireSvg}
+    ${rightSide.wireSvg}
+    ${showCurrent ? `<path d="${currentPath}" class="curr-path"/>` : ''}
+    ${topSide.deviceSvg}
+    ${bottomSide.deviceSvg}
+    ${leftSide.deviceSvg}
+    ${rightSide.deviceSvg}
+    ${batterySvg}
+    ${arrowsSvg}
+  </svg>`;
+}
+
+const senseBank = [
+  {batterySide:'bottom', plusPos:'left',  top:['lamp','resistor'], left:['motor'], right:[]},
+  {batterySide:'bottom', plusPos:'right', top:['del','lamp'], left:['motor'], right:['resistor']},
+  {batterySide:'bottom', plusPos:'left',  top:['motor'], left:['lamp'], right:['resistor','diode']},
+  {batterySide:'bottom', plusPos:'right', top:['lamp','resistor','del'], left:['motor'], right:[]},
+  {batterySide:'bottom', plusPos:'left',  top:['diode','resistor'], left:['lamp'], right:['motor']},
+
+  {batterySide:'top',    plusPos:'left',  bottom:['lamp','motor'], left:['resistor'], right:[]},
+  {batterySide:'top',    plusPos:'right', bottom:['del','resistor'], left:['lamp'], right:['motor']},
+  {batterySide:'top',    plusPos:'left',  bottom:['motor'], left:['lamp','diode'], right:['resistor']},
+  {batterySide:'top',    plusPos:'right', bottom:['lamp','resistor','diode'], left:[], right:['motor']},
+  {batterySide:'top',    plusPos:'left',  bottom:['del'], left:['lamp','resistor'], right:['motor']},
+
+  {batterySide:'left',   plusPos:'top',   top:['lamp','resistor'], bottom:['motor'], right:['diode']},
+  {batterySide:'left',   plusPos:'bottom',top:['del'], bottom:['lamp','resistor'], right:['motor']},
+  {batterySide:'left',   plusPos:'top',   top:['motor'], bottom:['lamp'], right:['resistor','del']},
+  {batterySide:'left',   plusPos:'bottom',top:['lamp','diode'], bottom:['motor'], right:['resistor']},
+  {batterySide:'left',   plusPos:'top',   top:['lamp'], bottom:['resistor','motor'], right:['del']},
+
+  {batterySide:'right',  plusPos:'top',   top:['lamp','motor'], bottom:['resistor'], left:['del']},
+  {batterySide:'right',  plusPos:'bottom',top:['diode','resistor'], bottom:['lamp'], left:['motor']},
+  {batterySide:'right',  plusPos:'top',   top:['del'], bottom:['lamp','resistor'], left:['motor']},
+  {batterySide:'right',  plusPos:'bottom',top:['lamp'], bottom:['motor','resistor'], left:['diode']},
+  {batterySide:'right',  plusPos:'top',   top:['resistor','diode'], bottom:['lamp','motor'], left:[]}
+];
+
+
+function senseCircuitIsValid(cfg){
+  const devices = [
+    ...(cfg.top || []),
+    ...(cfg.bottom || []),
+    ...(cfg.left || []),
+    ...(cfg.right || [])
+  ];
+
+  const unique = new Set(devices);
+  if(unique.size !== devices.length) return false;
+  if(unique.has('diode') && unique.has('del')) return false;
+  return true;
+}
+
+function shuffleArray(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function newSenseRound(){
+  return shuffleArray(senseBank.filter(senseCircuitIsValid)).slice(0,10);
+}
+
+let senseData = newSenseRound();
+let senseI=0,sensePts=0,senseLocked=false;
+
+function renderSense(){
+  senseLocked=false;
+  const cfg=senseData[senseI];
+  document.getElementById('senseCircuit').innerHTML=senseCircuitSVG(cfg,false);
+  document.getElementById('senseCount').textContent=`Circuit ${senseI+1} / ${senseData.length}`;
+  document.getElementById('senseScore').textContent=`Score : ${sensePts}`;
+  document.getElementById('senseProgress').style.width=`${senseI/senseData.length*100}%`;
+  document.getElementById('senseFeedback').className='feedback';
+  document.getElementById('senseNext').classList.add('hidden');
+  document.querySelectorAll('#senseChoices .choice').forEach(b=>b.classList.remove('correct','wrong'));
+}
+
+document.querySelectorAll('#senseChoices .choice').forEach(btn=>btn.addEventListener('click',()=>{
+  if(senseLocked)return;
+  senseLocked=true;
+  const cfg = senseData[senseI];
+  const correct = senseDirection(cfg);
+
+  document.querySelectorAll('#senseChoices .choice').forEach(b=>{
+    if(b.dataset.answer===correct)b.classList.add('correct');
+  });
+
+  const ok=btn.dataset.answer===correct;
+  if(!ok)btn.classList.add('wrong'); else sensePts++;
+
+  document.getElementById('senseCircuit').innerHTML=senseCircuitSVG(cfg,true);
+
+  const fb=document.getElementById('senseFeedback');
+  fb.className='feedback show '+(ok?'good':'bad');
+  fb.innerHTML=ok
+    ? '✅ Bravo ! Pars de la borne + puis suis le circuit jusqu’à la borne −.'
+    : '❌ Repère d’abord la borne <strong>+</strong>, puis suis mentalement le circuit jusqu’à la borne <strong>−</strong>.';
+
+  document.getElementById('senseScore').textContent=`Score : ${sensePts}`;
+  document.getElementById('senseProgress').style.width=`${(senseI+1)/senseData.length*100}%`;
+  document.getElementById('senseNext').classList.remove('hidden');
+}));
+
+function nextSense(){
+  if(senseI<senseData.length-1){
+    senseI++;
+    renderSense();
+  }else{
+    const fb=document.getElementById('senseFeedback');
+    fb.className='feedback show good';
+    fb.innerHTML=`🏁 Série terminée : <strong>${sensePts}/${senseData.length}</strong>. Clique sur « Recommencer » pour relancer une nouvelle série.`;
+    document.getElementById('senseNext').textContent='🔄 Recommencer';
+    document.getElementById('senseNext').classList.remove('hidden');
+    document.getElementById('senseNext').onclick=()=>{
+      sensePts=0;
+      senseI=0;
+      senseData=newSenseRound();
+      document.getElementById('senseNext').textContent='Question suivante ➜';
+      document.getElementById('senseNext').onclick=nextSense;
+      renderSense();
+    };
+  }
+}
+renderSense();
+// ---------- Motor ----------
+const motorAssets = {
+  battery:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png",
+  lampWeak:"https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png",
+  motor:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png",
+  prop:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png"
+};
+
+const processedMotorAssetCache = new Map();
+
+function motorAbsoluteUrl(url){
+  try{return new URL(url, location.href).href}catch(e){return url}
+}
+
+function motorEdgeBackgroundMask(imageData, width, height){
+  const d=imageData.data;
+  const visited=new Uint8Array(width*height);
+  const queue=new Int32Array(width*height);
+  let head=0,tail=0;
+
+  function isBackground(i){
+    const p=i*4;
+    const r=d[p],g=d[p+1],b=d[p+2],a=d[p+3];
+    if(a<12) return true;
+    const max=Math.max(r,g,b), min=Math.min(r,g,b);
+    const saturation=max-min;
+    const brightness=(r+g+b)/3;
+    return brightness>168 && saturation<42;
+  }
+  function add(i){
+    if(i<0 || i>=width*height || visited[i] || !isBackground(i)) return;
+    visited[i]=1; queue[tail++]=i;
+  }
+  for(let x=0;x<width;x++){add(x);add((height-1)*width+x)}
+  for(let y=0;y<height;y++){add(y*width);add(y*width+width-1)}
+
+  while(head<tail){
+    const i=queue[head++], x=i%width, y=(i/width)|0;
+    if(x>0)add(i-1); if(x<width-1)add(i+1);
+    if(y>0)add(i-width); if(y<height-1)add(i+width);
+  }
+  for(let i=0;i<visited.length;i++){
+    if(visited[i]) d[i*4+3]=0;
+  }
+}
+
+function motorTrimCanvas(canvas){
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  const w=canvas.width,h=canvas.height;
+  const d=ctx.getImageData(0,0,w,h).data;
+  let minX=w,minY=h,maxX=-1,maxY=-1;
+  for(let y=0;y<h;y++){
+    for(let x=0;x<w;x++){
+      if(d[(y*w+x)*4+3]>10){
+        if(x<minX)minX=x;if(x>maxX)maxX=x;
+        if(y<minY)minY=y;if(y>maxY)maxY=y;
+      }
+    }
+  }
+  if(maxX<minX || maxY<minY) return canvas;
+  const pad=Math.max(2,Math.round(Math.max(w,h)*.004));
+  minX=Math.max(0,minX-pad);minY=Math.max(0,minY-pad);
+  maxX=Math.min(w-1,maxX+pad);maxY=Math.min(h-1,maxY+pad);
+  const out=document.createElement('canvas');
+  out.width=maxX-minX+1;out.height=maxY-minY+1;
+  out.getContext('2d').drawImage(canvas,minX,minY,out.width,out.height,0,0,out.width,out.height);
+  return out;
+}
+
+function processMotorAssetUrl(url, trim=true){
+  url=motorAbsoluteUrl(url);
+  const cacheKey=url+'::trim='+(trim?'1':'0');
+  if(url.startsWith('data:') || url.startsWith('blob:')) return Promise.resolve(url);
+  if(processedMotorAssetCache.has(cacheKey)) return processedMotorAssetCache.get(cacheKey);
+
+  const promise=new Promise(resolve=>{
+    const source=new Image();
+    source.crossOrigin='anonymous';
+    source.onload=()=>{
+      try{
+        const canvas=document.createElement('canvas');
+        canvas.width=source.naturalWidth;
+        canvas.height=source.naturalHeight;
+        const ctx=canvas.getContext('2d',{willReadFrequently:true});
+        ctx.drawImage(source,0,0);
+        const data=ctx.getImageData(0,0,canvas.width,canvas.height);
+        motorEdgeBackgroundMask(data,canvas.width,canvas.height);
+        ctx.putImageData(data,0,0);
+        const outputCanvas=trim ? motorTrimCanvas(canvas) : canvas;
+        resolve(outputCanvas.toDataURL('image/png'));
+      }catch(error){
+        resolve(url);
+      }
+    };
+    source.onerror=()=>resolve(url);
+    source.src=url;
+  });
+  processedMotorAssetCache.set(cacheKey,promise);
+  return promise;
+}
+
+async function prepareMotorCircuitAssets(root){
+  const images=[...root.querySelectorAll('.motor-real img')];
+  await Promise.all(images.map(async img=>{
+    const shouldTrim=!img.classList.contains('propeller');
+    img.src=await processMotorAssetUrl(img.currentSrc || img.src, shouldTrim);
+    img.classList.add('asset-ready');
+  }));
+}
+
+let motorPlus='left',motorArrows=true,motorSwapped=false;
+
+function motorArrowSvg(plus='left'){
+  // Aucune flèche n'est placée au-dessus de la pile.
+  // Le sens est ajusté d'après l'orientation visible de la pile.
+  const plusOnLeft = plus === 'left';
+
+  const left = plusOnLeft
+    ? '<path class="motor-arrow" d="M125 534 L157 482 L189 534"/>'     // vers le haut
+    : '<path class="motor-arrow" d="M125 430 L157 482 L189 430"/>';    // vers le bas
+
+  const bottom = plusOnLeft
+    ? '<path class="motor-arrow" d="M624 785 L572 817 L624 849"/>'      // vers la gauche
+    : '<path class="motor-arrow" d="M520 785 L572 817 L520 849"/>';     // vers la droite
+
+  const right = plusOnLeft
+    ? '<path class="motor-arrow" d="M1107 430 L1139 482 L1171 430"/>'   // vers le bas
+    : '<path class="motor-arrow" d="M1107 534 L1139 482 L1171 534"/>';  // vers le haut
+
+  return `<svg class="mark-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
+    ${left}${bottom}${right}
+  </svg>`;
+}
+
+function motorSceneHTML(plus='left', arrows=true, swapped=false){
+  const batteryClass=plus==='right' ? 'component battery reversed circuit-asset' : 'component battery circuit-asset';
+  const propSpinClass=plus==='right' ? 'spin-ccw' : 'spin-cw';
+
+  const lampHolderClass = swapped ? 'lamp-holder swap-right' : 'lamp-holder';
+  const motorBodyClass = swapped ? 'component motor-body swap-left circuit-asset' : 'component motor-body circuit-asset';
+  const propClass = swapped
+    ? `component propeller swap-left ${propSpinClass} circuit-asset`
+    : `component propeller ${propSpinClass} circuit-asset`;
+
+  return `<div class="motor-real" aria-label="Circuit en série avec pile, lampe faiblement allumée et moteur à hélice tournant lentement">
+    <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
+      <path class="wire" d="M157 202 H431 M898 202 H1139 V817 H157 V202"/>
+    </svg>
+
+    <img crossorigin="anonymous" class="${batteryClass}"
+         src="${motorAssets.battery}" alt="Pile">
+
+    <div class="${lampHolderClass}">
+      <img crossorigin="anonymous" class="lamp-on circuit-asset"
+           src="${motorAssets.lampWeak}" alt="Lampe faiblement allumée">
+    </div>
+
+    <img crossorigin="anonymous" class="${motorBodyClass}"
+         src="${motorAssets.motor}" alt="Moteur sans hélice">
+
+    <img crossorigin="anonymous" class="${propClass}"
+         src="${motorAssets.prop}" alt="Hélice du moteur">
+
+    ${arrows ? motorArrowSvg(plus) : ''}
+  </div>`;
+}
+
+async function renderMotor(){
+  const root=document.getElementById('motorCircuit');
+  root.innerHTML=motorSceneHTML(motorPlus,motorArrows,motorSwapped);
+  await prepareMotorCircuitAssets(root);
+}
+
+function flipMotorBattery(){
+  motorPlus=motorPlus==='left'?'right':'left';
+  renderMotor();
+}
+function swapMotorReceivers(){
+  motorSwapped=!motorSwapped;
+  renderMotor();
+}
+function toggleMotorArrows(){
+  motorArrows=!motorArrows;
+  renderMotor();
+}
+renderMotor();
+
+function singleChoice(groupId,feedbackId,goodMsg,badMsg){
+  document.querySelectorAll(`#${groupId} .choice`).forEach(btn=>btn.addEventListener('click',()=>{
+    const grp=document.getElementById(groupId);
+    grp.querySelectorAll('.choice').forEach(b=>{
+      b.classList.remove('wrong','correct');
+      if(b.dataset.ok==='1') b.classList.add('correct');
+    });
+    const ok=btn.dataset.ok==='1';
+    if(!ok)btn.classList.add('wrong');
+    const fb=document.getElementById(feedbackId);
+    fb.className='feedback show '+(ok?'good':'bad');
+    fb.innerHTML=ok?goodMsg:badMsg;
+  }));
+}
+singleChoice('motorChoices','motorFeedback',
+  '✅ Exact. En inversant les bornes de la pile, on inverse le sens du courant dans le moteur. Le moteur change alors de sens de rotation.',
+  '❌ Non. Pour changer le fonctionnement du moteur, il faut que le courant change de sens de circulation ! Il faut donc inverser les bornes de la pile.');
+singleChoice('swapChoices','swapFeedback',
+  '✅ Exact. Dans ce circuit en série, échanger la place des récepteurs ne change pas leur fonctionnement : la lampe brille pareil et le moteur tourne dans le même sens.',
+  '❌ Non. Échanger la place des récepteurs ne change pas le fonctionnement du circuit : le moteur garde le même sens de rotation et la lampe garde le même éclat.');
+
+// ---------- DEL ----------
+const DEL_LEFT_X = 100, DEL_RIGHT_X = 500, DEL_TOP_Y = 70, DEL_BOTTOM_Y = 250;
+
+function delExDirection(cfg){
+  if(cfg.batterySide === 'bottom') return cfg.plusPos === 'left' ? 'cw' : 'ccw';
+  if(cfg.batterySide === 'top') return cfg.plusPos === 'right' ? 'cw' : 'ccw';
+  if(cfg.batterySide === 'left') return cfg.plusPos === 'top' ? 'cw' : 'ccw';
+  return cfg.plusPos === 'bottom' ? 'cw' : 'ccw';
+}
+
+function delExHorizontalCenters(n){
+  const map = {
+    0:[],
+    1:[300],
+    2:[185,415],
+    3:[145,300,455]
+  };
+  return map[n] || map[2];
+}
+
+function delExVerticalCenters(n){
+  const map = {
+    0:[],
+    1:[160],
+    2:[118,202]
+  };
+  return map[n] || map[1];
+}
+
+function delExExtent(dev){
+  return {
+    lamp:30,
+    motor:31,
+    resistor:40,
+    del:30,
+    diode:30,
+    switch:26
+  }[dev.type] || 30;
+}
+
+function delExSwitchSvg(cx, cy, side, open){
+  if(side === 'top' || side === 'bottom'){
+    return open
+      ? `
+        <circle cx="${cx-20}" cy="${cy}" r="6" fill="#111827"/>
+        <circle cx="${cx+20}" cy="${cy}" r="6" fill="#111827"/>
+        <line x1="${cx-20}" y1="${cy}" x2="${cx+6}" y2="${cy-18}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>`
+      : `
+        <circle cx="${cx-20}" cy="${cy}" r="6" fill="#111827"/>
+        <line x1="${cx-14}" y1="${cy}" x2="${cx+14}" y2="${cy}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="${cx+20}" cy="${cy}" r="6" fill="#111827"/>`;
+  }
+
+  return open
+    ? `
+      <circle cx="${cx}" cy="${cy-20}" r="6" fill="#111827"/>
+      <circle cx="${cx}" cy="${cy+20}" r="6" fill="#111827"/>
+      <line x1="${cx}" y1="${cy-20}" x2="${cx-18}" y2="${cy+6}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>`
+    : `
+      <circle cx="${cx}" cy="${cy-20}" r="6" fill="#111827"/>
+      <line x1="${cx}" y1="${cy-14}" x2="${cx}" y2="${cy+14}" stroke="#111827" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="${cx}" cy="${cy+20}" r="6" fill="#111827"/>`;
+}
+
+function delExLabelSvg(dev, cx, cy, side){
+  if(!dev.label) return '';
+  const label = dev.label;
+  const w = label.length >= 3 ? 42 : 30;
+  const h = 22;
+
+  if(side === 'top' || side === 'bottom'){
+    const rx = cx - w/2, ry = cy + 36;
+    return `
+      <rect x="${rx}" y="${ry}" width="${w}" height="${h}" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="${cx}" y="${ry+16}" text-anchor="middle" font-size="16" font-weight="900" fill="#111827">${label}</text>`;
+  }
+  if(side === 'left'){
+    const tx = cx - 40, ty = cy - 26;
+    return `
+      <rect x="${tx-20}" y="${ty}" width="${w}" height="${h}" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+      <text x="${tx}" y="${ty+16}" text-anchor="middle" font-size="16" font-weight="900" fill="#111827">${label}</text>`;
+  }
+  const tx = cx + 40, ty = cy - 26;
+  return `
+    <rect x="${tx-20}" y="${ty}" width="${w}" height="${h}" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="${tx}" y="${ty+16}" text-anchor="middle" font-size="16" font-weight="900" fill="#111827">${label}</text>`;
+}
+
+function delExDeviceSvg(dev, cx, cy, side, currentDir, canFlow){
+  if(dev.type === 'switch'){
+    return delExSwitchSvg(cx, cy, side, !!dev.open);
+  }
+
+  if(side === 'top' || side === 'bottom'){
+    const passToRight = currentDir === 'right' ? !!dev.pass : !dev.pass;
+
+    if(dev.type === 'lamp'){
+      return `
+        <circle cx="${cx}" cy="${cy}" r="30" class="dev"/>
+        <path d="M${cx-20} ${cy-20} L${cx+20} ${cy+20} M${cx+20} ${cy-20} L${cx-20} ${cy+20}" stroke="#111827" stroke-width="6"/>`;
+    }
+    if(dev.type === 'motor'){
+      return `<circle cx="${cx}" cy="${cy}" r="31" class="dev"/>${motorLetterSvg(cx, cy)}`;
+    }
+    if(dev.type === 'resistor'){
+      return resistorSymbolSvg(cx, cy);
+    }
+    if(dev.type === 'diode'){
+      return diodeSymbolSvg(cx, cy, passToRight);
+    }
+    if(dev.type === 'del'){
+      return `${ledSymbolSvg(cx, cy, passToRight, canFlow)}${delExLabelSvg(dev, cx, cy, side)}`;
+    }
+    return '';
+  }
+
+  const rotation = currentDir === 'down' ? 90 : -90;
+
+  if(dev.type === 'lamp'){
+    return `<g transform="rotate(${rotation} ${cx} ${cy})">
+      <circle cx="${cx}" cy="${cy}" r="30" class="dev"/>
+      <path d="M${cx-20} ${cy-20} L${cx+20} ${cy+20} M${cx+20} ${cy-20} L${cx-20} ${cy+20}" stroke="#111827" stroke-width="6"/>
+    </g>`;
+  }
+  if(dev.type === 'motor'){
+    return `<g transform="rotate(${rotation} ${cx} ${cy})">
+      <circle cx="${cx}" cy="${cy}" r="31" class="dev"/>
+      ${motorLetterSvg(cx, cy)}
+    </g>`;
+  }
+  if(dev.type === 'resistor'){
+    return `<g transform="rotate(${rotation} ${cx} ${cy})">${resistorSymbolSvg(cx, cy)}</g>`;
+  }
+  if(dev.type === 'diode'){
+    return `<g transform="rotate(${rotation} ${cx} ${cy})">${diodeSymbolSvg(cx, cy, !!dev.pass)}</g>`;
+  }
+  if(dev.type === 'del'){
+    return `<g transform="rotate(${rotation} ${cx} ${cy})">${ledSymbolSvg(cx, cy, !!dev.pass, canFlow)}</g>${delExLabelSvg(dev, cx, cy, side)}`;
+  }
+  return '';
+}
+
+function delBuildHorizontalSide(side, y, devices, currentDir, batteryGap=null, canFlow=false){
+  let wireSvg = '';
+  let deviceSvg = '';
+  const segments = [];
+
+  if(batteryGap){
+    const [gapA, gapB] = batteryGap;
+    wireSvg = `
+      <line x1="${DEL_LEFT_X}" y1="${y}" x2="${gapA}" y2="${y}" class="wire"/>
+      <line x1="${gapB}" y1="${y}" x2="${DEL_RIGHT_X}" y2="${y}" class="wire"/>`;
+    segments.push([DEL_LEFT_X, gapA], [gapB, DEL_RIGHT_X]);
+    return { wireSvg, deviceSvg, segments };
+  }
+
+  const list = devices || [];
+  if(list.length === 0){
+    wireSvg = `<line x1="${DEL_LEFT_X}" y1="${y}" x2="${DEL_RIGHT_X}" y2="${y}" class="wire"/>`;
+    segments.push([DEL_LEFT_X, DEL_RIGHT_X]);
+    return { wireSvg, deviceSvg, segments };
+  }
+
+  const centers = delExHorizontalCenters(list.length);
+  let cursor = DEL_LEFT_X;
+
+  list.forEach((dev, i) => {
+    const cx = centers[i];
+    const half = delExExtent(dev);
+    const start = cx - half;
+    const end = cx + half;
+
+    if(start > cursor){
+      wireSvg += `<line x1="${cursor}" y1="${y}" x2="${start}" y2="${y}" class="wire"/>`;
+      segments.push([cursor, start]);
+    }
+
+    deviceSvg += delExDeviceSvg(dev, cx, y, side, currentDir, canFlow);
+    cursor = end;
+  });
+
+  if(cursor < DEL_RIGHT_X){
+    wireSvg += `<line x1="${cursor}" y1="${y}" x2="${DEL_RIGHT_X}" y2="${y}" class="wire"/>`;
+    segments.push([cursor, DEL_RIGHT_X]);
+  }
+
+  return { wireSvg, deviceSvg, segments };
+}
+
+function delBuildVerticalSide(side, x, devices, currentDir, batteryGap=null, canFlow=false){
+  let wireSvg = '';
+  let deviceSvg = '';
+  const segments = [];
+
+  if(batteryGap){
+    const [gapA, gapB] = batteryGap;
+    wireSvg = `
+      <line x1="${x}" y1="${DEL_TOP_Y}" x2="${x}" y2="${gapA}" class="wire"/>
+      <line x1="${x}" y1="${gapB}" x2="${x}" y2="${DEL_BOTTOM_Y}" class="wire"/>`;
+    segments.push([DEL_TOP_Y, gapA], [gapB, DEL_BOTTOM_Y]);
+    return { wireSvg, deviceSvg, segments };
+  }
+
+  const list = devices || [];
+  if(list.length === 0){
+    wireSvg = `<line x1="${x}" y1="${DEL_TOP_Y}" x2="${x}" y2="${DEL_BOTTOM_Y}" class="wire"/>`;
+    segments.push([DEL_TOP_Y, DEL_BOTTOM_Y]);
+    return { wireSvg, deviceSvg, segments };
+  }
+
+  const centers = delExVerticalCenters(list.length);
+  let cursor = DEL_TOP_Y;
+
+  list.forEach((dev, i) => {
+    const cy = centers[i];
+    const half = delExExtent(dev);
+    const start = cy - half;
+    const end = cy + half;
+
+    if(start > cursor){
+      wireSvg += `<line x1="${x}" y1="${cursor}" x2="${x}" y2="${start}" class="wire"/>`;
+      segments.push([cursor, start]);
+    }
+
+    deviceSvg += delExDeviceSvg(dev, x, cy, side, currentDir, canFlow);
+    cursor = end;
+  });
+
+  if(cursor < DEL_BOTTOM_Y){
+    wireSvg += `<line x1="${x}" y1="${cursor}" x2="${x}" y2="${DEL_BOTTOM_Y}" class="wire"/>`;
+    segments.push([cursor, DEL_BOTTOM_Y]);
+  }
+
+  return { wireSvg, deviceSvg, segments };
+}
+
+function delCurrentPathsHorizontal(y, segments, dir){
+  return segments.map(([a,b]) => dir === 'right'
+    ? `<path d="M${a} ${y} H${b}" class="curr-path"/>`
+    : `<path d="M${b} ${y} H${a}" class="curr-path"/>`
+  ).join('');
+}
+function delCurrentPathsVertical(x, segments, dir){
+  return segments.map(([a,b]) => dir === 'down'
+    ? `<path d="M${x} ${a} V${b}" class="curr-path"/>`
+    : `<path d="M${x} ${b} V${a}" class="curr-path"/>`
+  ).join('');
+}
+
+function delExCanFlow(cfg){
+  const all = [...(cfg.top||[]), ...(cfg.bottom||[]), ...(cfg.left||[]), ...(cfg.right||[])];
+  return !all.some(dev => (dev.type === 'switch' && dev.open) || ((dev.type === 'del' || dev.type === 'diode') && dev.pass === false));
+}
+
+function delExerciseCircuitSVG(cfg, showCurrent=false){
+  const dir = delExDirection(cfg);
+  const canFlow = delExCanFlow(cfg);
+
+  const topDir = dir === 'cw' ? 'right' : 'left';
+  const bottomDir = dir === 'cw' ? 'left' : 'right';
+  const leftDir = dir === 'cw' ? 'up' : 'down';
+  const rightDir = dir === 'cw' ? 'down' : 'up';
+
+  let topGap = null, bottomGap = null, leftGap = null, rightGap = null;
+  let batterySvg = '';
+
+  if(cfg.batterySide === 'top' || cfg.batterySide === 'bottom'){
+    const yBase = cfg.batterySide === 'top' ? DEL_TOP_Y : DEL_BOTTOM_Y;
+    const longX = cfg.plusPos === 'left' ? 285 : 315;
+    const shortX = cfg.plusPos === 'left' ? 315 : 285;
+    const gapA = Math.min(longX, shortX);
+    const gapB = Math.max(longX, shortX);
+    const longTop = yBase - 42.5, longBottom = yBase + 42.5;
+    const shortTop = yBase - 15, shortBottom = yBase + 15;
+    const plusX = cfg.plusPos === 'left' ? longX - 42 : longX + 42;
+    const minusX = cfg.plusPos === 'left' ? shortX + 42 : shortX - 42;
+    const textY = cfg.batterySide === 'top' ? 96 : 302;
+
+    batterySvg = `
+      <line x1="${longX}" y1="${longTop}" x2="${longX}" y2="${longBottom}" stroke="#111827" stroke-width="6"/>
+      <line x1="${shortX}" y1="${shortTop}" x2="${shortX}" y2="${shortBottom}" stroke="#111827" stroke-width="6"/>
+      <text x="${plusX}" y="${textY}" text-anchor="middle" class="polarity" fill="#d32f2f">+</text>
+      <text x="${minusX}" y="${textY}" text-anchor="middle" class="polarity">−</text>`;
+
+    if(cfg.batterySide === 'top') topGap = [gapA, gapB];
+    else bottomGap = [gapA, gapB];
+  } else {
+    const xBase = cfg.batterySide === 'left' ? DEL_LEFT_X : DEL_RIGHT_X;
+    const longY = cfg.plusPos === 'top' ? 146 : 174;
+    const shortY = cfg.plusPos === 'top' ? 160 : 146;
+    const gapA = Math.min(longY, shortY);
+    const gapB = Math.max(longY, shortY);
+    const longLeft = xBase - 42.5, longRight = xBase + 42.5;
+    const shortLeft = xBase - 15, shortRight = xBase + 15;
+    const plusY = cfg.plusPos === 'top' ? longY - 10 : longY + 24;
+    const minusY = cfg.plusPos === 'top' ? shortY + 20 : shortY - 10;
+    const textX = cfg.batterySide === 'left' ? 45 : 555;
+
+    batterySvg = `
+      <line x1="${longLeft}" y1="${longY}" x2="${longRight}" y2="${longY}" stroke="#111827" stroke-width="6"/>
+      <line x1="${shortLeft}" y1="${shortY}" x2="${shortRight}" y2="${shortY}" stroke="#111827" stroke-width="6"/>
+      <text x="${textX}" y="${plusY}" text-anchor="middle" class="polarity" fill="#d32f2f">+</text>
+      <text x="${textX}" y="${minusY}" text-anchor="middle" class="polarity">−</text>`;
+
+    if(cfg.batterySide === 'left') leftGap = [gapA, gapB];
+    else rightGap = [gapA, gapB];
+  }
+
+  const topSide = delBuildHorizontalSide('top', DEL_TOP_Y, cfg.batterySide === 'top' ? [] : (cfg.top || []), topDir, topGap, canFlow);
+  const bottomSide = delBuildHorizontalSide('bottom', DEL_BOTTOM_Y, cfg.batterySide === 'bottom' ? [] : (cfg.bottom || []), bottomDir, bottomGap, canFlow);
+  const leftSide = delBuildVerticalSide('left', DEL_LEFT_X, cfg.batterySide === 'left' ? [] : (cfg.left || []), leftDir, leftGap, canFlow);
+  const rightSide = delBuildVerticalSide('right', DEL_RIGHT_X, cfg.batterySide === 'right' ? [] : (cfg.right || []), rightDir, rightGap, canFlow);
+
+  const currentSvg = (showCurrent && canFlow)
+    ? [
+        delCurrentPathsHorizontal(DEL_TOP_Y, topSide.segments, topDir),
+        delCurrentPathsHorizontal(DEL_BOTTOM_Y, bottomSide.segments, bottomDir),
+        delCurrentPathsVertical(DEL_LEFT_X, leftSide.segments, leftDir),
+        delCurrentPathsVertical(DEL_RIGHT_X, rightSide.segments, rightDir),
+        horizontalArrowSpecs(DEL_TOP_Y, topSide.segments, topDir).map(([x,y,aDir])=>`<path class="curr-arrow" d="${arrowPath(x,y,aDir)}"/>`).join(''),
+        horizontalArrowSpecs(DEL_BOTTOM_Y, bottomSide.segments, bottomDir).map(([x,y,aDir])=>`<path class="curr-arrow" d="${arrowPath(x,y,aDir)}"/>`).join(''),
+        verticalArrowSpecs(DEL_LEFT_X, leftSide.segments, leftDir).map(([x,y,aDir])=>`<path class="curr-arrow" d="${arrowPath(x,y,aDir)}"/>`).join(''),
+        verticalArrowSpecs(DEL_RIGHT_X, rightSide.segments, rightDir).map(([x,y,aDir])=>`<path class="curr-arrow" d="${arrowPath(x,y,aDir)}"/>`).join('')
+      ].join('')
+    : '';
+
+  return `<svg viewBox="0 0 600 320" class="circuit-svg" role="img" aria-label="Circuit avec DEL à analyser">
+    ${topSide.wireSvg}
+    ${bottomSide.wireSvg}
+    ${leftSide.wireSvg}
+    ${rightSide.wireSvg}
+    ${currentSvg}
+    ${topSide.deviceSvg}
+    ${bottomSide.deviceSvg}
+    ${leftSide.deviceSvg}
+    ${rightSide.deviceSvg}
+    ${batterySvg}
+  </svg>`;
+}
+
+const delBank = [
+  // ===== 10 circuits où le courant peut circuler =====
+  {
+    batterySide:'bottom', plusPos:'left',
+    top:[{type:'lamp'},{type:'del',pass:true}], left:[], right:[{type:'switch',open:false}], bottom:[],
+    answer:'yes',
+    reasons:[
+      ['ok','Le circuit est fermé et la DEL est dans le sens passant.'],
+      ['block','La DEL est dans le sens bloquant.'],
+      ['open','L’interrupteur est ouvert.'],
+      ['direction','Le courant circule dans le sens inverse des aiguilles d’une montre.']
+    ],
+    correctReason:'ok',
+    explain:'Le <strong>circuit est fermé</strong> et la DEL est dans le <strong>sens passant</strong> : le courant peut circuler.'
+  },
+  {
+    batterySide:'left', plusPos:'bottom',
+    top:[{type:'motor'}], right:[{type:'del',pass:true}], bottom:[{type:'lamp'}], left:[],
+    answer:'yes',
+    reasons:[
+      ['ok','La DEL est dans le sens passant.'],
+      ['block','La DEL est dans le sens bloquant.'],
+      ['direction','Le courant circule dans le sens des aiguilles d’une montre.'],
+      ['motor','Le moteur empêche le courant de circuler.']
+    ],
+    correctReason:'ok',
+    explain:'Ici, le courant peut circuler car le circuit est <strong>fermé</strong> et la DEL est dans le <strong>sens passant</strong>.'
+  },
+  {
+    batterySide:'right', plusPos:'top',
+    top:[{type:'resistor'}], left:[{type:'del',pass:true}], bottom:[{type:'lamp'}], right:[],
+    answer:'yes',
+    reasons:[
+      ['ok','La DEL est dans le sens passant et le circuit est fermé.'],
+      ['block','La DEL est dans le sens bloquant.'],
+      ['direction','Le courant circule dans le sens des aiguilles d’une montre.'],
+      ['resistor','La résistance empêche le courant de circuler.']
+    ],
+    correctReason:'ok',
+    explain:'La DEL est dans le <strong>sens passant</strong> et le circuit est <strong>fermé</strong> : le courant peut circuler.'
+  },
+  {
+    batterySide:'top', plusPos:'left',
+    top:[], left:[{type:'lamp'}], right:[{type:'motor'}], bottom:[{type:'del',pass:true},{type:'resistor'}],
+    answer:'yes',
+    reasons:[
+      ['ok','La DEL est dans le sens passant et le circuit est fermé.'],
+      ['block','La DEL est dans le sens bloquant.'],
+      ['direction','Le courant circule dans le sens inverse des aiguilles d’une montre.'],
+      ['motor','Le moteur bloque le passage du courant.']
+    ],
+    correctReason:'ok',
+    explain:'La DEL est dans le <strong>sens passant</strong> et le circuit ne comporte aucun "trou" : le courant peut circuler.'
+  },
+  {
+    batterySide:'bottom', plusPos:'right',
+    top:[{type:'del',pass:true},{type:'motor'}], left:[{type:'resistor'}], right:[{type:'switch',open:false}], bottom:[],
+    answer:'yes',
+    reasons:[
+      ['ok','L’interrupteur est fermé et la DEL est dans le sens passant.'],
+      ['block','L’interrupteur est fermé mais la DEL est dans le sens bloquant.'],
+      ['open','La DEL est dans le sens passant mais l’interrupteur est ouvert.'],
+      ['direction','Le courant circule dans le sens des aiguilles d’une montre.']
+    ],
+    correctReason:'ok',
+    explain:'L’<strong>interrupteur est fermé</strong> et la DEL est dans le <strong>sens passant</strong> : le courant circule.'
+  },
+  {
+    batterySide:'left', plusPos:'top',
+    top:[{type:'del',pass:true}], right:[{type:'lamp'},{type:'resistor'}], bottom:[{type:'motor'}], left:[],
+    answer:'yes',
+    reasons:[
+      ['ok','La DEL est orientée dans le même sens que le sens conventionnel du courant. Elle est dans le sens passant'],
+      ['top','La DEL est dans le sens bloquant.'],
+      ['lamp','Il y a trop de récepteurs.'],
+      ['series',"Le courant va toujours dans le sens des aiguilles d’une montre"]
+    ],
+    correctReason:'ok',
+    explain:'Le courant rencontre la DEL dans son <strong>sens passant</strong> et le circuit est fermé.'
+  },
+  {
+    batterySide:'right', plusPos:'bottom',
+    top:[{type:'lamp'}], left:[{type:'resistor'},{type:'del',pass:true}], bottom:[{type:'motor'}], right:[],
+    answer:'yes',
+    reasons:[
+      ['ok','La flèche de la DEL est dans le même sens que le sens conventionnel du courant. Elle est dans le sens passant..'],
+      ['resistor',"La DEL n’est pas bien placée dans le circuit."],
+      ['before','La DEL est fermée.'],
+      ['motor','Le moteur fournit bien du courant et la DEL est dans le sens passant..']
+    ],
+    correctReason:'ok',
+    explain:'Le <strong>sens du courant</strong> correspond au <strong>sens passant</strong> de la DEL : le courant peut circuler.'
+  },
+  {
+    batterySide:'top', plusPos:'right',
+    top:[], left:[{type:'switch',open:false}], right:[{type:'del',pass:true}], bottom:[{type:'lamp'},{type:'motor'}],
+    answer:'yes',
+    reasons:[
+      ['ok','L’interrupteur est fermé et la DEL est dans le sens passant.'],
+      ['switch','L’interrupteur est fermé, mais la DEL est dans le sens bloquant.'],
+      ['right',"L’interrupteur est ouvert."],
+      ['receivers',"M. Franco l’a dit."]
+    ],
+    correctReason:'ok',
+    explain:'Le circuit est <strong>fermé</strong> et la DEL est dans le <strong>sens passant</strong> : le courant circule dans toute la boucle.'
+  },
+  {
+    batterySide:'bottom', plusPos:'left',
+    top:[{type:'del',pass:true,label:'n°1'},{type:'del',pass:true,label:'n°2'}], left:[{type:'lamp'}], right:[{type:'resistor'}], bottom:[],
+    answer:'yes',
+    reasons:[
+      ['ok','Les deux DEL sont dans le sens passant et le circuit est fermé.'],
+      ['d1','La DEL n°1 est dans le sens passant mais la DEL n°2 est dans le sens bloquant.'],
+      ['d2','La DEL n°1 est dans le sens bloquant mais la DEL n°2 est dans le sens passant.'],
+      ['both','Les deux DEL sont dans le sens bloquant.']
+    ],
+    correctReason:'ok',
+    explain:'Les <strong>deux DEL</strong> sont dans le <strong>sens passant</strong> et le circuit est fermé : le courant peut circuler.'
+  },
+  {
+    batterySide:'right', plusPos:'top',
+    top:[{type:'motor'},{type:'del',pass:true}], left:[{type:'switch',open:false}], bottom:[{type:'resistor'}], right:[],
+    answer:'yes',
+    reasons:[
+      ['ok','Le circuit est fermé et la DEL est dans le sens passant.'],
+      ['block','Le circuit est fermé mais la DEL est dans le sens bloquant.'],
+      ['open','La DEL est dans le sens passant mais l’interrupteur est ouvert.'],
+      ['direction','Le courant circule dans le sens des aiguilles d’une montre.']
+    ],
+    correctReason:'ok',
+    explain:'Le circuit est <strong>fermé</strong> et la DEL est dans son <strong>sens passant</strong>.'
+  },
+
+  // ===== 10 circuits où le courant ne peut pas circuler =====
+  {
+    batterySide:'left', plusPos:'top',
+    top:[{type:'resistor'}], right:[{type:'del',pass:false}], bottom:[{type:'motor'}], left:[],
+    answer:'no',
+    reasons:[
+      ['block','La DEL est dans le sens bloquant.'],
+      ['pass','La DEL est dans le sens passant.'],
+      ['direction','Le courant circule dans le sens inverse des aiguilles d’une montre.'],
+      ['motor','Le moteur empêche le courant de circuler.']
+    ],
+    correctReason:'block',
+    explain:'La DEL est dans le <strong>sens bloquant</strong> : elle empêche le courant de circuler dans tout ce circuit en série.'
+  },
+  {
+    batterySide:'top', plusPos:'right',
+    top:[], left:[{type:'lamp'}], right:[{type:'switch',open:true}], bottom:[{type:'del',pass:true}],
+    answer:'no',
+    reasons:[
+      ['open','L’interrupteur est ouvert : le circuit est interrompu.'],
+      ['block','La DEL est dans le sens bloquant.'],
+      ['closed','L’interrupteur est fermé et la DEL est dans le sens passant.'],
+      ['direction','Le courant circule dans le sens inverse des aiguilles d’une montre.']
+    ],
+    correctReason:'open',
+    explain:'Même si la DEL est dans le <strong>sens passant</strong>, l’<strong>interrupteur est ouvert</strong> : le circuit est interrompu.'
+  },
+  {
+    batterySide:'right', plusPos:'bottom',
+    top:[{type:'del',pass:false}], left:[{type:'switch',open:true}], bottom:[{type:'lamp'},{type:'motor'}], right:[],
+    answer:'no',
+    reasons:[
+      ['double','La DEL est dans le sens bloquant et l’interrupteur est ouvert.'],
+      ['open','La DEL est dans le sens passant mais l’interrupteur est ouvert.'],
+      ['block','La DEL est dans le sens bloquant mais l’interrupteur est fermé.'],
+      ['pass','La DEL est dans le sens passant et l’interrupteur est fermé.']
+    ],
+    correctReason:'double',
+    explain:'Il y a <strong>deux raisons</strong> : la DEL est dans le <strong>sens bloquant</strong> et l’interrupteur est <strong>ouvert</strong>.'
+  },
+  {
+    batterySide:'bottom', plusPos:'right',
+    top:[{type:'lamp'},{type:'del',pass:false}], left:[{type:'resistor'}], right:[{type:'switch',open:false}], bottom:[],
+    answer:'no',
+    reasons:[
+      ['block','La DEL est dans le sens bloquant.'],
+      ['pass','La DEL est dans le sens passant.'],
+      ['open','L’interrupteur est ouvert.'],
+      ['direction','Le courant circule dans le sens inverse des aiguilles d’une montre.']
+    ],
+    correctReason:'block',
+    explain:'L’interrupteur est bien fermé, mais la DEL est dans le <strong>sens bloquant</strong> : aucun courant ne circule.'
+  },
+  {
+    batterySide:'top', plusPos:'left',
+    top:[], left:[{type:'del',pass:true}], right:[{type:'motor'}], bottom:[{type:'switch',open:true},{type:'lamp'}],
+    answer:'no',
+    reasons:[
+      ['open','La DEL est dans le sens passant mais l’interrupteur est ouvert.'],
+      ['block','La DEL est dans le sens bloquant et l’interrupteur est fermé.'],
+      ['closed','La DEL est dans le sens passant et l’interrupteur est fermé.'],
+      ['direction','Le courant circule dans le sens des aiguilles d’une montre.']
+    ],
+    correctReason:'open',
+    explain:'La DEL est bien dans le <strong>sens passant</strong>, mais l’<strong>interrupteur ouvert</strong> coupe la seule boucle du circuit.'
+  },
+  {
+    batterySide:'left', plusPos:'bottom',
+    top:[{type:'del',pass:false},{type:'resistor'}], right:[{type:'lamp'}], bottom:[{type:'motor'}], left:[],
+    answer:'no',
+    reasons:[
+      ['block','La DEL est dans le sens bloquant.'],
+      ['top',"Le courant circule jusqu’à la DEL qui est dans le sens bloquant."],
+      ['resistor','La DEL est dans le sens passant.'],
+      ['motor',"L’interrupteur est ouvert."]
+    ],
+    correctReason:'block',
+    explain:'Le courant rencontrerait la DEL dans son <strong>sens bloquant</strong> : elle empêche donc toute circulation du courant.'
+  },
+  {
+    batterySide:'right', plusPos:'top',
+    top:[{type:'lamp'}], left:[{type:'del',pass:true,label:'n°1'},{type:'del',pass:false,label:'n°2'}], bottom:[{type:'resistor'}], right:[],
+    answer:'no',
+    reasons:[
+      ['d2','La DEL n°1 est dans le sens passant mais la DEL n°2 est dans le sens bloquant.'],
+      ['d1','Les deux DEL sont dans le sens passant.'],
+      ['reverse','La DEL n°1 est dans le sens bloquant mais la DEL n°2 est dans le sens passant.'],
+      ['both','Les deux DEL sont dans le sens bloquant.']
+    ],
+    correctReason:'d2',
+    explain:'La DEL <strong>n°2</strong> est dans le <strong>sens bloquant</strong>. Dans un circuit en série, cela suffit à empêcher le courant de circuler partout.'
+  },
+  {
+    batterySide:'bottom', plusPos:'left',
+    top:[{type:'motor'}], left:[{type:'switch',open:true}], right:[{type:'del',pass:false}], bottom:[],
+    answer:'no',
+    reasons:[
+      ['double','L’interrupteur est ouvert et la DEL est dans le sens bloquant.'],
+      ['motor',"La DEL est dans le sens passant mais l’interrupteur est ouvert."],
+      ['block',"Le courant circule uniquement jusqu’à l’interrupteur."],
+      ['open','La DEL est dans le sens passant.']
+    ],
+    correctReason:'double',
+    explain:'Le circuit cumule deux blocages : un <strong>interrupteur ouvert</strong> et une DEL en <strong>sens bloquant</strong>.'
+  },
+  {
+    batterySide:'top', plusPos:'right',
+    top:[], left:[{type:'resistor'}], right:[{type:'del',pass:false},{type:'lamp'}], bottom:[{type:'motor'}],
+    answer:'no',
+    reasons:[
+      ['block','La DEL est en sens opposé par rapport au sens conventionnel du courant électrique.'],
+      ['lamp','La DEL est dans le sens passant.'],
+      ['motor','Le circuit est fermé.'],
+      ['resistor','Le courant va de la borne positive à la borne négative.']
+    ],
+    correctReason:'block',
+    explain:'La DEL est orientée dans le <strong>sens bloquant</strong> par rapport au courant conventionnel : elle coupe la circulation.'
+  },
+  {
+    batterySide:'right', plusPos:'bottom',
+    top:[{type:'switch',open:true},{type:'resistor'}], left:[{type:'del',pass:true}], bottom:[{type:'lamp'}], right:[],
+    answer:'no',
+    reasons:[
+      ['open','L’interrupteur est ouvert et empêche le courant de parcourir la boucle entière.'],
+      ['pass','La DEL est dans le sens passant, le courant peut circuler.'],
+      ['resistor','Le courant circule de la borne positive à la borne négative.'],
+      ['position',"Le courant circule jusqu’à l’interrupteur ouvert. La DEL et la lampe brillent"]
+    ],
+    correctReason:'open',
+    explain:'La DEL est dans le <strong>sens passant</strong>, mais l’<strong>interrupteur ouvert</strong> interrompt la boucle : aucun courant ne circule.'
+  },
+  // ===== 3 circuits supplémentaires avec deux DEL =====
+  {
+    batterySide:'top', plusPos:'right',
+    top:[], left:[{type:'del',pass:true,label:'n°1'}], right:[{type:'del',pass:true,label:'n°2'}], bottom:[{type:'lamp'}],
+    answer:'yes',
+    reasons:[
+      ['ok','Le circuit est fermé et les deux DEL sont dans le sens passant.'],
+      ['d1','La DEL n°1 est dans le sens passant mais la DEL n°2 est dans le sens bloquant.'],
+      ['d2','La DEL n°1 est dans le sens bloquant mais la DEL n°2 est dans le sens passant.'],
+      ['both','Les deux DEL sont dans le sens bloquant.']
+    ],
+    correctReason:'ok',
+    explain:'Ici, le courant peut circuler car le circuit est <strong>fermé</strong> et les <strong>deux DEL sont dans le sens passant</strong>.'
+  },
+  {
+    batterySide:'bottom', plusPos:'right',
+    top:[{type:'motor'}], left:[{type:'del',pass:false,label:'n°1'}], right:[{type:'del',pass:false,label:'n°2'}], bottom:[],
+    answer:'no',
+    reasons:[
+      ['ok','Les deux DEL sont dans le sens bloquant.'],
+      ['d1','La DEL n°1 est dans le sens passant mais la DEL n°2 est dans le sens bloquant.'],
+      ['d2','La DEL n°1 est dans le sens bloquant mais la DEL n°2 est dans le sens passant.'],
+      ['bothpass','Les deux DEL sont dans le sens passant.']
+    ],
+    correctReason:'ok',
+    explain:'Ici, le courant ne peut pas circuler car les <strong>deux DEL sont dans le sens bloquant</strong>.'
+  },
+  {
+    batterySide:'top', plusPos:'left',
+    top:[], left:[{type:'del',pass:true,label:'n°1'}], right:[{type:'del',pass:false,label:'n°2'}], bottom:[{type:'resistor'}],
+    answer:'no',
+    reasons:[
+      ['ok','La DEL n°1 est dans le sens passant mais la DEL n°2 est dans le sens bloquant.'],
+      ['reverse','La DEL n°1 est dans le sens bloquant mais la DEL n°2 est dans le sens passant.'],
+      ['bothpass','Les deux DEL sont dans le sens passant.'],
+      ['bothblock','Les deux DEL sont dans le sens bloquant.']
+    ],
+    correctReason:'ok',
+    explain:'Les deux DEL sont orientées en sens opposés : la DEL n°1 est dans le <strong>sens passant</strong>, mais la DEL n°2 est dans le <strong>sens bloquant</strong>. Le courant ne peut donc pas circuler dans ce circuit en série.'
+  }
+];
+
+function newDelRound(){
+  // 10 situations uniques : 5 où le courant circule et 5 où il ne circule pas.
+  // Cela évite qu'un tirage aléatoire donne une série trop déséquilibrée.
+  const yesCases = shuffleArray(delBank.filter(q => q.answer === 'yes')).slice(0,5);
+  const noCases = shuffleArray(delBank.filter(q => q.answer === 'no')).slice(0,5);
+  return shuffleArray([...yesCases, ...noCases]);
+}
+
+let delData = newDelRound();
+let delI = 0, delPts = 0, delLocked = false;
+let delSelectedAnswer = null, delSelectedReason = null;
+
+function renderDelReasons(q){
+  const box = document.getElementById('delReasonChoices');
+  box.innerHTML = '';
+  shuffleArray([...q.reasons]).forEach(([id, label]) => {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.dataset.reason = id;
+    b.textContent = label;
+    b.onclick = () => chooseDelReason(id);
+    box.appendChild(b);
+  });
+}
+
+function refreshDelSelectedStyles(){
+  document.querySelectorAll('#delYesNoChoices .choice').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.answer === delSelectedAnswer);
+  });
+  document.querySelectorAll('#delReasonChoices .choice').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.reason === delSelectedReason);
+  });
+}
+
+function renderDel(){
+  delLocked = false;
+  delSelectedAnswer = null;
+  delSelectedReason = null;
+  const q = delData[delI];
+
+  document.getElementById('delCircuit').innerHTML = delExerciseCircuitSVG(q, false);
+  document.getElementById('delCount').textContent = `Situation ${delI+1} / ${delData.length}`;
+  document.getElementById('delScore').textContent = `Score : ${delPts}`;
+  document.getElementById('delProgress').style.width = `${delI/delData.length*100}%`;
+  document.getElementById('delFeedback').className = 'feedback';
+  document.getElementById('delFeedback').innerHTML = '';
+  document.getElementById('delNext').classList.add('hidden');
+  document.getElementById('delValidate').classList.remove('hidden');
+
+  document.querySelectorAll('#delYesNoChoices .choice').forEach(btn => {
+    btn.classList.remove('correct','wrong','selected');
+  });
+
+  renderDelReasons(q);
+}
+
+function chooseDelAnswer(val){
+  if(delLocked) return;
+  delSelectedAnswer = val;
+  refreshDelSelectedStyles();
+}
+function chooseDelReason(val){
+  if(delLocked) return;
+  delSelectedReason = val;
+  refreshDelSelectedStyles();
+}
+
+document.querySelectorAll('#delYesNoChoices .choice').forEach(btn => {
+  btn.addEventListener('click', () => chooseDelAnswer(btn.dataset.answer));
+});
+
+function validateDel(){
+  if(delLocked) return;
+
+  const fb = document.getElementById('delFeedback');
+  if(!delSelectedAnswer || !delSelectedReason){
+    fb.className = 'feedback show bad';
+    fb.innerHTML = '❌ Choisis d’abord <strong>Oui</strong> ou <strong>Non</strong>, puis une <strong>justification</strong>.';
+    return;
+  }
+
+  delLocked = true;
+  const q = delData[delI];
+  const answerOk = delSelectedAnswer === q.answer;
+  const reasonOk = delSelectedReason === q.correctReason;
+  const allOk = answerOk && reasonOk;
+
+  document.querySelectorAll('#delYesNoChoices .choice').forEach(btn => {
+    if(btn.dataset.answer === q.answer) btn.classList.add('correct');
+    else if(btn.dataset.answer === delSelectedAnswer) btn.classList.add('wrong');
+  });
+
+  document.querySelectorAll('#delReasonChoices .choice').forEach(btn => {
+    if(btn.dataset.reason === q.correctReason) btn.classList.add('correct');
+    else if(btn.dataset.reason === delSelectedReason) btn.classList.add('wrong');
+  });
+
+  if(allOk) delPts++;
+
+  document.getElementById('delCircuit').innerHTML = delExerciseCircuitSVG(q, true);
+  document.getElementById('delScore').textContent = `Score : ${delPts}`;
+  document.getElementById('delProgress').style.width = `${(delI+1)/delData.length*100}%`;
+
+  let feedbackText = '';
+  if(allOk){
+    feedbackText = '✅ <strong>Félicitations !</strong> Tu sembles avoir compris le fonctionnement de ce circuit et tu as choisi la bonne justification.';
+  } else if(answerOk && !reasonOk){
+    feedbackText = `⚠️ <strong>Tu as raison, mais la justification est fausse.</strong> En effet, ${q.explain}`;
+  } else if(!answerOk && reasonOk){
+    feedbackText = `⚠️ <strong>Ta justification est correcte, mais ta réponse est fausse.</strong> En effet, ${q.explain}`;
+  } else {
+    feedbackText = `❌ <strong>Non !</strong> ${q.explain}`;
+  }
+
+  fb.className = 'feedback show ' + (allOk ? 'good' : 'bad');
+  fb.innerHTML = feedbackText;
+  document.getElementById('delValidate').classList.add('hidden');
+  document.getElementById('delNext').classList.remove('hidden');
+}
+
+function nextDel(){
+  if(delI < delData.length - 1){
+    delI++;
+    renderDel();
+  }else{
+    const fb = document.getElementById('delFeedback');
+    fb.className = 'feedback show good';
+    fb.innerHTML = `🏁 Série terminée : <strong>${delPts}/${delData.length}</strong>.`;
+    document.getElementById('delValidate').classList.add('hidden');
+    document.getElementById('delNext').textContent = '🔄 Recommencer';
+    document.getElementById('delNext').classList.remove('hidden');
+    document.getElementById('delNext').onclick = () => {
+      delI = 0;
+      delPts = 0;
+      delData = newDelRound();
+      document.getElementById('delNext').textContent = 'Situation suivante ➜';
+      document.getElementById('delNext').onclick = nextDel;
+      renderDel();
+    };
+  }
+}
+renderDel();
+
+// ---------- Challenge ----------
+const challengeBank=[
+ {device:'lamp',plus:'left',open:false,question:'Dans quel sens le courant circule-t-il dans ce circuit ?',choices:[['Dans le sens des aiguilles d’une montre','cw'],['De la borne positive à la borne négative','ccw'],["Il n'y a pas de courant","unknown"]],answer:'ccw',explain:'Le courant conventionnel sort de la borne + et rejoint la borne − : ici, il circule dans le sens des aiguilles d’une montre (mais on essaye de ne pas employer ces termes là pour justifier.'},
+
+ {device:'lamp',plus:'right',open:true,question:'Que peut-on affirmer à propos de ce circuit ?',choices:[['Le courant circule de la borne + vers la borne −','flows'],['Aucun courant ne circule car l’interrupteur est ouvert','no'],['Le courant circule seulement entre la pile et l’interrupteur','partial']],answer:'no',explain:'Un interrupteur ouvert coupe la boucle : aucun courant ne circule dans le circuit.'},
+
+ {device:'del',plus:'left',delPass:false,open:false,question:'La DEL est dans le sens bloquant. Quelle conséquence cela a-t-il ?',choices:[['Le courant s’arrête au niveau de la DEL','half'],['Aucun courant ne circule dans toute la boucle','block'],['Le courant change de sens pour traverser la DEL','reverse']],answer:'block',explain:'Dans un circuit en série, une DEL dans le sens bloquant empêche le courant de circuler dans toute la boucle.'},
+
+ {device:'del',plus:'right',delPass:true,open:false,question:'Quel raisonnement permet de conclure que la DEL s’allume ?',choices:[['Le circuit est fermé et la DEL est dans le sens passant','pass'],['La DEL est proche de la borne +','near'],['Le courant traverse toujours une DEL quel que soit son sens','always']],answer:'pass',explain:'Le circuit est fermé et la DEL est orientée dans le sens passant : le courant peut circuler.'},
+
+ {device:'lamp',plus:'right',open:false,question:'On inverse les bornes de la pile. Que devient le fonctionnement de la lampe ?',choices:[['Elle brille de la même manière','same'],['Elle s’éteint car le courant change de sens','off'],['Elle est alors dans le sens bloquant','block']],answer:'same',explain:'Une lampe à filament n’est pas polarisée : inverser le sens du courant ne change pas son fonctionnement.'},
+
+ {device:'del',plus:'right',delPass:false,open:false,question:'La DEL est dans le sens bloquant et le circuit est fermé. Que faut-il modifier pour permettre au courant de circuler ?',choices:[['Ouvrir l’interrupteur','open'],['Inverser les bornes de la pile','flip'],['Ajouter une lampe en série','lamp']],answer:'flip',explain:'En inversant les bornes de la pile, on inverse le sens du courant : la DEL se retrouve alors dans le sens passant.'},
+
+ {multiDel:true,cfg:{batterySide:'bottom',plusPos:'left',top:[{type:'del',pass:true,label:'n°1'},{type:'del',pass:true,label:'n°2'}],left:[{type:'lamp'}],right:[{type:'del',pass:false,label:'n°3'}],bottom:[]},question:'Trois DEL sont montées en série. Que peut-on dire ?',choices:[['Le courant circule car deux DEL sur trois sont dans le sens passant','majority'],['Aucun courant ne circule car la DEL n°3 est dans le sens bloquant','no'],['Seules les DEL n°1 et n°2 sont traversées par le courant','partial']],answer:'no',explain:'En série, une seule DEL dans le sens bloquant suffit à empêcher le courant de circuler dans toute la boucle.'},
+
+ {multiDel:true,cfg:{batterySide:'top',plusPos:'right',top:[],left:[{type:'del',pass:true,label:'n°1'}],right:[{type:'del',pass:false,label:'n°2'}],bottom:[{type:'lamp'}]},question:'Que peut-on dire ?',choices:[['Le courant circule car chaque DEL est placée sur des côtés opposés','sides'],['Le courant ne circule pas car l’une des deux DEL est dans le sens bloquant','no'],['Le courant circule jusqu’à la DEL placée en sens bloquant puis s’arrête','partial']],answer:'no',explain:'Même placées sur des côtés opposés, les deux DEL appartiennent à la même boucle en série. Une DEL dans le sens bloquant empêche donc tout courant.'},
+
+ {multiDel:true,cfg:{batterySide:'left',plusPos:'top',top:[{type:'del',pass:true,label:'n°1'}],right:[{type:'lamp'}],bottom:[{type:'del',pass:true,label:'n°2'}],left:[]},question:'Si on inverse les bornes de la pile, que se passe-t-il ?',choices:[['Les deux DEL sont alors dans le sens passant : le courant circule','same'],['Les deux DEL sont alors dans le sens bloquant : le courant ne circule plus','block'],['LE courant circulera de la borne négative à la borne positive','one']],answer:'block',explain:'Inverser la pile inverse le sens du courant. Comme les deux DEL étaient orientées dans le même sens, elles sont alors toutes les deux dans le sens bloquant.'},
+
+ {multiDel:true,cfg:{batterySide:'right',plusPos:'top',top:[{type:'switch',open:true}],left:[{type:'del',pass:true,label:'n°1'}],bottom:[{type:'del',pass:true,label:'n°2'}],right:[]},question:'Quelle proposition est correcte ?',choices:[['Le courant circule car les deux DEL sont dans le sens passant','pass'],['Aucun courant ne circule car le circuit est ouvert','open'],['Au courant ne circule car les DEL sont dans le sens bloquant','partial']],answer:'open',explain:'Même si les deux DEL sont dans le sens passant, un interrupteur ouvert empêche le courant de circuler.'}
+];
+let chI=0,chPts=0,chLocked=false;
+function renderChallenge(){
+  chLocked=false;const q=challengeBank[chI];
+  document.getElementById('chCircuit').innerHTML=q.multiDel ? delExerciseCircuitSVG(q.cfg,false) : circuitSVG({plus:q.plus,device:q.device,delPass:q.delPass!==false,open:q.open,arrows:false,glow:false});
+  document.getElementById('chQuestion').textContent=q.question;
+  document.getElementById('chCount').textContent=`Question ${chI+1} / ${challengeBank.length}`;
+  document.getElementById('chScore').textContent=`Score : ${chPts}`;
+  document.getElementById('chProgress').style.width=`${chI/challengeBank.length*100}%`;
+  const c=document.getElementById('chChoices');c.innerHTML='';
+  q.choices.forEach(([label,val])=>{
+    const b=document.createElement('button');b.className='choice';b.textContent=label;b.dataset.val=val;b.onclick=()=>answerChallenge(b);c.appendChild(b);
+  });
+  document.getElementById('chFeedback').className='feedback';
+  document.getElementById('chNext').classList.add('hidden');
+}
+function answerChallenge(btn){
+  if(chLocked)return;chLocked=true;const q=challengeBank[chI];
+  document.querySelectorAll('#chChoices .choice').forEach(b=>{if(b.dataset.val===q.answer)b.classList.add('correct')});
+  const ok=btn.dataset.val===q.answer;if(ok)chPts++;else btn.classList.add('wrong');
+  document.getElementById('chCircuit').innerHTML=q.multiDel ? delExerciseCircuitSVG(q.cfg,true) : circuitSVG({plus:q.plus,device:q.device,delPass:q.delPass!==false,open:q.open,arrows:true,glow:true});
+  const fb=document.getElementById('chFeedback');fb.className='feedback show '+(ok?'good':'bad');
+  fb.innerHTML=(ok?'✅ ':'❌ ')+q.explain;
+  document.getElementById('chScore').textContent=`Score : ${chPts}`;
+  document.getElementById('chProgress').style.width=`${(chI+1)/challengeBank.length*100}%`;
+  document.getElementById('chNext').classList.remove('hidden');
+}
+function nextChallenge(){
+  if(chI<challengeBank.length-1){chI++;renderChallenge()}
+  else finishChallenge();
+}
+function finishChallenge(){
+  document.getElementById('challengeCard').classList.add('hidden');
+  document.getElementById('challengeEnd').classList.remove('hidden');
+  document.getElementById('finalScore').textContent=`${chPts} / ${challengeBank.length}`;
+  const pct=chPts/challengeBank.length;
+  document.getElementById('finalMessage').textContent=
+    pct===1?'Excellent ! Tu maîtrises très bien le sens du courant.'
+    :pct>=.75?'Très bien ! Quelques détails à consolider.'
+    :pct>=.5?'Tu as compris l’essentiel. Revois surtout les situations avec la DEL.'
+    :'Reprends la leçon puis recommence le défi : repère toujours d’abord la borne +.';
+}
+function restartChallenge(){
+  chI=0;chPts=0;
+  document.getElementById('challengeEnd').classList.add('hidden');
+  document.getElementById('challengeCard').classList.remove('hidden');
+  renderChallenge();
+}
+renderChallenge();
+</script>
+</body>
+</html>
