@@ -873,6 +873,24 @@ header{
   padding:0 !important;
 }
 
+
+#challengeCircuitWrap{
+  position:relative;
+}
+
+#chFlipDemoRow{
+  min-height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:8px;
+}
+
+#chFlipDemoRow .hidden{
+  visibility:hidden !important;
+  display:inline-flex !important;
+}
+
 </style>
 </head>
 <body>
@@ -1037,11 +1055,18 @@ header{
       <div class="progress-wrap"><div class="progress" id="chProgress"></div></div>
       <span class="badge" id="chScore">Score : 0</span>
     </div>
-    <div id="chCircuit" class="circuit-box"></div>
+    <div id="challengeCircuitWrap">
+      <div id="chCircuit" class="circuit-box"></div>
+      <div id="chFlipDemoRow">
+        <button class="btn light hidden" id="chFlipDemo" onclick="toggleChallengeBatteryDemo()">🔄 En inversant les bornes</button>
+      </div>
+    </div>
     <div class="question" id="chQuestion"></div>
     <div class="choice-grid" id="chChoices"></div>
     <div class="feedback" id="chFeedback"></div>
-    <div class="control-row"><button class="btn primary hidden" id="chNext" onclick="nextChallenge()">Question suivante ➜</button></div>
+    <div class="control-row">
+      <button class="btn primary hidden" id="chNext" onclick="nextChallenge()">Question suivante ➜</button>
+    </div>
   </div>
   <div class="card hidden" id="challengeEnd">
     <div style="text-align:center;font-size:3rem">🏆</div>
@@ -2000,6 +2025,15 @@ function singleChoice(groupId,feedbackId,goodMsg,badMsg){
     fb.innerHTML=ok?goodMsg:badMsg;
   }));
 }
+
+function shuffleChoiceButtons(groupId){
+  const grp=document.getElementById(groupId);
+  if(!grp)return;
+  shuffleArray([...grp.querySelectorAll('.choice')]).forEach(btn=>grp.appendChild(btn));
+}
+shuffleChoiceButtons('motorChoices');
+shuffleChoiceButtons('swapChoices');
+
 singleChoice('motorChoices','motorFeedback',
   '✅ Exact. En inversant les bornes de la pile, on inverse le sens du courant dans le moteur. Le moteur change alors de sens de rotation.',
   '❌ Non. Pour changer le fonctionnement du moteur, il faut que le courant change de sens de circulation ! Il faut donc inverser les bornes de la pile.');
@@ -2806,44 +2840,145 @@ const challengeBank=[
 
  {device:'del',plus:'right',delPass:true,open:false,question:'Quel raisonnement permet de conclure que la DEL s’allume ?',choices:[['Le circuit est fermé et la DEL est dans le sens passant','pass'],['La DEL est proche de la borne +','near'],['Le courant traverse toujours une DEL quel que soit son sens','always']],answer:'pass',explain:'Le circuit est fermé et la DEL est orientée dans le sens passant : le courant peut circuler.'},
 
- {device:'lamp',plus:'right',open:false,question:'On inverse les bornes de la pile. Que devient le fonctionnement de la lampe ?',choices:[['Elle brille de la même manière','same'],['Elle s’éteint car le courant change de sens','off'],['Elle est alors dans le sens bloquant','block']],answer:'same',explain:'Une lampe à filament n’est pas polarisée : inverser le sens du courant ne change pas son fonctionnement.'},
+ {device:'lamp',plus:'right',open:false,flipDemo:true,question:'On inverse les bornes de la pile. Que devient le fonctionnement de la lampe ?',choices:[['Elle brille de la même manière','same'],['Elle s’éteint car le courant change de sens','off'],['Elle est alors dans le sens bloquant','block']],answer:'same',explain:'Une lampe à filament n’est pas polarisée : inverser le sens du courant ne change pas son fonctionnement.'},
 
- {device:'del',plus:'right',delPass:false,open:false,question:'La DEL est dans le sens bloquant et le circuit est fermé. Que faut-il modifier pour permettre au courant de circuler ?',choices:[['Ouvrir l’interrupteur','open'],['Inverser les bornes de la pile','flip'],['Ajouter une lampe en série','lamp']],answer:'flip',explain:'En inversant les bornes de la pile, on inverse le sens du courant : la DEL se retrouve alors dans le sens passant.'},
+ {device:'del',plus:'right',delPass:false,open:false,flipDemo:true,question:'La DEL est dans le sens bloquant et le circuit est fermé. Que faut-il modifier pour permettre au courant de circuler ?',choices:[['Ouvrir l’interrupteur','open'],['Inverser les bornes de la pile','flip'],['Ajouter une lampe en série','lamp']],answer:'flip',explain:'En inversant les bornes de la pile, on inverse le sens du courant : la DEL se retrouve alors dans le sens passant.'},
 
  {multiDel:true,cfg:{batterySide:'bottom',plusPos:'left',top:[{type:'del',pass:true,label:'n°1'},{type:'del',pass:true,label:'n°2'}],left:[{type:'lamp'}],right:[{type:'del',pass:false,label:'n°3'}],bottom:[]},question:'Trois DEL sont montées en série. Que peut-on dire ?',choices:[['Le courant circule car deux DEL sur trois sont dans le sens passant','majority'],['Aucun courant ne circule car la DEL n°3 est dans le sens bloquant','no'],['Seules les DEL n°1 et n°2 sont traversées par le courant','partial']],answer:'no',explain:'En série, une seule DEL dans le sens bloquant suffit à empêcher le courant de circuler dans toute la boucle.'},
 
  {multiDel:true,cfg:{batterySide:'top',plusPos:'right',top:[],left:[{type:'del',pass:true,label:'n°1'}],right:[{type:'del',pass:false,label:'n°2'}],bottom:[{type:'lamp'}]},question:'Que peut-on dire ?',choices:[['Le courant circule car chaque DEL est placée sur des côtés opposés','sides'],['Le courant ne circule pas car l’une des deux DEL est dans le sens bloquant','no'],['Le courant circule jusqu’à la DEL placée en sens bloquant puis s’arrête','partial']],answer:'no',explain:'Même placées sur des côtés opposés, les deux DEL appartiennent à la même boucle en série. Une DEL dans le sens bloquant empêche donc tout courant.'},
 
- {multiDel:true,cfg:{batterySide:'left',plusPos:'top',top:[{type:'del',pass:true,label:'n°1'}],right:[{type:'lamp'}],bottom:[{type:'del',pass:true,label:'n°2'}],left:[]},question:'Si on inverse les bornes de la pile, que se passe-t-il ?',choices:[['Les deux DEL sont alors dans le sens passant : le courant circule','same'],['Les deux DEL sont alors dans le sens bloquant : le courant ne circule plus','block'],['LE courant circulera de la borne négative à la borne positive','one']],answer:'block',explain:'Inverser la pile inverse le sens du courant. Comme les deux DEL étaient orientées dans le même sens, elles sont alors toutes les deux dans le sens bloquant.'},
+ {multiDel:true,cfg:{batterySide:'left',plusPos:'top',top:[{type:'del',pass:true,label:'n°1'}],right:[{type:'lamp'}],bottom:[{type:'del',pass:true,label:'n°2'}],left:[]},flipDemo:true,question:'Si on inverse les bornes de la pile, que se passe-t-il ?',choices:[['Les deux DEL sont alors dans le sens passant : le courant circule','same'],['Les deux DEL sont alors dans le sens bloquant : le courant ne circule plus','block'],['LE courant circulera de la borne négative à la borne positive','one']],answer:'block',explain:'Inverser la pile inverse le sens du courant. Comme les deux DEL étaient orientées dans le même sens, elles sont alors toutes les deux dans le sens bloquant.'},
 
  {multiDel:true,cfg:{batterySide:'right',plusPos:'top',top:[{type:'switch',open:true}],left:[{type:'del',pass:true,label:'n°1'}],bottom:[{type:'del',pass:true,label:'n°2'}],right:[]},question:'Quelle proposition est correcte ?',choices:[['Le courant circule car les deux DEL sont dans le sens passant','pass'],['Aucun courant ne circule car le circuit est ouvert','open'],['Au courant ne circule car les DEL sont dans le sens bloquant','partial']],answer:'open',explain:'Même si les deux DEL sont dans le sens passant, un interrupteur ouvert empêche le courant de circuler.'}
 ];
 let chI=0,chPts=0,chLocked=false;
+
+let chBatteryDemoFlipped = false;
+
+function oppositePlus(plus){
+  return plus === 'left' ? 'right' : 'left';
+}
+
+function flippedMultiDelCfg(cfg){
+  const copy = JSON.parse(JSON.stringify(cfg));
+
+  if(copy.batterySide === 'bottom' || copy.batterySide === 'top'){
+    copy.plusPos = copy.plusPos === 'left' ? 'right' : 'left';
+  }else{
+    copy.plusPos = copy.plusPos === 'top' ? 'bottom' : 'top';
+  }
+
+  ['top','right','bottom','left'].forEach(side=>{
+    (copy[side] || []).forEach(dev=>{
+      if(dev.type === 'del') dev.pass = !dev.pass;
+    });
+  });
+
+  return copy;
+}
+
+function challengeCircuitHTML(q, showResult=false, flipped=false){
+  if(q.multiDel){
+    const cfg = flipped ? flippedMultiDelCfg(q.cfg) : q.cfg;
+    return delExerciseCircuitSVG(cfg, showResult);
+  }
+
+  const plus = flipped ? oppositePlus(q.plus) : q.plus;
+  let delPass = q.delPass !== false;
+
+  // La DEL garde la même orientation physique :
+  // en inversant la pile, son état passant/bloquant s'inverse.
+  if(flipped && q.device === 'del') delPass = !delPass;
+
+  return circuitSVG({
+    plus,
+    device:q.device,
+    delPass,
+    open:q.open,
+    arrows:showResult,
+    glow:showResult
+  });
+}
+
+function toggleChallengeBatteryDemo(){
+  const q = challengeBank[chI];
+  if(!q.flipDemo) return;
+
+  chBatteryDemoFlipped = !chBatteryDemoFlipped;
+  document.getElementById('chCircuit').innerHTML =
+    challengeCircuitHTML(q, true, chBatteryDemoFlipped);
+
+  const btn = document.getElementById('chFlipDemo');
+  btn.textContent = chBatteryDemoFlipped
+    ? '↩️ En revenant au départ'
+    : '🔄 En inversant les bornes';
+}
+
 function renderChallenge(){
-  chLocked=false;const q=challengeBank[chI];
-  document.getElementById('chCircuit').innerHTML=q.multiDel ? delExerciseCircuitSVG(q.cfg,false) : circuitSVG({plus:q.plus,device:q.device,delPass:q.delPass!==false,open:q.open,arrows:false,glow:false});
+  chLocked=false;
+  chBatteryDemoFlipped=false;
+  const q=challengeBank[chI];
+
+  document.getElementById('chCircuit').innerHTML=challengeCircuitHTML(q,false,false);
   document.getElementById('chQuestion').textContent=q.question;
   document.getElementById('chCount').textContent=`Question ${chI+1} / ${challengeBank.length}`;
   document.getElementById('chScore').textContent=`Score : ${chPts}`;
   document.getElementById('chProgress').style.width=`${chI/challengeBank.length*100}%`;
-  const c=document.getElementById('chChoices');c.innerHTML='';
-  q.choices.forEach(([label,val])=>{
-    const b=document.createElement('button');b.className='choice';b.textContent=label;b.dataset.val=val;b.onclick=()=>answerChallenge(b);c.appendChild(b);
+
+  const c=document.getElementById('chChoices');
+  c.innerHTML='';
+  shuffleArray(q.choices).forEach(([label,val])=>{
+    const b=document.createElement('button');
+    b.className='choice';
+    b.textContent=label;
+    b.dataset.val=val;
+    b.onclick=()=>answerChallenge(b);
+    c.appendChild(b);
   });
+
   document.getElementById('chFeedback').className='feedback';
+
+  const flipBtn=document.getElementById('chFlipDemo');
+  flipBtn.classList.add('hidden');
+  flipBtn.textContent='🔄 En inversant les bornes';
+
   document.getElementById('chNext').classList.add('hidden');
 }
+
 function answerChallenge(btn){
-  if(chLocked)return;chLocked=true;const q=challengeBank[chI];
-  document.querySelectorAll('#chChoices .choice').forEach(b=>{if(b.dataset.val===q.answer)b.classList.add('correct')});
-  const ok=btn.dataset.val===q.answer;if(ok)chPts++;else btn.classList.add('wrong');
-  document.getElementById('chCircuit').innerHTML=q.multiDel ? delExerciseCircuitSVG(q.cfg,true) : circuitSVG({plus:q.plus,device:q.device,delPass:q.delPass!==false,open:q.open,arrows:true,glow:true});
-  const fb=document.getElementById('chFeedback');fb.className='feedback show '+(ok?'good':'bad');
+  if(chLocked)return;
+  chLocked=true;
+  const q=challengeBank[chI];
+
+  document.querySelectorAll('#chChoices .choice').forEach(b=>{
+    if(b.dataset.val===q.answer)b.classList.add('correct');
+  });
+
+  const ok=btn.dataset.val===q.answer;
+  if(ok)chPts++;
+  else btn.classList.add('wrong');
+
+  // On montre d'abord le circuit dans son état de départ avec la correction.
+  chBatteryDemoFlipped=false;
+  document.getElementById('chCircuit').innerHTML=challengeCircuitHTML(q,true,false);
+
+  const fb=document.getElementById('chFeedback');
+  fb.className='feedback show '+(ok?'good':'bad');
   fb.innerHTML=(ok?'✅ ':'❌ ')+q.explain;
+
   document.getElementById('chScore').textContent=`Score : ${chPts}`;
   document.getElementById('chProgress').style.width=`${(chI+1)/challengeBank.length*100}%`;
+
+  if(q.flipDemo){
+    const flipBtn=document.getElementById('chFlipDemo');
+    flipBtn.textContent='🔄 En inversant les bornes';
+    flipBtn.classList.remove('hidden');
+  }
+
   document.getElementById('chNext').classList.remove('hidden');
 }
+
 function nextChallenge(){
   if(chI<challengeBank.length-1){chI++;renderChallenge()}
   else finishChallenge();
