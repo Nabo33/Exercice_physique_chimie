@@ -1,3 +1,147 @@
+Oui. Le plus simple est de mettre tes deux paragraphes dans un bloc dédié, puis de lui appliquer un retrait à gauche. Tu peux aussi ajouter une petite animation très discrète sur les mots Transférer et Convertir.
+
+Je te conseille aussi de corriger légèrement la structure HTML : il y a actuellement un </p> sans balise <p> d’ouverture.
+
+<div class="hero-grid">
+  <div class="card definition">
+    
+    <p>
+      En sciences, l'<strong>énergie</strong> est une grandeur physique qui décrit
+      la capacité d'un système à produire un effet comme un
+      <strong>mouvement</strong>, de la <strong>chaleur</strong> ou de la
+      <strong>lumière</strong>.
+    </p>
+
+    <p>
+      ⚠️ On ne peut pas créer d'énergie à partir de rien mais on peut :
+    </p>
+
+    <div class="energy-actions">
+
+      <p class="energy-action transfer">
+        <span class="action-icon">→</span>
+        <strong>Transférer</strong> une énergie d'un objet A à un objet B
+        <span class="example">
+          (ex : une bille de billard lorsqu'elle tape contre une autre bille de billard).
+        </span>
+      </p>
+
+      <p class="energy-action conversion">
+        <span class="action-icon">↻</span>
+        <strong>Convertir</strong> une énergie, donc la transformer en une autre forme
+        <span class="example">
+          (ex : une lampe qui convertit l'énergie électrique reçue en énergie lumineuse).
+        </span>
+      </p>
+
+    </div>
+
+  </div>
+</div>
+
+Et dans ton CSS :
+
+.energy-actions {
+  margin-left: 35px; /* décale tout le bloc vers la droite */
+  margin-top: 12px;
+}
+
+.energy-action {
+  position: relative;
+  padding: 10px 14px 10px 42px;
+  margin: 10px 0;
+  border-radius: 10px;
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.energy-action:hover {
+  transform: translateX(6px);
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+.action-icon {
+  position: absolute;
+  left: 12px;
+  top: 8px;
+
+  font-size: 1.4em;
+  font-weight: bold;
+
+  animation: actionMove 2s ease-in-out infinite;
+}
+
+@keyframes actionMove {
+  0%, 100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(7px);
+  }
+}
+
+.conversion .action-icon {
+  animation: rotateEnergy 3s linear infinite;
+}
+
+@keyframes rotateEnergy {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.example {
+  font-style: italic;
+}
+
+Visuellement, cela donne une idée assez intuitive : → Transférer est associé à un déplacement de l'énergie d'un système vers un autre, tandis que ↻ Convertir est associé à une transformation. L'animation reste suffisamment légère pour ne pas distraire les élèves.
+
+Pour un cours de 5e/6e, je trouve même préférable de présenter ainsi :
+
+⚠️ On ne peut pas créer d'énergie à partir de rien. En revanche, l'énergie peut être transférée ou convertie.
+
+Puis tes deux blocs légèrement décalés dessous. C'est plus lisible que « mais on peut : » et la distinction transfert/conversion ressort beaucoup mieux.
+
+Texte collé(9).txt
+Document
+Je veux que tu fasses les modifications par toi même, que j epuisse télécharger le code
+
+Ce chat utilise désormais Work.Rétablir le chat
+
+Le fichier complet est modifié et prêt à l’emploi :
+
+Télécharger le code HTML modifié
+
+Modifications réalisées :
+
+décalage vers la droite des explications ;
+création de deux encadrés distincts ;
+animation du transfert d’énergie de A vers B ;
+animation de la conversion électricité → lumière ;
+correction de la formulation et des balises HTML ;
+adaptation aux écrans de téléphone ;
+conservation de tout le reste de votre page.
+Faisons_le_plein_d_energies_modifie.html
+HTML
+Pour l'animation "transférer", Je veux voir une bille "A" qui roule et qui vient taper une bille" B" immobile. La bille"A" s'arrête alors et la bille "B" se mete en mouvement.
+
+L’animation « Transférer » est modifiée :
+
+la bille A roule vers B ;
+A percute B et s’arrête ;
+un petit éclat matérialise le choc ;
+la bille B se met alors en mouvement ;
+la séquence recommence automatiquement.
+
+Télécharger le fichier HTML mis à jour
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,6 +170,38 @@ h1{font-family:'Fredoka One',cursive;color:#fff;font-size:clamp(1.75rem,5vw,3rem
 .section{display:none;position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:18px 16px 64px}.section.active{display:block;animation:fade .32s ease}@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .section-title{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.72rem;margin:10px 0 8px;display:flex;align-items:center;gap:10px}.intro{color:var(--gris);font-weight:700;margin-bottom:18px;line-height:1.55}.card{background:#fff;border-radius:var(--radius);box-shadow:var(--ombre);padding:20px;border:1px solid rgba(221,225,240,.75)}
 .hero-grid{display:grid;grid-template-columns:1fr;gap:18px;align-items:stretch}.definition{grid-column:1/-1;border-left:8px solid var(--jaune);background:linear-gradient(180deg,#fff,#fffaf0)}.definition strong{color:var(--rouge)}.note{margin-top:12px;background:var(--bleu-clair);border:2px solid #cddffc;border-radius:18px;padding:14px;font-weight:800;line-height:1.55}.verbs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.verb{padding:13px;border-radius:17px;font-weight:900;text-align:center}.v1{background:var(--vert-clair);color:var(--vert)}.v2{background:var(--jaune-clair);color:#8a5c00}.v3{background:var(--violet-clair);color:var(--violet)}.v4{background:var(--rose-clair);color:var(--rose)}
+.definition-intro{font-weight:700;line-height:1.6}
+.energy-rule{margin-top:14px;font-weight:900;line-height:1.5}
+.energy-rule strong{color:var(--texte)}
+.energy-actions{display:grid;gap:12px;margin:14px 0 0 34px}
+.energy-action{display:grid;grid-template-columns:200px 1fr;align-items:center;gap:16px;padding:14px 16px;border:2px solid transparent;border-radius:18px;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease}
+.energy-action:hover{transform:translateX(5px);box-shadow:0 5px 18px rgba(0,0,0,.10)}
+.energy-action.transfer{background:var(--bleu-clair);border-color:#cddffc}
+.energy-action.conversion{background:var(--jaune-clair);border-color:#f5d77a}
+.energy-action-text{font-weight:700;line-height:1.5}
+.energy-action-text strong{font-size:1.05rem}
+.energy-example{display:block;margin-top:3px;color:var(--gris);font-size:.92rem;font-style:italic;font-weight:750}
+.energy-animation{position:relative;height:52px;border-radius:999px;background:rgba(255,255,255,.78);border:1px solid rgba(101,112,133,.18);overflow:hidden}
+.transfer-animation .object{position:absolute;top:9px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:.82rem;z-index:2;box-shadow:inset -4px -5px 7px rgba(0,0,0,.18),0 2px 5px rgba(0,0,0,.16)}
+.transfer-animation .object:before{content:"";position:absolute;inset:4px;border:2px dashed rgba(255,255,255,.58);border-radius:50%;z-index:-1}
+.transfer-animation .object-a{left:12px;background:var(--bleu);animation:ballAMove 5s ease-in-out infinite}
+.transfer-animation .object-a:before{animation:ballARoll 5s linear infinite}
+.transfer-animation .object-b{left:108px;background:var(--violet);animation:ballBMove 5s ease-in-out infinite}
+.transfer-animation .object-b:before{animation:ballBRoll 5s linear infinite}
+.transfer-animation .collision-flash{position:absolute;left:98px;top:17px;width:16px;height:16px;z-index:3;background:var(--jaune);clip-path:polygon(50% 0,61% 34%,100% 20%,72% 50%,100% 80%,61% 66%,50% 100%,39% 66%,0 80%,28% 50%,0 20%,39% 34%);opacity:0;animation:collisionFlash 5s ease-in-out infinite}
+.transfer-animation:after{content:"";position:absolute;left:8px;right:8px;bottom:8px;height:3px;border-radius:99px;background:#b7bfd0}
+@keyframes ballAMove{0%,10%{left:12px;opacity:1}40%,88%{left:76px;opacity:1}89%{left:76px;opacity:0}90%{left:12px;opacity:0}100%{left:12px;opacity:1}}
+@keyframes ballBMove{0%,40%{left:108px;opacity:1}70%,88%{left:158px;opacity:1}89%{left:158px;opacity:0}90%{left:108px;opacity:0}100%{left:108px;opacity:1}}
+@keyframes ballARoll{0%,10%{transform:rotate(0)}40%,100%{transform:rotate(540deg)}}
+@keyframes ballBRoll{0%,40%{transform:rotate(0)}70%,100%{transform:rotate(420deg)}}
+@keyframes collisionFlash{0%,37%,45%,100%{opacity:0;transform:scale(.25) rotate(0)}40%{opacity:1;transform:scale(1.3) rotate(35deg)}}
+.conversion-animation{display:flex;align-items:center;justify-content:center;gap:13px;font-size:1.55rem}
+.conversion-animation .conversion-arrow{color:var(--orange);font-weight:900;animation:conversionArrow 1.8s ease-in-out infinite}
+.conversion-animation .light-output{filter:grayscale(1);opacity:.5;animation:lightConversion 1.8s ease-in-out infinite}
+@keyframes conversionArrow{0%,25%{transform:translateX(-4px);opacity:.45}55%,100%{transform:translateX(4px);opacity:1}}
+@keyframes lightConversion{0%,35%{filter:grayscale(1);opacity:.45;transform:scale(.88)}60%,100%{filter:grayscale(0);opacity:1;transform:scale(1.18);text-shadow:0 0 12px var(--jaune)}}
+@media(max-width:700px){.energy-actions{margin-left:12px}.energy-action{grid-template-columns:1fr;gap:10px}.energy-animation{width:100%;max-width:220px;margin:0 auto}.energy-action:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.object-a,.object-b,.object:before,.collision-flash,.conversion-arrow,.light-output{animation:none!important}.energy-action{transition:none}}
 .energy-grid{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:12px;margin-top:14px}.energy-card{background:#fff;border-radius:18px;box-shadow:var(--ombre);border:3px solid transparent;padding:14px;cursor:pointer;min-height:170px;transition:.22s;display:flex;flex-direction:column;align-items:center;text-align:center}.energy-card:hover{transform:translateY(-5px);border-color:var(--bleu);box-shadow:var(--ombre-forte)}.energy-icon{font-size:2rem;margin-bottom:7px}.energy-card h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1rem;line-height:1.2}.energy-card p{font-size:.83rem;color:var(--gris);font-weight:750;line-height:1.3;margin-top:8px}.stock{margin-top:auto;font-size:.75rem;font-weight:900;padding:4px 10px;border-radius:99px}.yes{background:var(--vert-clair);color:var(--vert)}.no{background:var(--rouge-clair);color:var(--rouge)}
 .examples{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.ex-card{background:#fff;border:1px solid var(--bord);border-radius:18px;overflow:hidden;box-shadow:var(--ombre);min-height:210px}.ex-card img{width:100%;height:118px;object-fit:contain;background:linear-gradient(180deg,#fff,#f8f9ff);padding:12px}.ex-card .txt{padding:12px;text-align:center}.ex-card h4{color:var(--bleu);font-weight:900;font-size:.98rem}.ex-card p{font-size:.85rem;color:var(--gris);font-weight:700;margin-top:5px;line-height:1.35}
 .source-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}.source-card{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;box-shadow:var(--ombre);padding:12px;border:1px solid var(--bord)}.source-card img{width:66px;height:66px;object-fit:contain}.source-card b{color:var(--bleu)}.source-card span{display:block;color:var(--gris);font-weight:800;font-size:.86rem;margin-top:2px}
@@ -225,8 +401,41 @@ header p,
   <h2 class="section-title">📚 Définition</h2>
   
   <div class="hero-grid">
-    <div class="card definition">En sciences, l'<strong>énergie</strong> est une grandeur physique qui permet de décrire la capacité d'un système à produire un effet comme par exemple un <strong>mouvement</strong>, de la <strong>chaleur</strong> ou de la <strong>lumière</strong>.</p> ⚠️ On ne crée pas l'énergie à partir de rien : on peut seulement la <strong>transformer</strong> ou la <strong>transférer</strong>.</div></div>
-    
+    <div class="card definition">
+      <p class="definition-intro">
+        En sciences, l'<strong>énergie</strong> est une grandeur physique qui décrit la capacité d'un système à produire un effet comme un <strong>mouvement</strong>, de la <strong>chaleur</strong> ou de la <strong>lumière</strong>.
+      </p>
+
+      <p class="energy-rule">
+        ⚠️ On ne peut pas créer d'énergie à partir de rien. En revanche, l'énergie peut être <strong>transférée</strong> ou <strong>convertie</strong>.
+      </p>
+
+      <div class="energy-actions">
+        <div class="energy-action transfer">
+          <div class="energy-animation transfer-animation" aria-hidden="true">
+            <span class="object object-a">A</span>
+            <span class="object object-b">B</span>
+            <span class="collision-flash"></span>
+          </div>
+          <p class="energy-action-text">
+            <strong>Transférer</strong> une énergie, c'est la faire passer d'un objet A à un objet B.
+            <span class="energy-example">Exemple : une bille de billard transfère de l'énergie à une autre bille lorsqu'elle la percute.</span>
+          </p>
+        </div>
+
+        <div class="energy-action conversion">
+          <div class="energy-animation conversion-animation" aria-hidden="true">
+            <span>⚡</span>
+            <span class="conversion-arrow">→</span>
+            <span class="light-output">💡</span>
+          </div>
+          <p class="energy-action-text">
+            <strong>Convertir</strong> une énergie, c'est la transformer en une autre forme.
+            <span class="energy-example">Exemple : une lampe convertit l'énergie électrique reçue en énergie lumineuse.</span>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <h2 class="section-title" style="margin-top:28px">🔋 Les 7 formes d'énergie</h2>
@@ -1205,3 +1414,5 @@ buildCourse();
 </script>
 </body>
 </html>
+Faisons_le_plein_d_energies_modifie.html
+HTML
