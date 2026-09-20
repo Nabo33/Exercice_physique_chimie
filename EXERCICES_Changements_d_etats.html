@@ -627,6 +627,63 @@ header p,
   display: none !important;
 }
 
+
+/* ===== Cours : bloc États physiques compact ===== */
+#lecon .etats-physiques-card{
+  padding:18px 20px;
+  margin-top:18px;
+}
+#lecon .etats-physiques-card h2{
+  font-size:1.35rem;
+  margin:0 0 10px;
+}
+#lecon .etats-physiques-card .intro-card{
+  padding:10px 14px;
+  margin-bottom:12px;
+  border-left-width:6px;
+  box-shadow:none;
+}
+#lecon .etats-physiques-card .intro-card p{
+  font-size:.96rem;
+  line-height:1.4;
+}
+#lecon .etats-physiques-card .states-grid{
+  gap:10px;
+  margin:10px 0 0;
+}
+#lecon .etats-physiques-card .state-card{
+  padding:10px 12px;
+  box-shadow:none;
+  border-width:2px;
+}
+#lecon .etats-physiques-card .state-icon{
+  min-height:62px;
+  font-size:2.5rem;
+  margin-bottom:7px;
+  border-radius:14px;
+}
+#lecon .etats-physiques-card .state-card h3{
+  font-size:1.05rem;
+  margin-bottom:5px;
+}
+#lecon .etats-physiques-card .state-card ul{
+  margin-left:15px;
+  line-height:1.35;
+  font-size:.88rem;
+}
+@media(max-width:760px){
+  #lecon .etats-physiques-card{
+    padding:16px 14px;
+  }
+  #lecon .etats-physiques-card .states-grid{
+    grid-template-columns:1fr;
+  }
+  #lecon .etats-physiques-card .state-icon{
+    min-height:54px;
+    font-size:2.2rem;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -646,8 +703,39 @@ header p,
 </nav>
 
 <section id="lecon" class="section active">
-  <div class="card etats-physiques-card">
-    <h2>📖 Les états physiques de la matière</h2>
+<div class="card">
+    <h2>🔄 Les changements d'état</h2>
+    <div class="intro-card">Un <strong>changement d'état</strong> correspond au passage d'un état physique à un autre. Il peut avoir lieu lors d'un changement de température ou de pression.</div>
+    <div class="schema-wrapper">
+      <svg class="schema" viewBox="0 100 760 135" xmlns="http://www.w3.org/2000/svg" font-family="Nunito, Arial, sans-serif" preserveAspectRatio="xMidYMid meet">
+        <rect x="30" y="120" width="140" height="80" rx="16" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/>
+        <text x="100" y="153" text-anchor="middle" font-size="16" font-weight="900" fill="#92400e">SOLIDE</text><text x="100" y="178" text-anchor="middle" font-size="12" fill="#78350f">glace, fer, sel</text>
+        <rect x="310" y="120" width="140" height="80" rx="16" fill="#dbeafe" stroke="#3b82f6" stroke-width="3"/>
+        <text x="380" y="153" text-anchor="middle" font-size="16" font-weight="900" fill="#1e40af">LIQUIDE</text><text x="380" y="178" text-anchor="middle" font-size="12" fill="#1e3a8a">eau, huile</text>
+        <rect x="590" y="120" width="140" height="80" rx="16" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
+        <text x="660" y="153" text-anchor="middle" font-size="16" font-weight="900" fill="#166534">GAZEUX</text><text x="660" y="178" text-anchor="middle" font-size="12" fill="#14532d">air, vapeur</text>
+        <defs><marker id="r" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#dc2626"/></marker><marker id="l" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"/></marker></defs>
+        <path d="M170,148 L310,148" stroke="#dc2626" stroke-width="3" marker-end="url(#r)"/><rect x="200" y="119" width="80" height="24" rx="10" fill="#fff0f0"/><text x="240" y="136" text-anchor="middle" font-size="12" font-weight="900" fill="#dc2626">FUSION</text>
+        <path d="M310,176 L170,176" stroke="#2563eb" stroke-width="3" marker-end="url(#l)"/><rect x="188" y="185" width="104" height="24" rx="10" fill="#eff6ff"/><text x="240" y="202" text-anchor="middle" font-size="12" font-weight="900" fill="#2563eb">SOLIDIFICATION</text>
+        <path d="M450,148 L590,148" stroke="#dc2626" stroke-width="3" marker-end="url(#r)"/><rect x="462" y="119" width="116" height="24" rx="10" fill="#fff0f0"/><text x="520" y="136" text-anchor="middle" font-size="12" font-weight="900" fill="#dc2626">VAPORISATION</text>
+        <path d="M590,176 L450,176" stroke="#2563eb" stroke-width="3" marker-end="url(#l)"/><rect x="474" y="185" width="92" height="24" rx="10" fill="#eff6ff"/><text x="520" y="202" text-anchor="middle" font-size="12" font-weight="900" fill="#2563eb">LIQUÉFACTION</text>
+        <text x="240" y="164" text-anchor="middle" font-size="11" fill="#dc2626">▲ chauffer</text><text x="520" y="164" text-anchor="middle" font-size="11" fill="#dc2626">▲ chauffer</text>
+        <text x="240" y="224" text-anchor="middle" font-size="11" fill="#2563eb">▼ refroidir</text><text x="520" y="224" text-anchor="middle" font-size="11" fill="#2563eb">▼ refroidir</text>
+      </svg>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Nom</th><th>Transformation</th><th>À faire</th><th>Exemple</th></tr>
+        <tr><td style="color:#dc2626">Fusion</td><td>Solide → liquide</td><td>Chauffer</td><td>Un glaçon fond.</td></tr>
+        <tr><td style="color:#2563eb">Solidification</td><td>Liquide → solide</td><td>Refroidir</td><td>L'eau devient glace.</td></tr>
+        <tr><td style="color:#dc2626">Vaporisation</td><td>Liquide → gazeux</td><td>Chauffer</td><td>L'eau bout.</td></tr>
+        <tr><td style="color:#2563eb">Liquéfaction</td><td>Gazeux → liquide</td><td>Refroidir</td><td>Buée sur une vitre.</td></tr>
+      </table>
+    </div>
+  </div>
+
+<div class="card etats-physiques-card">
+    <h2>📖 Rappel : Les états physiques</h2>
     <div class="intro-card">
       <p>
         On trouve l’eau, et plus généralement la matière, sous <strong>3 états physiques</strong> :
@@ -684,39 +772,7 @@ header p,
     </div>
 
   </div>
-
-  <div class="card">
-    <h2>🔄 Les changements d'état</h2>
-    <div class="intro-card">Un <strong>changement d'état</strong> correspond au passage d'un état physique à un autre. Il peut avoir lieu lors d'un changement de température ou de pression.</div>
-    <div class="schema-wrapper">
-      <svg class="schema" viewBox="0 100 760 135" xmlns="http://www.w3.org/2000/svg" font-family="Nunito, Arial, sans-serif" preserveAspectRatio="xMidYMid meet">
-        <rect x="30" y="120" width="140" height="80" rx="16" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/>
-        <text x="100" y="153" text-anchor="middle" font-size="16" font-weight="900" fill="#92400e">SOLIDE</text><text x="100" y="178" text-anchor="middle" font-size="12" fill="#78350f">glace, fer, sel</text>
-        <rect x="310" y="120" width="140" height="80" rx="16" fill="#dbeafe" stroke="#3b82f6" stroke-width="3"/>
-        <text x="380" y="153" text-anchor="middle" font-size="16" font-weight="900" fill="#1e40af">LIQUIDE</text><text x="380" y="178" text-anchor="middle" font-size="12" fill="#1e3a8a">eau, huile</text>
-        <rect x="590" y="120" width="140" height="80" rx="16" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
-        <text x="660" y="153" text-anchor="middle" font-size="16" font-weight="900" fill="#166534">GAZEUX</text><text x="660" y="178" text-anchor="middle" font-size="12" fill="#14532d">air, vapeur</text>
-        <defs><marker id="r" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#dc2626"/></marker><marker id="l" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2563eb"/></marker></defs>
-        <path d="M170,148 L310,148" stroke="#dc2626" stroke-width="3" marker-end="url(#r)"/><rect x="200" y="119" width="80" height="24" rx="10" fill="#fff0f0"/><text x="240" y="136" text-anchor="middle" font-size="12" font-weight="900" fill="#dc2626">FUSION</text>
-        <path d="M310,176 L170,176" stroke="#2563eb" stroke-width="3" marker-end="url(#l)"/><rect x="188" y="185" width="104" height="24" rx="10" fill="#eff6ff"/><text x="240" y="202" text-anchor="middle" font-size="12" font-weight="900" fill="#2563eb">SOLIDIFICATION</text>
-        <path d="M450,148 L590,148" stroke="#dc2626" stroke-width="3" marker-end="url(#r)"/><rect x="462" y="119" width="116" height="24" rx="10" fill="#fff0f0"/><text x="520" y="136" text-anchor="middle" font-size="12" font-weight="900" fill="#dc2626">VAPORISATION</text>
-        <path d="M590,176 L450,176" stroke="#2563eb" stroke-width="3" marker-end="url(#l)"/><rect x="474" y="185" width="92" height="24" rx="10" fill="#eff6ff"/><text x="520" y="202" text-anchor="middle" font-size="12" font-weight="900" fill="#2563eb">LIQUÉFACTION</text>
-        <text x="240" y="164" text-anchor="middle" font-size="11" fill="#dc2626">▲ chauffer</text><text x="520" y="164" text-anchor="middle" font-size="11" fill="#dc2626">▲ chauffer</text>
-        <text x="240" y="224" text-anchor="middle" font-size="11" fill="#2563eb">▼ refroidir</text><text x="520" y="224" text-anchor="middle" font-size="11" fill="#2563eb">▼ refroidir</text>
-      </svg>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <tr><th>Nom</th><th>Transformation</th><th>À faire</th><th>Exemple</th></tr>
-        <tr><td style="color:#dc2626">Fusion</td><td>Solide → liquide</td><td>Chauffer</td><td>Un glaçon fond.</td></tr>
-        <tr><td style="color:#2563eb">Solidification</td><td>Liquide → solide</td><td>Refroidir</td><td>L'eau devient glace.</td></tr>
-        <tr><td style="color:#dc2626">Vaporisation</td><td>Liquide → gazeux</td><td>Chauffer</td><td>L'eau bout.</td></tr>
-        <tr><td style="color:#2563eb">Liquéfaction</td><td>Gazeux → liquide</td><td>Refroidir</td><td>Buée sur une vitre.</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="course-start-exercise-wrap">
+<div class="course-start-exercise-wrap">
     <button type="button" class="course-start-exercise-btn" onclick="goToSection('exo4')">🧩 Accéder au premier exercice ?</button>
   </div>
 </section>
