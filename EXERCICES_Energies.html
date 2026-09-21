@@ -812,16 +812,22 @@ function checkAssoc(){
 const SENTENCE_VERBS=['possède','stocke','produit','convertit','transfère'];
 const SENTENCE_ENERGIES=['lumineuse','thermique','chimique','nucléaire','cinétique','de pesanteur','électrique'];
 const SENTENCES=[
+ // --- CONVERTIR : une forme d’énergie devient une autre forme ---
  {template:'Un radiateur électrique {v} l’énergie {e1} reçue en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES],e2:['thermique',SENTENCE_ENERGIES]}},
- {template:'Un panneau photovoltaïque {v} une partie de l’énergie {e1} du Soleil en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['lumineuse',SENTENCE_ENERGIES],e2:['électrique',SENTENCE_ENERGIES]}},
- {template:'Une éolienne {v} l’énergie {e1} de l’air en mouvement en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['cinétique',SENTENCE_ENERGIES],e2:['électrique',SENTENCE_ENERGIES]}},
+ {template:'Un panneau photovoltaïque {v} une partie de l’énergie {e1} reçue du Soleil en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['lumineuse',SENTENCE_ENERGIES],e2:['électrique',SENTENCE_ENERGIES]}},
+ {template:'Une éolienne {v} une partie de l’énergie {e1} de l’air en mouvement en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['cinétique',SENTENCE_ENERGIES],e2:['électrique',SENTENCE_ENERGIES]}},
  {template:'Une bouilloire électrique {v} l’énergie {e1} reçue en énergie {e2} pour chauffer l’eau.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES],e2:['thermique',SENTENCE_ENERGIES]}},
- {template:'Un ventilateur en fonctionnement {v} l’énergie {e1} reçue principalement en énergie {e2} de l’air.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
+ {template:'Un ventilateur en fonctionnement {v} une partie de l’énergie {e1} reçue en énergie {e2} de l’air.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
  {template:'Le moteur d’une voiture thermique {v} une partie de l’énergie {e1} du carburant en énergie {e2} du véhicule.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
- {template:'Les muscles d’un cycliste {v} une partie de l’énergie {e1} issue des aliments en énergie {e2} lors du mouvement.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
- {template:'Une lampe de poche {v} l’énergie {e1} reçue en énergie {e2} et en énergie thermique.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES],e2:['lumineuse',SENTENCE_ENERGIES]}},
+ {template:'Les muscles d’un cycliste {v} une partie de l’énergie {e1} issue des aliments en énergie {e2} lors du mouvement.', blanks:{v:['convertissent',['convertissent','transfèrent','stockent','possèdent','produisent']],e1:['chimique',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
+ {template:'Une lampe de poche {v} une partie de l’énergie {e1} reçue en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES],e2:['lumineuse',SENTENCE_ENERGIES]}},
  {template:'Dans une centrale nucléaire, le réacteur permet de {v} une partie de l’énergie {e1} en énergie {e2}.', blanks:{v:['convertir',['convertir','transférer','stocker','posséder','produire']],e1:['nucléaire',SENTENCE_ENERGIES],e2:['thermique',SENTENCE_ENERGIES]}},
- {template:'Une pile {v} de l’énergie {e1} et {v2} de l’énergie {e2} lorsqu’elle alimente un circuit.', blanks:{v:['stocke',SENTENCE_VERBS],v2:['produit',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES],e2:['électrique',SENTENCE_ENERGIES]}},
+ {template:'Dans un grille-pain, les résistances {v} l’énergie {e1} reçue en énergie {e2}.', blanks:{v:['convertissent',['convertissent','transfèrent','stockent','possèdent','produisent']],e1:['électrique',SENTENCE_ENERGIES],e2:['thermique',SENTENCE_ENERGIES]}},
+ {template:'Lors de sa chute, un objet {v} progressivement une partie de son énergie {e1} en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['de pesanteur',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
+ {template:'Une luciole {v} une partie de l’énergie {e1} issue des réactions chimiques de son organisme en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES],e2:['lumineuse',SENTENCE_ENERGIES]}},
+ {template:'Un moteur électrique {v} une partie de l’énergie {e1} reçue en énergie {e2} de mouvement.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
+
+ // --- POSSÉDER / STOCKER : les deux formulations sont acceptées ---
  {template:'Une batterie chargée {v} de l’énergie {e1}.', blanks:{v:['stocke',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES]}},
  {template:'Un morceau de bois avant de brûler {v} de l’énergie {e1}.', blanks:{v:['possède',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES]}},
  {template:'Une tasse de chocolat chaud {v} de l’énergie {e1}.', blanks:{v:['possède',SENTENCE_VERBS],e1:['thermique',SENTENCE_ENERGIES]}},
@@ -830,18 +836,19 @@ const SENTENCES=[
  {template:'Un skieur qui descend une pente {v} à la fois de l’énergie {e1} et de l’énergie {e2}.', blanks:{v:['possède',SENTENCE_VERBS],e1:['de pesanteur',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
  {template:'Un avion en vol, parce qu’il se déplace et se trouve en altitude, {v} de l’énergie {e1} et de l’énergie {e2}.', blanks:{v:['possède',SENTENCE_VERBS],e1:['cinétique',SENTENCE_ENERGIES],e2:['de pesanteur',SENTENCE_ENERGIES]}},
  {template:'Le noyau d’un atome d’uranium {v} de l’énergie {e1}.', blanks:{v:['possède',SENTENCE_VERBS],e1:['nucléaire',SENTENCE_ENERGIES]}},
- {template:'Le Soleil {v} de l’énergie {e1} et de l’énergie thermique vers la Terre.', blanks:{v:['transfère',SENTENCE_VERBS],e1:['lumineuse',SENTENCE_ENERGIES]}},
- {template:'Une casserole chaude {v} de l’énergie {e1} aux aliments qu’elle contient.', blanks:{v:['transfère',SENTENCE_VERBS],e1:['thermique',SENTENCE_ENERGIES]}},
- {template:'Une boule de bowling en mouvement {v} une partie de son énergie {e1} aux quilles lorsqu’elle les percute.', blanks:{v:['transfère',SENTENCE_VERBS],e1:['cinétique',SENTENCE_ENERGIES]}},
- {template:'Les fils d’un circuit {v} l’énergie {e1} du générateur vers les récepteurs.', blanks:{v:['transfèrent',['transfèrent','convertissent','stockent','possèdent','produisent']],e1:['électrique',SENTENCE_ENERGIES]}},
- {template:'Un radiateur chaud {v} de l’énergie {e1} à l’air de la pièce.', blanks:{v:['transfère',SENTENCE_VERBS],e1:['thermique',SENTENCE_ENERGIES]}},
- {template:'Le chargeur relié au secteur {v} de l’énergie {e1} vers le téléphone.', blanks:{v:['transfère',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES]}},
- {template:'Une flamme {v} de l’énergie {e1} et de l’énergie {e2}.', blanks:{v:['produit',SENTENCE_VERBS],e1:['thermique',SENTENCE_ENERGIES],e2:['lumineuse',SENTENCE_ENERGIES]}},
- {template:'Une centrale électrique {v} de l’énergie {e1} qui peut ensuite être transportée par le réseau.', blanks:{v:['produit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES]}},
- {template:'Une luciole {v} de l’énergie {e1}.', blanks:{v:['produit',SENTENCE_VERBS],e1:['lumineuse',SENTENCE_ENERGIES]}},
- {template:'Lors de sa chute, un objet {v} progressivement son énergie {e1} en énergie {e2}.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['de pesanteur',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
- {template:'Dans un grille-pain, les résistances {v} l’énergie {e1} reçue en énergie {e2}.', blanks:{v:['convertissent',['convertissent','transfèrent','stockent','possèdent','produisent']],e1:['électrique',SENTENCE_ENERGIES],e2:['thermique',SENTENCE_ENERGIES]}},
- {template:'Une voiture électrique en mouvement {v} de l’énergie {e1}, tandis que sa batterie {v2} de l’énergie {e2}.', blanks:{v:['possède',SENTENCE_VERBS],v2:['stocke',SENTENCE_VERBS],e1:['cinétique',SENTENCE_ENERGIES],e2:['chimique',SENTENCE_ENERGIES]}}
+
+ // --- TRANSFÉRER : l’énergie passe d’un système A à un système B ---
+ {template:'De l’énergie {e1} {v} du Soleil vers un panneau solaire.', blanks:{e1:['lumineuse',SENTENCE_ENERGIES],v:['est transférée',['est transférée','est convertie','est stockée','est produite','est possédée']]}},
+ {template:'Lorsqu’une boule de bowling percute des quilles, une partie de son énergie {e1} leur {v}.', blanks:{e1:['cinétique',SENTENCE_ENERGIES],v:['est transférée',['est transférée','est convertie','est stockée','est produite','est possédée']]}},
+ {template:'Dans un circuit, de l’énergie {e1} {v} du générateur vers le moteur par les fils.', blanks:{e1:['électrique',SENTENCE_ENERGIES],v:['est transférée',['est transférée','est convertie','est stockée','est produite','est possédée']]}},
+ {template:'Lorsque le téléphone est en charge, de l’énergie {e1} {v} du chargeur vers le téléphone.', blanks:{e1:['électrique',SENTENCE_ENERGIES],v:['est transférée',['est transférée','est convertie','est stockée','est produite','est possédée']]}},
+ {template:'Dans une pièce, de l’énergie {e1} {v} du radiateur chaud vers l’air plus froid.', blanks:{e1:['thermique',SENTENCE_ENERGIES],v:['est transférée',['est transférée','est convertie','est stockée','est produite','est possédée']]}},
+ {template:'Pendant la cuisson, de l’énergie {e1} {v} de la casserole chaude vers les aliments plus froids.', blanks:{e1:['thermique',SENTENCE_ENERGIES],v:['est transférée',['est transférée','est convertie','est stockée','est produite','est possédée']]}},
+
+ // --- PRODUIRE : formulation usuelle du cours pour une énergie fournie par un système ---
+ {template:'Une centrale électrique {v} de l’énergie {e1} qui est ensuite acheminée par le réseau.', blanks:{v:['produit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES]}},
+ {template:'Une flamme {v} de l’énergie {e1} et de l’énergie {e2} dans son environnement.', blanks:{v:['produit',SENTENCE_VERBS],e1:['thermique',SENTENCE_ENERGIES],e2:['lumineuse',SENTENCE_ENERGIES]}},
+ {template:'Lorsqu’elle alimente un circuit, une pile {v} de l’énergie {e1}.', blanks:{v:['produit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES]}}
 ];
 function makeTrousPool(){return shuffle(SENTENCES)}
 function sentenceSelect(key,answer,choices){
