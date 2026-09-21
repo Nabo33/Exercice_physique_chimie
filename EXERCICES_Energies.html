@@ -860,6 +860,16 @@ function renderTrous(){
  });
  document.getElementById('playArea').innerHTML=`<div class="fill-card"><div class="sentence-challenge-label">🧠 À toi de construire la phrase scientifique</div><div class="sentence">${html}</div><div class="sentence-hint">Plusieurs éléments peuvent être à choisir : lis toute la phrase avant de répondre.</div><div style="text-align:center"><button class="check-btn" onclick="checkTrous()">Vérifier</button></div></div>`;
 }
+function isSentenceAnswerCorrect(value,answer){
+ // Dans ce cours, « posséder » et « stocker » sont acceptés comme équivalents
+ // lorsqu'ils décrivent une énergie disponible dans un objet ou un système.
+ const equivalentGroups=[
+   ['possède','stocke'],
+   ['possèdent','stockent'],
+   ['posséder','stocker']
+ ];
+ return value===answer || equivalentGroups.some(group=>group.includes(value) && group.includes(answer));
+}
 function checkTrous(){
  if(answered)return;
  const selects=[...document.querySelectorAll('.sentence-select')];
@@ -869,7 +879,7 @@ function checkTrous(){
    setFeedback(false,'ℹ️ Complète tous les éléments de la phrase avant de vérifier.');
    return;
  }
- const wrong=selects.filter(sel=>sel.value!==sel.dataset.answer);
+ const wrong=selects.filter(sel=>!isSentenceAnswerCorrect(sel.value,sel.dataset.answer));
  answered=true;
  if(wrong.length===0){
    score++;
