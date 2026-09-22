@@ -828,7 +828,7 @@ const SENTENCES=[
  {template:'Un moteur électrique {v} une partie de l’énergie {e1} reçue en énergie {e2} de mouvement.', blanks:{v:['convertit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES],e2:['cinétique',SENTENCE_ENERGIES]}},
 
  // --- POSSÉDER / STOCKER : les deux formulations sont acceptées ---
- {template:'Une batterie chargée {v} de l’énergie {e1}.', blanks:{v:['stocke',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES]}},
+ {template:'Une batterie chargée {v} de l’énergie {e1}.', blanks:{v:['stocke',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES]}, validAnswers:[{v:['stocke','possède'],e1:['chimique']},{v:['produit'],e1:['électrique']}]},
  {template:'Un morceau de bois avant de brûler {v} de l’énergie {e1}.', blanks:{v:['possède',SENTENCE_VERBS],e1:['chimique',SENTENCE_ENERGIES]}},
  {template:'Une tasse de chocolat chaud {v} de l’énergie {e1}.', blanks:{v:['possède',SENTENCE_VERBS],e1:['thermique',SENTENCE_ENERGIES]}},
  {template:'Un ballon qui roule sur le sol {v} de l’énergie {e1}.', blanks:{v:['possède',SENTENCE_VERBS],e1:['cinétique',SENTENCE_ENERGIES]}},
@@ -848,15 +848,32 @@ const SENTENCES=[
  // --- PRODUIRE : formulation usuelle du cours pour une énergie fournie par un système ---
  {template:'Une centrale électrique {v} de l’énergie {e1} qui est ensuite acheminée par le réseau.', blanks:{v:['produit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES]}},
  {template:'Une flamme {v} de l’énergie {e1} et de l’énergie {e2} dans son environnement.', blanks:{v:['produit',SENTENCE_VERBS],e1:['thermique',SENTENCE_ENERGIES],e2:['lumineuse',SENTENCE_ENERGIES]}},
- {template:'Lorsqu’elle alimente un circuit, une pile {v} de l’énergie {e1}.', blanks:{v:['produit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES]}}
+ {template:'Lorsqu’elle alimente un circuit, une pile {v} de l’énergie {e1}.', blanks:{v:['produit',SENTENCE_VERBS],e1:['électrique',SENTENCE_ENERGIES]}, validAnswers:[{v:['produit'],e1:['électrique']},{v:['stocke','possède'],e1:['chimique']}]}
 ];
 function makeTrousPool(){return shuffle(SENTENCES)}
 function sentenceSelect(key,answer,choices){
  const options=['<option value="" selected disabled>[…]</option>', ...shuffle([...choices]).map(c=>`<option value="${c}">${c}</option>`)].join('');
  return `<select class="select-word sentence-select" data-key="${key}" data-answer="${answer}" onchange="this.classList.remove('wrong')">${options}</select>`;
 }
-function completedSentence(s){
- return s.template.replace(/\{([^}]+)\}/g,(m,key)=>s.blanks[key]?.[0] ?? m);
+function completedSentence(s,answers=null){
+ return s.template.replace(/\{([^}]+)\}/g,(m,key)=>{
+   if(answers && answers[key]) return Array.isArray(answers[key]) ? answers[key][0] : answers[key];
+   return s.blanks[key]?.[0] ?? m;
+ });
+}
+function sentenceSelections(){
+ const values={};
+ document.querySelectorAll('.sentence-select').forEach(sel=>values[sel.dataset.key]=sel.value);
+ return values;
+}
+function matchesValidSentenceAnswer(s,values){
+ if(!s.validAnswers) return null;
+ return s.validAnswers.some(combo=>Object.entries(combo).every(([key,accepted])=>accepted.includes(values[key])));
+}
+function validSentenceFeedback(s){
+ if(!s.validAnswers) return `Phrase correcte : ${completedSentence(s)}`;
+ const phrases=s.validAnswers.map(combo=>completedSentence(s,combo));
+ return 'Réponses possibles : '+phrases.join(' OU ');
 }
 function renderTrous(){
  const s=takeNextFromPool('trous', makeTrousPool);
@@ -886,14 +903,18 @@ function checkTrous(){
    setFeedback(false,'ℹ️ Complète tous les éléments de la phrase avant de vérifier.');
    return;
  }
- const wrong=selects.filter(sel=>!isSentenceAnswerCorrect(sel.value,sel.dataset.answer));
+ const values=sentenceSelections();
+ const comboResult=matchesValidSentenceAnswer(current,values);
+ const wrong=comboResult===null ? selects.filter(sel=>!isSentenceAnswerCorrect(sel.value,sel.dataset.answer)) : [];
+ const isCorrect=comboResult===null ? wrong.length===0 : comboResult;
  answered=true;
- if(wrong.length===0){
+ if(isCorrect){
    score++;
-   setFeedback(true,'✅ Très bien ! Le verbe et les formes d’énergie sont tous correctement choisis.');
+   setFeedback(true,'✅ Très bien ! Cette construction de phrase est scientifiquement correcte.');
  }else{
-   wrong.forEach(sel=>sel.classList.add('wrong'));
-   setFeedback(false,`❌ Pas tout à fait. Phrase correcte : ${completedSentence(current)}`);
+   if(comboResult===null) wrong.forEach(sel=>sel.classList.add('wrong'));
+   else selects.forEach(sel=>sel.classList.add('wrong'));
+   setFeedback(false,`❌ Pas tout à fait. ${validSentenceFeedback(current)}`);
  }
  finishQuestion();
 }
