@@ -231,6 +231,7 @@ header p,
 /* ===== Exercice Nutrition : lire, calculer, comparer ===== */
 .nutrition-wrap{max-width:900px;width:100%;margin:0 auto}.nutrition-card{background:#fff;border:1px solid var(--bord);border-radius:22px;box-shadow:0 3px 14px rgba(0,0,0,.08);padding:20px;margin-top:12px}.nutrition-step{display:inline-flex;align-items:center;gap:8px;background:var(--orange-clair);color:#9a3412;border:2px solid #fed7aa;border-radius:999px;padding:6px 12px;font-weight:900;margin-bottom:12px}.nutrition-card h3{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.35rem;margin-bottom:8px}.nutrition-card p{font-weight:750;line-height:1.55}.food-label{margin:16px auto;max-width:520px;border:3px solid var(--texte);border-radius:14px;background:#fff;padding:0;overflow:hidden;text-align:left}.food-label .food-title{background:var(--texte);color:#fff;padding:10px 14px;font-family:'Fredoka One',cursive;font-size:1.2rem}.food-label .food-row{display:flex;justify-content:space-between;gap:18px;padding:9px 14px;border-top:1px solid #c9ced8;font-weight:850}.food-label .food-row.energy-row{background:#fff;font-size:inherit;font-weight:850}.food-label .food-row.sub-row{padding-left:28px;font-size:.94rem;color:var(--gris)}.food-label .food-unit{font-weight:900;white-space:nowrap}.calc-box{margin:16px auto;max-width:650px;background:var(--bleu-clair);border:2px solid #cddffc;border-radius:18px;padding:15px;text-align:center;font-weight:900;font-size:1.12rem}.calc-input{width:120px;max-width:38vw;font-family:'Nunito';font-weight:900;font-size:1.1rem;text-align:center;border:2.5px solid var(--bord);border-radius:12px;padding:9px;background:#fff;color:var(--texte)}.calc-input:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 4px rgba(26,115,232,.12)}.calc-input.wrong{border-color:var(--rouge);background:var(--rouge-clair)}.meal-table{width:100%;max-width:620px;margin:16px auto;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid var(--bord);border-radius:16px}.meal-table th,.meal-table td{padding:10px 12px;border-bottom:1px solid var(--bord);text-align:left;font-weight:850}.meal-table th{background:var(--bleu-clair);color:var(--bleu);font-weight:900}.meal-table tr:last-child td{border-bottom:0}.meal-table td:last-child,.meal-table th:last-child{text-align:right}.compare-bars{max-width:680px;margin:18px auto;display:grid;gap:12px}.compare-line{display:grid;grid-template-columns:90px 1fr 90px;gap:10px;align-items:center;font-weight:900}.bar-track{height:22px;border-radius:999px;background:#e5e7eb;overflow:hidden;border:1px solid #d1d5db}.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--violet))}.bar-fill.need{background:linear-gradient(90deg,var(--jaune),var(--orange))}.nutrition-answers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.nutrition-answer{font-family:'Nunito';font-weight:900;background:#fff;border:2.5px solid var(--bord);border-radius:16px;padding:14px;cursor:pointer;min-height:64px;color:var(--texte);transition:.18s}.nutrition-answer:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);transform:translateY(-1px)}.nutrition-answer.correct{background:var(--vert-clair);border-color:var(--vert);color:var(--vert)}.nutrition-answer.wrong{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge)}.mission-box{border-left:7px solid var(--violet);background:linear-gradient(180deg,#fff,#faf8ff)}.nutrition-hint{margin-top:12px;padding:11px 13px;border-radius:14px;background:var(--jaune-clair);border:1px solid #f5d77a;color:#755100;font-weight:900;line-height:1.4}.nutrition-check-row{text-align:center;margin-top:16px}.nutrition-small{font-size:.9rem;color:var(--gris);font-weight:800;margin-top:6px}.relation-select{font-family:'Nunito';font-weight:900;border:2.5px solid var(--bord);border-radius:12px;padding:9px 12px;background:#fff;color:var(--texte);font-size:1rem}.relation-select.wrong{border-color:var(--rouge);background:var(--rouge-clair)}
 @media(max-width:700px){.nutrition-card{padding:16px 12px}.nutrition-answers{grid-template-columns:1fr}.compare-line{grid-template-columns:72px 1fr 76px;font-size:.88rem}.meal-table th,.meal-table td{padding:9px 8px;font-size:.9rem}.food-label{width:100%}}
+.diagnostic-question{font-family:'Fredoka One',cursive;color:var(--bleu);font-size:1.35rem;text-align:center;margin:10px 0 16px}.diagnostic-answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:720px;margin:0 auto}.diagnostic-answer{font-family:'Nunito';font-weight:900;background:#fff;border:2.5px solid var(--bord);border-radius:16px;padding:16px;cursor:pointer;min-height:70px;color:var(--texte);transition:.18s}.diagnostic-answer:hover:not(:disabled){border-color:var(--bleu);background:var(--bleu-clair);transform:translateY(-1px)}.diagnostic-answer.correct{background:var(--vert-clair);border-color:var(--vert);color:var(--vert)}.diagnostic-answer.wrong{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge)}.diagnostic-unknown-row{text-align:center;margin-top:14px}.diagnostic-unknown{font-family:'Nunito';font-weight:900;background:#fff;color:var(--gris);border:2.5px dashed #aeb6c5;border-radius:16px;padding:12px 18px;cursor:pointer;transition:.18s}.diagnostic-unknown:hover:not(:disabled){background:#f6f7fb;border-color:var(--gris);color:var(--texte)}.diagnostic-unknown:disabled{cursor:default;opacity:.75}.level-recommendation{max-width:760px;margin:18px auto;padding:18px;border-radius:20px;border:2px solid var(--bleu);background:var(--bleu-clair);text-align:center}.level-recommendation h3{font-family:'Fredoka One',cursive;color:var(--bleu);margin-bottom:8px}.level-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}@media(max-width:700px){.diagnostic-answers,.level-actions{grid-template-columns:1fr}}
 
 
 /* ===== Calculatrice intégrée ===== */
@@ -266,6 +267,147 @@ header p,
 .ex-card p strong{color:var(--rouge)}
 @media(max-width:900px){.action-verb-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.action-verb-grid,.sentence-patterns{grid-template-columns:1fr}}
+
+
+/* ===== Niveau difficile : passage à l’unité ===== */
+.unit-method{max-width:720px;margin:14px auto 18px;background:var(--violet-clair);border:2px solid #c4b5fd;border-radius:18px;padding:15px 17px;text-align:left}.unit-method h4{font-family:'Fredoka One',cursive;color:var(--violet);font-size:1.05rem;margin:0 0 8px}.unit-method p{font-weight:800;line-height:1.5;margin:5px 0}.unit-method .unit-chain{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:10px 12px;text-align:center;font-weight:900;margin-top:10px}.unit-method .unit-example{margin-top:9px;color:var(--gris);font-size:.92rem}.unit-tip{max-width:700px;margin:12px auto 0;background:#fff;border-left:6px solid var(--violet);border-radius:14px;padding:11px 13px;font-weight:850;line-height:1.45}
+
+/* ===== Diagnostic : navigation plus sûre ===== */
+.diagnostic-direct-choice{
+  margin-top:18px;
+  text-align:center;
+}
+.diagnostic-direct-choice button,
+.direct-level-choice{
+  background:#fff !important;
+  color:var(--gris) !important;
+  border:2px solid var(--bord) !important;
+  box-shadow:none !important;
+  font-weight:850 !important;
+}
+.diagnostic-direct-choice button:hover,
+.direct-level-choice:hover{
+  background:#f8f9ff !important;
+  color:var(--bleu) !important;
+  border-color:var(--bleu) !important;
+}
+
+
+.next.show{
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+}
+
+
+/* ===== Diagnostic : choix direct du niveau placé hors du flux ===== */
+.diagnostic-topbar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  max-width:900px;
+  margin:0 auto 10px;
+}
+.diagnostic-topbar .direct-level-choice{
+  background:#fff;
+  color:var(--gris);
+  border:2px solid var(--bord);
+  border-radius:999px;
+  padding:8px 13px;
+  box-shadow:none;
+  font-family:'Nunito',sans-serif;
+  font-size:.9rem;
+  font-weight:850;
+  cursor:pointer;
+}
+.diagnostic-topbar .direct-level-choice:hover{
+  color:var(--bleu);
+  border-color:var(--bleu);
+  background:var(--bleu-clair);
+}
+@media(max-width:700px){
+  .diagnostic-topbar{
+    justify-content:center;
+    margin-bottom:8px;
+  }
+}
+
+
+/* ===== Nutrition : choix direct intégré à la consigne ===== */
+.exercise-instruction:has(.nutrition-direct-level-btn){
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.nutrition-intro-copy{
+  flex:1 1 560px;
+  line-height:1.55;
+}
+.nutrition-intro-copy span{
+  display:inline-block;
+  margin-top:4px;
+}
+.nutrition-direct-level-btn{
+  flex:0 0 auto;
+  border:2.5px solid #fff;
+  border-radius:999px;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  color:#fff;
+  box-shadow:0 6px 18px rgba(6,182,212,.26);
+  padding:11px 18px;
+  font-family:'Nunito',sans-serif;
+  font-size:.96rem;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
+}
+.nutrition-direct-level-btn:hover{
+  background:linear-gradient(135deg,#0891b2,#6d28d9);
+  transform:translateY(-1px);
+}
+@media(max-width:700px){
+ .exercise-instruction:has(.nutrition-direct-level-btn){display:block;}
+ .nutrition-direct-level-btn{width:100%;margin-top:12px;}
+}
+
+
+/* ===== Nutrition : affichage du parcours choisi et actions de fin ===== */
+.nutrition-level-end{
+  margin-top:18px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.nutrition-level-end button{
+  font-family:'Nunito',sans-serif;
+  font-weight:900;
+  border-radius:999px;
+  padding:11px 18px;
+  cursor:pointer;
+  border:2px solid var(--bleu);
+}
+.nutrition-level-end .restart-level{
+  background:#fff;
+  color:var(--bleu);
+}
+.nutrition-level-end .next-level{
+  background:var(--bleu);
+  color:#fff;
+}
+.nutrition-level-end button:hover{
+  transform:translateY(-1px);
+}
+
+
+/* ===== Fin des parcours Nutrition ===== */
+.nutrition-level-end{margin-top:18px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.nutrition-level-end button{font-family:'Nunito',sans-serif;font-weight:900;border-radius:999px;padding:11px 18px;cursor:pointer;border:2px solid var(--bleu)}
+.nutrition-level-end .restart-level{background:#fff;color:var(--bleu)}
+.nutrition-level-end .next-level{background:var(--bleu);color:#fff}
+.nutrition-level-end button:hover{transform:translateY(-1px)}
 
 </style>
 <!-- Version vérifiée : texte à trous avec […] par défaut et validation bloquée si aucun verbe choisi. -->
@@ -387,6 +529,22 @@ header p,
 <div class="modal-overlay" id="modal" onclick="closeModal(event)"><div class="modal"><button class="close" onclick="document.getElementById('modal').classList.remove('open')">✕</button><div id="modalContent"></div></div></div>
 
 <script>
+const NUTRITION_LEVEL_NAMES={
+  discovery:'🌱 Découverte (Comprendre la démarche)',
+  intermediate:'🎯 Intermédiaire (Niveau contrôle)',
+  difficult:'🔥 Difficile (pour aller plus loin)'
+};
+
+
+function hideNutritionDiagnosticIntro(){
+  const el=document.getElementById('exerciseIntro');
+  if(el) el.style.display='none';
+}
+function showNutritionDiagnosticIntro(){
+  const el=document.getElementById('exerciseIntro');
+  if(el) el.style.display='';
+}
+
 const IMG={
   fraise:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Fraise.png',
   ampoule:'https://raw.githubusercontent.com/Nabo33/Images/a5c356bcc5b29db0239eb5bd5166b2655371de88/Ampoule.png',
@@ -440,6 +598,8 @@ const EXAMPLES=[
 let exercise='qcm',score=0,qCount=0,current=null,answered=false,dragAnswers=[];
 let qcmMistakes=[];
 let nutritionStep=0;
+let nutritionLevel='diagnostic';
+let nutritionDiagnosticQuestions=[];
 let nutritionFirstTry=true;
 let nutritionErrorCount=0;
 let nutritionRunData=null;
@@ -449,9 +609,9 @@ let nutritionSuccessText='';
 let qcmPool=[];
 let imagePool=[];
 let trousPool=[];
-const EXERCISE_LIMITS={qcm:14, images:10, trous:10, nutrition:6};
-function isLimitedExercise(){return Object.prototype.hasOwnProperty.call(EXERCISE_LIMITS, exercise)}
-function currentLimit(){return EXERCISE_LIMITS[exercise] || null}
+const EXERCISE_LIMITS={qcm:14, images:10, trous:10};
+function isLimitedExercise(){return exercise==='nutrition' ? nutritionLevel!=='menu' : Object.prototype.hasOwnProperty.call(EXERCISE_LIMITS, exercise)}
+function currentLimit(){if(exercise==='nutrition'){if(nutritionLevel==='menu')return null;if(nutritionLevel==='diagnostic')return 10;return 6;}return EXERCISE_LIMITS[exercise]||null}
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
 function energyName(id){return ENERGIES.find(e=>e.id===id)?.nom||id}
 (function bubbles(){const c=document.getElementById('bubbles');for(let i=0;i<70;i++){const s=document.createElement('div');s.className='bubble';const size=30+Math.random()*70;s.style.width=size+'px';s.style.height=size+'px';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--d',(3+Math.random()*5)+'s');s.style.animationDelay=(Math.random()*4)+'s';c.appendChild(s)}})();
@@ -473,7 +633,7 @@ const EXERCISE_INTROS={
  assoc:'Clique sur une définition, puis clique sur la forme d’énergie qui correspond. Il n’y a pas de score : tu peux t’entraîner librement.',
  images:'Observe l’image, puis choisis la forme d’énergie représentée. Objectif : 10 questions.',
  trous:'Complète chaque phrase avec le bon verbe et la ou les bonnes formes d’énergie. Dix situations sont tirées au hasard dans une grande banque de questions.',
- nutrition:'Progresse étape par étape : lis des données, calcule un apport énergétique puis compare-le aux besoins.'
+ nutrition:'Commence par un test rapide de 10 questions : il te proposera ensuite le parcours le plus adapté à ton niveau en calcul.'
 };
 function activateNavButton(btn){
  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -493,12 +653,18 @@ function setExercise(m,updateNav=true){
  const title=document.getElementById('exerciseTitle');
  const intro=document.getElementById('exerciseIntro');
  if(title) title.textContent=EXERCISE_TITLES[exercise] || '🎮 Exercices';
- if(intro) intro.textContent=EXERCISE_INTROS[exercise] || '';
+ if(intro){
+  if(exercise==='nutrition'){
+   intro.innerHTML=`<div class="nutrition-intro-copy"><strong>Commence par un test rapide de 10 questions :</strong> il te proposera ensuite le parcours le plus adapté à ton niveau en calcul.<br><span>Si tu préfères ne pas faire le test, tu peux choisir directement ton niveau.</span></div><button class="nutrition-direct-level-btn" onclick="skipNutritionDiagnostic()">Choisir directement un niveau</button>`;
+  }else{
+   intro.textContent=EXERCISE_INTROS[exercise] || '';
+  }
+ }
  if(updateNav) activateNavButton(document.querySelector(`.tab-btn[data-exercise="${exercise}"]`));
  newRun();
 }
 function resetPools(){qcmPool=[];imagePool=[];trousPool=[]}
-function newRun(){score=0;qCount=0;qcmMistakes=[];nutritionStep=0;nutritionFirstTry=true;nutritionRunData=exercise==='nutrition'?makeNutritionRun():null;resetPools();updateBar();nextQuestion(true)}
+function newRun(){score=0;qCount=0;qcmMistakes=[];nutritionStep=0;nutritionFirstTry=true;resetPools();if(exercise==='nutrition'){nutritionLevel='diagnostic';showNutritionDiagnosticIntro();nutritionRunData=makeNutritionRun();nutritionDiagnosticQuestions=makeNutritionDiagnostic();updateBar();nextQuestion(true);return;}nutritionRunData=null;updateBar();nextQuestion(true)}
 function updateBar(){
  const quizBar=document.querySelector('.quiz-bar');
  const nextBtn=document.getElementById('nextBtn');
@@ -514,13 +680,27 @@ function updateBar(){
  document.getElementById('qCount').textContent=Math.min(qCount+1,limit)+' / '+limit;
  document.getElementById('progressBar').style.width=Math.min(100,(qCount/limit)*100)+'%';
 }
+function ensureNextButtonVisible(){
+ const btn=document.getElementById('nextBtn');
+ if(!btn || !btn.classList.contains('show'))return;
+ requestAnimationFrame(()=>{
+   const r=btn.getBoundingClientRect();
+   const margin=18;
+   if(r.bottom>window.innerHeight-margin || r.top<margin){
+     btn.scrollIntoView({behavior:'smooth',block:'nearest'});
+   }
+ });
+}
 function setFeedback(ok,msg){
  const f=document.getElementById('feedback');
  f.className='feedback show '+(ok?'ok':'ko');
  f.textContent=msg;
- if(isLimitedExercise())document.getElementById('nextBtn').classList.add('show');
+ if(isLimitedExercise()){
+   document.getElementById('nextBtn').classList.add('show');
+   ensureNextButtonVisible();
+ }
 }
-function clearFeedback(){const f=document.getElementById('feedback');f.className='feedback';f.textContent='';document.getElementById('nextBtn').classList.remove('show')}
+function clearFeedback(){const f=document.getElementById('feedback');f.className='feedback';f.textContent='';f.style.background='';f.style.border='';f.style.color='';document.getElementById('nextBtn').classList.remove('show')}
 function nextQuestion(first=false){
  clearFeedback();answered=false;
  if(!isLimitedExercise()){updateBar();if(exercise==='assoc')renderAssoc();return;}
@@ -545,7 +725,7 @@ function finishQuestion(){
 function buildMotivationMessage(){
  const limit=currentLimit();
  const ratio=score/limit;
- const topic=exercise==='nutrition'?'la lecture, les calculs et la comparaison des apports énergétiques':'les définitions';
+ const topic=exercise==='nutrition'?(nutritionLevel==='discovery'?'la lecture, les calculs et la comparaison des apports énergétiques':'les calculs de proportionnalité à partir de 100 g'):'les définitions';
  if(ratio===1){
    return `<div class="end-motivation excellent"><div class="confetti-line">🎉 ✨ 🎊</div><div class="mood-title">Excellent ! Félicitations !</div><div class="mood-sub">${topic.charAt(0).toUpperCase()+topic.slice(1)} sont très bien maîtrisés.</div></div>`;
  }
@@ -559,7 +739,7 @@ function buildMotivationMessage(){
 }
 function buildFinalFeedback(){
  if(exercise==='nutrition'){
-   return `<div class="end-feedback"><h3>🎯 Ce que tu viens d’entraîner</h3><ul><li>Repérer une valeur énergétique et son unité.</li><li>Calculer l’énergie apportée par plusieurs aliments identiques.</li><li>Additionner les apports de plusieurs aliments.</li><li>Comparer les apports énergétiques aux besoins.</li><li>Calculer l’écart entre les apports et les besoins.</li></ul></div>`;
+   return `<div class="end-feedback"><h3>🎯 Ce que tu viens d’entraîner</h3><ul><li>Repérer une valeur énergétique et son unité.</li><li>Calculer l’énergie apportée par plusieurs aliments identiques.</li><li>Additionner les apports de plusieurs aliments.</li><li>Comparer les apports énergétiques aux besoins.</li><li>Calculer l’écart entre les apports et les besoins.</li><li>Adapter une valeur énergétique donnée pour 100 g à une masse réellement consommée.</li></ul></div>`;
  }
  if(exercise!=='qcm') return '';
  if(qcmMistakes.length===0){
@@ -575,8 +755,26 @@ function buildFinalFeedback(){
    .join('');
  return `<div class="end-feedback"><h3>🎯 À retravailler</h3><div class="revision-list">${chips}</div></div>`;
 }
+function nutritionNextLevel(level){
+ if(level==='discovery')return 'intermediate';
+ if(level==='intermediate')return 'difficult';
+ return null;
+}
+function renderNutritionLevelEnd(){
+ const level=nutritionLevel;
+ const next=nutritionNextLevel(level);
+ const nextBtn=next?`<button class="next-level" onclick="startNutritionLevel('${next}')">Passer au niveau suivant →</button>`:'';
+ const label=NUTRITION_LEVEL_NAMES[level]||'';
+ document.getElementById('nextBtn').textContent='Question suivante →';
+ document.getElementById('qCount').textContent='6 / 6';
+ document.getElementById('scoreVal').textContent=score+' / 6';
+ document.getElementById('progressBar').style.width='100%';
+ document.getElementById('playArea').innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card" style="text-align:center"><div style="font-size:3rem">🏁</div><h3>${label} terminé !</h3><div class="big-score">${score} / 6</div><p>Tu as terminé les 6 questions de ce parcours.</p><div class="nutrition-level-end"><button class="restart-level" onclick="startNutritionLevel('${level}')">↻ Recommencer ce niveau</button>${nextBtn}</div></div></div>`;
+}
 function renderEndScreen(){
  clearFeedback();
+ if(exercise==='nutrition' && nutritionLevel==='diagnostic'){renderDiagnosticResult();return;}
+ if(exercise==='nutrition' && ['discovery','intermediate','difficult'].includes(nutritionLevel)){renderNutritionLevelEnd();return;}
  const limit=currentLimit();
  document.getElementById('nextBtn').textContent='Question suivante →';
  document.getElementById('qCount').textContent=limit+' / '+limit;
@@ -1015,6 +1213,140 @@ function makeCompareSituation(preferredRel){
  if(rel==='gt'){apports=base+gap;besoins=base}
  return {apports,besoins,rel,gap:Math.abs(apports-besoins),name:pickOne(NUTRITION_NAMES)};
 }
+const NUTRITION_100G_BANK=[
+ {name:'Céréales',emoji:'🥣',energy100:1600},
+ {name:'Chocolat',emoji:'🍫',energy100:2400},
+ {name:'Pâtes cuites',emoji:'🍝',energy100:600},
+ {name:'Riz cuit',emoji:'🍚',energy100:520},
+ {name:'Pain',emoji:'🍞',energy100:1080},
+ {name:'Fromage',emoji:'🧀',energy100:1520},
+ {name:'Compote',emoji:'🍎',energy100:320},
+ {name:'Biscuits',emoji:'🍪',energy100:1880},
+ {name:'Yaourt',emoji:'🥛',energy100:400},
+ {name:'Carottes râpées',emoji:'🥕',energy100:160},
+ {name:'Jambon',emoji:'🍖',energy100:480},
+ {name:'Poisson',emoji:'🐟',energy100:720}
+];
+const NUTRITION_INTERMEDIATE_MASSES=[50,25,200,300,400,10];
+const NUTRITION_DIFFICULT_MASSES=[150,250,80,120,175,60];
+function makeNutritionMassRun(masses){const foods=shuffle(NUTRITION_100G_BANK).slice(0,masses.length);const mm=shuffle(masses);return foods.map((food,i)=>({...food,mass:mm[i],total:food.energy100*mm[i]/100}));}
+const NUTRITION_DIAGNOSTIC_BANK=[
+ {target:50,correct:'÷ 2',choices:['÷ 2','× 2','÷ 4','× 4','÷ 5','× 5'],explain:'50 est la moitié de 100 : on divise donc par 2.'},
+ {target:25,correct:'÷ 4',choices:['÷ 4','÷ 2','× 4','× 2','÷ 5','× 5'],explain:'25 est le quart de 100 : on divise donc par 4.'},
+ {target:200,correct:'× 2',choices:['× 2','÷ 2','× 4','÷ 4','× 3','÷ 5'],explain:'200 représente deux fois 100 : on multiplie donc par 2.'},
+ {target:300,correct:'× 3',choices:['× 3','÷ 3','× 2','× 4','÷ 2','× 5'],explain:'300 représente trois fois 100 : on multiplie donc par 3.'},
+ {target:10,correct:'÷ 10',choices:['÷ 10','× 10','÷ 5','÷ 2','× 2','÷ 4'],explain:'10 est dix fois plus petit que 100 : on divise donc par 10.'},
+ {target:400,correct:'× 4',choices:['× 4','÷ 4','× 2','× 3','÷ 2','× 5'],explain:'400 représente quatre fois 100 : on multiplie donc par 4.'},
+ {target:150,correct:'100 ÷ 100 × 150',choices:['100 ÷ 100 × 150','100 ÷ 2','100 × 2','100 − 100 ÷ 2'],explain:'On passe d’abord par 1 : 100 ÷ 100, puis on multiplie par 150 : 100 ÷ 100 × 150.'},
+ {target:250,correct:'100 ÷ 100 × 250',choices:['100 ÷ 100 × 250','100 ÷ 100 × 150','100 × 3','100 × 2'],explain:'Pour obtenir 250 à partir de 100, on passe d’abord par 1 : 100 ÷ 100, puis on multiplie par 250 : 100 ÷ 100 × 250.'},
+ {target:80,correct:'100 ÷ 100 × 80',choices:['100 ÷ 100 × 80','100 ÷ 8','100 − 10','100 ÷ 4'],explain:'On passe d’abord par 1 : 100 ÷ 100, puis on multiplie par 80 : 100 ÷ 100 × 80.'},
+ {target:120,correct:'100 ÷ 100 × 120',choices:['100 ÷ 100 × 120','100 × 2','100 − 100 ÷ 10 × 2','100 ÷ 100 × 150'],explain:'On passe d’abord par 1 : 100 ÷ 100, puis on multiplie par 120 : 100 ÷ 100 × 120.'}
+]
+function makeNutritionDiagnostic(){return NUTRITION_DIAGNOSTIC_BANK.map(q=>({...q,choices:shuffle(q.choices)}));}
+function renderNutritionDiagnostic(){
+ const q=nutritionDiagnosticQuestions[qCount];
+ const p=document.getElementById('playArea');
+
+ // Mélange l'ordre des réponses à chaque affichage tout en gardant
+ // l'index d'origine afin de vérifier correctement la réponse.
+ const shuffledChoices=shuffle(q.choices.map((text,index)=>({text,index})));
+
+ p.innerHTML=`<div class="nutrition-wrap">
+   <div class="nutrition-card">
+     <div class="nutrition-step">Test de départ · ${qCount+1} sur 10</div>
+     <h3 style="text-align:center">Trouver le bon calcul</h3>
+     <p class="diagnostic-question">Comment peut-on passer de <strong>100</strong> à <strong>${q.target}</strong> ?</p>
+     <div class="diagnostic-answers">${shuffledChoices.map(c=>`<button class="diagnostic-answer" onclick="checkNutritionDiagnostic(this,${c.index})">${c.text}</button>`).join('')}</div>
+     <div class="diagnostic-unknown-row"><button class="diagnostic-unknown" onclick="checkNutritionDiagnosticUnknown(this)">🤷 Je ne sais pas / Je ne trouve pas</button></div>
+     <div class="nutrition-small" style="text-align:center;margin-top:14px">Ce test n’est pas une note. Il sert seulement à te conseiller un niveau d’entraînement.</div>
+   </div>
+ </div>`;
+}
+function checkNutritionDiagnostic(btn,index){
+ if(answered)return;
+ const q=nutritionDiagnosticQuestions[qCount];
+ const choice=q.choices[index];
+ answered=true;
+ document.querySelectorAll('.diagnostic-answer').forEach(b=>{b.disabled=true;if(b.textContent.trim()===q.correct)b.classList.add('correct')});
+ if(choice===q.correct){score++;btn.classList.add('correct');setFeedback(true,'✅ '+q.explain);}else{btn.classList.add('wrong');setFeedback(false,'❌ '+q.explain);}
+ finishQuestion();
+}
+function checkNutritionDiagnosticUnknown(btn){
+ if(answered)return;
+ const q=nutritionDiagnosticQuestions[qCount];
+ answered=true;
+ document.querySelectorAll('.diagnostic-answer').forEach(b=>{b.disabled=true;if(b.textContent.trim()===q.correct)b.classList.add('correct')});
+ btn.disabled=true;
+ const f=document.getElementById('feedback');
+ f.className='feedback show';
+ f.style.background='#f6f7fb';f.style.border='1px solid #cfd5df';f.style.color='var(--texte)';
+ f.textContent='💡 Pas de problème : '+q.explain;
+ if(isLimitedExercise()){
+   document.getElementById('nextBtn').classList.add('show');
+   ensureNextButtonVisible();
+ }
+ finishQuestion();
+}
+
+function skipNutritionDiagnostic(){
+ hideNutritionDiagnosticIntro();
+ nutritionLevel='menu';
+ score=0;
+ qCount=0;
+ nutritionStep=0;
+ answered=false;
+ const nb=document.getElementById('nextBtn');
+ if(nb)nb.classList.remove('show');
+ clearFeedback();
+ renderNutritionLevelMenu();
+}
+
+function diagnosticRecommendation(){
+ if(score<=4)return {level:'discovery',title:'🌱 Parcours Découverte conseillé',text:'Commence par le parcours Découverte pour installer tranquillement le raisonnement avant de travailler les calculs à partir de 100 g.'};
+ if(score<=7)return {level:'intermediate',title:'🎯 Parcours Intermédiaire conseillé',text:'Tes bases sont déjà présentes. Le parcours Intermédiaire correspond bien aux calculs attendus dans un contrôle.'};
+ return {level:'difficult',title:'🔥 Parcours Difficile conseillé',text:'Tu maîtrises bien les transformations nécessaires. Tu peux découvrir une méthode générale : le passage par 1 g.'};
+}
+function renderDiagnosticResult(){
+ clearFeedback();
+ const r=diagnosticRecommendation();
+ const qb=document.querySelector('.quiz-bar');if(qb)qb.classList.add('hidden');
+ document.getElementById('playArea').innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card"><div style="font-size:3rem;text-align:center">🧭</div><h3 style="text-align:center">Ton test de départ est terminé</h3><div class="big-score" style="text-align:center">${score} / 10</div><div class="level-recommendation"><h3>${r.title}</h3><p>${r.text}</p></div><p style="text-align:center;font-weight:850">C’est seulement un conseil : tu peux choisir librement un autre parcours.</p><div class="level-actions"><button class="nutrition-answer" onclick="startNutritionLevel('discovery')"><strong>${NUTRITION_LEVEL_NAMES.discovery}</strong></button><button class="nutrition-answer" onclick="startNutritionLevel('intermediate')"><strong>${NUTRITION_LEVEL_NAMES.intermediate}</strong></button><button class="nutrition-answer" onclick="startNutritionLevel('difficult')"><strong>${NUTRITION_LEVEL_NAMES.difficult}</strong></button></div><div style="text-align:center;margin-top:14px"><button class="reset-btn" onclick="newRun()">🔄 Refaire le test</button></div></div></div>`;
+}
+function makeNutrition100gRun(){return {intermediate:makeNutritionMassRun(NUTRITION_INTERMEDIATE_MASSES),difficult:makeNutritionMassRun(NUTRITION_DIFFICULT_MASSES)};}
+function nutritionReasoning(x,stage){
+ const e=fmtKJ(x.energy100),m=x.mass;
+ const hints={
+  10:[`Compare 10 g à 100 g : 10 g est dix fois plus petit.`,`Une portion de 10 g correspond à 1/10 de 100 g. Il faut donc calculer ${e} ÷ 10.`],
+  25:[`Compare 25 g à 100 g : 25 g est le quart de 100 g.`,`Une portion de 25 g correspond à 1/4 de 100 g. Il faut donc calculer ${e} ÷ 4.`],
+  50:[`Compare 50 g à 100 g : 50 g est la moitié de 100 g.`,`Une portion de 50 g correspond à 1/2 de 100 g. Il faut donc calculer ${e} ÷ 2.`],
+  200:[`Compare 200 g à 100 g : 200 g représente deux portions de 100 g.`,`Il faut prendre deux fois l’énergie de 100 g : ${e} × 2.`],
+  300:[`Compare 300 g à 100 g : 300 g représente trois portions de 100 g.`,`Il faut prendre trois fois l’énergie de 100 g : ${e} × 3.`],
+  400:[`Compare 400 g à 100 g : 400 g représente quatre portions de 100 g.`,`Il faut prendre quatre fois l’énergie de 100 g : ${e} × 4.`],
+  150:[`Décompose 150 g en quantités faciles à relier à 100 g. Par exemple : 100 g + 50 g.`,`Pour 100 g : ${e} kJ. Pour 50 g : ${e} ÷ 2. Additionne ensuite ces deux valeurs.`],
+  250:[`Décompose 250 g en quantités faciles : 200 g + 50 g.`,`Pour 200 g : ${e} × 2. Pour 50 g : ${e} ÷ 2. Additionne les deux résultats.`],
+  80:[`Cherche d’abord quelle fraction de 100 g représente 20 g, puis utilise 4 × 20 g.`,`20 g représente 1/5 de 100 g : calcule ${e} ÷ 5, puis multiplie ce résultat par 4.`],
+  120:[`Décompose 120 g en 100 g + 20 g.`,`20 g représente 1/5 de 100 g : calcule ${e} ÷ 5, puis ajoute ce résultat à ${e}.`],
+  175:[`Décompose 175 g en 100 g + 50 g + 25 g.`,`Calcule l’énergie de 100 g, puis celle de 50 g (${e} ÷ 2) et celle de 25 g (${e} ÷ 4). Additionne les trois.`],
+  60:[`Décompose 60 g en 50 g + 10 g.`,`Pour 50 g : ${e} ÷ 2. Pour 10 g : ${e} ÷ 10. Additionne les deux résultats.`]
+ };
+ const h=hints[m]||[];
+ if(stage===1)return `💡 Indice : ${h[0]||'Compare la masse demandée à 100 g.'}`;
+ if(stage===2)return `🧭 Méthode : ${h[1]||'Décompose la masse en quantités faciles à relier à 100 g.'}`;
+ return `🔎 Vérification : ${m<100?`comme ${m} g est inférieur à 100 g, le résultat doit être inférieur à ${e} kJ.`:`comme ${m} g est supérieur à 100 g, le résultat doit être supérieur à ${e} kJ.`}`;
+}
+function difficultUnitHelp(x){
+ const e=fmtKJ(x.energy100);
+ const one=Number(x.energy100)/100;
+ return `<div class="unit-method"><h4>🧭 Une méthode utile : passer par l’unité</h4><p>S’il n’existe pas de lien évident entre le nombre de départ (ici 100 g) et celui que tu dois chercher (ici 80 g), alors la méthode la plus simple consiste à passer par le chiffre 1 (ici 1 g).</p><div class="unit-chain">100 g → 1 g → ${x.mass} g</div><p class="unit-example"><strong>Exemple de méthode :</strong> si 100 g apportent ${e} kJ, alors 1 g apporte ${e} ÷ 100 = ${fmtKJ(one)} kJ. Il suffit ensuite de multiplier cette valeur par la masse demandée.</p></div>`;
+}
+function nutrition100gLabel(x){
+ return `<div class="food-label">
+   <div class="food-title">${x.emoji} ${x.name}</div>
+   <div class="food-row"><span>Valeurs pour</span><span class="food-unit">100 g</span></div>
+   <div class="food-row energy-row"><span>Énergie</span><span class="food-unit">${fmtKJ(x.energy100)} kJ</span></div>
+ </div>`;
+}
+function nutrition100gHead(level,n){return `<div class="nutrition-step">${NUTRITION_LEVEL_NAMES[level]} · ${n} sur 6</div><h3>Calculer l’énergie d’une portion</h3>`;}
 function makeNutritionRun(){
  // Un seul scénario est construit pour les 6 étapes.
  // L'aliment principal doit pouvoir être compté (pommes, yaourts, biscuits...).
@@ -1074,7 +1406,8 @@ function makeNutritionRun(){
    sum:{foods:mealItems,total:mealTotal},
    compare:{apports:mealTotal,besoins:needs,rel:actualRel,name},
    gap:{apports:mealTotal,besoins:needs,rel:actualRel,gap:actualGap,name},
-   mission:{foods:missionFoods,total:missionTotal,needs:missionNeeds,rel:missionRel,name:missionName}
+   mission:{foods:missionFoods,total:missionTotal,needs:missionNeeds,rel:missionRel,name:missionName},
+   portions:makeNutrition100gRun()
  };
 }
 function nutritionHead(n,title,subtitle=''){
@@ -1190,7 +1523,15 @@ function calcEquals(){
  }
 }
 
+function renderNutritionLevelMenu(){
+ const qb=document.querySelector('.quiz-bar');if(qb)qb.classList.add('hidden');
+ clearFeedback();
+ document.getElementById('playArea').innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card"><h3 style="text-align:center">Choisis ton parcours</h3><p style="text-align:center;margin-bottom:18px">Chaque parcours comporte <strong>6 questions</strong>.</p><div class="nutrition-answers"><button class="nutrition-answer" onclick="startNutritionLevel('discovery')"><strong>${NUTRITION_LEVEL_NAMES.discovery}</strong></button><button class="nutrition-answer" onclick="startNutritionLevel('intermediate')"><strong>${NUTRITION_LEVEL_NAMES.intermediate}</strong></button><button class="nutrition-answer" onclick="startNutritionLevel('difficult')"><strong>${NUTRITION_LEVEL_NAMES.difficult}</strong></button></div></div></div>`;
+}
+function startNutritionLevel(level){
+ hideNutritionDiagnosticIntro();nutritionLevel=level;score=0;qCount=0;nutritionStep=0;nutritionFirstTry=true;nutritionErrorCount=0;nutritionRunData=makeNutritionRun();clearFeedback();updateBar();nextQuestion(true);}
 function renderNutrition(){
+ if(nutritionLevel==='diagnostic'){renderNutritionDiagnostic();return;}
  nutritionStep=qCount;
  nutritionFirstTry=true;
  nutritionErrorCount=0;
@@ -1199,7 +1540,7 @@ function renderNutrition(){
  const d=nutritionRunData;
  const p=document.getElementById('playArea');
 
- if(nutritionStep===0){
+ if(nutritionLevel==='discovery' && nutritionStep===0){
    const f=d.read;
    const n=FOOD_NUTRIENTS[f.name];
    const choices=shuffle([
@@ -1211,51 +1552,32 @@ function renderNutrition(){
      {type:'salt',label:`${fmtGram(n.salt)} g`}
    ]);
    p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(1,'Lire une étiquette','Observe l’étiquette et repère uniquement l’information demandée.')}${foodLabel(f)}<p style="text-align:center;font-weight:900">Quelle valeur indique l’énergie apportée par ${f.portion.toLowerCase()} ?</p><div class="nutrition-answers">${choices.map(c=>`<button class="nutrition-answer" onclick="checkNutritionReadChoice(this,'${c.type}')">${c.label}</button>`).join('')}</div><div class="nutrition-small" style="text-align:center">Toutes les informations de l’étiquette ne sont pas utiles pour répondre.</div></div></div>`;
-
- }else if(nutritionStep===1){
+ }else if(nutritionLevel==='discovery' && nutritionStep===1){
    const x=d.multiply;
    const total=x.total;
    const foodLabelCount=foodCountLabel(x.food,x.count);
    setNutritionNumberCheck(total,'',`${fmtKJ(total)} kJ : tu as trouvé l’énergie apportée par ${x.count} ${foodLabelCount}.`);
    p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(2,'Calculer')}${foodLabel(x.food)}<p style="text-align:center;font-weight:900">Calculer l’énergie apportée par ${x.count} ${foodLabelCount}.</p><div class="calc-box">Énergie apportée = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Énergie apportée"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div>${calculatorHTML()}</div></div>`;
-
- }else if(nutritionStep===2){
+ }else if(nutritionLevel==='discovery' && nutritionStep===2){
    const x=d.sum;
-   setNutritionNumberCheck(
-     x.total,
-     `Repère l’énergie apportée par chacun des aliments du repas dans le tableau. Pour obtenir l’apport énergétique du repas entier, il faut réunir les apports des trois aliments. Quelle opération permet de réunir plusieurs quantités d’énergie ?`,
-     `Le repas apporte ${fmtKJ(x.total)} kJ au total.`
-   );
+   setNutritionNumberCheck(x.total,`Repère l’énergie apportée par chacun des aliments du repas dans le tableau. Pour obtenir l’apport énergétique du repas entier, il faut réunir les apports des trois aliments. Quelle opération permet de réunir plusieurs quantités d’énergie ?`,`Le repas apporte ${fmtKJ(x.total)} kJ au total.`);
    p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(3,'Calculer')}${mealTable(x.foods)}<p style="text-align:center;font-weight:900">Calculer l’apport de ce repas.</p><div class="calc-box">Énergie apportée = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Apport énergétique du repas"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div>${calculatorHTML()}</div></div>`;
-
- }else if(nutritionStep===3){
+ }else if(nutritionLevel==='discovery' && nutritionStep===3){
    const x=d.compare;
    p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(4,'Comparer aux besoins',`${x.name} a besoin de ${fmtKJ(x.besoins)} kJ pour cette période. Le repas étudié apporte ${fmtKJ(x.apports)} kJ.`)}${compareBars(x.apports,x.besoins)}<p style="text-align:center;font-weight:900">Quelle phrase est correcte ?</p><div class="nutrition-answers"><button class="nutrition-answer" onclick="checkNutritionRelationChoice(this,'lt')">Les apports sont inférieurs aux besoins</button><button class="nutrition-answer" onclick="checkNutritionRelationChoice(this,'eq')">Les apports sont identiques aux besoins</button><button class="nutrition-answer" onclick="checkNutritionRelationChoice(this,'gt')">Les apports sont supérieurs aux besoins</button></div></div></div>`;
-
- }else if(nutritionStep===4){
+ }else if(nutritionLevel==='discovery' && nutritionStep===4){
    const x=d.gap;
-   setNutritionNumberCheck(
-     x.gap,
-     `Pour trouver l’écart, compare les deux valeurs puis cherche combien de kJ les séparent. Il faut soustraire la plus petite valeur de la plus grande.`,
-     `L’écart entre les apports et les besoins est de ${fmtKJ(x.gap)} kJ.`
-   );
+   setNutritionNumberCheck(x.gap,`Pour trouver l’écart, compare les deux valeurs puis cherche combien de kJ les séparent. Il faut soustraire la plus petite valeur de la plus grande.`,`L’écart entre les apports et les besoins est de ${fmtKJ(x.gap)} kJ.`);
    p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card">${nutritionHead(5,'Calculer l’écart',`Le repas apporte ${fmtKJ(x.apports)} kJ et les besoins de ${x.name} sont de ${fmtKJ(x.besoins)} kJ.`)}${compareBars(x.apports,x.besoins)}<p style="text-align:center;font-weight:900">De combien les apports et les besoins diffèrent-ils ?</p><div class="calc-box">Écart = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Écart entre apports et besoins"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div>${calculatorHTML()}</div></div>`;
-
- }else{
+ }else if(nutritionLevel==='discovery' && nutritionStep===5){
    const x=d.mission;
-   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card mission-box">${nutritionHead(6,'Mission : analyser un repas',`${x.name} a besoin de ${fmtKJ(x.needs)} kJ pour cette période. Calcule l’apport du repas puis compare-le aux besoins.`)}
-     ${mealTable(x.foods)}
-     <div class="calc-box">Apport total = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Apport total du repas"> kJ</div>
-     <div class="calc-box">Conclusion :
-       <select id="nutritionRelation" class="relation-select" aria-label="Conclusion sur les apports et les besoins">
-         <option value="">[…]</option>
-         <option value="lt">Les apports sont inférieurs aux besoins</option>
-         <option value="eq">Les apports sont identiques aux besoins</option>
-         <option value="gt">Les apports sont supérieurs aux besoins</option>
-       </select>
-     </div>
-     <div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionMission()">Vérifier ma mission</button></div>${calculatorHTML()}
-   </div></div>`;
+   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card mission-box">${nutritionHead(6,'Mission : analyser un repas',`${x.name} a besoin de ${fmtKJ(x.needs)} kJ pour cette période. Calcule l’apport du repas puis compare-le aux besoins.`)}${mealTable(x.foods)}<div class="calc-box">Apport total = <input id="nutritionInput" class="calc-input" inputmode="numeric" aria-label="Apport total du repas"> kJ</div><div class="calc-box">Conclusion : <select id="nutritionRelation" class="relation-select" aria-label="Conclusion sur les apports et les besoins"><option value="">[…]</option><option value="lt">Les apports sont inférieurs aux besoins</option><option value="eq">Les apports sont identiques aux besoins</option><option value="gt">Les apports sont supérieurs aux besoins</option></select></div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionMission()">Vérifier ma mission</button></div>${calculatorHTML()}</div></div>`;
+ }else{
+   const x=d.portions[nutritionLevel][nutritionStep];
+   const difficulty=nutritionLevel==='intermediate'?'🎯 Niveau contrôle':'🔥 Passage par l’unité';
+   const methodBox=nutritionLevel==='difficult'?difficultUnitHelp(x):'';
+   setNutritionNumberCheck(x.total,'',`Bonne réponse : ${fmtKJ(x.total)} kJ pour ${x.mass} g de ${x.name.toLowerCase()}.`);
+   p.innerHTML=`<div class="nutrition-wrap"><div class="nutrition-card mission-box">${nutrition100gHead(nutritionLevel,nutritionStep+1)}<div class="nutrition-small" style="text-align:center;margin-bottom:8px">${difficulty}</div>${methodBox}${nutrition100gLabel(x)}<p style="text-align:center;font-weight:900">Une personne consomme <strong>${x.mass} g</strong> de ${x.name.toLowerCase()}.<br>Calculer l’énergie apportée par cette quantité.</p><div class="calc-box">Énergie apportée = <input id="nutritionInput" class="calc-input" inputmode="numeric"> kJ</div><div class="nutrition-check-row"><button class="check-btn" onclick="checkNutritionNumberCurrent()">Vérifier</button></div><div class="nutrition-small" style="text-align:center">${nutritionLevel==='difficult'?'Utilise la méthode : 100 g → 1 g → masse demandée.':'L’étiquette donne l’énergie pour 100 g : adapte cette valeur à la masse consommée.'}</div>${calculatorHTML()}</div></div>`;
  }
 }
 function nutritionWrong(msg){
@@ -1309,42 +1631,62 @@ function checkNutritionNumberCurrent(){
    nutritionWrong('Écris d’abord un nombre dans la case.');
    return;
  }
-
  if(val!==nutritionExpected){
    input.classList.add('wrong');
+   nutritionErrorCount++;
 
-   // Étape 2 : feedback progressif selon la réponse de l’élève.
-   if(exercise==='nutrition' && nutritionStep===1){
+   // Parcours de départ : aide progressive pour le calcul de plusieurs portions.
+   if(nutritionStep===1){
      const x=nutritionRunData.multiply;
-     nutritionErrorCount++;
-
      let msg='';
      if(nutritionErrorCount===1){
        if(val===x.food.energy){
-         msg='Relis bien la question : la valeur que tu as saisie correspond à l’énergie apportée par une seule portion. Regarde maintenant quelle quantité de cet aliment est réellement consommée.';
+         msg='Relis bien la question : cette valeur correspond à une seule portion. Regarde combien de portions sont réellement consommées.';
        }else{
-         msg='Relis les informations utiles : repère l’énergie apportée par une portion, puis regarde combien de portions sont consommées. Réfléchis ensuite à l’opération qui permet de prendre en compte plusieurs portions identiques.';
+         msg='Repère l’énergie apportée par une portion, puis le nombre de portions consommées. Quelle opération permet de prendre plusieurs fois la même quantité ?';
        }
      }else{
-       const one=fmtKJ(x.food.energy);
-       const count=x.count;
-       msg=`On va détailler davantage. Une portion apporte ${one} kJ et ${count} portions sont consommées. Il faut donc prendre ${one} kJ ${count} fois. Le calcul à effectuer est ${one} × ${count}. On multiplie parce que chaque portion apporte la même quantité d’énergie.`;
+       const one=fmtKJ(x.food.energy), count=x.count;
+       msg=`Une portion apporte ${one} kJ et ${count} portions sont consommées. Il faut donc prendre ${one} kJ ${count} fois : ${one} × ${count}.`;
      }
-
-     nutritionWrong(msg);
-     input.focus();
-     input.select();
-     return;
+     nutritionWrong(msg); input.focus(); input.select(); return;
    }
 
-   // Les autres étapes conservent leur feedback prévu.
-   nutritionErrorCount++;
-   nutritionWrong(nutritionHint);
-   input.focus();
-   input.select();
-   return;
- }
+   // Parcours Intermédiaire : aide par comparaison directe à 100 g.
+   if(nutritionLevel==='intermediate'){
+     const x=nutritionRunData.portions.intermediate[nutritionStep];
+     let msg='';
+     if(nutritionErrorCount===1){
+       msg=nutritionReasoning(x,1);
+     }else if(nutritionErrorCount===2){
+       msg=nutritionReasoning(x,2);
+     }else{
+       const relation=x.mass<100?'moins':x.mass>100?'plus':'autant';
+       msg=nutritionReasoning(x,2)+` Vérifie aussi l’ordre de grandeur : ${x.mass} g, c’est ${relation} que 100 g. Ton résultat doit donc être ${relation==='moins'?'plus petit':relation==='plus'?'plus grand':'égal'} que ${fmtKJ(x.energy100)} kJ.`;
+     }
+     nutritionWrong(msg); input.focus(); input.select(); return;
+   }
 
+   // Parcours Difficile : guidage systématique par le passage à l’unité.
+   if(nutritionLevel==='difficult'){
+     const x=nutritionRunData.portions.difficult[nutritionStep];
+     const e=fmtKJ(x.energy100);
+     const one=Number(x.energy100)/100;
+     let msg='';
+     if(nutritionErrorCount===1){
+       msg=`💡 Indice : commence par chercher l’énergie apportée par <strong>1 g</strong>. Tu connais celle apportée par 100 g.`;
+     }else if(nutritionErrorCount===2){
+       msg=`🧭 Méthode : pour passer de 100 g à 1 g, divise l’énergie par 100 : ${e} ÷ 100 = <strong>${fmtKJ(one)} kJ pour 1 g</strong>.`;
+     }else{
+       const relation=x.mass<100?'inférieure':'supérieure';
+       msg=`🔎 Dernière aide : 1 g apporte ${fmtKJ(one)} kJ. Pour ${x.mass} g, calcule donc <strong>${fmtKJ(one)} × ${x.mass}</strong>. Vérifie ensuite l’ordre de grandeur : la masse demandée est ${relation} à 100 g.`;
+     }
+     nutritionWrong(msg); input.focus(); input.select(); return;
+   }
+
+   nutritionWrong(nutritionHint);
+   input.focus(); input.select(); return;
+ }
  input.disabled=true;
  nutritionSuccess(nutritionSuccessText);
 }
