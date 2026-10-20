@@ -1490,6 +1490,20 @@ h2.title,
   background:#eff6ff !important;
   border-color:#2563eb !important;
 }
+
+/* Rubriques repliables — sans modification de la disposition d’origine */
+.lesson-fold{margin:16px 0 0;}
+.lesson-fold > summary{
+  cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;
+  padding:12px 14px;border-radius:12px;background:#f0f4ff;
+  color:var(--bleu,#1a73e8);font-family:'Fredoka One',cursive;
+  font-size:1.08rem;user-select:none;
+}
+.lesson-fold > summary::-webkit-details-marker{display:none;}
+.lesson-fold > summary::after{content:'＋';margin-left:auto;font-family:Arial,sans-serif;font-size:1.4rem;}
+.lesson-fold[open] > summary::after{content:'−';}
+.lesson-fold > summary:focus-visible{outline:3px solid #2563eb;outline-offset:3px;}
+.lesson-fold[open] > summary{margin-bottom:12px;}
 </style>
 </head>
 <body>
@@ -1538,7 +1552,7 @@ h2.title,
   </div>
 
   <img crossorigin="anonymous" class="component motor-body circuit-asset"
-       src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png"
+       src="https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png"
        alt="Moteur sans hélice">
   <img crossorigin="anonymous" id="serieMotor" class="component propeller circuit-asset"
        src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png"
@@ -1559,7 +1573,9 @@ h2.title,
 </div>
       </div>
 
-      <h4>🔎 Savoir reconnaître</h4>
+      <details class="lesson-fold">
+
+        <summary>🔎 Savoir reconnaître</summary>
       <p>
         Un circuit en série ne possède qu’<span class="key">une seule boucle</span> :
         le courant n’a qu’un seul chemin possible pour aller d’une borne du générateur à l’autre.
@@ -1567,12 +1583,17 @@ h2.title,
       <p>Les dipôles se suivent dans la même boucle.</p>
 
       <div class="action">
-        <button class="btn" onclick="toggleMark('serieLoop')">👁️ Afficher la boucle</button>
+        <button class="btn" id="serieLoopButton" onclick="toggleMark('serieLoop')">👁️ Afficher la boucle</button>
       </div>
 
-      <hr style="border:0;border-top:2px solid #e7dfef;margin:24px 0">
+      
+      </details>
 
-      <h4>💥 Que se passe-t-il si un dipôle est cassé ?</h4>
+<hr style="border:0;border-top:2px solid #e7dfef;margin:24px 0">
+
+      <details class="lesson-fold">
+
+        <summary>💥 Que se passe-t-il si un dipôle est cassé ?</summary>
       <p>
         Si un récepteur est cassé, l’unique boucle est ouverte :
         <strong>aucun récepteur du circuit ne fonctionne plus</strong>.
@@ -1585,6 +1606,9 @@ h2.title,
       <div class="demo-status" id="serieStatus">
         La boucle est fermée : la lampe et le moteur fonctionnent.
       </div>
+
+      </details>
+
     </article>
 
     <!-- BLOC DROIT : CIRCUIT EN DÉRIVATION -->
@@ -1616,7 +1640,7 @@ h2.title,
   </div>
 
   <img crossorigin="anonymous" class="component motor-body circuit-asset"
-       src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png"
+       src="https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png"
        alt="Moteur sans hélice">
   <img crossorigin="anonymous" id="derivMotor" class="component propeller circuit-asset"
        src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png"
@@ -1655,13 +1679,15 @@ h2.title,
 </div>
       </div>
 
-      <h4>🔎 Savoir reconnaître</h4>
+      <details class="lesson-fold">
+
+        <summary>🔎 Savoir reconnaître</summary>
       <p>
         Un circuit en dérivation possède <span class="key">plusieurs boucles</span> :
         le courant dispose de plusieurs chemins possibles.
       </p>
       <div class="action">
-        <button class="btn" onclick="toggleDerivLoops()">🟢 Afficher les boucles</button>
+        <button class="btn" id="derivLoopsButton" onclick="toggleDerivLoops()">🟢 Afficher les boucles</button>
       </div>
 
       <p>
@@ -1669,7 +1695,7 @@ h2.title,
         Une <strong>branche</strong> est une portion de circuit comprise entre deux nœuds.
       </p>
       <div class="action">
-        <button class="btn" onclick="toggleMark('nodes')">🔴 Afficher les nœuds</button>
+        <button class="btn" id="nodesButton" onclick="toggleMark('nodes')">🔴 Afficher les nœuds</button>
       </div>
 
       <p>
@@ -1677,12 +1703,17 @@ h2.title,
         Les autres sont les <strong>branches dérivées</strong>.
       </p>
       <div class="action">
-        <button class="btn" onclick="showBranches()">🌈 Afficher les branches</button>
+        <button class="btn" id="branchesButton" onclick="showBranches()">🌈 Afficher les branches</button>
       </div>
 
-      <hr style="border:0;border-top:2px solid #dcefe2;margin:24px 0">
+      
+      </details>
 
-      <h4>💥 Que se passe-t-il si un dipôle est cassé ?</h4>
+<hr style="border:0;border-top:2px solid #dcefe2;margin:24px 0">
+
+      <details class="lesson-fold">
+
+        <summary>💥 Que se passe-t-il si un dipôle est cassé ?</summary>
       <p>
         Si un récepteur est cassé, seule sa branche est ouverte :
         <strong>les récepteurs placés dans les autres branches peuvent continuer à fonctionner</strong>.
@@ -1695,6 +1726,9 @@ h2.title,
       <div class="demo-status" id="derivStatus">
         Les deux branches sont fermées : la lampe et le moteur fonctionnent.
       </div>
+
+      </details>
+
     </article>
   </div>
 
@@ -1707,7 +1741,7 @@ h2.title,
   <h2 class="title">🎯 Exercices interactifs</h2>
 
   <div class="exercise-menu">
-    <button class="mode active" data-mode="type" onclick="setMode('type',this)">🔎 Série ou dérivation ?<br><small>15 circuits</small></button>
+    <button class="mode active" data-mode="type" onclick="setMode('type',this)">🔎 Série ou dérivation ?<br><small>10 questions parmi 30 circuits</small></button>
     <button class="mode" data-mode="structure" onclick="setMode('structure',this)">🌿 Nœuds, branches et boucles<br><small>15 questions parmi plus de 30</small></button>
     <button class="mode" data-mode="effect" onclick="setMode('effect',this)">💡 Prévoir le fonctionnement</button>
     <button class="mode" data-mode="mix" onclick="setMode('mix',this)">🎲 Parcours complet<br><small>10 questions variées</small></button>
@@ -1736,7 +1770,7 @@ const svgs = {
   </svg>
   <img crossorigin="anonymous" class="component battery" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
   <div class="lamp-holder lamp-weak"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Lampe faiblement allumée"></div>
-  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png" alt="Moteur">
   <img crossorigin="anonymous" class="component propeller motor-slow" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice tournant lentement">
 </div>`,
 
@@ -1750,7 +1784,7 @@ const svgs = {
   </svg>
   <img crossorigin="anonymous" class="component battery" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
   <div class="lamp-holder lamp-normal"><img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Lampe bien allumée"></div>
-  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png" alt="Moteur">
   <img crossorigin="anonymous" class="component propeller motor-normal" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice tournant normalement">
 </div>`,
 
@@ -1767,7 +1801,7 @@ const svgs = {
   <div class="lamp-holder lamp-normal">
     <img crossorigin="anonymous" class="lamp-on" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Lampe bien allumée">
   </div>
-  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+  <img crossorigin="anonymous" class="component motor-body" src="https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png" alt="Moteur">
   <img crossorigin="anonymous" class="component propeller motor-normal" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice tournant normalement">
   <img crossorigin="anonymous" class="component battery" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
 </div>`,
@@ -1803,7 +1837,7 @@ const svgs = {
 };
 
 
-/* Banque de 15 circuits pour l'exercice « Série ou dérivation ? ».
+/* Banque de 30 circuits pour l'exercice « Série ou dérivation ? ».
    Positionnement vertical systématique :
    - ampoule : trait à 86 % de la hauteur du conteneur ;
    - moteur : trait à 84 % de la hauteur du corps ;
@@ -1812,7 +1846,7 @@ const circuitAssets = {
   battery:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png",
   lampNormal:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png",
   lampWeak:"https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png",
-  motor:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png",
+  motor:"https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png",
   prop:"https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png"
 };
 function lampHtml(x,y,H=995,size=18,state="normal",z=4){
@@ -1821,12 +1855,12 @@ function lampHtml(x,y,H=995,size=18,state="normal",z=4){
   const src=state==="normal"?circuitAssets.lampNormal:circuitAssets.lampWeak;
   return `<div class="lamp-holder ${cls}" style="z-index:${z};left:${x}%;top:${top.toFixed(2)}%;width:${size}%;height:32%"><img crossorigin="anonymous" class="lamp-on" src="${src}" alt="Lampe"></div>`;
 }
-function motorHtml(x,y,H=995,state="normal",zBody=3,zProp=5){
+function motorHtml(x,y,H=995,state="normal",zBody=3,zProp=5,compact=false){
   const h=31, top=y/H*100-.84*h;
-  const propTop=top-8.4;
+  const propTop=top-(compact?3.4:8.4);
   const speed=state==="very"?"motor-very-slow":state==="slow"?"motor-slow":"motor-normal";
   return `<img crossorigin="anonymous" class="component motor-body" style="z-index:${zBody};left:${x}%;top:${top.toFixed(2)}%;width:15%;height:${h}%" src="${circuitAssets.motor}" alt="Moteur">
-  <img crossorigin="anonymous" class="component propeller ${speed}" style="z-index:${zProp};left:${(x-5.2).toFixed(2)}%;top:${propTop.toFixed(2)}%;width:25.5%;height:38%;transform-origin:50% 50%;animation-name:propellerRotation;animation-timing-function:linear;animation-iteration-count:infinite" src="${circuitAssets.prop}" alt="Hélice">`;
+  <img crossorigin="anonymous" class="component propeller ${speed}" style="z-index:${zProp};left:${(x-(compact?1.95:5.2)).toFixed(2)}%;top:${propTop.toFixed(2)}%;width:${compact?19:25.5}%;height:${compact?28:38}%;transform-origin:50% 50%;animation-name:propellerRotation;animation-timing-function:linear;animation-iteration-count:infinite" src="${circuitAssets.prop}" alt="Hélice">`;
 }
 function computeBranchShift(branches, branchIndex){
   /* Règle simple de placement horizontal :
@@ -1859,12 +1893,43 @@ function receiverXs(n, branchShift=0, extraShift=0){
 function makeSeries(receivers,label){
   const H=995, y=817;
   const count=receivers.length;
-  const xs=count===1?[41]:count===2?[23,59]:[16,41,66];
+  const xs=count===1?[41]
+    :count===2?[23,59]
+    :count===3?[16,41,66]
+    :[8,29,50,71];
   const state=count===1?"normal":count===2?"weak":"very";
-  let comps=receivers.map((r,i)=>r==="lamp"?lampHtml(xs[i],y,H,count===3?16:19,state):motorHtml(xs[i]+2,y,H,state==="normal"?"normal":state==="weak"?"slow":"very")).join('');
+  const lampSize=count>=4?14:(count===3?16:19);
+  let comps=receivers.map((r,i)=>r==="lamp"
+    ? lampHtml(xs[i],y,H,lampSize,state)
+    : motorHtml(xs[i]+2,y,H,state==="normal"?"normal":state==="weak"?"slow":"very")
+  ).join('');
   return `<div class="real-circuit compact" data-topology="serie" aria-label="${label}">
   <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none"><path class="wire" d="M157 202 H431 M898 202 H1139 V817 H157 V202"/></svg>
   <img crossorigin="anonymous" class="component battery" style="z-index:3;left:31.55%;top:9.45%;width:34.75%;height:20.55%" src="${circuitAssets.battery}" alt="Pile">${comps}</div>`;
+}
+
+
+/* Variante à quatre récepteurs : deux lampes sur les montants latéraux,
+   deux moteurs sur la branche inférieure. L'unique boucle est conservée. */
+function makeSeriesFourSides(label){
+  const H=995, state="very";
+  /* Les ampoules restent droites (sans rotation).
+     Leur socle est centré sur chaque côté vertical du rectangle. */
+  const sideY=510;
+  const lampSize=18;
+  const leftWireX=157/1363*100;
+  const rightWireX=1139/1363*100;
+  const leftLamp=lampHtml(leftWireX-lampSize/2,sideY,H,lampSize,state);
+  const rightLamp=lampHtml(rightWireX-lampSize/2,sideY,H,lampSize,state);
+  const bottomY=817;
+  const bottomMotors=motorHtml(28,bottomY,H,"very")+motorHtml(61,bottomY,H,"very");
+  return `<div class="real-circuit compact" data-topology="serie" aria-label="${label}">
+    <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none">
+      <path class="wire" d="M157 202 H431 M898 202 H1139 V817 H157 V202"/>
+    </svg>
+    <img crossorigin="anonymous" class="component battery" style="z-index:3;left:31.55%;top:9.45%;width:34.75%;height:20.55%" src="${circuitAssets.battery}" alt="Pile">
+    ${leftLamp}${bottomMotors}${rightLamp}
+  </div>`;
 }
 
 function nodesAtYs(nodeYs, zIndex){
@@ -1877,18 +1942,33 @@ function nodesAtYs(nodeYs, zIndex){
   ).join('');
   return `<svg class="wire-layer node-layer" style="z-index:${zIndex}" viewBox="0 0 1363 1100" preserveAspectRatio="none">${circles}</svg>`;
 }
-function makeParallelRectangular(branches,label,mainPosition='top'){
+function makeParallelRectangular(branches,label,mainPosition='top',customLayout=null){
   const H=1100;
   let mainY, branchYs;
-  if(mainPosition==='middle'){
-    mainY=520;
-    branchYs = branches.length===2 ? [300,780] : [260,720,900];
+  if(customLayout){
+    mainY=customLayout.mainY;
+    branchYs=[...customLayout.branchYs];
+  }else if(branches.length===4){
+    // Les niveaux supérieurs restent suffisamment bas pour contenir
+    // l'hélice, y compris pendant sa rotation.
+    const levels=[460,565,670,775,880]; // écart constant de 105 unités
+    const mainIndex=mainPosition==='top'?0:mainPosition==='bottom'?4:2;
+    mainY=levels[mainIndex];
+    branchYs=levels.filter((_,i)=>i!==mainIndex);
+  }else if(mainPosition==='middle'){
+    if(branches.length===2){
+      mainY=650;
+      branchYs=[455,845];
+    }else{
+      mainY=650;
+      branchYs=[455,805,950];
+    }
   }else if(mainPosition==='bottom'){
     mainY=900;
-    branchYs = branches.length===2 ? [300,610] : [250,500,720];
+    branchYs=branches.length===2?[455,750]:[455,650,825];
   }else{
     mainY=190;
-    branchYs = branches.length===2 ? [500,810] : [390,610,830];
+    branchYs=branches.length===2?[500,810]:[455,650,845];
   }
 
   /* Les montants verticaux commencent exactement sur le trait horizontal le
@@ -1904,7 +1984,12 @@ function makeParallelRectangular(branches,label,mainPosition='top'){
     if(y===bottomY) return internalNodeYs[internalNodeYs.length-1];
     return y;
   }
-  const batteryTop = mainPosition==='middle' ? 36.8 : (mainPosition==='bottom' ? 73.5 : 7);
+  /* Décalage vertical de la pile synchronisé avec la hauteur réelle du fil.
+     Conserve exactement les positions précédentes pour 2 ou 3 branches dérivées. */
+  const referenceY = mainPosition==='middle' ? 520 : (mainPosition==='bottom' ? 900 : 190);
+  const referenceTop = mainPosition==='middle' ? 36.8 : (mainPosition==='bottom' ? 73.5 : 7);
+  const batteryTop = referenceTop + (mainY-referenceY)/H*100;
+  const batteryZ = customLayout && customLayout.batteryZ ? customLayout.batteryZ : 3;
 
   let wireLayers=`<svg class="wire-layer" style="z-index:1" viewBox="0 0 1363 1100" preserveAspectRatio="none">
     <path class="wire vertical-rail" d="M157 ${topY} V${bottomY}"/>
@@ -1918,7 +2003,7 @@ function makeParallelRectangular(branches,label,mainPosition='top'){
     const y=branchYs[bi], n=branch.length;
     const xs=receiverXs(n, computeBranchShift(branches, bi), mainPosition==='bottom'?2:0);
     const state=n===1?"normal":"weak";
-    const layerRank=bi+1;
+    const layerRank=(customLayout && customLayout.branchLayerRanks && customLayout.branchLayerRanks[bi]) ? customLayout.branchLayerRanks[bi] : (bi+1);
     const wireZ=2*layerRank;
     const compZ=wireZ+1;
     const propZ=wireZ+2;
@@ -1931,7 +2016,7 @@ function makeParallelRectangular(branches,label,mainPosition='top'){
         comps += lampHtml(xs[i],y,H,n===1?19:17,state,compZ)
           .replace('class="lamp-holder', `data-node-y="${nodeY}" data-line-y="${y}" class="lamp-holder branch-dipole`);
       }else{
-        comps += motorHtml(xs[i]+2,y,H,n===1?"normal":"slow",compZ,propZ)
+        comps += motorHtml(xs[i]+2,y,H,n===1?"normal":"slow",compZ,propZ,branches.length===4)
           .replace('class="component motor-body', `data-node-y="${nodeY}" data-line-y="${y}" class="component motor-body branch-dipole`)
           .replace('class="component propeller', `data-node-y="${nodeY}" data-line-y="${y}" class="component propeller branch-dipole`);
       }
@@ -1944,8 +2029,9 @@ function makeParallelRectangular(branches,label,mainPosition='top'){
   const nodes=nodesAtYs(internalNodeYs,nodeZ);
   return `<div class="real-circuit compact" style="aspect-ratio:1363/1100" data-topology="derivation" data-main-y="${mainY}" data-branch-ys="${branchYs.join(',')}" data-node-ys="${internalNodeYs.join(',')}" data-expected-nodes="${internalNodeYs.length*2}" aria-label="${label}">
   ${wireLayers}
-  <img crossorigin="anonymous" data-node-y="${branchNodeY(mainY)}" data-line-y="${mainY}" data-main-dipole="true" class="component battery branch-dipole" style="z-index:3;left:31.55%;top:${batteryTop}%;width:34.75%;height:18.5%" src="${circuitAssets.battery}" alt="Pile">${comps}${nodes}</div>`;
+  <img crossorigin="anonymous" data-node-y="${branchNodeY(mainY)}" data-line-y="${mainY}" data-main-dipole="true" class="component battery branch-dipole" style="z-index:${batteryZ};left:31.55%;top:${batteryTop}%;width:34.75%;height:18.5%" src="${circuitAssets.battery}" alt="Pile">${comps}${nodes}</div>`;
 }
+
 Object.assign(svgs,{
   type01:makeSeries(["lamp"],"Circuit en série avec une lampe"),
   type02:makeSeries(["motor"],"Circuit en série avec un moteur"),
@@ -1954,18 +2040,30 @@ Object.assign(svgs,{
   type05:makeSeries(["lamp","lamp","lamp"],"Circuit en série avec trois lampes très faiblement allumées"),
   type06:makeSeries(["motor","motor"],"Circuit en série avec deux moteurs tournant lentement"),
   type07:makeSeries(["lamp","motor","lamp"],"Circuit en série avec trois récepteurs fonctionnant très faiblement"),
-  type08:makeParallelRectangular([["lamp"],["lamp"]],"Circuit en dérivation avec deux lampes et branche principale au milieu",'middle'),
-  type09:makeParallelRectangular([["lamp"],["motor"]],"Circuit en dérivation avec une lampe, un moteur et branche principale au milieu",'middle'),
+  type08:makeParallelRectangular([["lamp"],["lamp"]],"Circuit en dérivation avec deux lampes et branche principale au milieu",'middle',{mainY:650,branchYs:[360,940]}),
+  type09:makeParallelRectangular([["lamp"],["motor"]],"Circuit en dérivation avec une lampe, un moteur et branche principale au milieu",'middle',{mainY:650,branchYs:[360,940]}),
   type10:makeParallelRectangular([["lamp"],["lamp"],["motor"]],"Circuit en dérivation avec trois branches dérivées",'top'),
   type11:makeParallelRectangular([["motor"],["lamp"],["motor"]],"Circuit en dérivation avec trois branches et deux moteurs",'top'),
   type12:makeParallelRectangular([["lamp","lamp"],["motor"]],"Circuit en dérivation avec deux lampes en série dans une branche",'top'),
   type13:makeParallelRectangular([["lamp","motor"],["lamp"]],"Circuit en dérivation avec deux récepteurs en série dans une branche",'top'),
   type14:makeParallelRectangular([["lamp"],["lamp","lamp"],["motor"]],"Circuit en dérivation avec trois branches dérivées",'top'),
-  type15:makeParallelRectangular([["lamp"],["motor"],["lamp"]],"Circuit en dérivation avec branche principale en bas",'bottom'),
-  type16:makeParallelRectangular([["motor"],["lamp","motor"]],"Circuit en dérivation avec branche principale en bas et deux branches dérivées différentes",'bottom'),
-  type17:makeParallelRectangular([["lamp","motor"],["motor"]],"Circuit en dérivation avec branche principale au milieu et trois récepteurs",'middle'),
+  type15:makeParallelRectangular([["lamp"],["motor"],["lamp"]],"Circuit en dérivation avec branche principale en bas",'bottom',{mainY:960,branchYs:[390,580,770]}),
+  type16:makeParallelRectangular([["motor"],["lamp","motor"]],"Circuit en dérivation avec branche principale en bas et deux branches dérivées différentes",'bottom',{mainY:950,branchYs:[470,710]}),
+  type17:makeParallelRectangular([["lamp","motor"],["motor"]],"Circuit en dérivation avec branche principale au milieu et trois récepteurs",'middle',{mainY:650,branchYs:[420,880]}),
   type18:makeParallelRectangular([["motor"],["lamp"],["lamp","motor"]],"Circuit en dérivation avec trois branches dérivées de compositions différentes",'top'),
-  type19:makeParallelRectangular([["lamp","lamp"],["motor"],["lamp"]],"Circuit en dérivation avec branche principale en bas et quatre récepteurs",'bottom')
+  type19:makeParallelRectangular([["lamp","lamp"],["motor"],["lamp"]],"Circuit en dérivation avec branche principale en bas et quatre récepteurs",'bottom',{mainY:970,branchYs:[385,580,775]}),
+  type20:makeSeries(["motor","lamp"],"Circuit en série avec un moteur puis une lampe"),
+  type21:makeSeries(["lamp","lamp","motor"],"Circuit en série avec deux lampes puis un moteur"),
+  type22:makeSeries(["motor","lamp","lamp"],"Circuit en série avec un moteur puis deux lampes"),
+  type23:makeSeries(["lamp","motor","motor"],"Circuit en série avec une lampe puis deux moteurs"),
+  type24:makeSeries(["motor","lamp","motor"],"Circuit en série avec un moteur, une lampe puis un moteur"),
+  type25:makeSeries(["motor","motor","lamp"],"Circuit en série avec deux moteurs puis une lampe"),
+  type26:makeSeries(["motor","motor","motor"],"Circuit en série avec trois moteurs"),
+  type27:makeSeriesFourSides("Circuit en série avec quatre récepteurs : deux lampes sur les côtés et deux moteurs en bas"),
+  type28:makeParallelRectangular([["lamp"],["motor"],["lamp","lamp"],["motor"]],"Circuit en dérivation avec quatre branches dérivées et branche principale au milieu",'middle',{mainY:660,branchYs:[320,490,830,1000],batteryZ:7,branchLayerRanks:[1,2,4,5]}),
+  type29:makeParallelRectangular([["lamp","motor"],["lamp"],["motor"]],"Circuit en dérivation avec trois branches dérivées et branche principale au milieu",'middle'),
+  type30:makeParallelRectangular([["lamp"],["motor"],["lamp","motor"],["lamp"]],"Circuit en dérivation avec quatre branches dérivées et branche principale en bas",'bottom',{mainY:960,branchYs:[320,480,640,800]}),
+  type31:makeParallelRectangular([["motor"],["lamp"],["lamp","lamp"]],"Circuit en dérivation avec trois branches dérivées et branche principale en bas",'bottom',{mainY:950,branchYs:[430,610,760]})
 });
 
 
@@ -1977,8 +2075,8 @@ Object.assign(svgs,{
    Aucun point n'est accepté à une hauteur arbitraire du montant vertical. */
 function auditTypeCircuitNodes(){
   const errors=[];
-  for(let i=8;i<=19;i++){
-    const key=`type${String(i).padStart(2,'0')}`;
+  const derivationAuditKeys=['type08','type09','type10','type11','type12','type13','type14','type15','type16','type17','type18','type19','type28','type29','type30','type31'];
+  for(const key of derivationAuditKeys){
     const html=svgs[key] || '';
     const dots=[...html.matchAll(/<circle class="node-dot" cx="(157|1139)" cy="(\d+)" r="13"\s*\/?>(?:<\/circle>)?/g)]
       .map(m=>`${m[1]},${m[2]}`);
@@ -2000,8 +2098,8 @@ function auditTypeCircuitNodes(){
 }
 function auditOrthogonalTypeCircuits(){
   const errors=[];
-  for(let i=8;i<=19;i++){
-    const key=`type${String(i).padStart(2,'0')}`;
+  const derivationAuditKeys=['type08','type09','type10','type11','type12','type13','type14','type15','type16','type17','type18','type19','type28','type29','type30','type31'];
+  for(const key of derivationAuditKeys){
     const html=svgs[key] || '';
     const paths=[...html.matchAll(/<path class="wire" d="([^"]+)"/g)].map(m=>m[1]);
     paths.forEach((d,index)=>{
@@ -2009,7 +2107,7 @@ function auditOrthogonalTypeCircuits(){
     });
   }
   if(errors.length) console.error('Audit géométrique échoué :',errors);
-  else console.info('Audit géométrique validé : type08 à type19 utilisent uniquement des montants verticaux continus et des branches dérivées horizontales.');
+  else console.info('Audit géométrique validé : tous les circuits en dérivation audités utilisent uniquement des montants verticaux continus et des branches dérivées horizontales.');
 }
 auditTypeCircuitNodes();
 auditOrthogonalTypeCircuits();
@@ -2115,11 +2213,73 @@ async function prepareCircuitAsset(img){
   img.src=await processAssetUrl(img.currentSrc || img.src, shouldTrim);
   img.classList.add('asset-ready');
 }
+/* Alignement universel des hélices sur le centre réel de l'ovale du moteur.
+   Le centre de l'ovale n'est PAS le centre du support moteur : dans le PNG
+   d'origine (1000 × 1000), il est près de (503, 334). Après détourage et
+   recadrage automatique, il se trouve vers (49,4 %, 29,4 %) de l'image.
+   Le calcul prend en compte object-fit:contain et le redimensionnement. */
+function alignMotorPropellers(root=document){
+  const circuits=[];
+  if(root.matches && root.matches('.real-circuit')) circuits.push(root);
+  circuits.push(...root.querySelectorAll('.real-circuit'));
+  for(const circuit of circuits){
+    const bodies=[...circuit.querySelectorAll('.motor-body')];
+    const props=[...circuit.querySelectorAll('.propeller')];
+    bodies.forEach((motor,i)=>{
+      const prop=props[i];
+      if(!prop || !motor.complete || !motor.naturalWidth || !motor.naturalHeight) return;
+      const circuitRect=circuit.getBoundingClientRect();
+      const motorRect=motor.getBoundingClientRect();
+      const propRect=prop.getBoundingClientRect();
+      if(!circuitRect.width || !motorRect.width || !propRect.width) return;
+
+      // Ratio exact de l'image effectivement visible avec object-fit:contain.
+      const scale=Math.min(motorRect.width/motor.naturalWidth,
+                           motorRect.height/motor.naturalHeight);
+      const imageWidth=motor.naturalWidth*scale;
+      const imageHeight=motor.naturalHeight*scale;
+      const imageLeft=motorRect.left+(motorRect.width-imageWidth)/2;
+      const imageTop=motorRect.top+(motorRect.height-imageHeight)/2;
+      // Deux référentiels selon que le PNG a été détouré (data URL) ou non.
+      const trimmed=motor.currentSrc.startsWith('data:');
+      const pivotX=trimmed ? .494 : .503;
+      const pivotY=trimmed ? .294 : .334;
+      const centerX=imageLeft+imageWidth*pivotX;
+      const centerY=imageTop+imageHeight*pivotY;
+
+      // L'image d'hélice est centrée sur son moyeu : le milieu de son cadre
+      // correspond au centre de rotation, sans changer taille ni vitesse.
+      const propWidth=prop.offsetWidth;
+      const propHeight=prop.offsetHeight;
+      prop.style.left=((centerX-circuitRect.left-propWidth/2)/circuitRect.width*100).toFixed(3)+'%';
+      prop.style.top=((centerY-circuitRect.top-propHeight/2)/circuitRect.height*100).toFixed(3)+'%';
+      prop.style.transformOrigin='50% 50%';
+    });
+  }
+}
+/* Sens de rotation propre à chaque hélice. Tirage au sort une seule fois
+   à son insertion : relancer la préparation des images ne modifie pas son sens.
+   La vitesse, l'axe et la position restent strictement inchangés. */
+function randomizePropellerDirections(root=document){
+  const propellers=[...root.querySelectorAll('.real-circuit .propeller')];
+  if(root.matches && root.matches('.real-circuit .propeller')) propellers.unshift(root);
+  propellers.forEach(prop=>{
+    if(prop.dataset.rotationDirectionAssigned) return;
+    prop.style.animationDirection=Math.random()<0.5?'normal':'reverse';
+    prop.dataset.rotationDirectionAssigned='true';
+  });
+}
 async function prepareCircuitAssets(root=document){
+  randomizePropellerDirections(root);
   const images=[...root.querySelectorAll('.real-circuit img')];
   await Promise.all(images.map(prepareCircuitAsset));
+  // Les dimensions intrinsèques deviennent fiables lorsque les PNG sont décodés.
+  await Promise.all(images.filter(i=>i.classList.contains('motor-body'))
+    .map(i=>i.decode().catch(()=>{})));
+  requestAnimationFrame(()=>alignMotorPropellers(root));
 }
 document.addEventListener('DOMContentLoaded',()=>prepareCircuitAssets(document));
+window.addEventListener('resize',()=>alignMotorPropellers(document));
 
 const questions = [
   {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type01",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
@@ -2137,6 +2297,21 @@ const questions = [
   {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type13",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
   {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type14",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
   {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type15",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type16",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type17",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type19",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type20",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type21",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type22",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type23",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type24",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type25",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type26",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type27",o:["Circuit en série","Circuit en dérivation"],a:0,e:"On observe une seule boucle : c’est un circuit en série.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type28",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type29",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type30",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
+  {cat:"type",q:"Observe ce schéma. Quel est le type de circuit ?",v:"type31",o:["Circuit en série","Circuit en dérivation"],a:1,e:"On observe plusieurs chemins entre les deux nœuds : c’est un circuit en dérivation.",r:"Reconnaître le type de circuit"},
   {cat:"vocab",q:"Comment appelle-t-on les points où le courant se sépare et se rejoint ?",o:["Les bornes","Les nœuds","Les boucles","Les générateurs"],a:1,e:"Ces points de jonction sont appelés des nœuds.",r:"Définir un nœud"},
   {cat:"vocab",q:"Une branche est une portion de circuit comprise…",o:["entre deux lampes","entre les bornes d’une pile","entre deux nœuds","dans une seule boucle"],a:2,e:"Une branche est comprise entre deux nœuds.",r:"Définir une branche"},
   {cat:"vocab",q:"Quelle branche contient toujours le générateur ?",o:["Une branche dérivée","La branche principale","La branche la plus longue","Toutes les branches"],a:1,e:"Par définition, le générateur appartient à la branche principale.",r:"Identifier la branche principale"},
@@ -2224,8 +2399,27 @@ function showSection(id){
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="exercices" && !pool.length) startQuiz();
 }
+function updateLoopButtons(){
+  const serieButton = document.getElementById("serieLoopButton");
+  const derivButton = document.getElementById("derivLoopsButton");
+  if(serieButton) serieButton.textContent = document.getElementById("serieLoop").classList.contains("visible-mark")
+    ? "👁️ Enlever la boucle" : "👁️ Afficher la boucle";
+  if(derivButton) derivButton.textContent = document.getElementById("derivLoops").classList.contains("visible-mark")
+    ? "🟢 Enlever les boucles" : "🟢 Afficher les boucles";
+}
+function updateRepereButtons(){
+  const nodesButton = document.getElementById("nodesButton");
+  const branchesButton = document.getElementById("branchesButton");
+  if(nodesButton) nodesButton.textContent = document.getElementById("nodes").classList.contains("visible-mark")
+    ? "🔴 Enlever les nœuds" : "🔴 Afficher les nœuds";
+  if(branchesButton) branchesButton.textContent = ["branchMain","branch1","branch2"].every(id =>
+    document.getElementById(id).classList.contains("visible-mark"))
+    ? "🌈 Enlever les branches" : "🌈 Afficher les branches";
+}
 function toggleMark(id){
   document.getElementById(id).classList.toggle("visible-mark");
+  if(id === "serieLoop") updateLoopButtons();
+  if(id === "nodes") updateRepereButtons();
 }
 function toggleDerivLoops(){
   const loops = document.getElementById("derivLoops");
@@ -2236,6 +2430,8 @@ function toggleDerivLoops(){
     document.getElementById(id).classList.remove("visible-mark")
   );
   loops.classList.toggle("visible-mark", willShow);
+  updateLoopButtons();
+  updateRepereButtons();
 }
 
 function showBranches(){
@@ -2246,9 +2442,11 @@ function showBranches(){
 
   // Boucles et branches ne doivent jamais être affichées simultanément.
   document.getElementById("derivLoops").classList.remove("visible-mark");
+  updateLoopButtons();
   branchIds.forEach(id =>
     document.getElementById(id).classList.toggle("visible-mark", willShow)
   );
+  updateRepereButtons();
 }
 
 let serieBrokenComponent = null;
@@ -2462,7 +2660,7 @@ function buildStructurePool(){
 
 function startQuiz(){
   const source = mode==="mix" ? questions : questions.filter(q=>q.cat===mode);
-  const maxQuestions = mode==="mix" ? 10 : mode==="type" ? Math.min(15, source.length) : Math.min(8, source.length);
+  const maxQuestions = mode==="mix" ? 10 : mode==="type" ? Math.min(10, source.length) : Math.min(8, source.length);
   pool = mode==="structure" ? buildStructurePool() : shuffle(source).slice(0, maxQuestions);
   index = 0;
   score = 0;
@@ -2901,6 +3099,23 @@ function resetBranchClicks(){
   const q=pool[index];
   render();
 }
+/* Après validation, faire apparaître automatiquement le bouton suivant
+   uniquement s'il se trouve hors de la zone visible. */
+function revealNextButton(){
+  requestAnimationFrame(()=>{
+    const btn=document.getElementById('nextBtn');
+    if(btn && getComputedStyle(btn).display!=='none'){
+      // Prévoir un espace sous le bouton et sous le cadre de correction.
+      const margeBasse = 95;
+      const basBouton = btn.getBoundingClientRect().bottom;
+      const decalage = basBouton + margeBasse - window.innerHeight;
+      if(decalage > 0){
+        window.scrollBy({top:decalage,behavior:'smooth'});
+      }
+    }
+  });
+}
+
 function completeInteractiveAnswer(ok){
   const q=pool[index];
   if(ok){score++;document.getElementById('score').textContent=score;}
@@ -2914,6 +3129,7 @@ function completeInteractiveAnswer(ok){
   }
   document.getElementById('nextBtn').style.display='block';
   document.getElementById('bar').style.width=((index+1)/pool.length*100)+'%';
+  revealNextButton();
 }
 
 function answer(i,btn){
@@ -2959,6 +3175,7 @@ function answer(i,btn){
 
   document.getElementById("nextBtn").style.display = "block";
   document.getElementById("bar").style.width = ((index+1)/pool.length*100) + "%";
+  revealNextButton();
 }
 
 function nextQuestion(){
