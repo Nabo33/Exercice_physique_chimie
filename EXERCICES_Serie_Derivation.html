@@ -2365,7 +2365,7 @@ repereCircuits.forEach(c=>{
 
   questions.push({
     cat:"repere", kind:"clickMainBranch", repereCircuit:c.v,
-    q:"Repère la branche principale : clique sur un nœud, puis sur le dipôle présent dans cette branche, puis sur l’autre nœud.",
+    q:"Repère la branche principale de ce circuit.",
     v:c.v,
     e:"La branche principale est la portion du circuit comprise entre deux nœuds et contenant le générateur. Son trajet est maintenant surligné.",
     r:"Repérer la branche principale entre deux nœuds"
@@ -2373,7 +2373,7 @@ repereCircuits.forEach(c=>{
 
   questions.push({
     cat:"repere", kind:"clickNodes", repereCircuit:c.v,
-    q:"Clique sur tous les nœuds du circuit, puis valide.",
+    q:"Clique sur tous les nœuds du circuit.",
     v:c.v,
     e:"Les nœuds sont les points du circuit où les courants se séparent ou se rejoignent. Les coins du rectangle sont juste des « virages ».",
     r:"Repérer les nœuds sur un circuit"
@@ -2381,7 +2381,7 @@ repereCircuits.forEach(c=>{
 
   questions.push({
     cat:"repere", kind:"clickBranch", repereCircuit:c.v,
-    q:"Repère une branche (n’importe laquelle). Méthode : clique sur un nœud, puis sur un dipôle de cette branche, puis sur l’autre nœud.",
+    q:"Repère une branche de ce circuit.",
     v:c.v,
     e:"Une branche est une portion de circuit comprise entre deux nœuds. Il faut donc bien savoir repérer les nœuds du circuit.",
     r:"Repérer une branche entre deux nœuds"
@@ -2683,8 +2683,8 @@ function render(){
     document.getElementById("questionArea").innerHTML = `
       ${visual}
       <div class="question">${q.q}</div>
-      <div class="click-instruction">Sélectionne les points qui te semblent être des nœuds.<div class="click-progress" id="clickProgress">0 point sélectionné</div></div>
-      <div class="action" style="justify-content:center"><button class="btn primary" onclick="validateNodeClicks()">✅ Valider mes choix</button></div>`;
+      <div class="click-progress" id="clickProgress" style="text-align:center;margin:8px 0 12px">0 point sélectionné</div>
+      <div class="action" id="nodeValidateAction" style="justify-content:center"><button class="btn primary" onclick="validateNodeClicks()">✅ Valider mes choix</button></div>`;
     prepareCircuitAssets(document.getElementById("questionArea"));
     requestAnimationFrame(setupNodeClickQuestion);
     return;
@@ -2695,8 +2695,8 @@ function render(){
     document.getElementById("questionArea").innerHTML = `
       ${visual}
       <div class="question">${q.q}</div>
-      <div class="click-instruction">1. Nœud &nbsp;→&nbsp; 2. ${targetLabel} &nbsp;→&nbsp; 3. Autre nœud<div class="click-progress" id="clickProgress">Clique d’abord sur un nœud.</div></div>
-      <div class="action" style="justify-content:center"><button class="btn" onclick="resetBranchClicks()">↩️ Recommencer la sélection</button></div>`;
+      <div class="click-instruction" id="branchMethod"><strong>Méthode :</strong> <span class="click-progress" id="clickProgress" style="display:inline">Clique d’abord sur un nœud.</span></div>
+      <div class="action" id="branchResetAction" style="justify-content:center"><button class="btn" onclick="resetBranchClicks()">↩️ Recommencer la sélection</button></div>`;
     prepareCircuitAssets(document.getElementById("questionArea"));
     requestAnimationFrame(()=>setupBranchClickQuestion(q.kind==="clickMainBranch"));
     return;
@@ -2764,6 +2764,11 @@ function validateNodeClicks(){
   const selected=clickState.selected;
   const ok=selected.size===expected.size && [...selected].every(k=>expected.has(k));
   locked=true;
+  // Après validation, la consigne de sélection et le bouton de validation disparaissent.
+  const progress=document.getElementById('clickProgress');
+  const validateAction=document.getElementById('nodeValidateAction');
+  if(progress) progress.style.display='none';
+  if(validateAction) validateAction.style.display='none';
   circuit.querySelectorAll('.click-point').forEach(c=>{
     const key=`${c.dataset.x},${c.dataset.y}`;
     c.classList.remove('selected');
@@ -2771,9 +2776,6 @@ function validateNodeClicks(){
     else if(selected.has(key)) c.classList.add('wrong');
     c.style.pointerEvents='none';
   });
-  addVisualFeedback(ok
-    ? 'Tous les nœuds sont indiqués en vert. Les autres points proposés sont de simples virages.'
-    : 'Les nœuds corrects apparaissent en vert. Les points rouges sélectionnés sont de simples virages.',ok);
   completeInteractiveAnswer(ok);
 }
 function setupBranchClickQuestion(mainOnly=false){
@@ -3075,21 +3077,20 @@ function validateBranchClicks(){
     clickState.dipoleHitbox.classList.add(ok?'correct':'wrong');
   }
   circuit.querySelectorAll('.click-point,.dipole-hitbox').forEach(c=>c.style.pointerEvents='none');
+  // Le guidage ne sert plus après la sélection : conserver seulement la correction.
+  document.getElementById('branchMethod')?.remove();
+  document.getElementById('branchResetAction')?.remove();
   if(isMainQuestion){
     if(ok){
       drawBranchFeedback(circuit,dipole,y1,true);
-      addVisualFeedback('La branche principale contenant le générateur est surlignée en vert.',true);
     }else{
       drawMainBranchCorrection(circuit,dipole,y1);
-      addVisualFeedback('La branche choisie apparaît en rouge. La véritable branche principale, qui contient le générateur, apparaît en vert.',false);
     }
   }else{
     if(ok){
       drawBranchFeedback(circuit,dipole,y1,true);
-      addVisualFeedback('La branche choisie est surlignée en vert entre ses deux nœuds.',true);
     }else{
       showAllBranchesOnCircuit(circuit);
-      addVisualFeedback('Cela ne correspond pas à une branche. Les bonnes réponses sont maintenant affichées sur le schéma.',false);
     }
   }
   completeInteractiveAnswer(ok);
@@ -3122,8 +3123,14 @@ function completeInteractiveAnswer(ok){
   else errors.push(q.r);
   const f=document.getElementById('feedback');
   f.className='feedback show '+(ok?'ok':'no');
-  if(!ok && q.kind==='clickBranch'){
-    f.innerHTML='❌ <strong>Cela ne correspond pas à une branche.</strong> ❌ Une branche est une portion de circuit comprise entre deux nœuds. Il faut donc bien savoir repérer les nœuds du circuit. Les bonnes réponses sont affichées sur le schéma.';
+  if(q.kind==='clickNodes'){
+    f.innerHTML=ok
+      ? '✅ <strong>Bonne réponse !</strong>'
+      : '❌ <strong>Réponse incorrecte.</strong> Les nœuds sont indiqués en vert.';
+  }else if(q.kind==='clickBranch' || q.kind==='clickMainBranch'){
+    f.innerHTML=ok
+      ? '✅ <strong>Bonne réponse !</strong>'
+      : '❌ <strong>Réponse incorrecte.</strong> La correction apparaît en vert sur le schéma.';
   }else{
     f.innerHTML=(ok?'✅ <strong>Bonne réponse !</strong> ':'❌ <strong>Ce repérage n’est pas correct.</strong> ')+q.e;
   }
