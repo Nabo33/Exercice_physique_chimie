@@ -684,6 +684,27 @@ header p,
   }
 }
 
+
+/* Exercice 1 : zones ancrées aux coordonnées du SVG et mises à l'échelle
+   avec le schéma. Les centres correspondent aux milieux des flèches. */
+#exo4 .schema-wrap { container-type: inline-size; }
+#exo4 .drop-zone-on-schema {
+  width: 19cqw;
+  height: 6.6cqw;
+  min-height: 0;
+  padding: 0.5cqw;
+  font-size: clamp(7px, 1.75cqw, 12px);
+  line-height: 1.12;
+  overflow-wrap: anywhere;
+  transform: translate(-50%, -50%);
+}
+/* Les bulles du haut restent au-dessus des états et des flèches ;
+   celles du bas sont sous les états, sans couvrir les flèches. */
+#exo4 #dz-fusion          { left: 31.0606%; top: 24%; }
+#exo4 #dz-solidification { left: 31.0606%; top: 75%; }
+#exo4 #dz-vaporisation    { left: 65.9091%; top: 24%; }
+#exo4 #dz-liquefaction   { left: 65.9091%; top: 75%; }
+
 </style>
 </head>
 <body>
