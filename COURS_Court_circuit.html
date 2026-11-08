@@ -159,9 +159,13 @@ h2.title{margin:0 0 16px;font-family:'Fredoka One',cursive;font-size:1.8rem;colo
 .btn:hover{transform:translateY(-2px);color:var(--bleu);background:var(--bleu-clair);border-color:var(--bleu);box-shadow:var(--ombre-forte)}
 .tip{margin-top:14px;padding:12px 15px;border-radius:14px;background:#fff8df;border-left:5px solid var(--jaune);font-weight:800;line-height:1.5}
 .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chip{padding:7px 11px;border-radius:999px;background:#fff;border:2px solid var(--border);font-size:.9rem;font-weight:800;color:var(--gris)}
-.danger-box{margin-top:24px;padding:20px 22px;border-radius:var(--radius);background:linear-gradient(135deg,#fff,var(--rouge-clair));border-left:6px solid var(--rouge);box-shadow:var(--ombre)}
-.danger-box h3{margin:0 0 8px;font-family:'Fredoka One',cursive;color:var(--rouge)}
+.danger-callout{margin:1rem 0;padding:15px 16px;border-radius:15px;background:#fff4cf;border:2px solid #e9a008;border-left:8px solid #e9a008;color:#663b00;font-weight:800;line-height:1.5;display:flex;align-items:center;gap:12px;box-shadow:0 3px 12px rgba(245,158,11,.12)}
+.danger-callout .icon{font-size:2rem;line-height:1;flex:0 0 auto}
+.danger-box{margin-top:24px;padding:22px 24px;border-radius:var(--radius);background:linear-gradient(135deg,#fff5f4,#ffe3df);border:3px solid #dc2626;border-left:9px solid #dc2626;box-shadow:0 5px 22px rgba(220,38,38,.14);position:relative}
+.danger-box::before{content:'⚠️';position:absolute;top:-16px;right:18px;font-size:2rem;background:#fff;padding:2px 8px;border-radius:999px;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.danger-box h3{margin:0 0 12px;font-family:'Fredoka One',cursive;color:#b91c1c;font-size:1.5rem}
 .danger-box p{margin:.45rem 0;line-height:1.6;font-weight:700}
+.danger-box .danger-step{padding-left:15px;margin:.5rem 0}
 .real-circuit.explore-scene{aspect-ratio:1363/1200}
 .explore-scene .battery{z-index:3;left:18.35%;top:7.90%;width:30.82%;height:17.80%}
 .explore-scene .lamp-series-holder{z-index:4;left:19.82%;width:18.20%;height:30.00%;top:17.53%}
@@ -234,6 +238,83 @@ header{
   box-shadow:0 10px 28px rgba(37,99,235,.34), 0 0 22px rgba(34,197,94,.26) !important;
 }
 
+
+/* Indication compacte réservée aux interfaces tactiles : visible sans surcharger le schéma. */
+.touch-hint{display:none}
+@media (hover:none) and (pointer:coarse){
+  .touch-hint{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    width:fit-content;max-width:100%;margin:12px auto 8px;padding:7px 12px;
+    border:1px solid #b7d3ff;border-radius:999px;
+    background:#edf5ff;color:#174ea6;
+    font-size:.86rem;font-weight:800;line-height:1.3;text-align:center;
+  }
+  .touch-hint .touch-icon{font-size:1.05rem;flex:none}
+  .touch-hint + .circuit-box{margin-top:6px}
+}
+
+/* Mise en page : circuits en série et en dérivation l’un sous l’autre,
+   y compris sur les grands écrans. Largeur limitée pour conserver
+   des schémas agréables à consulter sans étirement excessif. */
+.grid2{
+  grid-template-columns:minmax(0, 1fr);
+  width:100%;
+  max-width:none;
+  margin:0 auto 24px;
+  gap:24px;
+}
+
+/* Définition et impact général : mêmes dimensions et disposition verticale
+   que les sections sur les circuits, quelle que soit la largeur de la fenêtre. */
+.definition{
+  grid-template-columns:minmax(0, 1fr);
+  width:100%;
+  max-width:none;
+  margin:0 auto 24px;
+  gap:24px;
+}
+
+/* Illustration du danger : image compacte à gauche, explications à droite. */
+.danger-content{
+  display:grid;
+  grid-template-columns:minmax(150px, 240px) minmax(0, 1fr);
+  align-items:center;
+  gap:22px;
+  margin-top:12px;
+}
+.danger-illustration{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:240px;
+  object-fit:contain;
+  border-radius:14px;
+  box-shadow:0 4px 18px rgba(90,20,20,.17);
+}
+.danger-explanation{min-width:0}
+@media(max-width:620px){
+  .danger-content{grid-template-columns:1fr;gap:14px}
+  .danger-illustration{max-width:230px;max-height:200px;margin:0 auto}
+}
+
+
+/* Schémas compacts et centrés : les encadrés de cours gardent leur largeur. */
+.grid2 > .card > .circuit-box{
+  width:100%;
+  max-width:650px;
+  margin:12px auto;
+}
+/* Même échelle pour le circuit de la partie « Aller plus loin ». */
+.compact-plus-card .circuit-box{
+  width:100%;
+  max-width:650px;
+  margin:0 auto 12px;
+}
+/* Évite une hauteur minimale artificielle quand l'écran est très étroit. */
+@media(max-width:520px){
+  .grid2 > .card .real-circuit{min-height:0}
+}
+
 </style>
 </head>
 <body>
@@ -248,26 +329,26 @@ header{
 </nav>
 <main>
   <section class="page active" id="page-cours">
-  <h2 class="title">📚 L’essentiel à comprendre</h2>
-  <div class="intro">
-    Un court-circuit peut modifier complètement le fonctionnement d’un circuit électrique. Dans les deux schémas ci-dessous, <strong>clique sur n’importe quel dipôle</strong> pour ajouter un fil de court-circuit. Clique de nouveau dessus pour l’enlever.
-  </div>
+
 
   <section class="definition">
     <article class="card definition-card">
       <h3>🔎 Définition</h3>
-      <p><span class="key">Un dipôle est court-circuité si ses deux bornes sont reliées par un fil.</span></p>
+      <p><span class="key">Un dipôle est court-circuité si on relie ses deux bornes par un fil.</span></p>
     </article>
     <article class="card impact-card">
-      <h3>💡 Impact d’un court-circuit</h3>
-      <p><span class="key">Un récepteur court-circuité ne fonctionne plus.</span> Le courant choisit de passer par le fil plutôt que par le récepteur.</p>
+      <h3>💡 Impact général :</h3>
+      <p><span class="key">Le récepteur court-circuité ne fonctionne plus.</span></p>
+      <p><strong>Le courant circule presque entièrement par le fil et pratiquement plus du tout par le récepteur.</strong></p>
     </article>
   </section>
 
   <section class="grid2">
     <article class="card serie">
       <h3>🟣 I. Court-circuit d’un récepteur placé en série</h3>
-      <p>En court-circuitant un dipôle en série, le nombre de récepteurs en fonctionnement diminue. <strong>Le courant devient plus important dans le circuit et les appareils restant fonctionnent mieux.</strong></p>
+      <p><strong>En série, les récepteurs qui ne sont pas court-circuités fonctionnent mieux !</strong></p>
+      <p>En effet, le nombre de récepteurs en fonctionnement diminue. L’intensité du courant augmente alors dans tout le circuit et les récepteurs qui continuent de fonctionner reçoivent davantage d’énergie pendant une même durée.</p>
+      <div class="touch-hint" role="note"><span class="touch-icon" aria-hidden="true">👆</span><span>Touche un appareil pour ajouter ou retirer un court-circuit.</span></div>
       <div class="circuit-box">
         <div class="real-circuit series" id="seriesCircuit" aria-label="Circuit en série interactif avec pile, lampe et moteur">
           <svg class="wire-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
@@ -290,7 +371,7 @@ header{
           </svg>
           <img crossorigin="anonymous" class="component battery circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
           <div class="lamp-holder"><img crossorigin="anonymous" id="seriesLamp" class="lamp-on circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Lampe faiblement allumée"></div>
-          <img crossorigin="anonymous" class="component motor-body circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+          <img crossorigin="anonymous" class="component motor-body circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png" alt="Moteur">
           <img crossorigin="anonymous" id="seriesProp" class="component propeller circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice du moteur">
           <svg class="short-layer" viewBox="0 0 1363 995" preserveAspectRatio="none" aria-hidden="true">
             <path id="seriesShortBattery" class="short-wire" d="M400 202 V312 H940 V202"/>
@@ -322,8 +403,10 @@ header{
     </article>
 
     <article class="card deriv">
-      <h3>🟢 II. Court-circuit d’un récepteur en dérivation</h3>
-      <p>En court-circuitant un dipôle en dérivation, <strong>tous les récepteurs aussi en dérivation sont court-circuités et ne fonctionnent plus.</strong></p>
+      <h3>⚠️ II. Court-circuit d’un récepteur en dérivation</h3>
+      <p>Lorsqu’un récepteur est court-circuité, <strong>il ne fonctionne plus... tout comme tous les autres récepteurs placés en dérivation par rapport à lui !!</strong></p>
+      <div class="danger-callout" role="note"><span class="icon" aria-hidden="true">⚠️</span><div><strong>ATTENTION !</strong> Dans ce circuit, le court-circuit crée une boucle avec la pile, mais <strong>sans aucun récepteur</strong>.</div></div>
+      <div class="touch-hint" role="note"><span class="touch-icon" aria-hidden="true">👆</span><span>Touche un appareil pour ajouter ou retirer un court-circuit.</span></div>
       <div class="circuit-box">
         <div class="real-circuit derivation-scene" id="parallelCircuit" aria-label="Circuit en dérivation interactif avec pile, lampe et moteur">
           <svg class="wire-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none" aria-hidden="true">
@@ -353,7 +436,7 @@ header{
           </svg>
           <img crossorigin="anonymous" class="component battery circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
           <div class="lamp-holder"><img crossorigin="anonymous" id="parallelLamp" class="lamp-on circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Lampe allumée"></div>
-          <img crossorigin="anonymous" class="component motor-body circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+          <img crossorigin="anonymous" class="component motor-body circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png" alt="Moteur">
           <img crossorigin="anonymous" id="parallelProp" class="component propeller circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice du moteur">
           <svg class="short-layer" viewBox="0 0 1363 1100" preserveAspectRatio="none" aria-hidden="true">
             <path id="parallelShortBattery" class="short-wire" d="M420 196 V306 H920 V196"/>
@@ -389,13 +472,24 @@ header{
   </section>
 
   <section class="danger-box">
-    <h3>🔥 Le danger du court-circuit de la pile</h3>
-    <p>Si la pile est aussi court-circuitée et qu’il n’y a plus de récepteurs en fonctionnement, <strong>la pile se met à fournir énormément de courant et d’énergie électrique.</strong> Ce sont les câbles qui vont transformer cette énergie en chaleur, pouvant créer un départ d’incendie.</p>
+    <h3>🔥 DANGER : risque d’incendie !</h3>
+    <div class="danger-content">
+      <img class="danger-illustration" src="https://raw.githubusercontent.com/Nabo33/Images/0ae37c9435f526751c06f9c7c02a4a73ff8bd8f5/Batterie%20sombre%20et%20%C3%A9tincelles%20incandescentes.png" alt="Batterie sombre avec des étincelles incandescentes illustrant le danger d’un court-circuit" loading="lazy" decoding="async">
+      <div class="danger-explanation">
+    <p><strong><u>Règle à retenir :</u></strong></p>
+    <p><strong>Lorsqu’un court-circuit crée une boucle sans aucun récepteur alors le circuit devient dangereux.</strong></p>
+    <p><strong><u>Pourquoi ?</u></strong></p>
+    <p class="danger-step"><strong>→ Le courant et l'énergie électrique fournis par la pile deviennent très importants.</strong></p>
+    <p class="danger-step"><strong>→ Seuls dans la boucle, les câbles vont alors devoir convertir cette énergie électrique en énergie thermique (chaleur).</strong></p>
+    <p class="danger-step"><strong>→ Sans sécurités, un départ d'incendie est inévitable !</strong></p>
+      </div>
+    </div>
   </section>
   </section>
 
   <section class="page" id="page-plus">
     <article class="card plus-card compact-plus-card">
+      <div class="touch-hint" role="note"><span class="touch-icon" aria-hidden="true">👆</span><span>Touche un appareil pour ajouter ou retirer un court-circuit.</span></div>
       <div class="circuit-box">
         <div class="real-circuit explore-scene" id="exploreCircuit" aria-label="Circuit en dérivation avec pile et interrupteur dans la branche principale, une ampoule et un moteur dans une branche dérivée, et une ampoule seule dans une autre branche dérivée">
           <svg class="wire-layer" viewBox="0 0 1363 1200" preserveAspectRatio="none" aria-hidden="true">
@@ -440,7 +534,7 @@ header{
           </svg>
           <img crossorigin="anonymous" class="component battery circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png" alt="Pile">
           <div class="lamp-holder lamp-series-holder"><img crossorigin="anonymous" id="exploreLampSeries" class="lamp-on circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/e2b2475897afb8b7f78b224768ba58279686fc90/ampoule_allumee_faible.png" alt="Ampoule de la branche du milieu"></div>
-          <img crossorigin="anonymous" class="component motor-body explore-motor circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/moteur_sans_helice.png" alt="Moteur">
+          <img crossorigin="anonymous" class="component motor-body explore-motor circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png" alt="Moteur">
           <img crossorigin="anonymous" id="exploreMotorProp" class="component propeller explore-prop circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png" alt="Hélice du moteur">
           <div class="lamp-holder lamp-bottom-holder"><img crossorigin="anonymous" id="exploreLampBottom" class="lamp-on circuit-asset" src="https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/ampoule_allumee.png" alt="Ampoule de la branche du bas"></div>
           <svg class="short-layer" viewBox="0 0 1363 1200" preserveAspectRatio="none" aria-hidden="true">
@@ -567,10 +661,60 @@ async function prepareCircuitAsset(img){
   img.src=await processAssetUrl(img.currentSrc || img.src, shouldTrim);
   img.classList.add('asset-ready');
 }
+/* Moteurs repris du fichier « série et dérivation » :
+   hélices centrées sur le moyeu réel du corps du moteur (même après recadrage). */
+function alignMotorPropellers(root=document){
+  const circuits=[];
+  if(root.matches && root.matches('.real-circuit')) circuits.push(root);
+  circuits.push(...root.querySelectorAll('.real-circuit'));
+  for(const circuit of circuits){
+    const bodies=[...circuit.querySelectorAll('.motor-body')];
+    const props=[...circuit.querySelectorAll('.propeller')];
+    bodies.forEach((motor,i)=>{
+      const prop=props[i];
+      if(!prop || !motor.complete || !motor.naturalWidth || !motor.naturalHeight) return;
+      const circuitRect=circuit.getBoundingClientRect();
+      const motorRect=motor.getBoundingClientRect();
+      const propRect=prop.getBoundingClientRect();
+      if(!circuitRect.width || !motorRect.width || !propRect.width) return;
+      const scale=Math.min(motorRect.width/motor.naturalWidth,
+                           motorRect.height/motor.naturalHeight);
+      const imageWidth=motor.naturalWidth*scale;
+      const imageHeight=motor.naturalHeight*scale;
+      const imageLeft=motorRect.left+(motorRect.width-imageWidth)/2;
+      const imageTop=motorRect.top+(motorRect.height-imageHeight)/2;
+      const trimmed=motor.currentSrc.startsWith('data:');
+      const pivotX=trimmed ? .494 : .503;
+      const pivotY=trimmed ? .294 : .334;
+      const centerX=imageLeft+imageWidth*pivotX;
+      const centerY=imageTop+imageHeight*pivotY;
+      const propWidth=prop.offsetWidth;
+      const propHeight=prop.offsetHeight;
+      prop.style.left=((centerX-circuitRect.left-propWidth/2)/circuitRect.width*100).toFixed(3)+'%';
+      prop.style.top=((centerY-circuitRect.top-propHeight/2)/circuitRect.height*100).toFixed(3)+'%';
+      prop.style.transformOrigin='50% 50%';
+    });
+  }
+}
+/* Sens de rotation aléatoire et indépendant, fixé une seule fois par hélice. */
+function randomizePropellerDirections(root=document){
+  const propellers=[...root.querySelectorAll('.real-circuit .propeller')];
+  if(root.matches && root.matches('.real-circuit .propeller')) propellers.unshift(root);
+  propellers.forEach(prop=>{
+    if(prop.dataset.rotationDirectionAssigned) return;
+    prop.style.animationDirection=Math.random()<0.5?'normal':'reverse';
+    prop.dataset.rotationDirectionAssigned='true';
+  });
+}
 async function prepareCircuitAssets(root=document){
+  randomizePropellerDirections(root);
   const images=[...root.querySelectorAll('.real-circuit img')];
   await Promise.all(images.map(prepareCircuitAsset));
+  await Promise.all(images.filter(i=>i.classList.contains('motor-body'))
+    .map(i=>i.decode().catch(()=>{})));
+  requestAnimationFrame(()=>alignMotorPropellers(root));
 }
+window.addEventListener('resize',()=>alignMotorPropellers(document));
 function initTabs(){
   const tabs=[...document.querySelectorAll('.tab[data-page]')];
   const pages=[...document.querySelectorAll('.page')];
@@ -578,6 +722,7 @@ function initTabs(){
     const target='page-'+tab.dataset.page;
     tabs.forEach(t=>t.classList.toggle('active',t===tab));
     pages.forEach(page=>page.classList.toggle('active',page.id===target));
+    requestAnimationFrame(()=>alignMotorPropellers(document));
     window.scrollTo({top:0,behavior:'smooth'});
   }));
 }
@@ -832,14 +977,16 @@ function updateParallel(){
     lamp.src=ASSETS.lampOff; lamp.className='lamp-off circuit-asset asset-ready';
     setPropellerStopped(prop);
     if(s.lamp && !s.battery && !s.motor){
-      status.innerHTML=`⚠️ En court-circuitant la lampe, on crée une boucle avec un générateur mais aucun récepteur. La pile fournit beaucoup d'énergie et de courant dans cette boucle pouvant créer un départ d'incendie. Par contre, il n'y a plus aucun courant dans les autres boucles.`;
+      status.innerHTML=`⚠️ <strong>Lampe court-circuitée :</strong> la lampe et le moteur ne fonctionnent plus.`;
     }else{
       if(s.battery){
-        status.innerHTML=`⚠️ En court-circuitant les 2 appareils présents dans cette branche, on crée une boucle avec un générateur mais aucun récepteur. Cela est dangereux. Risque d'incendie !`;
+        status.innerHTML=`⚠️ <strong>Pile court-circuitée :</strong> la lampe et le moteur ne fonctionnent plus.`;
+      }else if(s.lamp && s.motor){
+        status.innerHTML=`⚠️ <strong>Lampe et moteur court-circuités :</strong> la lampe et le moteur ne fonctionnent plus.`;
       }else if(s.lamp){
-        status.innerHTML=`⚠️ En court-circuitant la lampe, on crée une boucle avec un générateur mais aucun récepteur. La pile fournit beaucoup d'énergie et de courant dans cette boucle pouvant créer un départ d'incendie. Par contre, il n'y a plus aucun courant dans les autres boucles.`;
+        status.innerHTML=`⚠️ <strong>Lampe court-circuitée :</strong> la lampe et le moteur ne fonctionnent plus.`;
       }else{
-        status.innerHTML=`⚠️ En court-circuitant le moteur, on crée une boucle avec un générateur mais aucun récepteur. La pile fournit beaucoup d'énergie et de courant dans cette boucle pouvant créer un départ d'incendie. Par contre, il n'y a plus aucun courant dans les autres boucles.`;
+        status.innerHTML=`⚠️ <strong>Moteur court-circuité :</strong> le moteur et la lampe ne fonctionnent plus.`;
       }
     }
   }else{
