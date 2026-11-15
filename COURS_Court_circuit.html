@@ -181,7 +181,7 @@ h2.title{margin:0 0 16px;font-family:'Fredoka One',cursive;font-size:1.8rem;colo
 .real-circuit .switch-line{fill:none;stroke:#000;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
 .real-circuit .switch-contact{fill:#fff;stroke:#000;stroke-width:8}
 .plus-card{border-top-color:var(--cyan)}
-.compact-plus-card{max-width:820px;margin:0 auto;padding:16px 16px 18px}
+.compact-plus-card{width:100%;max-width:none;margin:0 auto;padding:16px 16px 18px}
 .compact-plus-card .circuit-box{max-width:720px;margin:0 auto 12px;padding:8px}
 .compact-plus-card .real-circuit{min-height:0}
 @media(max-width:850px){.definition,.grid2{grid-template-columns:1fr}.real-circuit{min-height:270px}}
@@ -317,7 +317,7 @@ header{
 
 
 /* Exercices : schémas simples, corrections progressives */
-.exercise-shell{max-width:800px;margin:auto}.exercise-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.exercise-shell{width:100%;max-width:none;margin:auto}.exercise-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
 .exercise-steps{font-weight:900;color:#334155}.exercise-progress{font-weight:900;color:#1d4ed8}
 .exercise-question{margin:6px 0 10px;font-size:1.12rem;font-weight:900;line-height:1.5}
 .exercise-diagram{max-width:540px;margin:8px auto;padding:8px;border:2px solid var(--border);border-radius:16px;background:#fff}
@@ -803,6 +803,14 @@ function initTabs(){
   const tabs=[...document.querySelectorAll('.tab[data-page]')];
   const pages=[...document.querySelectorAll('.page')];
   tabs.forEach(tab=>tab.addEventListener('click',()=>{
+    // Chaque clic sur « Aller plus loin », même si l'onglet est déjà actif,
+    // remet le circuit à son état initial (aucun court-circuit).
+    if(tab.dataset.page==='plus') resetCircuit('explore');
+    // Chaque clic sur « Cours » restaure les deux circuits pédagogiques.
+    if(tab.dataset.page==='cours'){
+      resetCircuit('series');
+      resetCircuit('parallel');
+    }
     const target='page-'+tab.dataset.page;
     tabs.forEach(t=>t.classList.toggle('active',t===tab));
     pages.forEach(page=>page.classList.toggle('active',page.id===target));
