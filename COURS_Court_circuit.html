@@ -315,6 +315,69 @@ header{
   .grid2 > .card .real-circuit{min-height:0}
 }
 
+
+/* Exercices : schémas simples, corrections progressives */
+.exercise-shell{max-width:800px;margin:auto}.exercise-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.exercise-steps{font-weight:900;color:#334155}.exercise-progress{font-weight:900;color:#1d4ed8}
+.exercise-question{margin:6px 0 10px;font-size:1.12rem;font-weight:900;line-height:1.5}
+.exercise-diagram{max-width:540px;margin:8px auto;padding:8px;border:2px solid var(--border);border-radius:16px;background:#fff}
+.exercise-diagram svg{width:100%;height:auto;display:block;max-height:265px}
+.exercise-diagram.is-corrected{border-color:#86d9ab;background:#fff}
+.exercise-diagram .ex-rotor{transform-box:view-box;animation:propellerRotation var(--spin-speed,1.25s) linear infinite;transform-origin:var(--cx) var(--cy)}
+.exercise-diagram svg.illustrated-exercise{max-height:390px;max-width:510px;margin:auto}
+.exercise-diagram.is-corrected{max-width:980px}
+.exercise-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.exercise-compare-panel{padding:8px;border:2px solid #dbe3f2;border-radius:14px;background:#fff}
+.exercise-compare-title{margin:0 0 8px;text-align:center;font-size:.96rem;font-weight:900;color:#334155}
+.exercise-diagram .ex-rotor.stopped{animation:none}
+.exercise-diagram .ex-illus-wire{stroke:#171717;stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.exercise-diagram .ex-photo{image-rendering:auto}
+.exercise-diagram .ex-short-illustrated{stroke:#d8223f;stroke-width:9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.exercise-diagram .ex-current-arrow{fill:none;stroke:#ff0000;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+.exercise-diagram .ex-led-symbol{fill:none;stroke:#111827;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.exercise-diagram .ex-led-rays{fill:none;stroke:#111827;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.exercise-wire{stroke:#111827;stroke-width:5;fill:none;stroke-linecap:square;stroke-linejoin:miter}
+.exercise-short{stroke:#e11d48;stroke-width:5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.exercise-dipole{stroke:#111827;stroke-width:3;fill:white}.exercise-dipole-text{font:800 15px Nunito,sans-serif;fill:#111827;text-anchor:middle;dominant-baseline:middle}
+.exercise-dipole-label{font:800 14px Nunito,sans-serif;fill:#334155;text-anchor:middle}
+.exercise-options{display:block;margin:12px 0 18px}
+.exercise-choice{margin:0;padding:0;border:0;background:transparent}
+.exercise-choice strong{display:inline}.exercise-choice select{font:800 .98rem Nunito,sans-serif;max-width:100%;padding:7px 30px 7px 10px;margin:3px 4px;border:2px solid #cbd5e1;border-radius:9px;background:#fff;color:#111827;vertical-align:middle}.exercise-sentence{font-size:1.08rem;font-weight:750;line-height:2.5;margin:0}.exercise-sentence select:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}.exercise-sentence select:disabled{opacity:1;color:#111827;background:#f8fafc}.exercise-sentence select.correct{border-color:#16a34a;background:#f0fdf4}.exercise-sentence select.incorrect{border-color:#dc2626;background:#fff1f2}
+.exercise-inline-mark{margin-left:8px;font-weight:900;white-space:nowrap}.exercise-inline-mark.ok{color:#15803d}.exercise-inline-mark.wrong{color:#dc2626}.exercise-inline-correction{display:inline;margin-left:8px;color:#991b1b;font-weight:850;line-height:1.5}.exercise-feedback{padding:10px 14px;border-radius:13px;border:2px solid #b8d7ff;background:#f0f7ff;line-height:1.6;font-weight:750;margin:16px 0}
+.exercise-feedback.good{border-color:#86d9ab;background:#ecfdf3}.exercise-feedback.bad{border-color:#f0b1a9;background:#fff0ee}
+.exercise-results{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:15px 0}.exercise-device{width:135px;text-align:center;border:2px solid #e2e8f0;border-radius:14px;padding:8px;background:white;font-weight:850}
+.exercise-device img{width:75px;height:75px;object-fit:contain}.exercise-device small{display:block;font-size:.8rem;min-height:2em}
+.exercise-motor-icon{font-size:2.5rem;display:block;margin:8px}.exercise-motor-icon.spin{animation:propellerRotation .9s linear infinite}
+.exercise-warning{font-weight:900;color:#b91c1c}.exercise-hidden{display:none!important}
+@media(max-width:560px){.exercise-diagram svg{max-height:none}.exercise-sentence{line-height:2.25}.exercise-choice select{font-size:.91rem}.exercise-compare{grid-template-columns:1fr}}
+
+
+/* Réponses en un clic : chaque choix complète une phrase. */
+.exercise-sentence{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;margin:8px 0 16px;line-height:1.5;font-size:1rem}
+.exercise-subject{font-weight:900;white-space:nowrap;min-width:92px}
+.exercise-answer-group{display:flex;flex:1 1 490px;gap:6px;flex-wrap:wrap}
+.exercise-answer-btn{flex:1 1 140px;min-height:44px;padding:8px 10px;border:2px solid #dbe3f2;border-radius:12px;background:#fff;color:#334155;font:800 .92rem 'Nunito',sans-serif;cursor:pointer;transition:background .15s,border-color .15s;line-height:1.3}
+.exercise-answer-btn:hover:not(:disabled){border-color:#1a73e8;background:#eef5ff}
+.exercise-answer-btn.selected{border-color:#1a73e8;background:#e8f0fe;color:#174ea6;box-shadow:inset 0 0 0 1px #1a73e8}
+.exercise-answer-btn:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}
+.exercise-answer-btn:disabled{cursor:default;opacity:1}
+.exercise-answer-btn.selected.correct{background:#ecfdf3;color:#166534;border-color:#16a34a}
+.exercise-answer-btn.selected.incorrect{background:#fff0ee;color:#991b1b;border-color:#dc2626}
+.exercise-inline-mark{margin-left:2px}.exercise-inline-correction{margin-left:0}
+@media(max-width:560px){.exercise-answer-group{flex-basis:100%}.exercise-answer-btn{flex:1 1 110px;font-size:.82rem;padding:8px 5px}}
+
+/* Navigation libre : chaque exercice peut être ouvert séparément. */
+.exercise-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 18px}
+.exercise-picker-button{display:flex;align-items:center;gap:9px;text-align:left;min-width:0;padding:12px;border:2px solid var(--border);border-radius:14px;background:#fff;color:var(--texte);font:800 .9rem Nunito,sans-serif;cursor:pointer;transition:background .15s,border-color .15s}
+.exercise-picker-button:hover{border-color:var(--bleu);background:var(--bleu-clair)}
+.exercise-picker-button.active{border-color:var(--bleu);background:var(--bleu-clair);color:#174ea6}
+.exercise-picker-number{display:grid;place-items:center;flex:0 0 29px;height:29px;border-radius:50%;background:#e9eef8;color:#26354f;font-weight:900}
+.exercise-picker-button.active .exercise-picker-number{background:var(--bleu);color:white}
+.exercise-picker-button.completed:not(.active){border-color:#89d5a8}
+.exercise-picker-button.completed:not(.active) .exercise-picker-number{background:#dcfce7;color:#166534}
+.exercise-picker-button span:last-child{min-width:0}
+@media(max-width:680px){.exercise-picker{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:390px){.exercise-picker{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -326,6 +389,7 @@ header{
 <nav class="tabs" aria-label="Navigation du cours">
   <button class="tab active" data-page="cours">📘 Cours</button>
   <button class="tab" data-page="plus">🚀 Aller plus loin</button>
+  <button class="tab" data-page="exercices">🧩 Exercices</button>
 </nav>
 <main>
   <section class="page active" id="page-cours">
@@ -579,6 +643,26 @@ header{
       <div class="status" id="exploreStatus">Aucun court-circuit : dans la branche du milieu, l’ampoule brille faiblement et le moteur tourne lentement, tandis que l’ampoule seule de l’autre branche brille normalement.</div>
     </article>
   </section>
+
+<section class="page" id="page-exercices">
+  <div class="exercise-shell">
+    <h2 class="title">🧩 Exercices</h2>
+    <p class="intro">Prévois le fonctionnement des récepteurs avant et après un court-circuit.</p>
+    <div class="exercise-picker" id="exercisePicker" role="group" aria-label="Choisir un exercice"></div>
+    <article class="card">
+      <div class="exercise-head"><span id="exerciseCount" class="exercise-progress"></span><span id="exerciseStep" class="exercise-steps"></span></div>
+      <h3 id="exerciseTitle" class="exercise-hidden"></h3>
+      <p class="exercise-question" id="exerciseQuestion"></p>
+      <div class="exercise-diagram" id="exerciseDiagram" role="img" aria-label="Schéma électrique de l'exercice"></div>
+      <div class="exercise-options" id="exerciseOptions"></div>
+      <div class="actions"><button type="button" class="btn" id="exerciseValidate">✅ Vérifier mes réponses</button></div>
+      <div id="exerciseFeedback" class="exercise-feedback exercise-hidden" aria-live="polite"></div>
+      <div class="actions"><button type="button" class="btn exercise-hidden" id="exerciseNext">➡️ Exercice suivant</button></div>
+      <div id="exerciseResults" class="exercise-results exercise-hidden"></div>
+    </article>
+    <div class="actions"><button type="button" class="btn" id="exerciseRestart">↻ Recommencer cet exercice</button></div>
+  </div>
+</section>
 </main>
 <script>
 const ASSETS={
@@ -1048,6 +1132,376 @@ function resetCircuit(c){
   Object.keys(state[c]).forEach(p=>state[c][p]=false);update(c);
 }
 update('series');update('parallel');update('explore');
+
+/* Exercices en deux temps : prévision sans court-circuit, puis avec court-circuit. */
+const EX_LED={
+ off:'https://raw.githubusercontent.com/Nabo33/Images/6b7a14d3954e9f197c17e68dc5b7cdcd122289a8/DEL%20%C3%A9teinte.png',
+ bright:'https://raw.githubusercontent.com/Nabo33/Images/6b7a14d3954e9f197c17e68dc5b7cdcd122289a8/DEL_bien%20allumee.png',
+ weak:'https://raw.githubusercontent.com/Nabo33/Images/6b7a14d3954e9f197c17e68dc5b7cdcd122289a8/DEL_un%20peu%20allumee.png'
+};
+const EXERCISES=[
+ {title:'Deux récepteurs en série',topology:'series',devices:[['A','Lampe','lamp'],['B','Moteur','motor']],short:'A',
+  before:['weak','weak'],after:['off','bright'],explanation:'Le courant contourne l’ampoule en passant dans le fil du court-circuit. Il n’y a donc plus qu’un seul récepteur en fonctionnement au lieu de 2. Le moteur tourne donc plus vite car il reçoit plus d’énergie et de courant.'},
+ {title:'DEL bloquante, lampe et moteur',topology:'series3',devices:[['A','DEL','led','blocked'],['B','Lampe','lamp'],['C','Moteur','motor']],short:'A',
+  before:['off','off','off'],after:['off','weak','weak'],explanation:'Au départ, la DEL est en sens bloquant : le courant ne peut pas circuler dans le circuit. La DEL ne brille pas, la lampe ne brille pas et le moteur ne tourne pas. Quand on court-circuite la DEL, le courant la contourne en passant dans le fil du court-circuit. Il peut alors circuler dans le reste du circuit : la lampe brille faiblement et le moteur tourne lentement.'},
+ {title:'Deux récepteurs en dérivation',topology:'parallel',devices:[['A','Lampe','lamp'],['B','Moteur','motor']],short:'A',
+  before:['bright','bright'],after:['off','off'],danger:true,explanation:"En court-circuitant l’ampoule, on court-circuite aussi le moteur et on crée une boucle sans aucun récepteur. La pile est donc elle aussi court-circuitée ! Le circuit devient dangereux : risque d’incendie."},
+ {title:'Deux branches dérivées',topology:'parallel',devices:[['A','DEL','led'],['B','Lampe','lamp']],short:'B',
+  before:['bright','bright'],after:['off','off'],danger:true,explanation:'Le fil du court-circuit relie directement les deux nœuds. Le courant passe alors presque entièrement par ce fil. La lampe et la DEL ne fonctionnent plus. On crée une boucle avec la pile mais sans aucun récepteur : le circuit devient dangereux, avec un risque d’incendie.'},
+ {title:'Une branche avec deux récepteurs',topology:'mixed',devices:[['A','Lampe','lamp'],['B','Moteur','motor'],['C','DEL','led']],short:'A',
+  before:['weak','weak','bright'],after:['off','bright','bright'],explanation:'Le courant contourne la lampe en passant par le fil du court-circuit. Dans cette branche, il n’y a donc plus qu’un seul récepteur en fonctionnement : le moteur. Il reçoit alors plus de courant et tourne plus vite. La DEL, située dans l’autre branche, continue de briller normalement.'},
+ {title:'Une autre branche court-circuitée',topology:'mixed',devices:[['A','DEL','led'],['B','Moteur','motor'],['C','Lampe','lamp']],short:'C',
+  before:['weak','weak','bright'],after:['off','off','off'],danger:true,explanation:'Le courant passe presque entièrement dans le fil qui court-circuite la lampe. Ce fil relie directement les deux nœuds : la DEL, le moteur et la lampe ne fonctionnent plus. On crée alors une boucle avec la pile mais sans aucun récepteur. Le circuit devient dangereux : risque d’incendie.'}
+];
+// Formulations adaptées au récepteur, pour des phrases naturelles.
+const EX_STATUS={
+ lamp:{off:'ne brille pas',weak:'brille faiblement',bright:'brille normalement'},
+ led:{off:'ne brille pas',weak:'brille faiblement',bright:'brille normalement'},
+ motor:{off:'ne tourne pas',weak:'tourne lentement',bright:'tourne normalement'}
+};
+function exStatusText(type,status){return EX_STATUS[type][status];}
+let exIndex=0,exStage=0,exAnswered=false;
+const exCompleted=new Set();
+function exRenderPicker(){
+ const picker=document.getElementById('exercisePicker');
+ picker.innerHTML=EXERCISES.map((ex,i)=>`<button type="button" class="exercise-picker-button ${i===exIndex?'active':''} ${exCompleted.has(i)?'completed':''}" data-ex-index="${i}" aria-pressed="${i===exIndex}"><span class="exercise-picker-number">${exCompleted.has(i)?'✓':i+1}</span><span>${ex.title}</span></button>`).join('');
+}
+function exSelect(i){
+ exIndex=i;exStage=0;exShow();
+ document.getElementById('exerciseQuestion').scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+document.getElementById('exercisePicker').addEventListener('click',e=>{
+ const button=e.target.closest('[data-ex-index]');
+ if(button)exSelect(Number(button.dataset.exIndex));
+});
+function exSvgDevice(d,x,y){
+ const type=d[2];
+ if(type==='lamp')return `<circle class="exercise-dipole" cx="${x}" cy="${y}" r="20"/><path d="M${x-13} ${y-13}l26 26 m0 -26 l-26 26" stroke="#111827" stroke-width="2.8" fill="none"/>`;
+ if(type==='motor')return `<circle class="exercise-dipole" cx="${x}" cy="${y}" r="20"/><text class="exercise-dipole-text" x="${x}" y="${y+1}">M</text>`;
+ // DEL horizontale passante : triangle dirigé vers la cathode, barre à droite.
+ // Les deux extrémités rejoignent exactement les fils (x−20 et x+20).
+ return `<g aria-label="DEL en sens passant">
+  <path d="M${x-20} ${y-18}L${x-20} ${y+18}L${x+12} ${y}Z" fill="white" stroke="#111827" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M${x+12} ${y-20}V${y+20}M${x+12} ${y}H${x+20}" stroke="#111827" stroke-width="3" fill="none"/>
+  <path d="M${x+16} ${y-23}l14 -14 m-6 0h6v6 M${x+23} ${y-15}l14 -14 m-6 0h6v6" fill="none" stroke="#111827" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+ </g>`;
+}
+function exSvg(){
+ const ex=EXERCISES[exIndex],short=exStage===1;
+ let out='<svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+ const wire=d=>`<path class="exercise-wire" d="${d}"/>`;
+ const bypass=(x,y)=>`<path class="exercise-short" d="M${x-37} ${y}V${y+30}H${x+37}V${y}"/>`;
+ const left=65,right=455,top=48,bottom=192;
+ out+=wire(`M${left} ${top}H250 M268 ${top}H${right}`);
+ out+=`<path d="M250 27V69 M268 35V61" stroke="#111827" stroke-width="4" stroke-linecap="square"/><text x="240" y="24" font-size="17" font-weight="900" fill="#111827" text-anchor="middle">+</text><text x="280" y="24" font-size="17" font-weight="900" fill="#111827" text-anchor="middle">−</text>`;
+ if(ex.topology==='series'){
+  const y=bottom,xs=[188,334];
+  out+=wire(`M${left} ${top}V${y}H${xs[0]-20} M${xs[0]+20} ${y}H${xs[1]-20} M${xs[1]+20} ${y}H${right}V${top}`);
+  ex.devices.forEach((d,i)=>{out+=exSvgDevice(d,xs[i],y);if(short&&d[0]===ex.short)out+=bypass(xs[i],y)});
+ }else if(ex.topology==='series3'){
+  const midY=120, midX=260;
+  out+=wire(`M${left} ${top}V105 M${left} 136V${bottom}H${midX-20} M${midX+20} ${bottom}H${right}V140 M${right} 100V${top}`);
+  // DEL bloquante : cathode (barre) EN HAUT, pointe du triangle vers le HAUT.
+  // Le courant conventionnel irait du haut vers le bas : la DEL l'empêche.
+  // Les raccordements arrivent au milieu de la barre et de la base du triangle.
+  out+=`<g aria-label="DEL en sens bloquant">
+   <path d="M${left-18} 105H${left+18}" stroke="#111827" stroke-width="3.5" fill="none" stroke-linecap="square"/>
+   <path d="M${left-16} 136L${left+16} 136L${left} 105Z" stroke="#111827" stroke-width="3" fill="white" stroke-linejoin="round"/>
+   <path d="M${left+21} 114l14 -14 m-6 0h6v6 M${left+26} 130l14 -14 m-6 0h6v6" stroke="#111827" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>`;
+  out+=exSvgDevice(ex.devices[1],midX,bottom);
+  out+=exSvgDevice(ex.devices[2],right,120);
+  if(short) out+=`<path class="exercise-short" d="M${left} 90H${left-38}V150H${left}"/>`;
+ }else{
+  const ys=[130,211];
+  out+=wire(`M${left} ${top}V${ys[1]} M${right} ${top}V${ys[1]}`);
+  if(ex.topology==='parallel'){
+   ex.devices.forEach((d,i)=>{const y=ys[i],x=260;out+=wire(`M${left} ${y}H${x-20} M${x+20} ${y}H${right}`)+exSvgDevice(d,x,y);if(short&&d[0]===ex.short)out+=bypass(x,y)});
+  }else{
+   const coords=[[190,ys[0]],[332,ys[0]],[260,ys[1]]];
+   out+=wire(`M${left} ${ys[0]}H170 M210 ${ys[0]}H312 M352 ${ys[0]}H${right} M${left} ${ys[1]}H240 M280 ${ys[1]}H${right}`);
+   ex.devices.forEach((d,i)=>{const [x,y]=coords[i];out+=exSvgDevice(d,x,y);if(short&&d[0]===ex.short)out+=bypass(x,y)});
+  }
+  out+=`<circle cx="${left}" cy="${ys[0]}" r="5" fill="#111827"/><circle cx="${right}" cy="${ys[0]}" r="5" fill="#111827"/>`;
+ }
+ return out+'</svg>';
+}
+/* Au moment de la correction, le schéma devient un circuit illustré.
+   Les images et les vitesses sont celles du cours interactif. */
+const EX_BATTERY='https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/pile_energizer.png';
+const EX_MOTOR='https://raw.githubusercontent.com/Nabo33/Images/1f2e92fc6ac1ce0b2151fafffa4d9548d008002f/moteur_sans_helice%203.png';
+const EX_PROPELLER='https://raw.githubusercontent.com/Nabo33/Images/fbc9148a508dfd62a42ff1a2a55209e0aac59496/helice_moteur.png';
+/* Correction illustrée : mêmes repères et mêmes proportions que le fichier de référence. */
+function exPhoto(url,x,y,w,h,extra=''){
+ return `<image href="${url}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" preserveAspectRatio="xMidYMid meet" ${extra.includes('class=')?extra:`class="ex-photo" ${extra}`}/>`;
+}
+function exBox(url,left,top,width,height,canvasHeight,extra=''){
+ return exPhoto(url,left*13.63,top*canvasHeight/100,width*13.63,height*canvasHeight/100,extra);
+}
+function exIllustratedDevice(device,status,position,canvasHeight){
+ const type=device[2];
+ const lampUrl=status==='off'?ASSETS.lampOff:status==='weak'?ASSETS.lampWeak:ASSETS.lampOn;
+ if(type==='lamp' || type==='led'){
+  const url=type==='lamp'?lampUrl:EX_LED[status==='off'?'off':status==='weak'?'weak':'bright'];
+  const size=status==='off'&&type==='lamp'?.84:status==='weak'&&type==='lamp'?.95:1;
+  const [l,t,w,h]=Array.isArray(position)?position:position.lamp;
+  // Garder un socle à la même hauteur même lorsque l'ampoule est éteinte.
+  return exBox(url,l+(w-w*size)/2,t+h-h*size,w*size,h*size,canvasHeight);
+ }
+ const [l,t,w,h]=position.body;
+ const [pl,pt,pw,ph]=position.rotor;
+ const body=exBox(EX_MOTOR,l,t,w,h,canvasHeight,'class="ex-photo ex-motor-body"');
+ // Les coordonnées de l’hélice sont celles du modèle, puis son centre exact
+ // sera recalé sur l’axe du moteur après recadrage des images.
+ const x=(pl+pw/2)*13.63,y=(pt+ph/2)*canvasHeight/100;
+ const speed=status==='weak'?'1.65s':'.82s';
+ const rotor=exBox(EX_PROPELLER,pl,pt,pw,ph,canvasHeight,
+  `class="ex-photo ex-rotor ${status==='off'?'stopped':''}" data-spin="${speed}" style="--spin-speed:${speed};--cx:${x}px;--cy:${y}px"`);
+ return body+rotor;
+}
+function exIllustratedSvg(ex,states,showShort=false,ariaLabel='Circuit illustré montrant le fonctionnement des récepteurs'){
+ const kind=ex.topology;
+ const H=kind==='parallel'?1100:kind==='mixed'?1200:995;
+ const wire=d=>`<path class="ex-illus-wire" d="${d}"/>`;
+ const bypass=d=>`<path class="ex-short-illustrated" d="${d}"/>`;
+ const arrow=d=>`<path class="ex-current-arrow" d="${d}"/>`;
+ // Les pointes indiquent le sens conventionnel du courant extérieur : + vers −.
+ const hArrow=(x,y,dir='right')=>dir==='right'?arrow(`M${x-16} ${y-12}L${x} ${y}L${x-16} ${y+12}`):arrow(`M${x+16} ${y-12}L${x} ${y}L${x+16} ${y+12}`);
+ const vArrow=(x,y,dir='down')=>dir==='down'?arrow(`M${x-12} ${y-16}L${x} ${y}L${x+12} ${y-16}`):arrow(`M${x-12} ${y+16}L${x} ${y}L${x+12} ${y+16}`);
+ let out=`<svg class="illustrated-exercise" viewBox="0 0 1363 ${H}" xmlns="http://www.w3.org/2000/svg" aria-label="${ariaLabel}">`;
+ let wires='',images='',shorts='',currents='';
+ if(kind==='series'){
+  wires=wire('M157 202 H431 M898 202 H1139 V817 H157 V202');
+  images+=exBox(EX_BATTERY,31.55,9.45,34.75,20.55,H);
+  const positions=[[18.65,49.30,21.85,38.15],{body:[56.65,50.70,17.25,37.25],rotor:[51.55,41.55,27.15,40.65],lamp:[56.5,49.30,21.85,38.15]}];
+  ex.devices.forEach((d,i)=>images+=exIllustratedDevice(d,states[i],positions[i],H));
+  if(showShort){const i=ex.devices.findIndex(d=>d[0]===ex.short);shorts+=bypass(i===0?'M220 817 V915 H555 V817':'M700 817 V915 H1015 V817');}
+ }else if(kind==='series3'){
+  wires=wire('M157 202 H431 M898 202 H1139 V817 H157 V570 M157 440V202');
+  images+=exBox(EX_BATTERY,31.55,9.45,34.75,20.55,H);
+  // Feedback final : utiliser l'image de la DEL (éteinte) et non son symbole.
+  // Elle reste éteinte avant et après, car le courant la contourne lors du court-circuit.
+  images+=exPhoto(EX_LED.off,22,337,270,335,'class="ex-photo"');
+  images+=exIllustratedDevice(ex.devices[1],states[1],[18.65,49.30,21.85,38.15],H);
+  images+=exIllustratedDevice(ex.devices[2],states[2],{body:[56.65,50.70,17.25,37.25],rotor:[51.55,41.55,27.15,40.65],lamp:[56.5,49.30,21.85,38.15]},H);
+  // Le fil contourne l'image de la DEL par la gauche, avec des portions horizontales au-dessus et au-dessous de l'image.
+  if(showShort) shorts+=bypass('M157 315 H8 V695 H157');
+ }else if(kind==='parallel'){
+  wires=wire('M157 520 V196 H453 M883 196 H1139 V520 M157 520 H1139 M157 520 V885 H1139 V520');
+  images+=exBox(EX_BATTERY,31.55,8.45,34.75,18.65,H);
+  const positions=[[17.73,17.59,21.85,34.51],{body:[58.10,55,15.40,31.40],rotor:[52.70,46.20,25.80,38.50],lamp:[56.5,50.77,21.85,34.51]}];
+  ex.devices.forEach((d,i)=>images+=exIllustratedDevice(d,states[i],positions[i],H));
+  if(showShort){const i=ex.devices.findIndex(d=>d[0]===ex.short);shorts+=bypass(i===0?'M210 520 V650 H570 V520':'M690 885 V1010 H1015 V885');}
+  images+='<circle cx="157" cy="520" r="13" fill="#111827"/><circle cx="1139" cy="520" r="13" fill="#111827"/>';
+ }else{
+  wires=wire('M157 520 V196 H250 M670 196 H1139 V520 M157 520 H1139 M157 520 V885 H1139 V520');
+  images+=exBox(EX_BATTERY,18.35,7.90,30.82,17.80,H);
+  const positions=[[19.82,17.53,18.20,30],{body:[58.10,16.96,15.40,31.40],rotor:[52.70,8.16,25.80,38.50]},[40.57,47.95,18.20,30]];
+  ex.devices.forEach((d,i)=>images+=exIllustratedDevice(d,states[i],positions[i],H));
+  if(showShort){const i=ex.devices.findIndex(d=>d[0]===ex.short);shorts+=bypass(['M255 520 V650 H520 V520','M690 520 V650 H1040 V520','M540 885 V1015 H803 V885'][i]);}
+  images+='<circle cx="157" cy="520" r="13" fill="#111827"/><circle cx="1139" cy="520" r="13" fill="#111827"/>';
+ }
+ // Les flèches sont placées uniquement sur les fils.
+ // Règle retenue : une flèche entre chaque dipôle, une flèche entre un dipôle et un nœud,
+ // et 3 flèches dans chaque court-circuit pour montrer clairement que le courant évite le dipôle.
+ if(kind==='series'){
+  currents+=hArrow(300,202,'left')+vArrow(157,520,'down')+
+   hArrow(635,817,'right')+vArrow(1139,510,'up');
+  if(showShort && ex.short==='A')currents+=vArrow(220,895,'down')+hArrow(385,915,'right')+vArrow(555,895,'up');
+  if(showShort && ex.short==='B')currents+=vArrow(700,895,'down')+hArrow(850,915,'right')+vArrow(1015,895,'up');
+ }else if(kind==='series3'){
+  // Avant le court-circuit, la DEL est bloquante : aucun courant.
+  if(showShort){
+   currents+=hArrow(300,202,'left')+
+    hArrow(95,315,'left')+vArrow(8,510,'down')+hArrow(110,695,'right')+
+    vArrow(157,745,'down')+hArrow(625,817,'right')+vArrow(1139,510,'up');
+  }
+ }else if(kind==='parallel'){
+  currents+=hArrow(300,196,'left')+vArrow(157,365,'down')+vArrow(1139,355,'up');
+  if(!showShort){
+   // Branche de la lampe : nœud -> dipôle -> nœud.
+   currents+=hArrow(200,520,'right')+hArrow(650,520,'right');
+   // Branche du moteur : nœud -> dipôle -> nœud.
+   currents+=vArrow(157,690,'down')+hArrow(465,885,'right')+hArrow(1080,885,'right')+vArrow(1139,690,'up');
+  }else if(ex.short==='A'){
+   // Boucle de court-circuit sur la branche de la lampe : 3 flèches dans le court-circuit.
+   currents+=hArrow(120,520,'right')+vArrow(210,600,'down')+hArrow(380,650,'right')+vArrow(570,600,'up')+hArrow(800,520,'right');
+  }else{
+   // Branche basse court-circuitée ; branche haute inactive.
+   currents+=vArrow(157,690,'down')+hArrow(470,885,'right')+
+    vArrow(690,955,'down')+hArrow(850,1010,'right')+vArrow(1015,955,'up')+
+    hArrow(1080,885,'right')+vArrow(1139,690,'up');
+  }
+ }else{
+  currents+=hArrow(205,196,'left')+vArrow(157,355,'down')+vArrow(1139,355,'up');
+  if(showShort && ex.short==='C'){
+   // Seule la branche basse est parcourue : nœud -> court-circuit -> nœud.
+   currents+=vArrow(157,690,'down')+hArrow(390,885,'right')+
+    vArrow(540,970,'down')+hArrow(670,1015,'right')+vArrow(803,970,'up')+
+    hArrow(980,885,'right')+vArrow(1139,690,'up');
+  }else{
+   // Branche haute : nœud -> lampe -> moteur -> nœud.
+   currents+=hArrow(215,520,'right')+hArrow(615,520,'right')+hArrow(1080,520,'right');
+   // Branche basse : nœud -> DEL -> nœud.
+   currents+=vArrow(157,690,'down')+hArrow(405,885,'right')+hArrow(900,885,'right')+vArrow(1139,690,'up');
+   if(showShort && ex.short==='A')currents+=vArrow(255,605,'down')+hArrow(385,650,'right')+vArrow(520,605,'up');
+  }
+ }
+ // Masque de sécurité : aucune flèche ne peut passer devant une photo, même après recadrage.
+ // Les rectangles sont légèrement élargis pour conserver un espace visible autour des socles.
+ const imageRects=[...images.matchAll(/<image\s[^>]*\bx="([\d.]+)"\s+y="([\d.]+)"\s+width="([\d.]+)"\s+height="([\d.]+)"/g)]
+   .map(m=>({x:+m[1],y:+m[2],w:+m[3],h:+m[4]}));
+ const maskId=`ex-arrows-clear-${kind}-${showShort?'short':'normal'}-${ex.devices.map(d=>d[0]).join('')}`;
+ const mask=`<defs><mask id="${maskId}" maskUnits="userSpaceOnUse" x="0" y="0" width="1363" height="${H}"><rect width="1363" height="${H}" fill="white"/>${imageRects.map(r=>`<rect x="${r.x-13}" y="${r.y-13}" width="${r.w+26}" height="${r.h+26}" fill="black"/>`).join('')}</mask></defs>`;
+ return out+mask+wires+images+shorts+`<g mask="url(#${maskId})">${currents}</g>`+'</svg>';
+}
+function exComparisonSvg(ex){
+ return `<div class="exercise-compare">  <div class="exercise-compare-panel">   <p class="exercise-compare-title">Sans court-circuit</p>   ${exIllustratedSvg(ex,ex.before,false,'Circuit sans court-circuit')}  </div>  <div class="exercise-compare-panel">   <p class="exercise-compare-title">Avec court-circuit</p>   ${exIllustratedSvg(ex,ex.after,true,'Circuit avec court-circuit')}  </div> </div>`;
+}
+async function exPrepareIllustrationAssets(diagram){
+ const images=[...diagram.querySelectorAll('svg image.ex-photo')];
+ await Promise.all(images.map(async img=>{
+  const source=img.getAttribute('href');
+  try{
+   const processed=await processAssetUrl(source,!img.classList.contains('ex-rotor'));
+   if(diagram.contains(img))img.setAttribute('href',processed);
+  }catch(error){/* Image originale conservée. */}
+ }));
+ // Après chargement, placer le centre géométrique de l'hélice sur l'axe
+ // du moteur (pivot recalculé à partir de ses dimensions réelles recadrées).
+ if(!diagram.querySelector('svg.illustrated-exercise'))return;
+ const bodies=[...diagram.querySelectorAll('.ex-motor-body')];
+ const rotors=[...diagram.querySelectorAll('.ex-rotor')];
+ for(let i=0;i<bodies.length;i++){
+  const body=bodies[i],rotor=rotors[i];if(!rotor)continue;
+  const src=body.getAttribute('href');
+  await new Promise(resolve=>{
+   const im=new Image();im.onload=()=>{
+    const bx=+body.getAttribute('x'),by=+body.getAttribute('y');
+    const bw=+body.getAttribute('width'),bh=+body.getAttribute('height');
+    const scale=Math.min(bw/im.naturalWidth,bh/im.naturalHeight);
+    const actualW=im.naturalWidth*scale,actualH=im.naturalHeight*scale;
+    const left=bx+(bw-actualW)/2,top=by+(bh-actualH)/2;
+    // Coefficients d'axe utilisés dans le modèle de référence.
+    const pivotX=src.startsWith('data:')?.494:.503;
+    const pivotY=src.startsWith('data:')?.294:.334;
+    const x=left+actualW*pivotX,y=top+actualH*pivotY;
+    const w=+rotor.getAttribute('width'),h=+rotor.getAttribute('height');
+    rotor.setAttribute('x',String(x-w/2));
+    rotor.setAttribute('y',String(y-h/2));
+    rotor.style.setProperty('--cx',x+'px');
+    rotor.style.setProperty('--cy',y+'px');
+    resolve();
+   };im.onerror=resolve;im.src=src;
+  });
+ }
+}
+function exDeviceName(ex,i){
+ const d=ex.devices[i];
+ const duplicates=ex.devices.filter(item=>item[1]===d[1]).length>1;
+ if(!duplicates)return d[1];
+ return `${d[1]} (${i===0?'gauche':i===1?'milieu':'bas'})`;
+}
+function exShow(){
+ exRenderPicker();
+ const ex=EXERCISES[exIndex];exAnswered=false;
+ document.getElementById('exerciseCount').textContent=`Exercice ${exIndex+1} / ${EXERCISES.length}`;
+ document.getElementById('exerciseStep').textContent=exStage===0?'Circuit initial':'Avec court-circuit';
+ document.getElementById('exerciseTitle').textContent=ex.title;
+ document.getElementById('exerciseQuestion').textContent=exStage===0?'Complète les phrases.':'Après le court-circuit, complète les phrases.';
+ const diagram=document.getElementById('exerciseDiagram');
+ diagram.classList.remove('is-corrected');
+ diagram.innerHTML=exSvg();
+ document.getElementById('exerciseOptions').innerHTML=ex.devices.map((d,i)=>{
+  const name=exDeviceName(ex,i);
+  const subject=/^[AEIOUYÉÈÊ]/i.test(name)?`L’${name.toLowerCase()}`:(d[1]==='Lampe'||d[1]==='DEL'?`La ${name.toLowerCase()}`:`Le ${name.toLowerCase()}`);
+  const choices=Object.entries(EX_STATUS[d[2]]).map(([key,v])=>`<button type="button" class="exercise-answer-btn" data-choice="${key}" aria-pressed="false">${v}</button>`).join('');
+  return `<div class="exercise-sentence" data-ex-device="${d[0]}"><span class="exercise-subject">${subject} :</span><div class="exercise-answer-group" role="group" aria-label="${name}">${choices}</div></div>`;
+ }).join('');
+ document.getElementById('exerciseValidate').classList.remove('exercise-hidden');
+ document.getElementById('exerciseNext').classList.add('exercise-hidden');
+ document.getElementById('exerciseFeedback').className='exercise-feedback exercise-hidden';
+ document.getElementById('exerciseResults').className='exercise-results exercise-hidden';
+}
+function exResults(ex,correct){
+ const assets=typeof ASSETS!=='undefined'?ASSETS:{};
+ const container=document.getElementById('exerciseResults');
+ container.innerHTML=ex.devices.map((d,i)=>{
+  const st=correct[i];let media='';
+  if(d[2]==='led') media=`<img crossorigin="anonymous" src="${EX_LED[st==='off'?'off':st==='weak'?'weak':'bright']}" alt="DEL ${st==='off'?'éteinte':st==='weak'?'peu allumée':'bien allumée'}">`;
+  else if(d[2]==='lamp')media=`<img src="${st==='off'?assets.lampOff:st==='weak'?assets.lampWeak:assets.lampOn}" alt="Lampe">`;
+  else media=`<span class="exercise-motor-icon ${st==='off'?'':'spin'}" aria-hidden="true">⚙️</span>`;
+  return `<div class="exercise-device"><strong>${exDeviceName(ex,i)}</strong>${media}<small>${exStatusText(d[2],st)}</small></div>`;
+ }).join('');container.classList.remove('exercise-hidden');
+}
+function exValidate(){
+ if(exAnswered)return;
+ const ex=EXERCISES[exIndex],correct=exStage===0?ex.before:ex.after;
+ const sentences=[...document.querySelectorAll('#exerciseOptions .exercise-sentence')];
+ if(sentences.some(sentence=>!sentence.querySelector('.exercise-answer-btn.selected'))){
+  const feedback=document.getElementById('exerciseFeedback');feedback.className='exercise-feedback bad';feedback.textContent='Choisis une réponse pour chaque récepteur.';return;
+ }
+ // Correction directement à la suite de chaque ligne, sans score global.
+ sentences.forEach((sentence,i)=>{
+  const selected=sentence.querySelector('.exercise-answer-btn.selected');
+  const isCorrect=selected.dataset.choice===correct[i];
+  const subject=sentence.querySelector('.exercise-subject').textContent.replace(/\s*:\s*$/,'');
+  sentence.querySelectorAll('.exercise-answer-btn').forEach(btn=>btn.disabled=true);
+  selected.classList.add(isCorrect?'correct':'incorrect');
+  const mark=document.createElement('span');
+  mark.className='exercise-inline-mark '+(isCorrect?'ok':'wrong');
+  mark.textContent=isCorrect?'✓':'❌';
+  sentence.appendChild(mark);
+  if(!isCorrect){
+   const correction=document.createElement('span');
+   correction.className='exercise-inline-correction';
+   correction.textContent=`${subject} ${EX_STATUS[ex.devices[i][2]][correct[i]]}.`;
+   sentence.appendChild(correction);
+  }
+ });
+ // On garde uniquement l'explication scientifique à l'étape du court-circuit.
+ const feedback=document.getElementById('exerciseFeedback');
+ if(exStage===1 && ex.explanation){
+  feedback.className='exercise-feedback';
+  feedback.textContent=ex.explanation;
+ }else{
+  feedback.className='exercise-feedback exercise-hidden';
+  feedback.textContent='';
+ }
+ // La correction se lit sur le circuit lui-même : aucune vignette séparée.
+ const diagram=document.getElementById('exerciseDiagram');
+ diagram.classList.add('is-corrected');
+ if(exStage===1){
+  diagram.innerHTML=exComparisonSvg(ex);
+ }else{
+  diagram.innerHTML=exIllustratedSvg(ex,correct,false,'Circuit illustré montrant le fonctionnement des récepteurs');
+ }
+ exPrepareIllustrationAssets(diagram);
+ document.getElementById('exerciseResults').classList.add('exercise-hidden');
+ exAnswered=true;
+ if(exStage===1){exCompleted.add(exIndex);exRenderPicker();}
+ document.getElementById('exerciseValidate').classList.add('exercise-hidden');
+ const next=document.getElementById('exerciseNext');next.classList.remove('exercise-hidden');
+ next.textContent=exStage===0?'⚡ Ajouter le court-circuit':'➡️ Exercice suivant';
+ // Retourner à la question plutôt qu'à une position variable selon la taille de la correction.
+}
+function exNext(){if(!exAnswered)return;if(exStage===0)exStage=1;else {exStage=0;exIndex=(exIndex+1)%EXERCISES.length;}exShow();document.getElementById('exerciseQuestion').scrollIntoView({block:'start',behavior:'smooth'});}
+document.getElementById('exerciseOptions').addEventListener('click',event=>{
+ const button=event.target.closest('.exercise-answer-btn');
+ if(!button||exAnswered)return;
+ const group=button.closest('.exercise-answer-group');
+ group.querySelectorAll('.exercise-answer-btn').forEach(choice=>{
+  const chosen=choice===button;
+  choice.classList.toggle('selected',chosen);
+  choice.setAttribute('aria-pressed',String(chosen));
+ });
+ const feedback=document.getElementById('exerciseFeedback');
+ if(feedback.classList.contains('bad'))feedback.className='exercise-feedback exercise-hidden';
+});
+document.getElementById('exerciseValidate').addEventListener('click',exValidate);
+document.getElementById('exerciseNext').addEventListener('click',exNext);
+document.getElementById('exerciseRestart').addEventListener('click',()=>{exStage=0;exShow()});
+exShow();
 </script>
 </body>
 </html>
