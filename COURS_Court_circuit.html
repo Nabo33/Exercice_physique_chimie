@@ -1246,6 +1246,14 @@ function exPhoto(url,x,y,w,h,extra=''){
 function exBox(url,left,top,width,height,canvasHeight,extra=''){
  return exPhoto(url,left*13.63,top*canvasHeight/100,width*13.63,height*canvasHeight/100,extra);
 }
+// La pile photographique originale présente sa borne + à droite.
+// Dans les schémas des exercices, la grande barre (+) est à gauche :
+// on retourne uniquement l'image de la pile, pas le circuit entier.
+function exIllustratedBattery(left,top,width,height,canvasHeight){
+ const x=left*13.63, w=width*13.63;
+ return exBox(EX_BATTERY,left,top,width,height,canvasHeight,
+  `class="ex-photo" transform="translate(${(2*x+w).toFixed(2)} 0) scale(-1 1)"`);
+}
 function exIllustratedDevice(device,status,position,canvasHeight){
  const type=device[2];
  const lampUrl=status==='off'?ASSETS.lampOff:status==='weak'?ASSETS.lampWeak:ASSETS.lampOn;
@@ -1274,19 +1282,23 @@ function exIllustratedSvg(ex,states,showShort=false,ariaLabel='Circuit illustré
  const bypass=d=>`<path class="ex-short-illustrated" d="${d}"/>`;
  const arrow=d=>`<path class="ex-current-arrow" d="${d}"/>`;
  // Les pointes indiquent le sens conventionnel du courant extérieur : + vers −.
+ // Dans les schémas initiaux, la borne + est à gauche. Après avoir
+ // réorienté l'image de la pile, le courant conventionnel doit circuler
+ // en sens inverse des anciennes illustrations (qui avaient le + à droite).
+ // La pointe (sommet central) indique réellement la direction demandée.
  const hArrow=(x,y,dir='right')=>dir==='right'?arrow(`M${x-16} ${y-12}L${x} ${y}L${x-16} ${y+12}`):arrow(`M${x+16} ${y-12}L${x} ${y}L${x+16} ${y+12}`);
  const vArrow=(x,y,dir='down')=>dir==='down'?arrow(`M${x-12} ${y-16}L${x} ${y}L${x+12} ${y-16}`):arrow(`M${x-12} ${y+16}L${x} ${y}L${x+12} ${y+16}`);
  let out=`<svg class="illustrated-exercise" viewBox="0 0 1363 ${H}" xmlns="http://www.w3.org/2000/svg" aria-label="${ariaLabel}">`;
  let wires='',images='',shorts='',currents='';
  if(kind==='series'){
   wires=wire('M157 202 H431 M898 202 H1139 V817 H157 V202');
-  images+=exBox(EX_BATTERY,31.55,9.45,34.75,20.55,H);
+  images+=exIllustratedBattery(31.55,9.45,34.75,20.55,H);
   const positions=[[18.65,49.30,21.85,38.15],{body:[56.65,50.70,17.25,37.25],rotor:[51.55,41.55,27.15,40.65],lamp:[56.5,49.30,21.85,38.15]}];
   ex.devices.forEach((d,i)=>images+=exIllustratedDevice(d,states[i],positions[i],H));
   if(showShort){const i=ex.devices.findIndex(d=>d[0]===ex.short);shorts+=bypass(i===0?'M220 817 V915 H555 V817':'M700 817 V915 H1015 V817');}
  }else if(kind==='series3'){
   wires=wire('M157 202 H431 M898 202 H1139 V817 H157 V570 M157 440V202');
-  images+=exBox(EX_BATTERY,31.55,9.45,34.75,20.55,H);
+  images+=exIllustratedBattery(31.55,9.45,34.75,20.55,H);
   // Feedback final : utiliser l'image de la DEL (éteinte) et non son symbole.
   // Elle reste éteinte avant et après, car le courant la contourne lors du court-circuit.
   images+=exPhoto(EX_LED.off,22,337,270,335,'class="ex-photo"');
@@ -1296,14 +1308,14 @@ function exIllustratedSvg(ex,states,showShort=false,ariaLabel='Circuit illustré
   if(showShort) shorts+=bypass('M157 315 H8 V695 H157');
  }else if(kind==='parallel'){
   wires=wire('M157 520 V196 H453 M883 196 H1139 V520 M157 520 H1139 M157 520 V885 H1139 V520');
-  images+=exBox(EX_BATTERY,31.55,8.45,34.75,18.65,H);
+  images+=exIllustratedBattery(31.55,8.45,34.75,18.65,H);
   const positions=[[17.73,17.59,21.85,34.51],{body:[58.10,55,15.40,31.40],rotor:[52.70,46.20,25.80,38.50],lamp:[56.5,50.77,21.85,34.51]}];
   ex.devices.forEach((d,i)=>images+=exIllustratedDevice(d,states[i],positions[i],H));
   if(showShort){const i=ex.devices.findIndex(d=>d[0]===ex.short);shorts+=bypass(i===0?'M210 520 V650 H570 V520':'M690 885 V1010 H1015 V885');}
   images+='<circle cx="157" cy="520" r="13" fill="#111827"/><circle cx="1139" cy="520" r="13" fill="#111827"/>';
  }else{
   wires=wire('M157 520 V196 H250 M670 196 H1139 V520 M157 520 H1139 M157 520 V885 H1139 V520');
-  images+=exBox(EX_BATTERY,18.35,7.90,30.82,17.80,H);
+  images+=exIllustratedBattery(18.35,7.90,30.82,17.80,H);
   const positions=[[19.82,17.53,18.20,30],{body:[58.10,16.96,15.40,31.40],rotor:[52.70,8.16,25.80,38.50]},[40.57,47.95,18.20,30]];
   ex.devices.forEach((d,i)=>images+=exIllustratedDevice(d,states[i],positions[i],H));
   if(showShort){const i=ex.devices.findIndex(d=>d[0]===ex.short);shorts+=bypass(['M255 520 V650 H520 V520','M690 520 V650 H1040 V520','M540 885 V1015 H803 V885'][i]);}
