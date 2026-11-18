@@ -843,6 +843,31 @@ header p,
   font-weight: 950;
 }
 
+
+/* Reprise de l'exercice illustré « Mélanges » (sans effet sur les autres onglets). */
+#q-card.classify-mode {text-align:center;padding:16px 18px;}
+#q-card.classify-mode .question-header {margin-bottom:8px;}
+#q-card.classify-mode .question-text {font-family:'Fredoka One',cursive;color:var(--bleu);font-size:clamp(1.25rem,2.5vw,1.7rem);line-height:1.4;margin:0 auto 10px;max-width:850px;}
+#q-card.classify-mode .classify-visual {width:100%;max-width:490px;margin:0 auto;padding:8px;background:white;border:1px solid #e4e8f2;border-radius:16px;}
+#q-card.classify-mode .classify-visual img {display:block;width:100%;height:clamp(170px,31vh,290px);object-fit:contain;background:white;border-radius:10px;}
+#q-card.classify-mode .classify-answers {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:850px;margin:12px auto 0;}
+#q-card.classify-mode .classify-answers .choice-btn {justify-content:center;min-height:62px;padding:10px 14px;text-align:center;}
+#q-card.classify-mode .classify-dock {display:flex;align-items:center;justify-content:center;gap:10px;max-width:850px;min-height:104px;margin:10px auto 0;visibility:hidden;pointer-events:none;}
+#q-card.classify-mode .classify-dock.is-visible {visibility:visible;pointer-events:auto;}
+#q-card.classify-mode .classify-dock .feedback {display:block;flex:1;margin:0;min-height:82px;height:82px;overflow:auto;padding:10px 14px;}
+#q-card.classify-mode .classify-dock #next-btn {flex:none;white-space:nowrap;min-height:50px;margin:0;padding:11px 20px;}
+#game-area:has(.classify-mode) {padding-bottom:190px;}
+@media(max-width:700px){
+ #q-card.classify-mode{padding:12px;}
+ #q-card.classify-mode .classify-visual{max-width:100%;padding:6px;}
+ #q-card.classify-mode .classify-visual img{height:clamp(150px,27vh,240px);}
+ #q-card.classify-mode .classify-answers{gap:10px;}
+ #q-card.classify-mode .classify-answers .choice-btn{min-height:64px;padding:10px;}
+ #q-card.classify-mode .classify-dock{flex-direction:column;min-height:160px;gap:8px;}
+ #q-card.classify-mode .classify-dock .feedback{width:100%;height:94px;flex:auto;}
+ #q-card.classify-mode .classify-dock #next-btn{width:100%;}
+}
+
 </style>
 </head>
 <body>
@@ -946,8 +971,10 @@ header p,
     </div>
     <div class="question-text" id="q-text"></div>
     <div id="q-content"></div>
-    <div class="feedback" id="feedback"></div>
-    <button class="btn" id="next-btn" onclick="nextQuestion()" style="display:none">Suivant →</button>
+    <div id="classify-dock" class="classify-dock">
+      <div class="feedback" id="feedback"></div>
+      <button class="btn" id="next-btn" onclick="nextQuestion()" style="display:none">Suivant →</button>
+    </div>
   </div>
 </div>
 
@@ -991,27 +1018,34 @@ header p,
 // ========================
 
 const EXAMPLES_HOMOGENE = [
-  { name: "Eau sucrée", desc: "eau + sucre dissous" },
-  { name: "Eau salée", desc: "eau + sel dissous" },
-  { name: "Limonade", desc: "eau + jus de citron + sucre dissous" },
-  { name: "Menthe à l'eau", desc: "eau + sirop de menthe" },
-  { name: "Eau de mer", desc: "eau + sels minéraux dissous" },
-  { name: "Vinaigre", desc: "eau + acide acétique" },
-  { name: "Café filtré", desc: "eau + café dissous" },
-  { name: "Lait entier", desc: "eau + matières grasses émulsifiées" },
-  { name: "Eau de Javel", desc: "eau + hypochlorite dissous" },
+  { name: "de l'eau sucrée", desc: "eau + sucre dissous", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H01_eau_sucree.png" },
+  { name: "de l'eau salée", desc: "eau + sel dissous", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H02_eau_salee.png" },
+  { name: "de la menthe à l'eau", desc: "eau + sirop de menthe", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H03_menthe_a_leau.png" },
+  { name: "de l'eau de mer", desc: "eau + sels minéraux dissous", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H04_eau_de_mer.png" },
+  { name: "du vinaigre blanc", desc: "eau + acide acétique", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H05_vinaigre_blanc.png" },
+  { name: "du lait entier", desc: "eau + matières grasses émulsifiées", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H07_lait_entier.png" },
+  { name: "de l'eau de Javel", desc: "eau + hypochlorite dissous", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H08_eau_de_javel.png" },
+  { name: "du sirop de grenadine dilué", desc: "eau + sirop de grenadine", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H09_grenadine_diluee.png" },
+  { name: "du thé filtré", desc: "eau + arômes", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H10_the_filtre.png" },
+  { name: "de l'alcool à brûler", desc: "eau + alcool", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H11_alcool_a_bruler.png" },
+  { name: "un yaourt nature", desc: "lait + sucre dissous + épaississant", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H11_Yaourt.png" }
 ];
 
 const EXAMPLES_HETEROGENE = [
-  { name: "Eau et huile", desc: "deux liquides non-miscibles" },
-  { name: "Jus d'orange avec pulpe", desc: "liquide + morceaux de pulpe visibles" },
-  { name: "Eau du lac Neyton", desc: "eau + algues + particules visibles" },
-  { name: "Eau boueuse", desc: "eau + argile non dissoute" },
-  { name: "Sable dans l'eau", desc: "solide insoluble dans l'eau" },
-  { name: "Eau et farine", desc: "eau + particules de farine en suspension" },
-  { name: "Vinaigrette", desc: "huile + vinaigre séparés" },
-  { name: "Granité", desc: "eau + glace visible" },
-  { name: "Craie dans l'eau", desc: "poudre de craie insoluble" },
+  { name: "du café", desc: "café liquide + mousse visible à la surface", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/H06_cafe.png" },
+  { name: "de l'eau et de l'huile", desc: "deux liquides non-miscibles", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE01_eau_et_huile.png" },
+  { name: "de la limonade", desc: "liquide + bulles de gaz visibles", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE02_limonade.png" },
+  { name: "du jus d'orange avec pulpe", desc: "liquide + morceaux de pulpe visibles", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE03_jus_orange_avec_pulpe.png" },
+  { name: "de l'eau boueuse", desc: "eau + terre + caillou", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE04_Eau_boueuse.png" },
+  { name: "de la soupe au vermicelle", desc: "eau + pâtes", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE05_Soupe_Vermicelle.png" },
+  { name: "du sable dans l'eau", desc: "eau + sable visible au fond", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE06_sable_dans_eau.png" },
+  { name: "de l'eau et de la farine", desc: "eau + particules de farine en suspension", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE07_eau_et_farine.png" },
+  { name: "de la vinaigrette", desc: "huile + vinaigre", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE08_Vinaigrette.png" },
+  { name: "de l'eau et du poivre", desc: "eau + grain de poivre", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE09_Eau_et_poivre.png" },
+  { name: "du chocolat aux noisettes", desc: "chocolat + noisettes entières", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE10_Chocolats_aux_noisettes.png" },
+  { name: "du taboulé oriental", desc: "semoule + menthe + raisin", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE11_Taboulet_oriental.png" },
+  { name: "un yaourt aux fruits", desc: "yaourt + morceaux de fruits", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE12_Yaourt_aux_fruits.png" },
+  { name: "du jus de pamplemousse avec pulpe", desc: "liquide + morceaux de pulpe visibles", image: "https://raw.githubusercontent.com/Nabo33/Images/d23b16988c106f539b280cf408bea0d05da9e962/HE13_jus_pamplemousse.png" }
 ];
 
 const VOCAB_QCM = [
@@ -1532,6 +1566,7 @@ function hideFeedback() {
   const fb = document.getElementById('feedback');
   fb.className = 'feedback';
   document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('classify-dock').classList.remove('is-visible');
 }
 
 function cleanText(str) {
@@ -1593,6 +1628,17 @@ function escapeForHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+
+// Positionnement de l'exercice sous le menu fixe, sans masquer l'énoncé.
+function positionClassifyExercise() {
+  const score = document.getElementById('scorebar');
+  const nav = document.querySelector('.nav');
+  if (!score || !nav) return;
+  const stickyNav = getComputedStyle(nav).position === 'sticky';
+  const offset = (stickyNav ? nav.getBoundingClientRect().height : 0) + 12;
+  const top = Math.max(0, score.getBoundingClientRect().top + window.scrollY - offset);
+  window.scrollTo({top, behavior:'instant'});
+}
 
 // ========================
 //  GAME START
@@ -1659,6 +1705,7 @@ function nextQuestion() {
 
   hideFeedback();
   renderQuestion();
+
 }
 
 // ========================
@@ -1666,6 +1713,7 @@ function nextQuestion() {
 // ========================
 function renderQuestion() {
   document.getElementById('q-counter').textContent = `Question ${questionIndex + 1} / ${sessionTotal}`;
+  document.getElementById('q-card').classList.toggle('classify-mode', currentGame === 'classify');
   switch(currentGame) {
     case 'classify': renderClassify(); break;
     case 'vocab':    renderVocab(); break;
@@ -1675,8 +1723,13 @@ function renderQuestion() {
     case 'truefalse':renderTrueFalse(); break;
   }
   hideFeedback();
-  // scroll to card
-  document.getElementById('q-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Placer la barre de progression juste sous la navigation fixe.
+  // Le rendu étant dynamique, attendre la stabilisation de la mise en page.
+  if (currentGame === 'classify') {
+    requestAnimationFrame(() => requestAnimationFrame(positionClassifyExercise));
+  } else {
+    document.getElementById('q-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 // ========================
@@ -1685,40 +1738,44 @@ function renderQuestion() {
 function renderClassify() {
   document.getElementById('q-type-badge').textContent = 'Classer un mélange';
   const allExamples = [...EXAMPLES_HOMOGENE.map(e => ({...e, type:'homogène'})), ...EXAMPLES_HETEROGENE.map(e => ({...e, type:'hétérogène'}))];
- const ex = allExamples[classifyOrder[questionIndex % classifyOrder.length]];
-
-  document.getElementById('q-text').innerHTML = `Quel est le type du mélange suivant : <span class="highlight">${ex.name}</span><br><small style="font-weight:600;color:#64748b">(${ex.desc})</small> ?`;
-
-  const choices = ['homogène', 'hétérogène'];
-  const html = `<div class="choices">` +
-    choices.map((c, i) => `<button class="choice-btn" onclick="answerClassify(this,'${c}','${ex.type}','${escHtml(ex.name)}')">
-      ${i === 0 ? '🔵' : '🔴'} Mélange ${c}
-    </button>`).join('') +
-    `</div>`;
-  document.getElementById('q-content').innerHTML = html;
+  const ex = allExamples[classifyOrder[questionIndex % classifyOrder.length]];
+  document.getElementById('q-text').innerHTML = `Quel type de mélange obtient-on avec <span class="highlight">${escapeForHtml(ex.name)}</span> ?`;
+  document.getElementById('q-content').innerHTML = `
+    <figure class="classify-visual"><img src="${escapeForHtml(ex.image)}" alt="Illustration de ${escapeForHtml(ex.name)}" loading="eager" decoding="async"></figure>
+    <div class="classify-answers">
+      <button class="choice-btn" onclick="answerClassify(this,'homogène')">🔵 Mélange homogène</button>
+      <button class="choice-btn" onclick="answerClassify(this,'hétérogène')">🔴 Mélange hétérogène</button>
+    </div>`;
+  window.currentClassifyExample = ex;
 }
 
-function answerClassify(btn, chosen, correct, name) {
+function answerClassify(btn, chosen) {
   if (answered) return;
   answered = true;
   totalAnswered++;
+  const ex = window.currentClassifyExample;
+  const correct = ex.type;
   const ok = chosen === correct;
   if (ok) correctCount++;
   updateScoreBar();
   btn.classList.add(ok ? 'correct' : 'wrong');
-  const expl = ok
-    ? `<strong>${name}</strong> est bien un mélange <strong>${correct}</strong>.` + (correct === 'homogène' ? " On ne distingue pas les constituants à l'œil nu." : " On peut distinguer les constituants à l'œil nu.")
-    : `Non ! <strong>${name}</strong> est un mélange <strong>${correct}</strong>.` + (correct === 'homogène' ? " On ne distingue pas les constituants à l'œil nu." : " On peut distinguer les constituants à l'œil nu.");
-  if (!ok) {
-    recordMistake(
-      document.getElementById('q-text').innerHTML,
-      `Mélange ${chosen}`,
-      `Mélange ${correct}`,
-      expl
-    );
-  }
+  document.querySelectorAll('#q-content .choice-btn').forEach(b => {
+    b.disabled = true;
+    if (!ok && b.textContent.toLowerCase().includes(correct)) b.classList.add('correct');
+  });
+  const observation = ex.name === 'du café'
+    ? 'On distingue le café liquide et la mousse à sa surface.'
+    : correct === 'homogène'
+      ? 'On ne distingue pas les constituants à l’œil nu.'
+      : 'On peut distinguer les constituants à l’œil nu.';
+  const expl = `<strong>${escapeForHtml(ex.name)}</strong> ${ok ? 'est bien' : 'est'} un mélange <strong>${correct}</strong>. ${observation}`;
+  if (!ok) recordMistake(document.getElementById('q-text').innerHTML, `Mélange ${chosen}`, `Mélange ${correct}`, expl);
   showFeedback(ok, expl);
-  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+  document.getElementById('next-btn').textContent = totalAnswered >= sessionTotal ? 'Voir le résultat →' : 'Question suivante →';
+  const dock = document.getElementById('classify-dock');
+  dock.classList.add('is-visible');
+  // Ne pas défiler vers la correction : la question reste visible en haut.
+  // L'espace de correction est déjà réservé dans la carte, sans saut de page.
 }
 
 // ========================
